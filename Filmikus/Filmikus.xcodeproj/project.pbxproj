@@ -3,19 +3,27 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4300C958FEAED5600AE0340A /* Pods_Filmikus.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A0E906518A08B8A3AA08FC87 /* Pods_Filmikus.framework */; };
 		491C218A24641393007CDEC2 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 491C218924641393007CDEC2 /* AppDelegate.swift */; };
 		491C219324641395007CDEC2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 491C219224641395007CDEC2 /* Assets.xcassets */; };
 		491C219624641395007CDEC2 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 491C219424641395007CDEC2 /* LaunchScreen.storyboard */; };
 		491C21AA24641ADD007CDEC2 /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 491C21A924641ADD007CDEC2 /* TabBarController.swift */; };
 		491C21AE24641D61007CDEC2 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 491C21AD24641D61007CDEC2 /* MainViewController.swift */; };
 		491C21B024641E94007CDEC2 /* CategoriesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 491C21AF24641E94007CDEC2 /* CategoriesViewController.swift */; };
+		491C21B3246423E0007CDEC2 /* Category.swift in Sources */ = {isa = PBXBuildFile; fileRef = 491C21B2246423E0007CDEC2 /* Category.swift */; };
+		491C21B5246423F2007CDEC2 /* Film.swift in Sources */ = {isa = PBXBuildFile; fileRef = 491C21B4246423F2007CDEC2 /* Film.swift */; };
+		491C21B72464240D007CDEC2 /* Censorship.swift in Sources */ = {isa = PBXBuildFile; fileRef = 491C21B62464240D007CDEC2 /* Censorship.swift */; };
+		491C21BC246424A8007CDEC2 /* CategoryTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 491C21BB246424A8007CDEC2 /* CategoryTableViewCell.swift */; };
+		491C21BE246424F4007CDEC2 /* UITableView+Reusable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 491C21BD246424F4007CDEC2 /* UITableView+Reusable.swift */; };
+		491C21C024642506007CDEC2 /* UICollectionView+Reusable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 491C21BF24642506007CDEC2 /* UICollectionView+Reusable.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		2CB43A7752A6743CCCD2C37C /* Pods-Filmikus.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Filmikus.debug.xcconfig"; path = "Target Support Files/Pods-Filmikus/Pods-Filmikus.debug.xcconfig"; sourceTree = "<group>"; };
 		491C218624641393007CDEC2 /* Filmikus.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Filmikus.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		491C218924641393007CDEC2 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		491C219224641395007CDEC2 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -24,6 +32,14 @@
 		491C21A924641ADD007CDEC2 /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
 		491C21AD24641D61007CDEC2 /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		491C21AF24641E94007CDEC2 /* CategoriesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoriesViewController.swift; sourceTree = "<group>"; };
+		491C21B2246423E0007CDEC2 /* Category.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Category.swift; sourceTree = "<group>"; };
+		491C21B4246423F2007CDEC2 /* Film.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Film.swift; sourceTree = "<group>"; };
+		491C21B62464240D007CDEC2 /* Censorship.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Censorship.swift; sourceTree = "<group>"; };
+		491C21BB246424A8007CDEC2 /* CategoryTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryTableViewCell.swift; sourceTree = "<group>"; };
+		491C21BD246424F4007CDEC2 /* UITableView+Reusable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITableView+Reusable.swift"; sourceTree = "<group>"; };
+		491C21BF24642506007CDEC2 /* UICollectionView+Reusable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UICollectionView+Reusable.swift"; sourceTree = "<group>"; };
+		910D8458524217E7FCF8A076 /* Pods-Filmikus.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Filmikus.release.xcconfig"; path = "Target Support Files/Pods-Filmikus/Pods-Filmikus.release.xcconfig"; sourceTree = "<group>"; };
+		A0E906518A08B8A3AA08FC87 /* Pods_Filmikus.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Filmikus.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -31,17 +47,37 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4300C958FEAED5600AE0340A /* Pods_Filmikus.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		104B766D29690F20DFF8145F /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				2CB43A7752A6743CCCD2C37C /* Pods-Filmikus.debug.xcconfig */,
+				910D8458524217E7FCF8A076 /* Pods-Filmikus.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
+		30E72FD0F07108F8BF24CD4E /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				A0E906518A08B8A3AA08FC87 /* Pods_Filmikus.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		491C217D24641393007CDEC2 = {
 			isa = PBXGroup;
 			children = (
 				491C218824641393007CDEC2 /* Filmikus */,
 				491C218724641393007CDEC2 /* Products */,
+				104B766D29690F20DFF8145F /* Pods */,
+				30E72FD0F07108F8BF24CD4E /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -109,6 +145,8 @@
 		491C21A724641A05007CDEC2 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				491C21BD246424F4007CDEC2 /* UITableView+Reusable.swift */,
+				491C21BF24642506007CDEC2 /* UICollectionView+Reusable.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -133,10 +171,30 @@
 		491C21AC24641D51007CDEC2 /* Main */ = {
 			isa = PBXGroup;
 			children = (
+				491C21B824642475007CDEC2 /* Cells */,
+				491C21B1246423CB007CDEC2 /* ViewModels */,
 				491C21AD24641D61007CDEC2 /* MainViewController.swift */,
 				491C21AF24641E94007CDEC2 /* CategoriesViewController.swift */,
 			);
 			path = Main;
+			sourceTree = "<group>";
+		};
+		491C21B1246423CB007CDEC2 /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				491C21B2246423E0007CDEC2 /* Category.swift */,
+				491C21B4246423F2007CDEC2 /* Film.swift */,
+				491C21B62464240D007CDEC2 /* Censorship.swift */,
+			);
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		491C21B824642475007CDEC2 /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				491C21BB246424A8007CDEC2 /* CategoryTableViewCell.swift */,
+			);
+			path = Cells;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -146,9 +204,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 491C219A24641395007CDEC2 /* Build configuration list for PBXNativeTarget "Filmikus" */;
 			buildPhases = (
+				1A22BC20B13A32168ED34711 /* [CP] Check Pods Manifest.lock */,
 				491C218224641393007CDEC2 /* Sources */,
 				491C218324641393007CDEC2 /* Frameworks */,
 				491C218424641393007CDEC2 /* Resources */,
+				586B323ADE7FECDB8D98F653 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -204,15 +264,63 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		1A22BC20B13A32168ED34711 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Filmikus-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		586B323ADE7FECDB8D98F653 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Filmikus/Pods-Filmikus-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Filmikus/Pods-Filmikus-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Filmikus/Pods-Filmikus-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		491C218224641393007CDEC2 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 				491C21AE24641D61007CDEC2 /* MainViewController.swift in Sources */,
+				491C21B72464240D007CDEC2 /* Censorship.swift in Sources */,
+				491C21B5246423F2007CDEC2 /* Film.swift in Sources */,
+				491C21B3246423E0007CDEC2 /* Category.swift in Sources */,
+				491C21BE246424F4007CDEC2 /* UITableView+Reusable.swift in Sources */,
 				491C218A24641393007CDEC2 /* AppDelegate.swift in Sources */,
 				491C21B024641E94007CDEC2 /* CategoriesViewController.swift in Sources */,
 				491C21AA24641ADD007CDEC2 /* TabBarController.swift in Sources */,
+				491C21BC246424A8007CDEC2 /* CategoryTableViewCell.swift in Sources */,
+				491C21C024642506007CDEC2 /* UICollectionView+Reusable.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -346,6 +454,7 @@
 		};
 		491C219B24641395007CDEC2 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 2CB43A7752A6743CCCD2C37C /* Pods-Filmikus.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
@@ -364,6 +473,7 @@
 		};
 		491C219C24641395007CDEC2 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 910D8458524217E7FCF8A076 /* Pods-Filmikus.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;

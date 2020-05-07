@@ -16,7 +16,7 @@ class TabBarController: UITabBarController {
 
         tabBar.tintColor = .systemRed
         
-        let mainVC = UIViewController()
+        let mainVC = MainViewController()
         let mainNavVC = UINavigationController(rootViewController: mainVC)
         mainNavVC.tabBarItem = UITabBarItem(tabBarSystemItem: .contacts, tag: 0)
         
