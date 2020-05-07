@@ -12,6 +12,7 @@
 		491C219624641395007CDEC2 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 491C219424641395007CDEC2 /* LaunchScreen.storyboard */; };
 		491C21AA24641ADD007CDEC2 /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 491C21A924641ADD007CDEC2 /* TabBarController.swift */; };
 		491C21AE24641D61007CDEC2 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 491C21AD24641D61007CDEC2 /* MainViewController.swift */; };
+		491C21B024641E94007CDEC2 /* CategoriesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 491C21AF24641E94007CDEC2 /* CategoriesViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -22,6 +23,7 @@
 		491C219724641395007CDEC2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		491C21A924641ADD007CDEC2 /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
 		491C21AD24641D61007CDEC2 /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
+		491C21AF24641E94007CDEC2 /* CategoriesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoriesViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -132,6 +134,7 @@
 			isa = PBXGroup;
 			children = (
 				491C21AD24641D61007CDEC2 /* MainViewController.swift */,
+				491C21AF24641E94007CDEC2 /* CategoriesViewController.swift */,
 			);
 			path = Main;
 			sourceTree = "<group>";
@@ -208,6 +211,7 @@
 			files = (
 				491C21AE24641D61007CDEC2 /* MainViewController.swift in Sources */,
 				491C218A24641393007CDEC2 /* AppDelegate.swift in Sources */,
+				491C21B024641E94007CDEC2 /* CategoriesViewController.swift in Sources */,
 				491C21AA24641ADD007CDEC2 /* TabBarController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
