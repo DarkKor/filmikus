@@ -10,6 +10,16 @@ import UIKit
 
 class CategoryTableViewCell<Cell: ReusableCollectionViewCell>: ReusableTableViewCell {
 	
+	var contentOffset: CGFloat {
+		get {
+			return collectionView.contentOffset.x
+		}
+
+		set {
+			collectionView.contentOffset.x = newValue
+		}
+	}
+	
 	typealias CategoryDelegate = UICollectionViewDelegate & UICollectionViewDataSource
 	
 	private lazy var collectionLayout: UICollectionViewLayout = {
@@ -23,14 +33,14 @@ class CategoryTableViewCell<Cell: ReusableCollectionViewCell>: ReusableTableView
 		let collection = UICollectionView(frame: .zero, collectionViewLayout: collectionLayout)
 		
 		collection.showsHorizontalScrollIndicator = false
-		collection.register(view: Cell.self)
+		collection.register(cell: Cell.self)
 		return collection
 	}()
 	
 	override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
 		super.init(style: style, reuseIdentifier: reuseIdentifier)
-		
-		collectionView.backgroundColor = .black
+		backgroundColor = .clear
+		collectionView.backgroundColor = .clear
 		contentView.addSubview(collectionView)
 		collectionView.snp.makeConstraints {
 			$0.edges.equalToSuperview()

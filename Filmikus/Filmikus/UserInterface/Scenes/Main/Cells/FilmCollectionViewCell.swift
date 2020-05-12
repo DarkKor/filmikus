@@ -19,33 +19,43 @@ class FilmCollectionViewCell: ReusableCollectionViewCell {
 	override init(frame: CGRect) {
 		super.init(frame: frame)
 		
-		contentView.backgroundColor = .clear
+		contentView.backgroundColor = .white
+		contentView.rounded(radius: 5)
+		contentView.layer.shadowOpacity = 1.0
 		labelTitle.font = .boldSystemFont(ofSize: 12)
-		labelTitle.textColor = .white
+//		labelTitle.textColor = .white
 		labelGenres.font = .systemFont(ofSize: 12)
-		labelGenres.textColor = .white
+//		labelGenres.textColor = .white
 		labelCountryYear.font = .systemFont(ofSize: 12)
-		labelCountryYear.textColor = .lightText
+//		labelCountryYear.textColor = .lightText
 
 		contentView.addSubview(imageView)
 		contentView.addSubview(labelTitle)
 		contentView.addSubview(labelGenres)
 		contentView.addSubview(labelCountryYear)
-		
+		imageView.setContentHuggingPriority(.defaultLow, for: .vertical)
+		labelTitle.setContentCompressionResistancePriority(.required, for: .vertical)
+		labelGenres.setContentCompressionResistancePriority(.required, for: .vertical)
+		labelCountryYear.setContentCompressionResistancePriority(.required, for: .vertical)
+
 		imageView.snp.makeConstraints {
 			$0.left.top.right.equalToSuperview()
 		}
 		labelTitle.snp.makeConstraints {
 			$0.top.equalTo(imageView.snp.bottom)
-			$0.leading.trailing.equalToSuperview()
+			$0.leading.equalToSuperview().offset(5)
+			$0.trailing.equalToSuperview().offset(-5)
 		}
 		labelGenres.snp.makeConstraints {
 			$0.top.equalTo(labelTitle.snp.bottom)
-			$0.leading.trailing.equalToSuperview()
+			$0.leading.equalToSuperview().offset(5)
+			$0.trailing.equalToSuperview().offset(-5)
 		}
 		labelCountryYear.snp.makeConstraints {
 			$0.top.equalTo(labelGenres.snp.bottom)
-			$0.leading.trailing.bottom.equalToSuperview()
+			$0.leading.equalToSuperview().offset(5)
+			$0.trailing.equalToSuperview().offset(-5)
+			$0.bottom.equalToSuperview()
 		}
 	}
 	

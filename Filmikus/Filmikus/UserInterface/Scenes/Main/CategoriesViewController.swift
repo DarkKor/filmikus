@@ -11,9 +11,13 @@ import UIKit
 class CategoriesViewController: UIViewController {
 	
 	private var categories: [Category] = []
+	private var categoriesOffsets: [Int: CGFloat] = [:]
 	
 	private lazy var tableView: UITableView = {
-		let table = UITableView()
+		let table = UITableView(frame: .zero, style: .grouped)
+		table.backgroundColor = .clear
+		table.separatorStyle = .none
+		table.sectionHeaderHeight = 44
 		table.delegate = self
 		table.dataSource = self
 		table.rowHeight = 220
@@ -46,16 +50,6 @@ extension CategoriesViewController: UITableViewDataSource {
 		categories.count
 	}
 	
-	func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-		let header: CategoryHeaderSectionView = tableView.dequeueHeaderFooter()
-		header.textLabel?.text = categories[section].title
-		return header
-	}
-	
-//	func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-//		categories[section].title
-//	}
-	
 	func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
 		1
 	}
@@ -63,13 +57,26 @@ extension CategoriesViewController: UITableViewDataSource {
 	func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 		let cell: CategoryTableViewCell<FilmCollectionViewCell> = tableView.dequeueCell(for: indexPath)
 		cell.setDelegate(delegate: self, withTag: indexPath.section)
+		cell.contentOffset = categoriesOffsets[indexPath.section] ?? 0
 		return cell
 	}
 }
 
 // MARK: - UITableViewDelegate
 
-extension CategoriesViewController: UITableViewDelegate {}
+extension CategoriesViewController: UITableViewDelegate {
+	
+	func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+		let header: CategoryHeaderSectionView = tableView.dequeueHeaderFooter()
+		header.fill(title: categories[section].title)
+		return header
+	}
+	
+	func tableView(_ tableView: UITableView, didEndDisplaying cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+		guard let cell = cell as? CategoryTableViewCell<FilmCollectionViewCell> else { return }
+		categoriesOffsets[indexPath.section] = cell.contentOffset
+	}
+}
 
 // MARK: - UICollectionViewDataSource
 
@@ -80,7 +87,7 @@ extension CategoriesViewController: UICollectionViewDataSource {
 	}
 	
 	func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-		let cell: FilmCollectionViewCell = collectionView.dequeue(for: indexPath)
+		let cell: FilmCollectionViewCell = collectionView.dequeueCell(for: indexPath)
 		cell.fill(film: categories[collectionView.tag].films[indexPath.item])
 		return cell
 	}

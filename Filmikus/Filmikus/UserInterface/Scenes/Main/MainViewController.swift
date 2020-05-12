@@ -15,6 +15,7 @@ class MainViewController: UIViewController {
 	
 	override func loadView() {
 		view = UIView()
+		view.backgroundColor = .appDarkBlue
 		addChild(categoriesViewController)
 		view.addSubview(categoriesViewController.view)
 		categoriesViewController.didMove(toParent: self)
