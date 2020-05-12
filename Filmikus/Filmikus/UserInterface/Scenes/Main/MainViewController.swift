@@ -28,11 +28,86 @@ class MainViewController: UIViewController {
         super.viewDidLoad()
 		
 		let categories = [
-			Category(title: "Популярное", films: [Film()]),
-			Category(title: "Рекомендуем", films: [Film()]),
-			Category(title: "Фильмы", films: [Film()]),
-			Category(title: "Сериалы", films: [Film()])
-
+			Category(title: "Популярное", films: [
+				Film(
+					imageUrl: "",
+					title: "Дурак",
+					genres: ["Драма", "Криминал"],
+					country: "Россия",
+					year: "2015",
+					censorship: .sixteenPlus
+				),
+				Film(
+					imageUrl: "https://via.placeholder.com/150x200/884444/000000",
+					title: "Дурак",
+					genres: ["Драма", "Криминал"],
+					country: "Россия",
+					year: "2015",
+					censorship: .sixteenPlus
+				),
+				Film(
+					imageUrl: "https://via.placeholder.com/150/228888/000000",
+					title: "Дурак",
+					genres: ["Драма", "Криминал"],
+					country: "Россия",
+					year: "2015",
+					censorship: .sixteenPlus
+				),
+				Film(
+					imageUrl: "https://via.placeholder.com/150x100/228888/FFFFFF",
+					title: "Дурак",
+					genres: ["Драма", "Криминал"],
+					country: "Россия",
+					year: "2015",
+					censorship: .sixteenPlus
+				),
+				Film(
+					imageUrl: "https://via.placeholder.com/150x75/F05520/000000",
+					title: "Дурак",
+					genres: ["Драма", "Криминал"],
+					country: "Россия",
+					year: "2015",
+					censorship: .sixteenPlus
+				),
+				Film(
+					imageUrl: "https://via.placeholder.com/150x300/FFFF00/000000",
+					title: "Дурак",
+					genres: ["Драма", "Криминал"],
+					country: "Россия",
+					year: "2015",
+					censorship: .sixteenPlus
+				)
+			]),
+			Category(title: "Рекомендуем", films: [
+				Film(
+					imageUrl: "https://via.placeholder.com/150x100/228888/FFFFFF",
+					title: "Дурак",
+					genres: ["Драма", "Криминал"],
+					country: "Россия",
+					year: "2015",
+					censorship: .sixteenPlus
+				)
+			]),
+			Category(title: "Фильмы", films: [
+				Film(
+					imageUrl: "https://via.placeholder.com/150x200/884444/000000",
+					title: "Дурак",
+					genres: ["Драма", "Криминал"],
+					country: "Россия",
+					year: "2015",
+					censorship: .sixteenPlus
+				)
+			]),
+			Category(title: "Сериалы", films: [
+				Film(
+					imageUrl: "https://via.placeholder.com/150x300/FFFF00/000000",
+					title: "Дурак",
+					genres: ["Драма", "Криминал"],
+					country: "Россия",
+					year: "2015",
+					censorship: .sixteenPlus
+				)
+			])
 		]
 		categoriesViewController.update(categories: categories)
     }

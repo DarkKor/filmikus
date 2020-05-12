@@ -7,10 +7,10 @@
 //
 
 struct Film {
-	let imageUrl: String = ""
-	let title: String = ""
-	let genres: [String] = []
-	let country: String = ""
-	let year: String = ""
-	let censorship: Censorship = .zeroPlus
+	let imageUrl: String
+	let title: String
+	let genres: [String]
+	let country: String
+	let year: String
+	let censorship: Censorship
 }
