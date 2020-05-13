@@ -24,4 +24,17 @@ extension UIColor {
 	static var appLightGray: UIColor {
 		UIColor(named: "appLightGray")!
 	}
+	
+	static var appNightBlue: UIColor {
+		UIColor(named: "appNightBlue")!
+	}
+	
+	static var appUnderlineGray: UIColor {
+		UIColor(named: "appUnderlineGray")!
+	}
+	
+	static var appPlaceholderGray: UIColor {
+		UIColor(named: "appPlaceholderGray")!
+	}
+	
 }

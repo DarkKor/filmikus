@@ -10,6 +10,20 @@ import UIKit
 
 class VideosViewController: UIViewController {
 
+	private lazy var categoriesViewController = CategoriesViewController()
+	
+	override func loadView() {
+		view = UIView()
+		view.backgroundColor = .appDarkBlue
+		addChild(categoriesViewController)
+		view.addSubview(categoriesViewController.view)
+		categoriesViewController.didMove(toParent: self)
+		
+		categoriesViewController.view.snp.makeConstraints {
+			$0.edges.equalToSuperview()
+		}
+	}
+	
     override func viewDidLoad() {
         super.viewDidLoad()
 

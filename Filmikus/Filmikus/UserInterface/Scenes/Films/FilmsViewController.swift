@@ -14,7 +14,7 @@ class FilmsViewController: UIViewController {
 	
 	override func loadView() {
 		view = UIView()
-		view.backgroundColor = .appLightGray
+		view.backgroundColor = .appDarkBlue
 		addChild(categoriesViewController)
 		view.addSubview(categoriesViewController.view)
 		categoriesViewController.didMove(toParent: self)

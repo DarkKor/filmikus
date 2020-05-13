@@ -1,5 +1,5 @@
 //
-//  MoreButton.swift
+//  BlueButton.swift
 //  Filmikus
 //
 //  Created by Андрей Козлов on 12.05.2020.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class MoreButton: UIButton {
+class BlueButton: UIButton {
 
 	private let insets = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10)
 	
@@ -31,22 +31,28 @@ class MoreButton: UIButton {
 		}
 	}
 	
-	init() {
+	init(title: String = "", target: Any?, action: Selector) {
 		super.init(frame: .zero)
+		addTarget(target, action: action, for: .touchUpInside)
 		
 		titleLabel?.font = .boldSystemFont(ofSize: 12)
-		setTitle("СМОТРЕТЬ ВСЕ", for: .normal)
+		setTitle(title, for: .normal)
 		setTitleColor(.appBlue, for: .normal)
 		setTitleColor(.white, for: .selected)
 		setTitleColor(.white, for: .highlighted)
 		
-		rounded(radius: 13)
 		layer.borderColor = UIColor.appBlue.cgColor
 		layer.borderWidth = 1.0
 	}
 	
 	required init?(coder: NSCoder) {
 		fatalError("init(coder:) has not been implemented")
+	}
+	
+	override func layoutSubviews() {
+		super.layoutSubviews()
+		
+		rounded(radius: bounds.height / 2)
 	}
 	
 }

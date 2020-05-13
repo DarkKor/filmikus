@@ -24,6 +24,7 @@ class NavigationController: UINavigationController {
 		let outputImage = UIGraphicsGetImageFromCurrentImageContext()
 		UIGraphicsEndImageContext()
 		//navigationBar.setBackgroundImage(outputImage, for: .default)
+		navigationBar.barStyle = .black
 		navigationBar.barTintColor = UIColor(patternImage: outputImage!)
 		navigationBar.titleTextAttributes = [.foregroundColor: UIColor.white]
 	}

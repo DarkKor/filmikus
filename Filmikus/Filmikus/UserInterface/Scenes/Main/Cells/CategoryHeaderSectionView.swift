@@ -17,11 +17,7 @@ class CategoryHeaderSectionView: ReusableTableHeaderFooterView {
 		return label
 	}()
 	
-	private lazy var buttonMore: MoreButton = {
-		let button = MoreButton()
-		button.addTarget(self, action: #selector(onButtonMoreTap), for: .touchUpInside)
-		return button
-	}()
+	private lazy var buttonMore = BlueButton(title: "СМОТРЕТЬ ВСЕ", target: self, action: #selector(onButtonMoreTap))
 
 	override init(reuseIdentifier: String?) {
 		super.init(reuseIdentifier: reuseIdentifier)

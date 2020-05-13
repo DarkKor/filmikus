@@ -22,7 +22,7 @@
 		491C21C424642A93007CDEC2 /* FilmCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 491C21C324642A93007CDEC2 /* FilmCollectionViewCell.swift */; };
 		49684A5E246AC51600E9BADC /* CategoryHeaderSectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49684A5D246AC51600E9BADC /* CategoryHeaderSectionView.swift */; };
 		49684A60246ACD9B00E9BADC /* UIView+Style.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49684A5F246ACD9B00E9BADC /* UIView+Style.swift */; };
-		49684A62246ACDDA00E9BADC /* MoreButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49684A61246ACDDA00E9BADC /* MoreButton.swift */; };
+		49684A62246ACDDA00E9BADC /* BlueButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49684A61246ACDDA00E9BADC /* BlueButton.swift */; };
 		49684A64246AD78A00E9BADC /* UIColor+Hex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49684A63246AD78A00E9BADC /* UIColor+Hex.swift */; };
 		49684A66246ADA9900E9BADC /* UIColor+App.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49684A65246ADA9900E9BADC /* UIColor+App.swift */; };
 		49684A69246AF49100E9BADC /* FilmsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49684A68246AF49100E9BADC /* FilmsViewController.swift */; };
@@ -30,6 +30,7 @@
 		49684A70246BE70600E9BADC /* SerialsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49684A6F246BE70600E9BADC /* SerialsViewController.swift */; };
 		49684A72246BE70C00E9BADC /* VideosViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49684A71246BE70C00E9BADC /* VideosViewController.swift */; };
 		49684A74246BE71200E9BADC /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49684A73246BE71200E9BADC /* ProfileViewController.swift */; };
+		49684A76246BED4000E9BADC /* UnderlinedTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49684A75246BED4000E9BADC /* UnderlinedTextField.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -50,7 +51,7 @@
 		491C21C324642A93007CDEC2 /* FilmCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilmCollectionViewCell.swift; sourceTree = "<group>"; };
 		49684A5D246AC51600E9BADC /* CategoryHeaderSectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryHeaderSectionView.swift; sourceTree = "<group>"; };
 		49684A5F246ACD9B00E9BADC /* UIView+Style.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Style.swift"; sourceTree = "<group>"; };
-		49684A61246ACDDA00E9BADC /* MoreButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoreButton.swift; sourceTree = "<group>"; };
+		49684A61246ACDDA00E9BADC /* BlueButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlueButton.swift; sourceTree = "<group>"; };
 		49684A63246AD78A00E9BADC /* UIColor+Hex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Hex.swift"; sourceTree = "<group>"; };
 		49684A65246ADA9900E9BADC /* UIColor+App.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+App.swift"; sourceTree = "<group>"; };
 		49684A68246AF49100E9BADC /* FilmsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilmsViewController.swift; sourceTree = "<group>"; };
@@ -58,6 +59,7 @@
 		49684A6F246BE70600E9BADC /* SerialsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SerialsViewController.swift; sourceTree = "<group>"; };
 		49684A71246BE70C00E9BADC /* VideosViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideosViewController.swift; sourceTree = "<group>"; };
 		49684A73246BE71200E9BADC /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
+		49684A75246BED4000E9BADC /* UnderlinedTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnderlinedTextField.swift; sourceTree = "<group>"; };
 		910D8458524217E7FCF8A076 /* Pods-Filmikus.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Filmikus.release.xcconfig"; path = "Target Support Files/Pods-Filmikus/Pods-Filmikus.release.xcconfig"; sourceTree = "<group>"; };
 		A0E906518A08B8A3AA08FC87 /* Pods_Filmikus.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Filmikus.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -191,7 +193,8 @@
 		491C21AB24641B3A007CDEC2 /* Reusable */ = {
 			isa = PBXGroup;
 			children = (
-				49684A61246ACDDA00E9BADC /* MoreButton.swift */,
+				49684A61246ACDDA00E9BADC /* BlueButton.swift */,
+				49684A75246BED4000E9BADC /* UnderlinedTextField.swift */,
 			);
 			path = Reusable;
 			sourceTree = "<group>";
@@ -383,6 +386,7 @@
 				491C21BE246424F4007CDEC2 /* ReusableView.swift in Sources */,
 				49684A72246BE70C00E9BADC /* VideosViewController.swift in Sources */,
 				49684A5E246AC51600E9BADC /* CategoryHeaderSectionView.swift in Sources */,
+				49684A76246BED4000E9BADC /* UnderlinedTextField.swift in Sources */,
 				49684A70246BE70600E9BADC /* SerialsViewController.swift in Sources */,
 				49684A60246ACD9B00E9BADC /* UIView+Style.swift in Sources */,
 				49684A64246AD78A00E9BADC /* UIColor+Hex.swift in Sources */,
@@ -392,7 +396,7 @@
 				491C21AA24641ADD007CDEC2 /* TabBarController.swift in Sources */,
 				491C21BC246424A8007CDEC2 /* CategoryTableViewCell.swift in Sources */,
 				49684A69246AF49100E9BADC /* FilmsViewController.swift in Sources */,
-				49684A62246ACDDA00E9BADC /* MoreButton.swift in Sources */,
+				49684A62246ACDDA00E9BADC /* BlueButton.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
