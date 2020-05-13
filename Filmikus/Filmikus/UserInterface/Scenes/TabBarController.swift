@@ -15,17 +15,17 @@ class TabBarController: UITabBarController {
         super.viewDidLoad()
 
         tabBar.tintColor = .white
-		
+		tabBar.barTintColor = UIColor(red: 9, green: 12, blue: 32)//.appDarkBlue
+		tabBar.unselectedItemTintColor = .white
 		let layerGradient = CAGradientLayer()
-		// UIColor(red: 238, green: 135, blue: 85), UIColor(red: 103, green: 56, blue: 162)
 		layerGradient.colors = [UIColor(red: 238, green: 135, blue: 85).cgColor, UIColor(red: 103, green: 56, blue: 162).cgColor]
         layerGradient.startPoint = CGPoint(x: 0, y: 0.5)
         layerGradient.endPoint = CGPoint(x: 1, y: 0.5)
         layerGradient.frame = CGRect(x: 0, y: 0, width: view.bounds.width, height: view.bounds.height)
-        self.tabBar.layer.addSublayer(layerGradient)
+//        self.tabBar.layer.addSublayer(layerGradient)
         
         let mainVC = MainViewController()
-        let mainNavVC = UINavigationController(rootViewController: mainVC)
+        let mainNavVC = NavigationController(rootViewController: mainVC)
         mainNavVC.tabBarItem = UITabBarItem(
 			title: "Главная",
 			image: UIImage(systemName: "house"),
@@ -33,31 +33,31 @@ class TabBarController: UITabBarController {
 		)
         
         let filmsVC = FilmsViewController()
-        let filmsNavVC = UINavigationController(rootViewController: filmsVC)
+        let filmsNavVC = NavigationController(rootViewController: filmsVC)
         filmsNavVC.tabBarItem = UITabBarItem(
 			title: "Фильмы",
 			image: UIImage(systemName: "film"),
 			selectedImage: UIImage(systemName: "film.fill")
 		)
 
-        let serialsVC = UIViewController()
-        let serialsNavVC = UINavigationController(rootViewController: serialsVC)
+        let serialsVC = SerialsViewController()
+        let serialsNavVC = NavigationController(rootViewController: serialsVC)
         serialsNavVC.tabBarItem = UITabBarItem(
 			title: "Сериалы",
 			image: UIImage(systemName: "tv"),
 			selectedImage: UIImage(systemName: "tv.fill")
 		)
 
-        let videosVC = UIViewController()
-        let videosNavVC = UINavigationController(rootViewController: videosVC)
+        let videosVC = VideosViewController()
+        let videosNavVC = NavigationController(rootViewController: videosVC)
         videosNavVC.tabBarItem = UITabBarItem(
 			title: "Видео",
 			image: UIImage(systemName: "video"),
 			selectedImage: UIImage(systemName: "video.fill")
 		)
 
-		let profileVC = UIViewController()
-        let profileNavVC = UINavigationController(rootViewController: profileVC)
+		let profileVC = ProfileViewController()
+        let profileNavVC = NavigationController(rootViewController: profileVC)
         profileNavVC.tabBarItem = UITabBarItem(
 			title: "Профиль",
 			image: UIImage(systemName: "person.crop.square"),

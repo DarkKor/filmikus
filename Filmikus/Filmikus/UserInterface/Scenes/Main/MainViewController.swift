@@ -28,6 +28,8 @@ class MainViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 		
+		title = "Главная"
+		
 		let categories = [
 			Category(title: "Популярное", films: [
 				Film(

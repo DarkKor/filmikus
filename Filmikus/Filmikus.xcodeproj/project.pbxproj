@@ -26,6 +26,10 @@
 		49684A64246AD78A00E9BADC /* UIColor+Hex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49684A63246AD78A00E9BADC /* UIColor+Hex.swift */; };
 		49684A66246ADA9900E9BADC /* UIColor+App.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49684A65246ADA9900E9BADC /* UIColor+App.swift */; };
 		49684A69246AF49100E9BADC /* FilmsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49684A68246AF49100E9BADC /* FilmsViewController.swift */; };
+		49684A6B246BE5B600E9BADC /* NavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49684A6A246BE5B600E9BADC /* NavigationController.swift */; };
+		49684A70246BE70600E9BADC /* SerialsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49684A6F246BE70600E9BADC /* SerialsViewController.swift */; };
+		49684A72246BE70C00E9BADC /* VideosViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49684A71246BE70C00E9BADC /* VideosViewController.swift */; };
+		49684A74246BE71200E9BADC /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49684A73246BE71200E9BADC /* ProfileViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -50,6 +54,10 @@
 		49684A63246AD78A00E9BADC /* UIColor+Hex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Hex.swift"; sourceTree = "<group>"; };
 		49684A65246ADA9900E9BADC /* UIColor+App.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+App.swift"; sourceTree = "<group>"; };
 		49684A68246AF49100E9BADC /* FilmsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilmsViewController.swift; sourceTree = "<group>"; };
+		49684A6A246BE5B600E9BADC /* NavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationController.swift; sourceTree = "<group>"; };
+		49684A6F246BE70600E9BADC /* SerialsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SerialsViewController.swift; sourceTree = "<group>"; };
+		49684A71246BE70C00E9BADC /* VideosViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideosViewController.swift; sourceTree = "<group>"; };
+		49684A73246BE71200E9BADC /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		910D8458524217E7FCF8A076 /* Pods-Filmikus.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Filmikus.release.xcconfig"; path = "Target Support Files/Pods-Filmikus/Pods-Filmikus.release.xcconfig"; sourceTree = "<group>"; };
 		A0E906518A08B8A3AA08FC87 /* Pods_Filmikus.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Filmikus.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -168,10 +176,14 @@
 		491C21A824641A16007CDEC2 /* Scenes */ = {
 			isa = PBXGroup;
 			children = (
+				49684A6E246BE6F400E9BADC /* Profile */,
+				49684A6D246BE6F000E9BADC /* Videos */,
+				49684A6C246BE6E200E9BADC /* Serials */,
 				49684A67246AF45700E9BADC /* Films */,
 				491C21AC24641D51007CDEC2 /* Main */,
 				491C21AB24641B3A007CDEC2 /* Reusable */,
 				491C21A924641ADD007CDEC2 /* TabBarController.swift */,
+				49684A6A246BE5B600E9BADC /* NavigationController.swift */,
 			);
 			path = Scenes;
 			sourceTree = "<group>";
@@ -221,6 +233,30 @@
 				49684A68246AF49100E9BADC /* FilmsViewController.swift */,
 			);
 			path = Films;
+			sourceTree = "<group>";
+		};
+		49684A6C246BE6E200E9BADC /* Serials */ = {
+			isa = PBXGroup;
+			children = (
+				49684A6F246BE70600E9BADC /* SerialsViewController.swift */,
+			);
+			path = Serials;
+			sourceTree = "<group>";
+		};
+		49684A6D246BE6F000E9BADC /* Videos */ = {
+			isa = PBXGroup;
+			children = (
+				49684A71246BE70C00E9BADC /* VideosViewController.swift */,
+			);
+			path = Videos;
+			sourceTree = "<group>";
+		};
+		49684A6E246BE6F400E9BADC /* Profile */ = {
+			isa = PBXGroup;
+			children = (
+				49684A73246BE71200E9BADC /* ProfileViewController.swift */,
+			);
+			path = Profile;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -339,11 +375,15 @@
 			files = (
 				491C21AE24641D61007CDEC2 /* MainViewController.swift in Sources */,
 				491C21B72464240D007CDEC2 /* Censorship.swift in Sources */,
+				49684A74246BE71200E9BADC /* ProfileViewController.swift in Sources */,
 				49684A66246ADA9900E9BADC /* UIColor+App.swift in Sources */,
 				491C21B5246423F2007CDEC2 /* Film.swift in Sources */,
 				491C21B3246423E0007CDEC2 /* Category.swift in Sources */,
+				49684A6B246BE5B600E9BADC /* NavigationController.swift in Sources */,
 				491C21BE246424F4007CDEC2 /* ReusableView.swift in Sources */,
+				49684A72246BE70C00E9BADC /* VideosViewController.swift in Sources */,
 				49684A5E246AC51600E9BADC /* CategoryHeaderSectionView.swift in Sources */,
+				49684A70246BE70600E9BADC /* SerialsViewController.swift in Sources */,
 				49684A60246ACD9B00E9BADC /* UIView+Style.swift in Sources */,
 				49684A64246AD78A00E9BADC /* UIColor+Hex.swift in Sources */,
 				491C21C424642A93007CDEC2 /* FilmCollectionViewCell.swift in Sources */,

@@ -27,6 +27,8 @@ class FilmsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 		
+		title = "Фильмы"
+		
 		let categories = [
 			Category(title: "Артхаус", films: [
 				Film(
