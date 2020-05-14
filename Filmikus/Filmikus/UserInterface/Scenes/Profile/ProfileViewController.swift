@@ -21,15 +21,16 @@ class ProfileViewController: UIViewController {
 		return segment
 	}()
 	
-	private lazy var loginTextField = UnderlinedTextField(placeholder: "Введите логин")
-	private lazy var passwordTextField: UnderlinedTextField = {
-		let textField = UnderlinedTextField(placeholder: "Введите пароль")
-		textField.isSecureTextEntry = true
+	private lazy var loginTextField: UnderlinedTextField = {
+		let textField = UnderlinedTextField(placeholder: "Введите логин")
+		textField.textContentType = .nickname
 		return textField
 	}()
+	private lazy var passwordTextField = PasswordUnderlinedTextField(placeholder: "Введите пароль")
 	private lazy var phoneTextField: UnderlinedTextField = {
 		let textField = UnderlinedTextField(placeholder: "Введите номер телефона")
 		textField.keyboardType = .phonePad
+		textField.textContentType = .telephoneNumber
 		textField.isHidden = true
 		return textField
 	}()
@@ -96,14 +97,15 @@ class ProfileViewController: UIViewController {
 	@objc
 	private func segmentControlChanged(sender: UISegmentedControl) {
 		let isLoginAuth = sender.selectedSegmentIndex == 0
-		loginTextField.isHidden = !isLoginAuth
-		passwordTextField.isHidden = !isLoginAuth
-		phoneTextField.isHidden = isLoginAuth
+		self.loginTextField.isHidden = !isLoginAuth
+		self.passwordTextField.isHidden = !isLoginAuth
+		self.phoneTextField.isHidden = isLoginAuth
 	}
 	
 	@objc
 	private func onSignUpButtonTap(sender: UIButton) {
-		
+		let signUpVC = SignUpViewController()
+		navigationController?.pushViewController(signUpVC, animated: true)
 	}
     
 	@objc

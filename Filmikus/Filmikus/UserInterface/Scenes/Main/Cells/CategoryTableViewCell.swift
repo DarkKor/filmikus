@@ -14,7 +14,6 @@ class CategoryTableViewCell<Cell: ReusableCollectionViewCell>: ReusableTableView
 		get {
 			return collectionView.contentOffset.x
 		}
-
 		set {
 			collectionView.contentOffset.x = newValue
 		}
@@ -24,14 +23,13 @@ class CategoryTableViewCell<Cell: ReusableCollectionViewCell>: ReusableTableView
 	
 	private lazy var collectionLayout: UICollectionViewLayout = {
 		let layout = UICollectionViewFlowLayout()
-		layout.itemSize = CGSize(width: 100, height: 200)
+		layout.itemSize = CGSize(width: 150, height: 200)
 		layout.scrollDirection = .horizontal
 		return layout
 	}()
 	
 	private lazy var collectionView: UICollectionView = {
 		let collection = UICollectionView(frame: .zero, collectionViewLayout: collectionLayout)
-		
 		collection.showsHorizontalScrollIndicator = false
 		collection.register(cell: Cell.self)
 		return collection

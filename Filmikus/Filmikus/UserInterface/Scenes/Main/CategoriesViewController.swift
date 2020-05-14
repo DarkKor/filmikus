@@ -13,6 +13,16 @@ class CategoriesViewController: UIViewController {
 	private var categories: [Category] = []
 	private var categoriesOffsets: [Int: CGFloat] = [:]
 	
+	private lazy var headerView: CategoriesHeaderView = {
+		let screenSize = UIScreen.main.bounds
+		let view = CategoriesHeaderView()
+		view.frame = CGRect(x: 0, y: 0, width: screenSize.width, height: screenSize.height / 4)
+		view.clipsToBounds = true
+		let url = URL(string: "https://via.placeholder.com/500/228822/000000")
+		view.setImage(with: url)
+		return view
+	}()
+	
 	private lazy var tableView: UITableView = {
 		let table = UITableView(frame: .zero, style: .grouped)
 		table.backgroundColor = .clear
@@ -21,6 +31,7 @@ class CategoriesViewController: UIViewController {
 		table.delegate = self
 		table.dataSource = self
 		table.rowHeight = 220
+		table.tableHeaderView = headerView
 		table.register(cell: CategoryTableViewCell<FilmCollectionViewCell>.self)
 		table.register(headerFooterView: CategoryHeaderSectionView.self)
 		return table
@@ -33,7 +44,6 @@ class CategoriesViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        
     }
     
 	func update(categories: [Category]) {
@@ -95,4 +105,9 @@ extension CategoriesViewController: UICollectionViewDataSource {
 
 // MARK: - UICollectionViewDataSource
 
-extension CategoriesViewController: UICollectionViewDelegate {}
+extension CategoriesViewController: UICollectionViewDelegate {
+	
+	func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+		print(categories[collectionView.tag].films[indexPath.item])
+	}
+}

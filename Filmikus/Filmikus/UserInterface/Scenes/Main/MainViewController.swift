@@ -12,7 +12,8 @@ import SnapKit
 class MainViewController: UIViewController {
 	
 	private lazy var categoriesViewController = CategoriesViewController()
-	
+	private lazy var searchController = UISearchController(searchResultsController: nil)
+
 	override func loadView() {
 		view = UIView()
 		view.backgroundColor = .appDarkBlue
@@ -27,7 +28,8 @@ class MainViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-		
+		navigationItem.searchController = searchController
+
 		title = "Главная"
 		
 		let categories = [
