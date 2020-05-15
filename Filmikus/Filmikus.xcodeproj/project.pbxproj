@@ -34,6 +34,8 @@
 		49684A78246C4AAD00E9BADC /* CategoriesHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49684A77246C4AAD00E9BADC /* CategoriesHeaderView.swift */; };
 		49684A7A246D76DA00E9BADC /* PasswordUnderlinedTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49684A79246D76DA00E9BADC /* PasswordUnderlinedTextField.swift */; };
 		49684A7C246D7A9100E9BADC /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49684A7B246D7A9100E9BADC /* SignUpViewController.swift */; };
+		49684A7E246E84E000E9BADC /* DetailFilmViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49684A7D246E84E000E9BADC /* DetailFilmViewController.swift */; };
+		49684A81246E87CC00E9BADC /* FilmMainInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49684A80246E87CC00E9BADC /* FilmMainInfoView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -66,6 +68,8 @@
 		49684A77246C4AAD00E9BADC /* CategoriesHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoriesHeaderView.swift; sourceTree = "<group>"; };
 		49684A79246D76DA00E9BADC /* PasswordUnderlinedTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordUnderlinedTextField.swift; sourceTree = "<group>"; };
 		49684A7B246D7A9100E9BADC /* SignUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
+		49684A7D246E84E000E9BADC /* DetailFilmViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailFilmViewController.swift; sourceTree = "<group>"; };
+		49684A80246E87CC00E9BADC /* FilmMainInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilmMainInfoView.swift; sourceTree = "<group>"; };
 		910D8458524217E7FCF8A076 /* Pods-Filmikus.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Filmikus.release.xcconfig"; path = "Target Support Files/Pods-Filmikus/Pods-Filmikus.release.xcconfig"; sourceTree = "<group>"; };
 		A0E906518A08B8A3AA08FC87 /* Pods_Filmikus.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Filmikus.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -184,6 +188,7 @@
 		491C21A824641A16007CDEC2 /* Scenes */ = {
 			isa = PBXGroup;
 			children = (
+				49684A7F246E875B00E9BADC /* DetailFilm */,
 				49684A6E246BE6F400E9BADC /* Profile */,
 				49684A6D246BE6F000E9BADC /* Videos */,
 				49684A6C246BE6E200E9BADC /* Serials */,
@@ -269,6 +274,15 @@
 				49684A7B246D7A9100E9BADC /* SignUpViewController.swift */,
 			);
 			path = Profile;
+			sourceTree = "<group>";
+		};
+		49684A7F246E875B00E9BADC /* DetailFilm */ = {
+			isa = PBXGroup;
+			children = (
+				49684A7D246E84E000E9BADC /* DetailFilmViewController.swift */,
+				49684A80246E87CC00E9BADC /* FilmMainInfoView.swift */,
+			);
+			path = DetailFilm;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -387,6 +401,8 @@
 			files = (
 				491C21AE24641D61007CDEC2 /* MainViewController.swift in Sources */,
 				491C21B72464240D007CDEC2 /* Censorship.swift in Sources */,
+				49684A7E246E84E000E9BADC /* DetailFilmViewController.swift in Sources */,
+				49684A81246E87CC00E9BADC /* FilmMainInfoView.swift in Sources */,
 				49684A74246BE71200E9BADC /* ProfileViewController.swift in Sources */,
 				49684A66246ADA9900E9BADC /* UIColor+App.swift in Sources */,
 				491C21B5246423F2007CDEC2 /* Film.swift in Sources */,
