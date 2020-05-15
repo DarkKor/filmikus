@@ -8,7 +8,13 @@
 
 import UIKit
 
+protocol CategoriesViewControllerDelegate: class {
+	func categoriesViewController(_ viewController: CategoriesViewController, didSelectFilm film: Film)
+}
+
 class CategoriesViewController: UIViewController {
+	
+	weak var delegate: CategoriesViewControllerDelegate?
 	
 	private var categories: [Category] = []
 	private var categoriesOffsets: [Int: CGFloat] = [:]
@@ -108,6 +114,7 @@ extension CategoriesViewController: UICollectionViewDataSource {
 extension CategoriesViewController: UICollectionViewDelegate {
 	
 	func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-		print(categories[collectionView.tag].films[indexPath.item])
+		let film = categories[collectionView.tag].films[indexPath.item]
+		delegate?.categoriesViewController(self, didSelectFilm: film)
 	}
 }

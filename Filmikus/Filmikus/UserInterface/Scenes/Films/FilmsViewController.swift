@@ -10,7 +10,11 @@ import UIKit
 
 class FilmsViewController: UIViewController {
 
-	private lazy var categoriesViewController = CategoriesViewController()
+	private lazy var categoriesViewController: CategoriesViewController = {
+		let viewController = CategoriesViewController()
+		viewController.delegate = self
+		return viewController
+	}()
 	
 	override func loadView() {
 		view = UIView()
@@ -115,4 +119,14 @@ class FilmsViewController: UIViewController {
     }
 	
 	
+}
+
+// MARK: - CategoriesViewControllerDelegate
+
+extension FilmsViewController: CategoriesViewControllerDelegate {
+	
+	func categoriesViewController(_ viewController: CategoriesViewController, didSelectFilm film: Film) {
+		let detailFilmVC = DetailFilmViewController(film: film)
+		navigationController?.pushViewController(detailFilmVC, animated: true)
+	}
 }

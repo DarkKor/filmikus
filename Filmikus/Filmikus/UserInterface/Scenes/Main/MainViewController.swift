@@ -11,7 +11,11 @@ import SnapKit
 
 class MainViewController: UIViewController {
 	
-	private lazy var categoriesViewController = CategoriesViewController()
+	private lazy var categoriesViewController: CategoriesViewController = {
+		let viewController = CategoriesViewController()
+		viewController.delegate = self
+		return viewController
+	}()
 	private lazy var searchController = UISearchController(searchResultsController: nil)
 
 	override func loadView() {
@@ -117,4 +121,14 @@ class MainViewController: UIViewController {
 		categoriesViewController.update(categories: categories)
     }
 
+}
+
+// MARK: - CategoriesViewControllerDelegate
+
+extension MainViewController: CategoriesViewControllerDelegate {
+	
+	func categoriesViewController(_ viewController: CategoriesViewController, didSelectFilm film: Film) {
+		let detailFilmVC = DetailFilmViewController(film: film)
+		navigationController?.pushViewController(detailFilmVC, animated: true)
+	}
 }

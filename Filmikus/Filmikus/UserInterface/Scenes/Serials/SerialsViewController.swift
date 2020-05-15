@@ -10,7 +10,11 @@ import UIKit
 
 class SerialsViewController: UIViewController {
 
-	private lazy var categoriesViewController = CategoriesViewController()
+	private lazy var categoriesViewController: CategoriesViewController = {
+		let viewController = CategoriesViewController()
+		viewController.delegate = self
+		return viewController
+	}()
 	
 	override func loadView() {
 		view = UIView()
@@ -130,4 +134,14 @@ class SerialsViewController: UIViewController {
 		categoriesViewController.update(categories: categories)
     }
 
+}
+
+// MARK: - CategoriesViewControllerDelegate
+
+extension SerialsViewController: CategoriesViewControllerDelegate {
+	
+	func categoriesViewController(_ viewController: CategoriesViewController, didSelectFilm film: Film) {
+		let detailFilmVC = DetailFilmViewController(film: film)
+		navigationController?.pushViewController(detailFilmVC, animated: true)
+	}
 }

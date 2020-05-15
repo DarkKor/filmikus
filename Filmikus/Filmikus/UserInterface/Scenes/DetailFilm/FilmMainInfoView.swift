@@ -28,6 +28,7 @@ class FilmMainInfoView: UIView {
 
 		posterImageView.snp.makeConstraints {
 			$0.top.left.bottom.equalToSuperview()
+			$0.width.equalToSuperview().multipliedBy(0.25)
 		}
 		titleLabel.snp.makeConstraints {
 			$0.left.equalTo(posterImageView.snp.right).offset(10)

@@ -37,6 +37,7 @@ class NavigationController: UINavigationController {
 		navigationBar.scrollEdgeAppearance = scrollEdgeAppearance
 		navigationBar.barStyle = .black
 		navigationBar.prefersLargeTitles = true
+		navigationBar.tintColor = .white
 	}
     
 }
