@@ -37,4 +37,7 @@ extension UIColor {
 		UIColor(named: "appPlaceholderGray")!
 	}
 	
+	static var appGrayText: UIColor {
+		UIColor(named: "appGrayText")!
+	}
 }

@@ -39,65 +39,91 @@ class MainViewController: UIViewController {
 		let categories = [
 			Category(title: "Популярное", films: [
 				Film(
-					imageUrl: "",
+					imageUrl: "https://filmikus.com/images/1/30/middle/img.jpg",
+					title: "1+1",
+					genres: ["Комедия", "Драма"],
+					country: "Франция",
+					year: "2011",
+					censorship: .sixteenPlus
+				),
+				Film(
+					imageUrl: "https://filmikus.com/images/1/373/middle/img.jpg",
 					title: "Дурак",
-					genres: ["Драма", "Криминал"],
+					genres: ["Драма", "Россия"],
 					country: "Россия",
+					year: "2014",
+					censorship: .sixteenPlus
+				),
+				Film(
+					imageUrl: "https://filmikus.com/images/1/592/middle/img.jpg",
+					title: "Танцовщик",
+					genres: ["Биография", "Документальный"],
+					country: "Россия",
+					year: "2016",
+					censorship: .sixteenPlus
+				),
+				Film(
+					imageUrl: "https://filmikus.com/images/1/722/middle/img.jpg",
+					title: "Месть от кутюр",
+					genres: ["Комедия", "Драма"],
+					country: "Австралия",
 					year: "2015",
 					censorship: .sixteenPlus
 				),
 				Film(
-					imageUrl: "https://via.placeholder.com/150x200/884444/000000",
-					title: "Дурак",
-					genres: ["Драма", "Криминал"],
+					imageUrl: "https://filmikus.com/images/1/723/middle/img.jpg",
+					title: "28 панфиловцев",
+					genres: ["Драма", "Военный"],
 					country: "Россия",
-					year: "2015",
-					censorship: .sixteenPlus
-				),
-				Film(
-					imageUrl: "https://via.placeholder.com/150/228888/000000",
-					title: "Дурак",
-					genres: ["Драма", "Криминал"],
-					country: "Россия",
-					year: "2015",
-					censorship: .sixteenPlus
-				),
-				Film(
-					imageUrl: "https://via.placeholder.com/150x100/228888/FFFFFF",
-					title: "Дурак",
-					genres: ["Драма", "Криминал"],
-					country: "Россия",
-					year: "2015",
-					censorship: .sixteenPlus
-				),
-				Film(
-					imageUrl: "https://via.placeholder.com/150x75/F05520/000000",
-					title: "Дурак",
-					genres: ["Драма", "Криминал"],
-					country: "Россия",
-					year: "2015",
-					censorship: .sixteenPlus
-				),
-				Film(
-					imageUrl: "https://via.placeholder.com/150x300/FFFF00/000000",
-					title: "Дурак",
-					genres: ["Драма", "Криминал"],
-					country: "Россия",
-					year: "2015",
+					year: "2016",
 					censorship: .sixteenPlus
 				)
 			]),
 			Category(title: "Рекомендуем", films: [
 				Film(
-					imageUrl: "https://via.placeholder.com/150x100/228888/FFFFFF",
-					title: "Дурак",
-					genres: ["Драма", "Криминал"],
+					imageUrl: "https://filmikus.com/images/1/15/middle/img.jpg",
+					title: "О чем говорят мужчины",
+					genres: ["Комедия"],
 					country: "Россия",
-					year: "2015",
+					year: "2010",
+					censorship: .sixteenPlus
+				),
+				Film(
+					imageUrl: "https://filmikus.com/images/1/520/middle/img.jpg",
+					title: "Антропоид",
+					genres: ["Биография"],
+					country: "Франция",
+					year: "2016",
+					censorship: .sixteenPlus
+				),
+				Film(
+					imageUrl: "https://filmikus.com/images/1/523/middle/img.jpg",
+					title: "Хардкор",
+					genres: ["Фантастика", "Боевик"],
+					country: "Россия",
+					year: "2016",
+					censorship: .sixteenPlus
+				),
+				Film(
+					imageUrl: "https://filmikus.com/images/1/721/middle/img.jpg",
+					title: "Гонка",
+					genres: ["Спорт", "Драма"],
+					country: "США",
+					year: "2013",
 					censorship: .sixteenPlus
 				)
 			]),
-			Category(title: "Фильмы", films: [
+			Category(title: "Сериалы", films: [
+				Film(
+					imageUrl: "https://filmikus.com/images/2/5/middle/img.jpg",
+					title: "Стрелок",
+					genres: ["Боевик"],
+					country: "Россия",
+					year: "2012",
+					censorship: .sixteenPlus
+				)
+			]),
+			Category(title: "Развлекательное видео", films: [
 				Film(
 					imageUrl: "https://via.placeholder.com/150x200/884444/000000",
 					title: "Дурак",
@@ -107,16 +133,7 @@ class MainViewController: UIViewController {
 					censorship: .sixteenPlus
 				)
 			]),
-			Category(title: "Сериалы", films: [
-				Film(
-					imageUrl: "https://via.placeholder.com/150x300/FFFF00/000000",
-					title: "Дурак",
-					genres: ["Драма", "Криминал"],
-					country: "Россия",
-					year: "2015",
-					censorship: .sixteenPlus
-				)
-			])
+			
 		]
 		categoriesViewController.update(categories: categories)
     }

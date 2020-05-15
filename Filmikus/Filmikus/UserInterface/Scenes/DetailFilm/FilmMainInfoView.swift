@@ -35,15 +35,15 @@ class FilmMainInfoView: UIView {
 			$0.top.right.equalToSuperview()
 		}
 		ratingLabel.snp.makeConstraints {
-			$0.top.equalTo(titleLabel.snp.bottom)
+			$0.top.equalTo(titleLabel.snp.bottom).offset(5)
 			$0.left.equalTo(posterImageView.snp.right).offset(10)
 		}
 		genresLabel.snp.makeConstraints {
-			$0.top.equalTo(ratingLabel.snp.bottom)
+			$0.top.equalTo(ratingLabel.snp.bottom).offset(5)
 			$0.left.equalTo(posterImageView.snp.right).offset(10)
 		}
 		countryLabel.snp.makeConstraints {
-			$0.top.equalTo(genresLabel.snp.bottom)
+			$0.top.equalTo(genresLabel.snp.bottom).offset(5)
 			$0.left.equalTo(posterImageView.snp.right).offset(10)
 		}
 	}

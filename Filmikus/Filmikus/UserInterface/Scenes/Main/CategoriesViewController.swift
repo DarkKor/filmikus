@@ -22,9 +22,9 @@ class CategoriesViewController: UIViewController {
 	private lazy var headerView: CategoriesHeaderView = {
 		let screenSize = UIScreen.main.bounds
 		let view = CategoriesHeaderView()
-		view.frame = CGRect(x: 0, y: 0, width: screenSize.width, height: screenSize.height / 4)
+		view.frame = CGRect(x: 0, y: 0, width: screenSize.width, height: screenSize.height * 0.34)
 		view.clipsToBounds = true
-		let url = URL(string: "https://via.placeholder.com/500/228822/000000")
+		let url = URL(string: "https://photo.tvigle.ru/res/tvigle/slider/2019/09/03/6b5adfe1-c5db-4ac1-a3ed-c5db6d5fb10b.jpg")
 		view.setImage(with: url)
 		return view
 	}()
