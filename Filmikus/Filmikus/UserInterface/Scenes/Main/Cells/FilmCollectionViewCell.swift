@@ -21,13 +21,11 @@ class FilmCollectionViewCell: ReusableCollectionViewCell {
 		
 		contentView.backgroundColor = .white
 		contentView.rounded(radius: 5)
-		contentView.layer.shadowOpacity = 1.0
+		layer.shadowOpacity = 0.3
+		layer.shadowRadius = 5
 		labelTitle.font = .boldSystemFont(ofSize: 12)
-//		labelTitle.textColor = .white
 		labelGenres.font = .systemFont(ofSize: 12)
-//		labelGenres.textColor = .white
 		labelCountryYear.font = .systemFont(ofSize: 12)
-//		labelCountryYear.textColor = .lightText
 
 		contentView.addSubview(imageView)
 		contentView.addSubview(labelTitle)

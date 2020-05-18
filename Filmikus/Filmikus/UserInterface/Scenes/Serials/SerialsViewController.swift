@@ -10,20 +10,20 @@ import UIKit
 
 class SerialsViewController: UIViewController {
 
-	private lazy var categoriesViewController: CategoriesViewController = {
-		let viewController = CategoriesViewController()
+	private lazy var filmsCollectionViewController: FilmsCollectionViewController = {
+		let viewController = FilmsCollectionViewController()
 		viewController.delegate = self
 		return viewController
 	}()
 	
 	override func loadView() {
 		view = UIView()
-		view.backgroundColor = .appDarkBlue
-		addChild(categoriesViewController)
-		view.addSubview(categoriesViewController.view)
-		categoriesViewController.didMove(toParent: self)
+		view.backgroundColor = .appLightGray
+		addChild(filmsCollectionViewController)
+		view.addSubview(filmsCollectionViewController.view)
+		filmsCollectionViewController.didMove(toParent: self)
 		
-		categoriesViewController.view.snp.makeConstraints {
+		filmsCollectionViewController.view.snp.makeConstraints {
 			$0.edges.equalToSuperview()
 		}
 	}
@@ -33,8 +33,7 @@ class SerialsViewController: UIViewController {
 
         title = "Сериалы"
 		
-		let categories = [
-			Category(title: "Комедия", films: [
+		let films = [
 				Film(
 					imageUrl: "https://via.placeholder.com/150x250/555555/000000",
 					title: "Карамель",
@@ -58,9 +57,7 @@ class SerialsViewController: UIViewController {
 					country: "Россия",
 					year: "2009",
 					censorship: .eighteenPlus
-				)
-			]),
-			Category(title: "Фантастика", films: [
+				),
 				Film(
 					imageUrl: "https://via.placeholder.com/150x100/228888/FFFFFF",
 					title: "Сектор зеро",
@@ -76,9 +73,7 @@ class SerialsViewController: UIViewController {
 					country: "Россия",
 					year: "2008",
 					censorship: .twelvePlus
-				)
-			]),
-			Category(title: "Драма", films: [
+				),
 				Film(
 					imageUrl: "https://via.placeholder.com/150x200/884444/000000",
 					title: "Непридуманная жизнь",
@@ -102,9 +97,7 @@ class SerialsViewController: UIViewController {
 					country: "СССР",
 					year: "1984",
 					censorship: .sixteenPlus
-				)
-			]),
-			Category(title: "Триллер", films: [
+				),
 				Film(
 					imageUrl: "https://via.placeholder.com/150x300/F8F8F8/000000",
 					title: "Фортитьюд",
@@ -129,18 +122,17 @@ class SerialsViewController: UIViewController {
 					year: "2014",
 					censorship: .twelvePlus
 				)
-			])
 		]
-		categoriesViewController.update(categories: categories)
+		filmsCollectionViewController.update(films: films)
     }
 
 }
 
-// MARK: - CategoriesViewControllerDelegate
+// MARK: - FilmsCollectionViewControllerDelegate
 
-extension SerialsViewController: CategoriesViewControllerDelegate {
+extension SerialsViewController: FilmsCollectionViewControllerDelegate {
 	
-	func categoriesViewController(_ viewController: CategoriesViewController, didSelectFilm film: Film) {
+	func filmsCollectionViewController(_ viewController: FilmsCollectionViewController, didSelectFilm film: Film) {
 		let detailFilmVC = DetailFilmViewController(film: film)
 		navigationController?.pushViewController(detailFilmVC, animated: true)
 	}

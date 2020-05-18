@@ -35,6 +35,10 @@
 		49684A7C246D7A9100E9BADC /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49684A7B246D7A9100E9BADC /* SignUpViewController.swift */; };
 		49684A7E246E84E000E9BADC /* DetailFilmViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49684A7D246E84E000E9BADC /* DetailFilmViewController.swift */; };
 		49684A81246E87CC00E9BADC /* FilmMainInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49684A80246E87CC00E9BADC /* FilmMainInfoView.swift */; };
+		49684A84246EF29900E9BADC /* FilterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49684A83246EF29900E9BADC /* FilterViewController.swift */; };
+		49684A88246EF9CF00E9BADC /* FilmsCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49684A87246EF9CF00E9BADC /* FilmsCollectionViewController.swift */; };
+		49684A8B2472E7D600E9BADC /* FilterItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49684A8A2472E7D600E9BADC /* FilterItem.swift */; };
+		49684A8D2472E7ED00E9BADC /* FilterContentItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49684A8C2472E7ED00E9BADC /* FilterContentItem.swift */; };
 		DBB5AD7EDA6B8BBB5543CBB9 /* Pods_Filmikus.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 97F5ACE358500956AF72C9A2 /* Pods_Filmikus.framework */; };
 /* End PBXBuildFile section */
 
@@ -70,6 +74,10 @@
 		49684A7B246D7A9100E9BADC /* SignUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
 		49684A7D246E84E000E9BADC /* DetailFilmViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailFilmViewController.swift; sourceTree = "<group>"; };
 		49684A80246E87CC00E9BADC /* FilmMainInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilmMainInfoView.swift; sourceTree = "<group>"; };
+		49684A83246EF29900E9BADC /* FilterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterViewController.swift; sourceTree = "<group>"; };
+		49684A87246EF9CF00E9BADC /* FilmsCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilmsCollectionViewController.swift; sourceTree = "<group>"; };
+		49684A8A2472E7D600E9BADC /* FilterItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterItem.swift; sourceTree = "<group>"; };
+		49684A8C2472E7ED00E9BADC /* FilterContentItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterContentItem.swift; sourceTree = "<group>"; };
 		5F55A71C0021F60EFFD15EA6 /* Pods-Filmikus.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Filmikus.debug.xcconfig"; path = "Target Support Files/Pods-Filmikus/Pods-Filmikus.debug.xcconfig"; sourceTree = "<group>"; };
 		97F5ACE358500956AF72C9A2 /* Pods_Filmikus.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Filmikus.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -188,6 +196,7 @@
 		491C21A824641A16007CDEC2 /* Scenes */ = {
 			isa = PBXGroup;
 			children = (
+				49684A892472E7B500E9BADC /* Filter */,
 				49684A7F246E875B00E9BADC /* DetailFilm */,
 				49684A6E246BE6F400E9BADC /* Profile */,
 				49684A6D246BE6F000E9BADC /* Videos */,
@@ -204,9 +213,8 @@
 		491C21AB24641B3A007CDEC2 /* Reusable */ = {
 			isa = PBXGroup;
 			children = (
-				49684A61246ACDDA00E9BADC /* BlueButton.swift */,
-				49684A75246BED4000E9BADC /* UnderlinedTextField.swift */,
-				49684A79246D76DA00E9BADC /* PasswordUnderlinedTextField.swift */,
+				49684A86246EF61F00E9BADC /* ViewControllers */,
+				49684A85246EF61300E9BADC /* Views */,
 			);
 			path = Reusable;
 			sourceTree = "<group>";
@@ -283,6 +291,34 @@
 				49684A80246E87CC00E9BADC /* FilmMainInfoView.swift */,
 			);
 			path = DetailFilm;
+			sourceTree = "<group>";
+		};
+		49684A85246EF61300E9BADC /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				49684A61246ACDDA00E9BADC /* BlueButton.swift */,
+				49684A75246BED4000E9BADC /* UnderlinedTextField.swift */,
+				49684A79246D76DA00E9BADC /* PasswordUnderlinedTextField.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		49684A86246EF61F00E9BADC /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				49684A87246EF9CF00E9BADC /* FilmsCollectionViewController.swift */,
+			);
+			path = ViewControllers;
+			sourceTree = "<group>";
+		};
+		49684A892472E7B500E9BADC /* Filter */ = {
+			isa = PBXGroup;
+			children = (
+				49684A83246EF29900E9BADC /* FilterViewController.swift */,
+				49684A8A2472E7D600E9BADC /* FilterItem.swift */,
+				49684A8C2472E7ED00E9BADC /* FilterContentItem.swift */,
+			);
+			path = Filter;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -411,6 +447,7 @@
 				491C21BE246424F4007CDEC2 /* ReusableView.swift in Sources */,
 				49684A72246BE70C00E9BADC /* VideosViewController.swift in Sources */,
 				49684A5E246AC51600E9BADC /* CategoryHeaderSectionView.swift in Sources */,
+				49684A88246EF9CF00E9BADC /* FilmsCollectionViewController.swift in Sources */,
 				49684A76246BED4000E9BADC /* UnderlinedTextField.swift in Sources */,
 				49684A7A246D76DA00E9BADC /* PasswordUnderlinedTextField.swift in Sources */,
 				49684A70246BE70600E9BADC /* SerialsViewController.swift in Sources */,
@@ -420,11 +457,14 @@
 				491C21C424642A93007CDEC2 /* FilmCollectionViewCell.swift in Sources */,
 				491C218A24641393007CDEC2 /* AppDelegate.swift in Sources */,
 				49684A7C246D7A9100E9BADC /* SignUpViewController.swift in Sources */,
+				49684A84246EF29900E9BADC /* FilterViewController.swift in Sources */,
 				491C21B024641E94007CDEC2 /* CategoriesViewController.swift in Sources */,
 				491C21AA24641ADD007CDEC2 /* TabBarController.swift in Sources */,
 				491C21BC246424A8007CDEC2 /* CategoryTableViewCell.swift in Sources */,
 				49684A69246AF49100E9BADC /* FilmsViewController.swift in Sources */,
 				49684A62246ACDDA00E9BADC /* BlueButton.swift in Sources */,
+				49684A8D2472E7ED00E9BADC /* FilterContentItem.swift in Sources */,
+				49684A8B2472E7D600E9BADC /* FilterItem.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
