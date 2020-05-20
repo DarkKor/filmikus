@@ -28,6 +28,14 @@ class MainViewController: UIViewController {
 		categoriesViewController.view.snp.makeConstraints {
 			$0.edges.equalToSuperview()
 		}
+		
+//		StoreKitService.shared.startWith(
+//			productIds: [
+//				"com.filmikustestsubscription.testapp",
+//				"com.filmikustestsubscription.year.testapp"
+//			],
+//			sharedSecret: "325bac5a10fd4dcd9274233dcf980c17"
+//		)
 	}
 
     override func viewDidLoad() {

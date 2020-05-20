@@ -158,16 +158,13 @@ class FilmsViewController: UIViewController {
 				$0.height.equalTo(filmsHeight)
 			}
 		}
-		
 		let filterHeight = filterViewController.tableView.contentSize.height
 		if filterHeight > 0 {
 			filterViewController.view.snp.updateConstraints {
 				$0.height.equalTo(filterHeight)
 			}
 		}
-		
 		scrollView.contentSize.height = filmsHeight + filterHeight
-
 	}
 	
 	@objc
@@ -183,11 +180,13 @@ class FilmsViewController: UIViewController {
 extension FilmsViewController: FilterViewControllerDelegate {
 	
 	func filterViewController(_ viewController: FilterViewController, didSelectFilterItem item: FilterItem) {
-		print(item)
-		var item = item
-		let content = item.content
-		item.content = FilterContentItem(title: content.title, detail: content.title)
-		viewController.updateFilter(item: item)
+		let selectItemViewController = SelectItemViewController(items: ["Россия", "Украина", "Белорусь"]) { selectedItem in
+			var item = item
+			let content = item.content
+			item.content = FilterContentItem(title: content.title, detail: selectedItem)
+			viewController.updateFilter(item: item)
+		}
+		navigationController?.pushViewController(selectItemViewController, animated: true)
 	}
 }
 
