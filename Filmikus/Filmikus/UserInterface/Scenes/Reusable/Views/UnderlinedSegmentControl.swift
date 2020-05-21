@@ -32,7 +32,7 @@ class UnderlinedSegmentControl: UIView {
 	}()
 	
 	private var normalColor = UIColor.black
-	private var selectedColor = UIColor.systemBlue
+	private var selectedColor = UIColor.appBlue
 	
 	override var intrinsicContentSize: CGSize {
 		let height = buttons.first?.intrinsicContentSize.height ?? 0
@@ -46,6 +46,7 @@ class UnderlinedSegmentControl: UIView {
 			return button
 		}
 		super.init(frame: .zero)
+		backgroundColor = .white
 		addSubview(scrollView)
 		self.buttons.forEach {
 			$0.setTitleColor(normalColor, for: .normal)
@@ -78,6 +79,19 @@ class UnderlinedSegmentControl: UIView {
 		scrollView.contentSize.width = x
 	}
 	
+	private func scrollTo(index: Int) {
+		let button = buttons[index]
+		var offsetX = button.frame.minX - scrollView.bounds.width / 2 + button.frame.width / 2
+		let minOffsetX: CGFloat = -scrollView.contentInset.left
+		let maxOffsetX: CGFloat = scrollView.contentSize.width + scrollView.contentInset.right - scrollView.frame.width
+		if offsetX <= minOffsetX {
+			offsetX = minOffsetX
+		} else if offsetX >= maxOffsetX {
+			offsetX = maxOffsetX
+		}
+		scrollView.setContentOffset(CGPoint(x: offsetX, y: 0), animated: true)
+	}
+	
 	@objc
 	private func onButtonTap(sender: UIButton) {
 		for (index, button) in buttons.enumerated() {
@@ -88,6 +102,7 @@ class UnderlinedSegmentControl: UIView {
 				UIView.animate(withDuration: 0.25) {
 					self.underlinedView.frame.origin.x = button.frame.minX
 				}
+				scrollTo(index: index)
 			}
 		}
 	}

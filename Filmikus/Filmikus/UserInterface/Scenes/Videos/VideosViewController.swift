@@ -92,7 +92,7 @@ class VideosViewController: UIViewController {
 				$0.height.equalTo(filmsHeight)
 			}
 		}
-		scrollView.contentSize.height = filmsHeight + 50
+		scrollView.contentSize.height = filmsHeight + segmentControl.frame.height
 	}
 }
 
