@@ -46,6 +46,7 @@ class FilmsViewController: UIViewController {
 		containerView.addSubview(filmsCollectionViewController.view)
 		filmsCollectionViewController.didMove(toParent: self)
 		
+		scrollView.showsVerticalScrollIndicator = false
 		scrollView.translatesAutoresizingMaskIntoConstraints = false
 		let frameGuide = scrollView.frameLayoutGuide
 		let contentGuide = scrollView.contentLayoutGuide
@@ -70,78 +71,77 @@ class FilmsViewController: UIViewController {
         super.viewDidLoad()
 		
 		title = "Фильмы"
-		navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "ellipsis"), style: .plain, target: self, action: #selector(onButtonFilterTap))
 		let films = [
 			Film(
-				imageUrl: "https://via.placeholder.com/150x250/555555/000000",
-				title: "Это всего лишь конец света",
+				imageUrl: "https://filmikus.com/images/1/30/middle/img.jpg",
+				title: "1+1",
+				genres: ["Комедия", "Драма"],
+				country: "Франция",
+				year: "2011",
+				censorship: .sixteenPlus
+			),
+			Film(
+				imageUrl: "https://filmikus.com/images/1/676/middle/img.jpg",
+				title: "Девочка и дельфин",
+				genres: ["Мультфильм"],
+				country: "СССР",
+				year: "1979",
+				censorship: .eighteenPlus
+			),
+			Film(
+				imageUrl: "https://filmikus.com/images/1/446/middle/img.jpg",
+				title: "Женщины",
+				genres: ["Драма", "Мелодрама"],
+				country: "СССР",
+				year: "1965",
+				censorship: .eighteenPlus
+			),
+			Film(
+				imageUrl: "https://filmikus.com/images/1/331/middle/img.jpg",
+				title: "Шинель",
 				genres: ["Драма"],
-				country: "Канада",
-				year: "2015",
+				country: "СССР",
+				year: "1959",
 				censorship: .eighteenPlus
 			),
 			Film(
-				imageUrl: "https://via.placeholder.com/150x200/884444/000000",
-				title: "Том на ферме",
-				genres: ["Драма", "Триллер"],
-				country: "Канада",
-				year: "2015",
-				censorship: .eighteenPlus
-			),
-			Film(
-				imageUrl: "https://via.placeholder.com/150/228888/000000",
-				title: "Свинья",
-				genres: ["Драма", "Комедия"],
-				country: "Иран",
-				year: "2018",
-				censorship: .eighteenPlus
-			),
-			Film(
-				imageUrl: "https://via.placeholder.com/150x100/228888/FFFFFF",
-				title: "Монстры Юга",
-				genres: ["Триллер", "Ужасы"],
-				country: "США",
-				year: "2015",
-				censorship: .eighteenPlus
-			),
-			Film(
-				imageUrl: "https://via.placeholder.com/150x100/228888/FFFFFF",
-				title: "Дыши ради нас",
-				genres: ["Биография", "Драма"],
-				country: "Великобритания",
-				year: "2015",
+				imageUrl: "https://filmikus.com/images/1/447/middle/img.jpg",
+				title: "Доживем до понедельника",
+				genres: ["Драма", "Мелодрама"],
+				country: "СССР",
+				year: "1968",
 				censorship: .sixteenPlus
 			),
 			Film(
-				imageUrl: "https://via.placeholder.com/150x75/F05520/000000",
-				title: "Ван Гог",
+				imageUrl: "https://filmikus.com/images/1/448/middle/img.jpg",
+				title: "Дело было в Пенькове",
 				genres: ["Биография", "Драма"],
-				country: "Великобритания",
-				year: "2015",
+				country: "СССР",
+				year: "1957",
 				censorship: .twelvePlus
 			),
 			Film(
-				imageUrl: "https://via.placeholder.com/150x300/FFFF00/000000",
-				title: "Илон Маск",
-				genres: ["Биография", "Документальный фильм"],
-				country: "Великобритания",
-				year: "2015",
+				imageUrl: "https://filmikus.com/images/1/449/middle/img.jpg",
+				title: "Варвара-краса",
+				genres: ["Комедия", "Драма"],
+				country: "СССР",
+				year: "1970",
 				censorship: .twelvePlus
 			),
 			Film(
-				imageUrl: "https://via.placeholder.com/150x200/884444/000000",
-				title: "Пламя и Цитрон",
+				imageUrl: "https://filmikus.com/images/1/450/middle/img.jpg",
+				title: "Добровольцы",
 				genres: ["Боевик", "Военный"],
-				country: "Германия, Дания",
-				year: "2015",
+				country: "СССР",
+				year: "1958",
 				censorship: .sixteenPlus
 			),
 			Film(
-				imageUrl: "https://via.placeholder.com/150x300/FFFF00/000000",
-				title: "28 панфиловцев",
-				genres: ["Военный", "Драма"],
-				country: "Россия",
-				year: "2016",
+				imageUrl: "https://filmikus.com/images/1/454/middle/img.jpg",
+				title: "Евдокия",
+				genres: ["Драма"],
+				country: "СССР",
+				year: "1961",
 				censorship: .twelvePlus
 			)
 		]
@@ -150,8 +150,6 @@ class FilmsViewController: UIViewController {
 	
 	override func viewWillLayoutSubviews() {
 		super.viewWillLayoutSubviews()
-		print("filmsCollection: \(filmsCollectionViewController.collectionView.contentSize)")
-		print("scrollView: \(scrollView.contentSize)")
 		let filmsHeight = filmsCollectionViewController.collectionView.contentSize.height
 		if filmsHeight > 0 {
 			filmsCollectionViewController.view.snp.updateConstraints {
@@ -166,12 +164,6 @@ class FilmsViewController: UIViewController {
 		}
 		scrollView.contentSize.height = filmsHeight + filterHeight
 	}
-	
-	@objc
-	private func onButtonFilterTap(sender: UIBarButtonItem) {
-		
-	}
-	
 	
 }
 

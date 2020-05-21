@@ -22,7 +22,7 @@ class CategoriesViewController: UIViewController {
 	private lazy var headerView: CategoriesHeaderView = {
 		let screenSize = UIScreen.main.bounds
 		let view = CategoriesHeaderView()
-		view.frame = CGRect(x: 0, y: 0, width: screenSize.width, height: screenSize.height * 0.34)
+		view.frame = CGRect(x: 0, y: 0, width: screenSize.width, height: screenSize.width / 1.49)
 		view.clipsToBounds = true
 		let url = URL(string: "https://photo.tvigle.ru/res/tvigle/slider/2019/09/03/6b5adfe1-c5db-4ac1-a3ed-c5db6d5fb10b.jpg")
 		view.setImage(with: url)
@@ -38,6 +38,7 @@ class CategoriesViewController: UIViewController {
 		table.dataSource = self
 		table.rowHeight = 220
 		table.tableHeaderView = headerView
+		table.showsVerticalScrollIndicator = false
 		table.register(cell: CategoryTableViewCell<FilmCollectionViewCell>.self)
 		table.register(headerFooterView: CategoryHeaderSectionView.self)
 		return table

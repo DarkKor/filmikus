@@ -42,6 +42,10 @@
 		49684A8F2472ED1400E9BADC /* SelectItemViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49684A8E2472ED1400E9BADC /* SelectItemViewController.swift */; };
 		49684A912472F2D000E9BADC /* String+SelectableItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49684A902472F2D000E9BADC /* String+SelectableItem.swift */; };
 		49684AB524742FC500E9BADC /* StoreKitService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49684AB424742FC500E9BADC /* StoreKitService.swift */; };
+		49684AB7247671E500E9BADC /* VideoCategoriesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49684AB6247671E500E9BADC /* VideoCategoriesViewController.swift */; };
+		49684ABD247675CF00E9BADC /* VideoCategoryCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49684ABC247675CF00E9BADC /* VideoCategoryCollectionViewCell.swift */; };
+		49684AC0247676DE00E9BADC /* VideoCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49684ABF247676DE00E9BADC /* VideoCategory.swift */; };
+		49684AC22476801A00E9BADC /* UnderlinedSegmentControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49684AC12476801A00E9BADC /* UnderlinedSegmentControl.swift */; };
 		DBB5AD7EDA6B8BBB5543CBB9 /* Pods_Filmikus.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 97F5ACE358500956AF72C9A2 /* Pods_Filmikus.framework */; };
 /* End PBXBuildFile section */
 
@@ -84,6 +88,10 @@
 		49684A8E2472ED1400E9BADC /* SelectItemViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectItemViewController.swift; sourceTree = "<group>"; };
 		49684A902472F2D000E9BADC /* String+SelectableItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+SelectableItem.swift"; sourceTree = "<group>"; };
 		49684AB424742FC500E9BADC /* StoreKitService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreKitService.swift; sourceTree = "<group>"; };
+		49684AB6247671E500E9BADC /* VideoCategoriesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoCategoriesViewController.swift; sourceTree = "<group>"; };
+		49684ABC247675CF00E9BADC /* VideoCategoryCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoCategoryCollectionViewCell.swift; sourceTree = "<group>"; };
+		49684ABF247676DE00E9BADC /* VideoCategory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoCategory.swift; sourceTree = "<group>"; };
+		49684AC12476801A00E9BADC /* UnderlinedSegmentControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnderlinedSegmentControl.swift; sourceTree = "<group>"; };
 		5F55A71C0021F60EFFD15EA6 /* Pods-Filmikus.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Filmikus.debug.xcconfig"; path = "Target Support Files/Pods-Filmikus/Pods-Filmikus.debug.xcconfig"; sourceTree = "<group>"; };
 		97F5ACE358500956AF72C9A2 /* Pods_Filmikus.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Filmikus.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -231,7 +239,7 @@
 			isa = PBXGroup;
 			children = (
 				491C21B824642475007CDEC2 /* Cells */,
-				491C21B1246423CB007CDEC2 /* ViewModels */,
+				491C21B1246423CB007CDEC2 /* CellModels */,
 				491C21AD24641D61007CDEC2 /* MainViewController.swift */,
 				491C21AF24641E94007CDEC2 /* CategoriesViewController.swift */,
 				49684A77246C4AAD00E9BADC /* CategoriesHeaderView.swift */,
@@ -239,14 +247,14 @@
 			path = Main;
 			sourceTree = "<group>";
 		};
-		491C21B1246423CB007CDEC2 /* ViewModels */ = {
+		491C21B1246423CB007CDEC2 /* CellModels */ = {
 			isa = PBXGroup;
 			children = (
 				491C21B2246423E0007CDEC2 /* Category.swift */,
 				491C21B4246423F2007CDEC2 /* Film.swift */,
 				491C21B62464240D007CDEC2 /* Censorship.swift */,
 			);
-			path = ViewModels;
+			path = CellModels;
 			sourceTree = "<group>";
 		};
 		491C21B824642475007CDEC2 /* Cells */ = {
@@ -278,7 +286,10 @@
 		49684A6D246BE6F000E9BADC /* Videos */ = {
 			isa = PBXGroup;
 			children = (
+				49684ABB247675BE00E9BADC /* Cells */,
+				49684ABE247676AB00E9BADC /* CellModels */,
 				49684A71246BE70C00E9BADC /* VideosViewController.swift */,
+				49684AB6247671E500E9BADC /* VideoCategoriesViewController.swift */,
 			);
 			path = Videos;
 			sourceTree = "<group>";
@@ -307,6 +318,7 @@
 				49684A61246ACDDA00E9BADC /* BlueButton.swift */,
 				49684A75246BED4000E9BADC /* UnderlinedTextField.swift */,
 				49684A79246D76DA00E9BADC /* PasswordUnderlinedTextField.swift */,
+				49684AC12476801A00E9BADC /* UnderlinedSegmentControl.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -328,6 +340,22 @@
 				49684A8C2472E7ED00E9BADC /* FilterContentItem.swift */,
 			);
 			path = Filter;
+			sourceTree = "<group>";
+		};
+		49684ABB247675BE00E9BADC /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				49684ABC247675CF00E9BADC /* VideoCategoryCollectionViewCell.swift */,
+			);
+			path = Cells;
+			sourceTree = "<group>";
+		};
+		49684ABE247676AB00E9BADC /* CellModels */ = {
+			isa = PBXGroup;
+			children = (
+				49684ABF247676DE00E9BADC /* VideoCategory.swift */,
+			);
+			path = CellModels;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -451,13 +479,16 @@
 				49684A74246BE71200E9BADC /* ProfileViewController.swift in Sources */,
 				49684A66246ADA9900E9BADC /* UIColor+App.swift in Sources */,
 				491C21B5246423F2007CDEC2 /* Film.swift in Sources */,
+				49684AC22476801A00E9BADC /* UnderlinedSegmentControl.swift in Sources */,
 				491C21B3246423E0007CDEC2 /* Category.swift in Sources */,
+				49684AB7247671E500E9BADC /* VideoCategoriesViewController.swift in Sources */,
 				49684A6B246BE5B600E9BADC /* NavigationController.swift in Sources */,
 				491C21BE246424F4007CDEC2 /* ReusableView.swift in Sources */,
 				49684A72246BE70C00E9BADC /* VideosViewController.swift in Sources */,
 				49684A5E246AC51600E9BADC /* CategoryHeaderSectionView.swift in Sources */,
 				49684A88246EF9CF00E9BADC /* FilmsCollectionViewController.swift in Sources */,
 				49684A76246BED4000E9BADC /* UnderlinedTextField.swift in Sources */,
+				49684AC0247676DE00E9BADC /* VideoCategory.swift in Sources */,
 				49684A7A246D76DA00E9BADC /* PasswordUnderlinedTextField.swift in Sources */,
 				49684A70246BE70600E9BADC /* SerialsViewController.swift in Sources */,
 				49684AB524742FC500E9BADC /* StoreKitService.swift in Sources */,
@@ -471,6 +502,7 @@
 				49684A84246EF29900E9BADC /* FilterViewController.swift in Sources */,
 				491C21B024641E94007CDEC2 /* CategoriesViewController.swift in Sources */,
 				491C21AA24641ADD007CDEC2 /* TabBarController.swift in Sources */,
+				49684ABD247675CF00E9BADC /* VideoCategoryCollectionViewCell.swift in Sources */,
 				491C21BC246424A8007CDEC2 /* CategoryTableViewCell.swift in Sources */,
 				49684A912472F2D000E9BADC /* String+SelectableItem.swift in Sources */,
 				49684A69246AF49100E9BADC /* FilmsViewController.swift in Sources */,

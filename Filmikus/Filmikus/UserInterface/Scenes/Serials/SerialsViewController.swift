@@ -10,21 +10,60 @@ import UIKit
 
 class SerialsViewController: UIViewController {
 
+	private lazy var scrollView = UIScrollView()
+	private lazy var containerView = UIView()
+	
+	private lazy var filterViewController: FilterViewController = {
+		let viewController = FilterViewController()
+		viewController.delegate = self
+		viewController.tableView.isScrollEnabled = false
+		return viewController
+	}()
+	
 	private lazy var filmsCollectionViewController: FilmsCollectionViewController = {
 		let viewController = FilmsCollectionViewController()
 		viewController.delegate = self
+		viewController.collectionView.isScrollEnabled = false
 		return viewController
 	}()
 	
 	override func loadView() {
 		view = UIView()
 		view.backgroundColor = .appLightGray
+		
+		view.addSubview(scrollView)
+		scrollView.addSubview(containerView)
+		
+		addChild(filterViewController)
+		containerView.addSubview(filterViewController.view)
+		filterViewController.didMove(toParent: self)
+		filterViewController.view.snp.makeConstraints {
+			$0.top.left.right.equalToSuperview()
+			$0.height.equalTo(300)
+		}
+		
 		addChild(filmsCollectionViewController)
-		view.addSubview(filmsCollectionViewController.view)
+		containerView.addSubview(filmsCollectionViewController.view)
 		filmsCollectionViewController.didMove(toParent: self)
 		
+		scrollView.showsVerticalScrollIndicator = false
+		scrollView.translatesAutoresizingMaskIntoConstraints = false
+		let frameGuide = scrollView.frameLayoutGuide
+		let contentGuide = scrollView.contentLayoutGuide
+		
+		frameGuide.snp.makeConstraints {
+			$0.edges.equalTo(view)
+			$0.width.equalTo(contentGuide)
+		}
+		
+		containerView.snp.makeConstraints {
+			$0.edges.equalTo(contentGuide)
+		}
+		
 		filmsCollectionViewController.view.snp.makeConstraints {
-			$0.edges.equalToSuperview()
+			$0.top.equalTo(filterViewController.view.snp.bottom)
+			$0.left.bottom.right.equalToSuperview()
+			$0.height.equalTo(100)
 		}
 	}
 	
@@ -35,55 +74,47 @@ class SerialsViewController: UIViewController {
 		
 		let films = [
 				Film(
-					imageUrl: "https://via.placeholder.com/150x250/555555/000000",
-					title: "Карамель",
-					genres: ["Комедия"],
+					imageUrl: "https://filmikus.com/images/2/1/middle/img.jpg",
+					title: "Улики",
+					genres: ["Криминал", "Детектив"],
 					country: "Россия",
-					year: "2011",
+					year: "2015",
 					censorship: .eighteenPlus
 				),
 				Film(
-					imageUrl: "https://via.placeholder.com/150x200/884444/000000",
-					title: "Трое в Коми",
-					genres: ["Комедия", "Мелодрама"],
+					imageUrl: "https://filmikus.com/images/2/2/middle/img.jpg",
+					title: "Полицейский участок",
+					genres: ["Детектив"],
 					country: "Россия",
-					year: "2013",
+					year: "2015",
 					censorship: .eighteenPlus
 				),
 				Film(
-					imageUrl: "https://via.placeholder.com/150/228888/000000",
-					title: "Маленький человек большого офиса",
-					genres: ["Комедия"],
-					country: "Россия",
-					year: "2009",
-					censorship: .eighteenPlus
-				),
-				Film(
-					imageUrl: "https://via.placeholder.com/150x100/228888/FFFFFF",
-					title: "Сектор зеро",
-					genres: ["Фантастика", "Драма"],
-					country: "Фарнция",
-					year: "2016",
-					censorship: .sixteenPlus
-				),
-				Film(
-					imageUrl: "https://via.placeholder.com/150x75/F05520/000000",
-					title: "Секунда до",
-					genres: ["Фантастика"],
-					country: "Россия",
-					year: "2008",
-					censorship: .twelvePlus
-				),
-				Film(
-					imageUrl: "https://via.placeholder.com/150x200/884444/000000",
+					imageUrl: "https://filmikus.com/images/2/3/middle/img.jpg",
 					title: "Непридуманная жизнь",
 					genres: ["Драма", "Биография"],
 					country: "Россия",
 					year: "2015",
+					censorship: .eighteenPlus
+				),
+				Film(
+					imageUrl: "https://filmikus.com/images/2/4/middle/img.jpg",
+					title: "Мой любимый папа",
+					genres: ["Драма"],
+					country: "Россия",
+					year: "2014",
 					censorship: .sixteenPlus
 				),
 				Film(
-					imageUrl: "https://via.placeholder.com/150x200/228888/000000",
+					imageUrl: "https://filmikus.com/images/2/5/middle/img.jpg",
+					title: "Стрелок",
+					genres: ["Боевик"],
+					country: "Россия",
+					year: "2012",
+					censorship: .twelvePlus
+				),
+				Film(
+					imageUrl: "https://filmikus.com/images/2/8/middle/img.jpg",
 					title: "Сибирь",
 					genres: ["Драма", "История"],
 					country: "СССР",
@@ -91,41 +122,67 @@ class SerialsViewController: UIViewController {
 					censorship: .sixteenPlus
 				),
 				Film(
-					imageUrl: "https://via.placeholder.com/150x200/181818/000000",
-					title: "Предел возможного",
-					genres: ["Драма"],
+					imageUrl: "https://filmikus.com/images/2/10/middle/img.jpg",
+					title: "Мужество",
+					genres: ["Драма", "История"],
 					country: "СССР",
-					year: "1984",
+					year: "1980",
 					censorship: .sixteenPlus
 				),
 				Film(
-					imageUrl: "https://via.placeholder.com/150x300/F8F8F8/000000",
+					imageUrl: "https://filmikus.com/images/2/13/middle/img.jpg",
 					title: "Фортитьюд",
-					genres: ["Драма", "Триллер"],
+					genres: ["Драма"],
 					country: "Великобритания",
 					year: "2015",
-					censorship: .twelvePlus
+					censorship: .sixteenPlus
 				),
 				Film(
-					imageUrl: "https://via.placeholder.com/150x300/880055/000000",
-					title: "Сплит",
-					genres: ["Триллер", "Мелодрама"],
-					country: "Украина",
-					year: "2011",
-					censorship: .twelvePlus
-				),
-				Film(
-					imageUrl: "https://via.placeholder.com/150x300/991399/000000",
-					title: "Палач",
-					genres: ["Триллер", "Криминал"],
+					imageUrl: "https://filmikus.com/images/2/20/middle/img.jpg",
+					title: "Мата Хари",
+					genres: ["Драма", "Биография"],
 					country: "Россия",
-					year: "2014",
+					year: "2016",
 					censorship: .twelvePlus
 				)
 		]
 		filmsCollectionViewController.update(films: films)
     }
+	
+	override func viewWillLayoutSubviews() {
+		super.viewWillLayoutSubviews()
+		print("filmsCollection: \(filmsCollectionViewController.collectionView.contentSize)")
+		print("scrollView: \(scrollView.contentSize)")
+		let filmsHeight = filmsCollectionViewController.collectionView.contentSize.height
+		if filmsHeight > 0 {
+			filmsCollectionViewController.view.snp.updateConstraints {
+				$0.height.equalTo(filmsHeight)
+			}
+		}
+		let filterHeight = filterViewController.tableView.contentSize.height
+		if filterHeight > 0 {
+			filterViewController.view.snp.updateConstraints {
+				$0.height.equalTo(filterHeight)
+			}
+		}
+		scrollView.contentSize.height = filmsHeight + filterHeight
+	}
 
+}
+
+// MARK: - FilterViewControllerDelegate
+
+extension SerialsViewController: FilterViewControllerDelegate {
+	
+	func filterViewController(_ viewController: FilterViewController, didSelectFilterItem item: FilterItem) {
+		let selectItemViewController = SelectItemViewController(items: ["Россия", "Украина", "Белорусь"]) { selectedItem in
+			var item = item
+			let content = item.content
+			item.content = FilterContentItem(title: content.title, detail: selectedItem)
+			viewController.updateFilter(item: item)
+		}
+		navigationController?.pushViewController(selectItemViewController, animated: true)
+	}
 }
 
 // MARK: - FilmsCollectionViewControllerDelegate

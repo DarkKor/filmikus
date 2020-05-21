@@ -133,15 +133,46 @@ class MainViewController: UIViewController {
 			]),
 			Category(title: "Развлекательное видео", films: [
 				Film(
-					imageUrl: "https://via.placeholder.com/150x200/884444/000000",
-					title: "Дурак",
+					imageUrl: "https://filmikus.com/images/3/1/middle/img.jpg",
+					title: "Тест драйв",
 					genres: ["Драма", "Криминал"],
 					country: "Россия",
 					year: "2015",
 					censorship: .sixteenPlus
-				)
-			]),
-			
+				),
+				Film(
+					imageUrl: "https://filmikus.com/images/3/6/middle/img.jpg",
+					title: "Мода",
+					genres: ["Драма", "Криминал"],
+					country: "Россия",
+					year: "2015",
+					censorship: .sixteenPlus
+				),
+				Film(
+					imageUrl: "https://filmikus.com/images/3/7/middle/img.jpg",
+					title: "Стань красиво",
+					genres: ["Драма", "Криминал"],
+					country: "Россия",
+					year: "2015",
+					censorship: .sixteenPlus
+				),
+				Film(
+					imageUrl: "https://filmikus.com/images/3/8/middle/img.jpg",
+					title: "Простые советы",
+					genres: ["Драма", "Криминал"],
+					country: "Россия",
+					year: "2015",
+					censorship: .sixteenPlus
+				),
+				Film(
+					imageUrl: "https://filmikus.com/images/3/9/middle/img.jpg",
+					title: "Мода S",
+					genres: ["Драма", "Криминал"],
+					country: "Россия",
+					year: "2015",
+					censorship: .sixteenPlus
+				),
+			])
 		]
 		categoriesViewController.update(categories: categories)
     }

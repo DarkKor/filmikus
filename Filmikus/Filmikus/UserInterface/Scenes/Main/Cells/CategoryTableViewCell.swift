@@ -24,7 +24,7 @@ class CategoryTableViewCell<Cell: ReusableCollectionViewCell>: ReusableTableView
 	private lazy var collectionLayout: UICollectionViewFlowLayout = {
 		let layout = UICollectionViewFlowLayout()
 		layout.scrollDirection = .horizontal
-		layout.sectionInset = UIEdgeInsets(top: 0, left: 12, bottom: 0, right: 0)
+		layout.sectionInset = UIEdgeInsets(top: 0, left: 12, bottom: 0, right: 12)
 		return layout
 	}()
 	
