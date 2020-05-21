@@ -41,6 +41,13 @@ class VideoCategoryCollectionViewCell: ReusableCollectionViewCell {
 		fatalError("init(coder:) has not been implemented")
 	}
 	
+	override func prepareForReuse() {
+		super.prepareForReuse()
+		
+		imageView.image = nil
+		titleLabel.text = nil
+	}
+	
 	func fill(videoCategory: VideoCategory) {
 		let imageUrl = URL(string: videoCategory.imageUrl)
 		imageView.kf.setImage(with: imageUrl)
