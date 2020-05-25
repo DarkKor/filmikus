@@ -20,6 +20,10 @@ class VideoCollectionViewCell: ReusableCollectionViewCell {
 		contentView.addSubview(imageView)
 		contentView.addSubview(titleLabel)
 
+		titleLabel.setContentCompressionResistancePriority(.required, for: .vertical)
+		titleLabel.setContentHuggingPriority(.required, for: .vertical)
+		imageView.rounded(radius: frame.height / 16)
+		
 		imageView.snp.makeConstraints {
 			$0.left.top.right.equalToSuperview()
 		}
@@ -38,12 +42,6 @@ class VideoCollectionViewCell: ReusableCollectionViewCell {
 		
 		imageView.image = nil
 		titleLabel.text = nil
-	}
-	
-	override func layoutSubviews() {
-		super.layoutSubviews()
-		
-		imageView.rounded(radius: imageView.frame.height / 16)
 	}
 	
 	func fill(video: Video) {

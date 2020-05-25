@@ -46,13 +46,6 @@ class VideosCollectionViewController: UIViewController {
         // Do any additional setup after loading the view.
     }
 	
-	override func viewWillLayoutSubviews() {
-		super.viewWillLayoutSubviews()
-		let width = (collectionView.bounds.size.width - 6 - 12 * 2) / 2
-		let height = width / 1.49
-		collectionLayout.itemSize = CGSize(width: width, height: height)
-	}
-	
 	func update(videos: [Video]) {
 		self.videos = videos
 		collectionView.reloadData()
@@ -82,5 +75,19 @@ extension VideosCollectionViewController: UICollectionViewDelegate {
 	func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
 		let video = videos[indexPath.item]
 		delegate?.videoCollectionViewController(self, didSelectVideo: video)
+	}
+}
+
+// MARK: - UICollectionViewDelegateFlowLayout
+
+extension VideosCollectionViewController: UICollectionViewDelegateFlowLayout {
+	
+	func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+		let itemsInRow: CGFloat = 2
+		let spacing = collectionLayout.minimumInteritemSpacing * (itemsInRow - 1)
+		let padding = collectionLayout.sectionInset.left + collectionLayout.sectionInset.right
+		let width = (collectionView.bounds.size.width - spacing - padding) / itemsInRow
+		let height = width / 1.49
+		return CGSize(width: width, height: height)
 	}
 }
