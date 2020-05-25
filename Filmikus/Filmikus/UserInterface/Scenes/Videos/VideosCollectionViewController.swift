@@ -1,27 +1,28 @@
 //
-//  FilmsCollectionViewController.swift
+//  VideosCollectionViewController.swift
 //  Filmikus
 //
-//  Created by Андрей Козлов on 15.05.2020.
+//  Created by Андрей Козлов on 21.05.2020.
 //  Copyright © 2020 Андрей Козлов. All rights reserved.
 //
 
 import UIKit
 
-protocol FilmsCollectionViewControllerDelegate: class {
-	func filmsCollectionViewController(_ viewController: FilmsCollectionViewController, didSelectFilm film: Film)
+protocol VideosCollectionViewControllerDelegate: class {
+	func videoCollectionViewController(_ viewController: VideosCollectionViewController, didSelectVideo video: Video)
 }
 
-class FilmsCollectionViewController: UIViewController {
+class VideosCollectionViewController: UIViewController {
 	
-	weak var delegate: FilmsCollectionViewControllerDelegate?
-	
-	private var films: [Film] = []
+	weak var delegate: VideosCollectionViewControllerDelegate?
+
+	private var videos: [Video] = []
 	
 	private lazy var collectionLayout: UICollectionViewFlowLayout = {
 		let layout = UICollectionViewFlowLayout()
 		layout.scrollDirection = .vertical
 		layout.sectionInset = UIEdgeInsets(top: 12, left: 12, bottom: 12, right: 12)
+		layout.minimumInteritemSpacing = 6
 		return layout
 	}()
 	
@@ -30,7 +31,7 @@ class FilmsCollectionViewController: UIViewController {
 		collection.delegate = self
 		collection.dataSource = self
 		collection.showsVerticalScrollIndicator = false
-		collection.register(cell: FilmCollectionViewCell.self)
+		collection.register(cell: VideoCollectionViewCell.self)
 		return collection
 	}()
 	
@@ -47,13 +48,13 @@ class FilmsCollectionViewController: UIViewController {
 	
 	override func viewWillLayoutSubviews() {
 		super.viewWillLayoutSubviews()
-		let width = (collectionView.bounds.size.width - 10 - 12 * 2) / 2
-		let height = width * 1.49
+		let width = (collectionView.bounds.size.width - 6 - 12 * 2) / 2
+		let height = width / 1.49
 		collectionLayout.itemSize = CGSize(width: width, height: height)
 	}
 	
-	func update(films: [Film]) {
-		self.films = films
+	func update(videos: [Video]) {
+		self.videos = videos
 		collectionView.reloadData()
 	}
 
@@ -61,25 +62,25 @@ class FilmsCollectionViewController: UIViewController {
 
 // MARK: - UICollectionViewDataSource
 
-extension FilmsCollectionViewController: UICollectionViewDataSource {
+extension VideosCollectionViewController: UICollectionViewDataSource {
 	
 	func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-		films.count
+		videos.count
 	}
 	
 	func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-		let cell: FilmCollectionViewCell = collectionView.dequeueCell(for: indexPath)
-		cell.fill(film: films[indexPath.item])
+		let cell: VideoCollectionViewCell = collectionView.dequeueCell(for: indexPath)
+		cell.fill(video: videos[indexPath.item])
 		return cell
 	}
 }
 
 // MARK: - UICollectionViewDataSource
 
-extension FilmsCollectionViewController: UICollectionViewDelegate {
+extension VideosCollectionViewController: UICollectionViewDelegate {
 	
 	func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-		let film = films[indexPath.item]
-		delegate?.filmsCollectionViewController(self, didSelectFilm: film)
+		let video = videos[indexPath.item]
+		delegate?.videoCollectionViewController(self, didSelectVideo: video)
 	}
 }

@@ -9,21 +9,10 @@
 import UIKit
 
 class SerialsViewController: UIViewController {
-
-	private lazy var scrollView = UIScrollView()
-	private lazy var containerView = UIView()
-	
-	private lazy var filterViewController: FilterViewController = {
-		let viewController = FilterViewController()
-		viewController.delegate = self
-		viewController.tableView.isScrollEnabled = false
-		return viewController
-	}()
 	
 	private lazy var filmsCollectionViewController: FilmsCollectionViewController = {
 		let viewController = FilmsCollectionViewController()
 		viewController.delegate = self
-		viewController.collectionView.isScrollEnabled = false
 		return viewController
 	}()
 	
@@ -31,39 +20,12 @@ class SerialsViewController: UIViewController {
 		view = UIView()
 		view.backgroundColor = .appLightGray
 		
-		view.addSubview(scrollView)
-		scrollView.addSubview(containerView)
-		
-		addChild(filterViewController)
-		containerView.addSubview(filterViewController.view)
-		filterViewController.didMove(toParent: self)
-		filterViewController.view.snp.makeConstraints {
-			$0.top.left.right.equalToSuperview()
-			$0.height.equalTo(300)
-		}
-		
 		addChild(filmsCollectionViewController)
-		containerView.addSubview(filmsCollectionViewController.view)
+		view.addSubview(filmsCollectionViewController.view)
 		filmsCollectionViewController.didMove(toParent: self)
 		
-		scrollView.showsVerticalScrollIndicator = false
-		scrollView.translatesAutoresizingMaskIntoConstraints = false
-		let frameGuide = scrollView.frameLayoutGuide
-		let contentGuide = scrollView.contentLayoutGuide
-		
-		frameGuide.snp.makeConstraints {
-			$0.edges.equalTo(view)
-			$0.width.equalTo(contentGuide)
-		}
-		
-		containerView.snp.makeConstraints {
-			$0.edges.equalTo(contentGuide)
-		}
-		
 		filmsCollectionViewController.view.snp.makeConstraints {
-			$0.top.equalTo(filterViewController.view.snp.bottom)
-			$0.left.bottom.right.equalToSuperview()
-			$0.height.equalTo(100)
+			$0.edges.equalToSuperview()
 		}
 	}
 	
@@ -147,47 +109,36 @@ class SerialsViewController: UIViewController {
 				)
 		]
 		filmsCollectionViewController.update(films: films)
+		
+		let filterItems: [FilterItem] = [
+			.genre(FilterContentItem(title: "Жанр", detail: "Все")),
+			.country(FilterContentItem(title: "Страна", detail: "Все")),
+			.year(FilterContentItem(title: "Год", detail: "Все")),
+			.quality(FilterContentItem(title: "Качество", detail: "Все")),
+			.sort(FilterContentItem(title: "Сортировать", detail: "По популярности"))
+		]
+		filmsCollectionViewController.update(filterItems: filterItems)
     }
 	
-	override func viewWillLayoutSubviews() {
-		super.viewWillLayoutSubviews()
-		print("filmsCollection: \(filmsCollectionViewController.collectionView.contentSize)")
-		print("scrollView: \(scrollView.contentSize)")
-		let filmsHeight = filmsCollectionViewController.collectionView.contentSize.height
-		if filmsHeight > 0 {
-			filmsCollectionViewController.view.snp.updateConstraints {
-				$0.height.equalTo(filmsHeight)
-			}
-		}
-		let filterHeight = filterViewController.tableView.contentSize.height
-		if filterHeight > 0 {
-			filterViewController.view.snp.updateConstraints {
-				$0.height.equalTo(filterHeight)
-			}
-		}
-		scrollView.contentSize.height = filmsHeight + filterHeight
-	}
-
-}
-
-// MARK: - FilterViewControllerDelegate
-
-extension SerialsViewController: FilterViewControllerDelegate {
-	
-	func filterViewController(_ viewController: FilterViewController, didSelectFilterItem item: FilterItem) {
-		let selectItemViewController = SelectItemViewController(items: ["Россия", "Украина", "Белорусь"]) { selectedItem in
-			var item = item
-			let content = item.content
-			item.content = FilterContentItem(title: content.title, detail: selectedItem)
-			viewController.updateFilter(item: item)
-		}
-		navigationController?.pushViewController(selectItemViewController, animated: true)
-	}
 }
 
 // MARK: - FilmsCollectionViewControllerDelegate
 
 extension SerialsViewController: FilmsCollectionViewControllerDelegate {
+	
+	func filmsCollectionViewController(_ viewController: FilmsCollectionViewController, didSelectFilter item: FilterItem) {
+		let selectItemViewController = SelectItemViewController(items: ["Россия", "Украина", "Белорусь"]) { selectedItem in
+			var item = item
+			let content = item.content
+			item.content = FilterContentItem(title: content.title, detail: selectedItem)
+			viewController.update(filterItem: item)
+		}
+		navigationController?.pushViewController(selectItemViewController, animated: true)
+	}
+	
+	func filmsCollectionViewControllerShouldShowActivity(_ viewController: FilmsCollectionViewController) -> Bool {
+		return false
+	}
 	
 	func filmsCollectionViewController(_ viewController: FilmsCollectionViewController, didSelectFilm film: Film) {
 		let detailFilmVC = DetailFilmViewController(film: film)

@@ -42,6 +42,11 @@ class FilmCollectionViewCell: ReusableCollectionViewCell {
 		fatalError("init(coder:) has not been implemented")
 	}
 	
+	override func preferredLayoutAttributesFitting(_ layoutAttributes: UICollectionViewLayoutAttributes) -> UICollectionViewLayoutAttributes {
+		// disable self-sizing 
+		return layoutAttributes
+	}
+	
 	func fill(film: Film) {
 		let url = URL(string: film.imageUrl)
 		imageView.kf.setImage(with: url)
