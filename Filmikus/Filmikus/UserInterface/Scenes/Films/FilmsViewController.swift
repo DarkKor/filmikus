@@ -125,7 +125,20 @@ class FilmsViewController: UIViewController {
 extension FilmsViewController: FilmsCollectionViewControllerDelegate {
 	
 	func filmsCollectionViewController(_ viewController: FilmsCollectionViewController, didSelectFilter item: FilterItem) {
-		let selectItemViewController = SelectItemViewController(items: ["Россия", "Украина", "Белорусь"]) { selectedItem in
+		var selectItems: [String] = []
+		switch item {
+		case .genre:
+			selectItems = ["Драма", "Комедия", "Биография"]
+		case .country:
+			selectItems = ["Россия", "Украина", "Белорусь"]
+		case .year:
+			selectItems = (1900 ... 2020).map { String($0) }
+		case .quality:
+			selectItems = ["SD", "HD", "fullHD"]
+		case .sort:
+			selectItems = ["По популярности", "По новизне"]
+		}
+		let selectItemViewController = SelectItemViewController(items: selectItems) { selectedItem in
 			var item = item
 			let content = item.content
 			item.content = FilterContentItem(title: content.title, detail: selectedItem)

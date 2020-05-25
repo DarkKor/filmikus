@@ -14,13 +14,21 @@ class ProfileViewController: UIViewController {
 	private lazy var scrollView = UIScrollView()
 	private lazy var containerView = UIView()
 	
-	private lazy var segmentControl: UISegmentedControl = {
-		let segment = UISegmentedControl(items: ["По логину", "По номеру телефона"])
-		segment.addTarget(self, action: #selector(segmentControlChanged), for: .valueChanged)
-		segment.backgroundColor = .white
-		segment.selectedSegmentIndex = 0
-		segment.selectedSegmentTintColor = .appBlue
-		segment.setTitleTextAttributes([.foregroundColor: UIColor.white], for: .selected)
+//	private lazy var segmentControl: UISegmentedControl = {
+//		let segment = UISegmentedControl(items: ["По логину", "По номеру телефона"])
+//		segment.addTarget(self, action: #selector(segmentControlChanged), for: .valueChanged)
+//		segment.backgroundColor = .white
+//		segment.selectedSegmentIndex = 0
+//		segment.selectedSegmentTintColor = .appBlue
+//		segment.setTitleTextAttributes([.foregroundColor: UIColor.white], for: .selected)
+//		return segment
+//	}()
+	
+	private lazy var segmentControl: UnderlinedSegmentControl = {
+		let segment = UnderlinedSegmentControl(buttons: [
+			"По логину", "По номеру телефона"
+		])
+		segment.delegate = self
 		return segment
 	}()
 	
@@ -75,7 +83,7 @@ class ProfileViewController: UIViewController {
 		
 		segmentControl.snp.makeConstraints {
 			$0.top.equalToSuperview().offset(30)
-			$0.centerX.equalToSuperview()
+			$0.left.right.equalToSuperview().inset(0)
 		}
 
 		loginTextField.snp.makeConstraints {
@@ -177,6 +185,8 @@ class ProfileViewController: UIViewController {
 
 }
 
+// MARK: - UITextFieldDelegate
+
 extension ProfileViewController: UITextFieldDelegate {
 //	func textFieldDidBeginEditing(_ textField: UITextField) {
 //		scrollView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 500, right: 0)
@@ -189,5 +199,17 @@ extension ProfileViewController: UITextFieldDelegate {
 	func textFieldShouldReturn(_ textField: UITextField) -> Bool {
 		textField.resignFirstResponder()
 		return true
+	}
+}
+
+// MARK: - UnderlinedSegmentControlDelegate
+
+extension ProfileViewController: UnderlinedSegmentControlDelegate {
+	
+	func underlinedSegmentControl(_ control: UnderlinedSegmentControl, didChangeSelectedIndex index: Int) {
+		let isLoginAuth = index == 0
+		self.loginTextField.isHidden = !isLoginAuth
+		self.passwordTextField.isHidden = !isLoginAuth
+		self.phoneTextField.isHidden = isLoginAuth
 	}
 }

@@ -9,6 +9,7 @@
 import UIKit
 
 protocol CategoriesViewControllerDelegate: class {
+	func categoriesViewController(_ viewController: CategoriesViewController, didSelectCategory category: Category)
 	func categoriesViewController(_ viewController: CategoriesViewController, didSelectFilm film: Film)
 }
 
@@ -22,7 +23,7 @@ class CategoriesViewController: UIViewController {
 	private lazy var headerView: CategoriesHeaderView = {
 		let screenSize = UIScreen.main.bounds
 		let view = CategoriesHeaderView()
-		view.frame = CGRect(x: 0, y: 0, width: screenSize.width, height: screenSize.width / 1.49)
+		view.frame = CGRect(x: 0, y: 0, width: screenSize.width, height: screenSize.width / 2.1)
 		view.clipsToBounds = true
 		let url = URL(string: "https://photo.tvigle.ru/res/tvigle/slider/2019/09/03/6b5adfe1-c5db-4ac1-a3ed-c5db6d5fb10b.jpg")
 		view.setImage(with: url)
@@ -85,7 +86,11 @@ extension CategoriesViewController: UITableViewDelegate {
 	
 	func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
 		let header: CategoryHeaderSectionView = tableView.dequeueHeaderFooter()
-		header.fill(title: categories[section].title)
+		let category = categories[section]
+		header.fill(title: category.title)
+		header.onTap = {
+			self.delegate?.categoriesViewController(self, didSelectCategory: category)
+		}
 		return header
 	}
 	

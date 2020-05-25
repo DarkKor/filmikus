@@ -10,6 +10,10 @@ import UIKit
 
 class CategoryHeaderSectionView: ReusableTableHeaderFooterView {
 	
+	typealias OnTapAction = () -> Void
+	
+	var onTap: OnTapAction?
+	
 	private let labelTitle: UILabel = {
 		let label = UILabel()
 		label.font = .boldSystemFont(ofSize: 17)
@@ -52,7 +56,7 @@ class CategoryHeaderSectionView: ReusableTableHeaderFooterView {
 	
 	@objc
 	private func onButtonMoreTap(sender: UIButton) {
-		print("More")
+		onTap?()
 	}
 	
 }

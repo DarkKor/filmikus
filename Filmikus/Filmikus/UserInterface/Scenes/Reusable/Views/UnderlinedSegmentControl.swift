@@ -83,10 +83,10 @@ class UnderlinedSegmentControl: UIView {
 		let button = buttons[index]
 		var offsetX = button.frame.minX - scrollView.bounds.width / 2 + button.frame.width / 2
 		let minOffsetX: CGFloat = -scrollView.contentInset.left
-		let maxOffsetX: CGFloat = scrollView.contentSize.width + scrollView.contentInset.right - scrollView.frame.width
-		if offsetX <= minOffsetX {
+		let maxOffsetX: CGFloat = max(minOffsetX, scrollView.contentInset.right + scrollView.contentSize.width - scrollView.frame.width)
+		if offsetX < minOffsetX {
 			offsetX = minOffsetX
-		} else if offsetX >= maxOffsetX {
+		} else if offsetX > maxOffsetX {
 			offsetX = maxOffsetX
 		}
 		scrollView.setContentOffset(CGPoint(x: offsetX, y: 0), animated: true)

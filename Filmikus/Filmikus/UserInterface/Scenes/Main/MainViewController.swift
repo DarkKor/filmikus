@@ -183,6 +183,21 @@ class MainViewController: UIViewController {
 
 extension MainViewController: CategoriesViewControllerDelegate {
 	
+	func categoriesViewController(_ viewController: CategoriesViewController, didSelectCategory category: Category) {
+		switch category.title {
+		case "Популярное":
+			tabBarController?.selectedIndex = 1
+		case "Рекомендуем":
+			tabBarController?.selectedIndex = 1
+		case "Сериалы":
+			tabBarController?.selectedIndex = 2
+		case "Развлекательное видео":
+			tabBarController?.selectedIndex = 3
+		default:
+			break
+		}
+	}
+	
 	func categoriesViewController(_ viewController: CategoriesViewController, didSelectFilm film: Film) {
 		let detailFilmVC = DetailFilmViewController(film: film)
 		navigationController?.pushViewController(detailFilmVC, animated: true)
