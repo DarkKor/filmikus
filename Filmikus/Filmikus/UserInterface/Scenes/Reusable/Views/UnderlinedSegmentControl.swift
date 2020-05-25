@@ -8,17 +8,11 @@
 
 import UIKit
 
-protocol UnderlinedSegmentControlDelegate: class {
-	func underlinedSegmentControl(_ control: UnderlinedSegmentControl, didChangeSelectedIndex index: Int)
-}
-
-class UnderlinedSegmentControl: UIView {
-	
-	weak var delegate: UnderlinedSegmentControlDelegate?
-	
+class UnderlinedSegmentControl: UIControl {
+		
 	private(set) var selectedIndex: Int = 0 {
 		didSet {
-			delegate?.underlinedSegmentControl(self, didChangeSelectedIndex: selectedIndex)
+			sendActions(for: .valueChanged)
 		}
 	}
 	

@@ -14,21 +14,11 @@ class ProfileViewController: UIViewController {
 	private lazy var scrollView = UIScrollView()
 	private lazy var containerView = UIView()
 	
-//	private lazy var segmentControl: UISegmentedControl = {
-//		let segment = UISegmentedControl(items: ["По логину", "По номеру телефона"])
-//		segment.addTarget(self, action: #selector(segmentControlChanged), for: .valueChanged)
-//		segment.backgroundColor = .white
-//		segment.selectedSegmentIndex = 0
-//		segment.selectedSegmentTintColor = .appBlue
-//		segment.setTitleTextAttributes([.foregroundColor: UIColor.white], for: .selected)
-//		return segment
-//	}()
-	
 	private lazy var segmentControl: UnderlinedSegmentControl = {
 		let segment = UnderlinedSegmentControl(buttons: [
 			"По логину", "По номеру телефона"
 		])
-		segment.delegate = self
+		segment.addTarget(self, action: #selector(segmentControlChanged), for: .valueChanged)
 		return segment
 	}()
 	
@@ -165,11 +155,9 @@ class ProfileViewController: UIViewController {
 	}
 	
 	@objc
-	private func segmentControlChanged(sender: UISegmentedControl) {
-		let isLoginAuth = sender.selectedSegmentIndex == 0
-		self.loginTextField.isHidden = !isLoginAuth
-		self.passwordTextField.isHidden = !isLoginAuth
-		self.phoneTextField.isHidden = isLoginAuth
+	private func segmentControlChanged(sender: UnderlinedSegmentControl) {
+		let index = sender.selectedIndex
+		print(sender.buttons[index].title(for: .normal))
 	}
 	
 	@objc
@@ -199,17 +187,5 @@ extension ProfileViewController: UITextFieldDelegate {
 	func textFieldShouldReturn(_ textField: UITextField) -> Bool {
 		textField.resignFirstResponder()
 		return true
-	}
-}
-
-// MARK: - UnderlinedSegmentControlDelegate
-
-extension ProfileViewController: UnderlinedSegmentControlDelegate {
-	
-	func underlinedSegmentControl(_ control: UnderlinedSegmentControl, didChangeSelectedIndex index: Int) {
-		let isLoginAuth = index == 0
-		self.loginTextField.isHidden = !isLoginAuth
-		self.passwordTextField.isHidden = !isLoginAuth
-		self.phoneTextField.isHidden = isLoginAuth
 	}
 }

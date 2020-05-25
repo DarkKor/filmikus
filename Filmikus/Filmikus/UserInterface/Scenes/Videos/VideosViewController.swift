@@ -17,7 +17,7 @@ class VideosViewController: UIViewController {
 		let segment = UnderlinedSegmentControl(buttons: [
 			"Все видео", "Авто-шоу", "Lifestyle", "Красота", "Мода"
 		])
-		segment.delegate = self
+		segment.addTarget(self, action: #selector(segmentControlChanged), for: .valueChanged)
 		return segment
 	}()
 
@@ -132,17 +132,13 @@ class VideosViewController: UIViewController {
 		}
 		scrollView.contentSize.height = filmsHeight + segmentControl.frame.height
 	}
-}
-
-// MARK: - UnderlinedSegmentControlDelegate
-
-extension VideosViewController: UnderlinedSegmentControlDelegate {
 	
-	func underlinedSegmentControl(_ control: UnderlinedSegmentControl, didChangeSelectedIndex index: Int) {
-		print(control.buttons[index].title(for: .normal))
+	@objc
+	private func segmentControlChanged(sender: UnderlinedSegmentControl) {
+		let index = sender.selectedIndex
+		print(sender.buttons[index].title(for: .normal)!)
 	}
 }
-
 
 // MARK: - VideoCategoriesViewControllerDelegate
 
