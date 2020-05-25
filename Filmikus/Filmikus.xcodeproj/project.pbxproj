@@ -51,6 +51,7 @@
 		49684ACA2476A78000E9BADC /* VideosCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49684AC92476A78000E9BADC /* VideosCollectionViewController.swift */; };
 		49684ACC2476D20A00E9BADC /* LoadingCollectionFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49684ACB2476D20A00E9BADC /* LoadingCollectionFooterView.swift */; };
 		49684AD8247ABAF000E9BADC /* FilmsFilterCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49684AD7247ABAF000E9BADC /* FilmsFilterCollectionViewCell.swift */; };
+		49907C3D247BD3C400E201B6 /* FilmAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49907C3C247BD3C400E201B6 /* FilmAPI.swift */; };
 		DBB5AD7EDA6B8BBB5543CBB9 /* Pods_Filmikus.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 97F5ACE358500956AF72C9A2 /* Pods_Filmikus.framework */; };
 /* End PBXBuildFile section */
 
@@ -102,6 +103,7 @@
 		49684AC92476A78000E9BADC /* VideosCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideosCollectionViewController.swift; sourceTree = "<group>"; };
 		49684ACB2476D20A00E9BADC /* LoadingCollectionFooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingCollectionFooterView.swift; sourceTree = "<group>"; };
 		49684AD7247ABAF000E9BADC /* FilmsFilterCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilmsFilterCollectionViewCell.swift; sourceTree = "<group>"; };
+		49907C3C247BD3C400E201B6 /* FilmAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilmAPI.swift; sourceTree = "<group>"; };
 		5F55A71C0021F60EFFD15EA6 /* Pods-Filmikus.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Filmikus.debug.xcconfig"; path = "Target Support Files/Pods-Filmikus/Pods-Filmikus.debug.xcconfig"; sourceTree = "<group>"; };
 		97F5ACE358500956AF72C9A2 /* Pods_Filmikus.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Filmikus.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -188,6 +190,7 @@
 		491C21A4246416D7007CDEC2 /* DataAccess */ = {
 			isa = PBXGroup;
 			children = (
+				49907C3C247BD3C400E201B6 /* FilmAPI.swift */,
 			);
 			path = DataAccess;
 			sourceTree = "<group>";
@@ -540,6 +543,7 @@
 				491C21AA24641ADD007CDEC2 /* TabBarController.swift in Sources */,
 				49684ABD247675CF00E9BADC /* VideoCategoryCollectionViewCell.swift in Sources */,
 				491C21BC246424A8007CDEC2 /* CategoryTableViewCell.swift in Sources */,
+				49907C3D247BD3C400E201B6 /* FilmAPI.swift in Sources */,
 				49684A912472F2D000E9BADC /* String+SelectableItem.swift in Sources */,
 				49684A69246AF49100E9BADC /* FilmsViewController.swift in Sources */,
 				49684A62246ACDDA00E9BADC /* BlueButton.swift in Sources */,

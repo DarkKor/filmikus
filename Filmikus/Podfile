@@ -7,5 +7,5 @@ target 'Filmikus' do
 
   pod 'SnapKit'
   pod 'Kingfisher'
-
+  pod 'Moya'
 end
