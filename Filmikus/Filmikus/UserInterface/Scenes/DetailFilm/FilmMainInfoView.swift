@@ -54,7 +54,14 @@ class FilmMainInfoView: UIView {
 	
 	func fill(film: Film) {
 		let imageUrl = URL(string: film.imageUrl)
-		posterImageView.kf.setImage(with: imageUrl)
+		posterImageView.kf.indicatorType = .activity
+		posterImageView.kf.setImage(
+			with: imageUrl,
+			placeholder: nil,
+			options: [
+				.transition(.fade(0.25))
+			]
+		)
 		titleLabel.text = film.title
 		ratingLabel.text = "8.8"
 		genresLabel.text = film.genres.first

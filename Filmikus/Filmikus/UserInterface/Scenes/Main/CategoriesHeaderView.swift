@@ -28,6 +28,13 @@ class CategoriesHeaderView: UIView {
 	}
 	
 	func setImage(with url: URL?) {
-		imageView.kf.setImage(with: url)
+		imageView.kf.indicatorType = .activity
+		imageView.kf.setImage(
+			with: url,
+			placeholder: nil,
+			options: [
+				.transition(.fade(0.25))
+			]
+		)
 	}
 }

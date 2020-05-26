@@ -46,7 +46,14 @@ class VideoCollectionViewCell: ReusableCollectionViewCell {
 	
 	func fill(video: Video) {
 		let imageUrl = URL(string: video.imageUrl)
-		imageView.kf.setImage(with: imageUrl)
+		imageView.kf.indicatorType = .activity
+		imageView.kf.setImage(
+			with: imageUrl,
+			placeholder: nil,
+			options: [
+				.transition(.fade(0.25))
+			]
+		)
 		titleLabel.text = video.title
 	}
 }

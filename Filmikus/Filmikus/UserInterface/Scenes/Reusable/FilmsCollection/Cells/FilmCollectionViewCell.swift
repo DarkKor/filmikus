@@ -22,7 +22,7 @@ class FilmCollectionViewCell: ReusableCollectionViewCell {
 		layer.shadowOpacity = 0.3
 		layer.shadowRadius = 5
 		labelTitle.font = .boldSystemFont(ofSize: 14)
-
+		imageView.backgroundColor = .appLightGray
 		contentView.addSubview(imageView)
 		contentView.addSubview(labelTitle)
 
@@ -49,7 +49,14 @@ class FilmCollectionViewCell: ReusableCollectionViewCell {
 	
 	func fill(film: Film) {
 		let url = URL(string: film.imageUrl)
-		imageView.kf.setImage(with: url)
+		imageView.kf.indicatorType = .activity
+		imageView.kf.setImage(
+			with: url,
+			placeholder: nil,
+			options: [
+				.transition(.fade(0.25))
+			]
+		)
 		labelTitle.text = film.title
 	}
 }
