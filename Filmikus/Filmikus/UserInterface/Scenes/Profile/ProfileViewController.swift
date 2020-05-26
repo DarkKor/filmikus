@@ -156,8 +156,10 @@ class ProfileViewController: UIViewController {
 	
 	@objc
 	private func segmentControlChanged(sender: UnderlinedSegmentControl) {
-		let index = sender.selectedIndex
-		print(sender.buttons[index].title(for: .normal))
+		let isLoginAuth = sender.selectedIndex == 0
+		self.loginTextField.isHidden = !isLoginAuth
+		self.passwordTextField.isHidden = !isLoginAuth
+		self.phoneTextField.isHidden = isLoginAuth
 	}
 	
 	@objc
@@ -176,13 +178,6 @@ class ProfileViewController: UIViewController {
 // MARK: - UITextFieldDelegate
 
 extension ProfileViewController: UITextFieldDelegate {
-//	func textFieldDidBeginEditing(_ textField: UITextField) {
-//		scrollView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 500, right: 0)
-//	}
-//
-//	func textFieldDidEndEditing(_ textField: UITextField) {
-//		scrollView.contentInset = .zero
-//	}
 	
 	func textFieldShouldReturn(_ textField: UITextField) -> Bool {
 		textField.resignFirstResponder()

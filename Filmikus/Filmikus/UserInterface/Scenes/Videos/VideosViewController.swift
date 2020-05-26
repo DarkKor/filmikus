@@ -9,22 +9,10 @@
 import UIKit
 
 class VideosViewController: UIViewController {
-	
-	private lazy var scrollView = UIScrollView()
-	private lazy var containerView = UIView()
-	
-	private lazy var segmentControl: UnderlinedSegmentControl = {
-		let segment = UnderlinedSegmentControl(buttons: [
-			"Все видео", "Авто-шоу", "Lifestyle", "Красота", "Мода"
-		])
-		segment.addTarget(self, action: #selector(segmentControlChanged), for: .valueChanged)
-		return segment
-	}()
 
 	private lazy var videoCategoriesViewController: VideoCategoriesViewController = {
 		let viewController = VideoCategoriesViewController()
 		viewController.delegate = self
-		viewController.collectionView.isScrollEnabled = false
 		return viewController
 	}()
 	
@@ -32,37 +20,12 @@ class VideosViewController: UIViewController {
 		view = UIView()
 		view.backgroundColor = .appLightGray
 		
-		view.addSubview(scrollView)
-		scrollView.addSubview(containerView)
-		
-		containerView.addSubview(segmentControl)
 		addChild(videoCategoriesViewController)
-		containerView.addSubview(videoCategoriesViewController.view)
+		view.addSubview(videoCategoriesViewController.view)
 		videoCategoriesViewController.didMove(toParent: self)
 		
-		scrollView.showsVerticalScrollIndicator = false
-		scrollView.translatesAutoresizingMaskIntoConstraints = false
-		let frameGuide = scrollView.frameLayoutGuide
-		let contentGuide = scrollView.contentLayoutGuide
-		
-		frameGuide.snp.makeConstraints {
-			$0.edges.equalTo(view)
-			$0.width.equalTo(contentGuide)
-		}
-		
-		containerView.snp.makeConstraints {
-			$0.edges.equalTo(contentGuide)
-		}
-		
-		segmentControl.snp.makeConstraints {
-			$0.top.left.right.equalToSuperview()
-		}
-		
 		videoCategoriesViewController.view.snp.makeConstraints {
-			$0.top.equalTo(segmentControl.snp.bottom)
-			$0.left.right.bottom.equalToSuperview()
-			$0.height.equalTo(100)
-//			$0.edges.equalToSuperview()
+			$0.edges.equalToSuperview()
 		}
 	}
 	
@@ -120,18 +83,6 @@ class VideosViewController: UIViewController {
 		
 		videoCategoriesViewController.update(categories: videoCategories)
     }
-    
-	override func viewWillLayoutSubviews() {
-		super.viewWillLayoutSubviews()
-		
-		let filmsHeight = videoCategoriesViewController.collectionView.contentSize.height
-		if filmsHeight > 0 {
-			videoCategoriesViewController.view.snp.updateConstraints {
-				$0.height.equalTo(filmsHeight)
-			}
-		}
-		scrollView.contentSize.height = filmsHeight + segmentControl.frame.height
-	}
 	
 	@objc
 	private func segmentControlChanged(sender: UnderlinedSegmentControl) {

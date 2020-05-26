@@ -22,6 +22,7 @@ class VideoCategoriesViewController: UIViewController {
 		let layout = UICollectionViewFlowLayout()
 		layout.scrollDirection = .vertical
 		layout.sectionInset = UIEdgeInsets(top: 12, left: 12, bottom: 12, right: 12)
+		layout.headerReferenceSize.height = 44
 		return layout
 	}()
 	
@@ -31,6 +32,11 @@ class VideoCategoriesViewController: UIViewController {
 		collection.dataSource = self
 		collection.showsVerticalScrollIndicator = false
 		collection.register(cell: VideoCategoryCollectionViewCell.self)
+		collection.register(
+			VideoCategoryHeaderSectionView.self,
+			forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
+			withReuseIdentifier: VideoCategoryHeaderSectionView.reuseId
+		)
 		return collection
 	}()
 	
@@ -44,13 +50,6 @@ class VideoCategoriesViewController: UIViewController {
 
         // Do any additional setup after loading the view.
     }
-	
-	override func viewWillLayoutSubviews() {
-		super.viewWillLayoutSubviews()
-		let width = (collectionView.bounds.size.width - 12 * 2)
-		let height = width / 1.49
-		collectionLayout.itemSize = CGSize(width: width, height: height)
-	}
 	
 	func update(categories: [VideoCategory]) {
 		self.categories = categories
@@ -78,8 +77,32 @@ extension VideoCategoriesViewController: UICollectionViewDataSource {
 
 extension VideoCategoriesViewController: UICollectionViewDelegate {
 	
+	func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+		switch kind {
+		case UICollectionView.elementKindSectionHeader:
+			let headerView = collectionView.dequeueReusableSupplementaryView(
+				ofKind: kind,
+				withReuseIdentifier: VideoCategoryHeaderSectionView.reuseId,
+				for: indexPath
+			)
+			return headerView
+		default:
+			return UICollectionReusableView()
+		}
+	}
+	
 	func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
 		let category = categories[indexPath.item]
 		delegate?.videoCategoriesViewController(self, didSelectCategory: category)
+	}
+}
+
+extension VideoCategoriesViewController: UICollectionViewDelegateFlowLayout {
+	
+	func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+		let padding = collectionLayout.sectionInset.left + collectionLayout.sectionInset.right
+		let width = (collectionView.bounds.size.width - padding)
+		let height = width / 1.49
+		return CGSize(width: width, height: height)
 	}
 }
