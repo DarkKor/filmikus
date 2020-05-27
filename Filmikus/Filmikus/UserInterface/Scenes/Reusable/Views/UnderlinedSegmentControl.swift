@@ -60,10 +60,12 @@ class UnderlinedSegmentControl: UIControl {
 	override func layoutSubviews() {
 		super.layoutSubviews()
 		scrollView.frame = bounds
-		let maxButtonWidth: CGFloat = buttons.map { $0.intrinsicContentSize.width }.reduce(0, { max($0, $1) })
-		let buttonSize = CGSize(width: maxButtonWidth + 10, height: scrollView.frame.size.height)
+//		let maxButtonWidth: CGFloat = buttons.map { $0.intrinsicContentSize.width }.reduce(0, { max($0, $1) })
+//		let buttonSize = CGSize(width: maxButtonWidth + 10, height: scrollView.frame.size.height)
 		var x: CGFloat = 0
 		for index in buttons.indices {
+			let maxButtonWidth: CGFloat = buttons[index].intrinsicContentSize.width
+			let buttonSize = CGSize(width: maxButtonWidth + 10, height: scrollView.frame.size.height)
 			buttons[index].frame = CGRect(origin: CGPoint(x: x, y: 0), size: buttonSize)
 			if index == selectedIndex {
 				underlinedView.frame = CGRect(x: x, y: buttonSize.height - 2, width: buttonSize.width, height: 2)
@@ -95,6 +97,7 @@ class UnderlinedSegmentControl: UIControl {
 				selectedIndex = index
 				UIView.animate(withDuration: 0.25) {
 					self.underlinedView.frame.origin.x = button.frame.minX
+					self.underlinedView.frame.size.width = button.frame.width
 				}
 				scrollTo(index: index)
 			}

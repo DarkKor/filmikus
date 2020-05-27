@@ -32,8 +32,12 @@ class SelectItemViewController<Item: SelectableItem>: UITableViewController {
 	
 	override func viewDidLoad() {
 		super.viewDidLoad()
+		tableView.backgroundColor = .appLightGray
+		tableView.separatorInset = .zero
+		tableView.tableFooterView = UIView()
 		tableView.register(cell: ReusableTableViewCell.self)
 		navigationItem.largeTitleDisplayMode = .never
+		
 	}
 	
 	// MARK: - UITableViewDataSource

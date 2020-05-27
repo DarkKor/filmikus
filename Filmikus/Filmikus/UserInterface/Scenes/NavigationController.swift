@@ -20,13 +20,13 @@ class NavigationController: UINavigationController {
 		switch gradientStyle {
 		case .orangePurple:
 			gradientColor = self.gradientColor(
-				from: UIColor(red: 238, green: 135, blue: 85),
-				to: UIColor(red: 103, green: 56, blue: 162)
+				from: .appPeach,
+				to: .appViolet
 			)
 		case .bluePurple:
 			gradientColor = self.gradientColor(
-				from: UIColor(red: 81, green: 87, blue: 206),
-				to: UIColor(red: 94, green: 53, blue: 165)
+				from: .appGBlue,
+				to: .appGViolet
 			)
 		}
 		

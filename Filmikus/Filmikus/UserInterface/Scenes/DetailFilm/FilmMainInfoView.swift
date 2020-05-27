@@ -11,45 +11,49 @@ import SnapKit
 
 class FilmMainInfoView: UIView {
 
-	private lazy var posterImageView = UIImageView()
-	private lazy var titleLabel = UILabel()
-	private lazy var ratingLabel = UILabel()
-	private lazy var genresLabel = UILabel()
-	private lazy var countryLabel = UILabel()
+	private let posterImageView = UIImageView()
+	private lazy var stackView: UIStackView = {
+		let stack = UIStackView(arrangedSubviews: [
+			titleLabel, ratingLabel, genresLabel, countryLabel
+		])
+		stack.distribution = .equalSpacing
+		stack.axis = .vertical
+		return stack
+	}()
+	private let titleLabel = UILabel()
+	private let ratingLabel = UILabel()
+	private let genresLabel = UILabel()
+	private let countryLabel = UILabel()
 	
 	init() {
 		super.init(frame: .zero)
 		
+		titleLabel.font = .boldSystemFont(ofSize: 17)
+		ratingLabel.textColor = .systemOrange
+		
 		addSubview(posterImageView)
-		addSubview(titleLabel)
-		addSubview(ratingLabel)
-		addSubview(genresLabel)
-		addSubview(countryLabel)
+		addSubview(stackView)
 
 		posterImageView.snp.makeConstraints {
 			$0.top.left.bottom.equalToSuperview()
-			$0.width.equalToSuperview().multipliedBy(0.25)
+			$0.width.equalToSuperview().multipliedBy(0.33)
+			$0.height.equalTo(posterImageView.snp.width).multipliedBy(1.49)
 		}
-		titleLabel.snp.makeConstraints {
-			$0.left.equalTo(posterImageView.snp.right).offset(10)
-			$0.top.right.equalToSuperview()
-		}
-		ratingLabel.snp.makeConstraints {
-			$0.top.equalTo(titleLabel.snp.bottom).offset(5)
-			$0.left.equalTo(posterImageView.snp.right).offset(10)
-		}
-		genresLabel.snp.makeConstraints {
-			$0.top.equalTo(ratingLabel.snp.bottom).offset(5)
-			$0.left.equalTo(posterImageView.snp.right).offset(10)
-		}
-		countryLabel.snp.makeConstraints {
-			$0.top.equalTo(genresLabel.snp.bottom).offset(5)
-			$0.left.equalTo(posterImageView.snp.right).offset(10)
+		stackView.snp.makeConstraints {
+			$0.left.equalTo(posterImageView.snp.right).offset(20)
+			$0.centerY.right.equalToSuperview()
+			$0.height.equalTo(posterImageView).multipliedBy(0.8)
 		}
 	}
 	
 	required init?(coder: NSCoder) {
 		fatalError("init(coder:) has not been implemented")
+	}
+	
+	override func layoutSubviews() {
+		super.layoutSubviews()
+		
+		posterImageView.rounded(radius: posterImageView.frame.height / 16)
 	}
 	
 	func fill(film: Film) {
@@ -63,7 +67,7 @@ class FilmMainInfoView: UIView {
 			]
 		)
 		titleLabel.text = film.title
-		ratingLabel.text = "8.8"
+		ratingLabel.text = "⭐️8.8"
 		genresLabel.text = film.genres.first
 		countryLabel.text = film.country
 	}

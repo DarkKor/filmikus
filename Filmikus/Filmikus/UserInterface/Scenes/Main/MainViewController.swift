@@ -41,7 +41,16 @@ class MainViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 		navigationItem.searchController = searchController
-
+		let textField = searchController.searchBar.searchTextField
+		textField.backgroundColor = UIColor.appDarkBlue.withAlphaComponent(0.3)
+		textField.attributedPlaceholder = NSAttributedString(string: "Поиск", attributes: [.foregroundColor : UIColor.white])
+		textField.textColor = .white
+		if let leftView = textField.leftView as? UIImageView {
+			leftView.image = leftView.image?.withRenderingMode(.alwaysTemplate)
+			leftView.tintColor = UIColor.white
+		}
+		
+		
 		title = "Главная"
 		
 		let categories = [

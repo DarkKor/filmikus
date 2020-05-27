@@ -40,4 +40,20 @@ extension UIColor {
 	static var appGrayText: UIColor {
 		UIColor(named: "appGrayText")!
 	}
+	
+	static var appPeach: UIColor {
+		UIColor(named: "appPeach")!
+	}
+	
+	static var appViolet: UIColor {
+		UIColor(named: "appViolet")!
+	}
+	
+	static var appGBlue: UIColor {
+		UIColor(named: "appGBlue")!
+	}
+	
+	static var appGViolet: UIColor {
+		UIColor(named: "appGViolet")!
+	}
 }

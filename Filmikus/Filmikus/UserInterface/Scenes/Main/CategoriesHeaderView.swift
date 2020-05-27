@@ -15,7 +15,7 @@ class CategoriesHeaderView: UIView {
 	init() {
 		super.init(frame: .zero)
 		
-		backgroundColor = .appLightGray
+		imageView.backgroundColor = .appLightGray
 		
 		addSubview(imageView)
 		imageView.snp.makeConstraints {

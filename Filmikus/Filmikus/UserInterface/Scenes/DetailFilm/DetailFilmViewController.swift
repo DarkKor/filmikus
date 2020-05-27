@@ -16,11 +16,15 @@ class DetailFilmViewController: UIViewController {
 	private lazy var scrollView = UIScrollView()
 	private lazy var containerView = UIView()
 	private lazy var webView = WKWebView()
+	private lazy var authRequiredView = AuthRequiredView()
 	private lazy var mainInfoView = FilmMainInfoView()
+	
+	private lazy var separatorView = UIView()
 	
 	private lazy var directorsLabel = UILabel()
 	private lazy var actorsLabel = UILabel()
 	private lazy var descriptionLabel = UILabel()
+	private lazy var showFilmButton = BlueButton(title: "СМОТРЕТЬ ФИЛЬМ", target: self, action: #selector(onShowFilmButtonTap))
 
 	init(film: Film) {
 		self.film = film
@@ -34,7 +38,9 @@ class DetailFilmViewController: UIViewController {
 	override func loadView() {
 		view = UIView()
 		view.backgroundColor = .white
+		webView.isHidden = true
 		webView.scrollView.isScrollEnabled = false
+		separatorView.backgroundColor = .separator
 		webView.backgroundColor = .systemRed
 		directorsLabel.numberOfLines = 0
 		actorsLabel.numberOfLines = 0
@@ -43,10 +49,13 @@ class DetailFilmViewController: UIViewController {
 		view.addSubview(scrollView)
 		scrollView.addSubview(containerView)
 		containerView.addSubview(webView)
+		containerView.addSubview(authRequiredView)
 		containerView.addSubview(mainInfoView)
+		containerView.addSubview(separatorView)
 		containerView.addSubview(directorsLabel)
 		containerView.addSubview(actorsLabel)
 		containerView.addSubview(descriptionLabel)
+		containerView.addSubview(showFilmButton)
 		
 		scrollView.translatesAutoresizingMaskIntoConstraints = false
 		let frameGuide = scrollView.frameLayoutGuide
@@ -64,13 +73,21 @@ class DetailFilmViewController: UIViewController {
 			$0.leading.trailing.top.equalToSuperview().inset(16)
 			$0.height.equalTo(200)
 		}
+		authRequiredView.snp.makeConstraints {
+			$0.left.top.right.equalToSuperview()
+//			$0.height.equalTo(200)
+		}
 		mainInfoView.snp.makeConstraints {
-			$0.top.equalTo(webView.snp.bottom).offset(10)
+			$0.top.equalTo(authRequiredView.snp.bottom).offset(10)
 			$0.left.right.equalToSuperview().inset(16)
-			$0.height.equalTo(150)
+		}
+		separatorView.snp.makeConstraints {
+			$0.top.equalTo(mainInfoView.snp.bottom).offset(10)
+			$0.left.right.equalToSuperview()
+			$0.height.equalTo(1)
 		}
 		directorsLabel.snp.makeConstraints {
-			$0.top.equalTo(mainInfoView.snp.bottom).offset(10)
+			$0.top.equalTo(separatorView.snp.bottom).offset(10)
 			$0.leading.trailing.equalToSuperview().inset(16)
 		}
 		actorsLabel.snp.makeConstraints {
@@ -79,7 +96,13 @@ class DetailFilmViewController: UIViewController {
 		}
 		descriptionLabel.snp.makeConstraints {
 			$0.top.equalTo(actorsLabel.snp.bottom).offset(10)
-			$0.leading.trailing.bottom.equalToSuperview().inset(16)
+			$0.leading.trailing.equalToSuperview().inset(16)
+		}
+		showFilmButton.snp.makeConstraints {
+			$0.top.equalTo(descriptionLabel.snp.bottom).offset(10)
+			$0.centerX.equalToSuperview()
+			$0.bottom.left.right.equalToSuperview().inset(16)
+			$0.height.equalTo(44)
 		}
 
 	}
@@ -128,5 +151,10 @@ class DetailFilmViewController: UIViewController {
 		let result = NSMutableAttributedString(attributedString: grayAttributed)
 		result.append(blackAttributed)
 		return result
+	}
+	
+	@objc
+	private func onShowFilmButtonTap(sender: UIButton) {
+		
 	}
 }
