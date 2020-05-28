@@ -64,6 +64,15 @@ class MainViewController: UIViewController {
 			leftView.tintColor = UIColor.white
 		}
 		loadData()
+		
+		let categoriesService = VideosService()
+		var filter = FilterModel()
+		filter.categoryId = 2
+//		filter.startDate
+		categoriesService.getMovies(with: filter) { (result) in
+			let a = try? result.get()
+			print(a)
+		}
     }
 	
 	private func loadData() {
@@ -81,25 +90,22 @@ class MainViewController: UIViewController {
 		let dispatchGroup = DispatchGroup()
 		
 		dispatchGroup.enter()
-		mainService.getPopular { [weak self] result in
+		mainService.getPopular { result in
 			dispatchGroup.leave()
-			guard let self = self else { return }
 			guard let movies = try? result.get() else { return }
 			categories[0].movies = movies
 		}
 		
 		dispatchGroup.enter()
-		mainService.getRecommendations { [weak self] result in
+		mainService.getRecommendations { result in
 			dispatchGroup.leave()
-			guard let self = self else { return }
 			guard let movies = try? result.get() else { return }
 			categories[1].movies = movies
 		}
 		
 		dispatchGroup.enter()
-		mainService.getSeries { [weak self] result in
+		mainService.getSeries { result in
 			dispatchGroup.leave()
-			guard let self = self else { return }
 			guard let movies = try? result.get() else { return }
 			categories[2].movies = movies
 		}

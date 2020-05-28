@@ -6,7 +6,7 @@
 //  Copyright © 2020 Андрей Козлов. All rights reserved.
 //
 
-enum MovieType: Int, Codable {
+enum MovieType: Int, Decodable {
 	case film = 1
 	case serial = 2
 	case fun = 3

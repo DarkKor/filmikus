@@ -48,7 +48,7 @@ class MovieCollectionViewCell: ReusableCollectionViewCell {
 	}
 	
 	func fill(movie: MovieModel) {
-		let url = URL(string: movie.imageUrl)
+		let url = URL(string: movie.imageUrl ?? "")
 		imageView.kf.indicatorType = .activity
 		imageView.kf.setImage(
 			with: url,

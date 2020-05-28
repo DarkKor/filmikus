@@ -57,7 +57,7 @@ class MovieMainInfoView: UIView {
 	}
 	
 	func fill(movie: MovieModel) {
-		let imageUrl = URL(string: movie.imageUrl)
+		let imageUrl = URL(string: movie.imageUrl ?? "")
 		posterImageView.kf.indicatorType = .activity
 		posterImageView.kf.setImage(
 			with: imageUrl,

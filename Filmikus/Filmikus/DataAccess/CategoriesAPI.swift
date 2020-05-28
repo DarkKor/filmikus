@@ -1,36 +1,33 @@
 //
-//  MainAPI.swift
+//  CategoriesAPI.swift
 //  Filmikus
 //
-//  Created by Андрей Козлов on 27.05.2020.
+//  Created by Андрей Козлов on 28.05.2020.
 //  Copyright © 2020 Андрей Козлов. All rights reserved.
 //
 
 import Moya
 
-enum MainAPI {
-	case slider
-	case popular
-	case recommendations
+enum CategoriesAPI {
+	case movies
 	case series
+	case fun
 }
 
-extension MainAPI: TargetType {
+extension CategoriesAPI: TargetType {
 	
 	var baseURL: URL {
-		URL(string: "https://api.filmikus.com/v1/main")!
+		URL(string: "https://api.filmikus.com/v1/categories")!
 	}
 	
 	var path: String {
 		switch self {
-		case .slider:
-			return "/slider"
-		case .popular:
-			return "/popular"
-		case .recommendations:
-			return "/recommendations"
+		case .movies:
+			return "/movies"
 		case .series:
 			return "/series"
+		case .fun:
+			return "/fun"
 		}
 	}
 	

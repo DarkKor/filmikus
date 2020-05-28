@@ -6,7 +6,7 @@
 //  Copyright © 2020 Андрей Козлов. All rights reserved.
 //
 
-struct SliderModel: Codable {
+struct SliderModel: Decodable {
 	let id: Int
 	let type: MovieType
 	let imageUrl: String

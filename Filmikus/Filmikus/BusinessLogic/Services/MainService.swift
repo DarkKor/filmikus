@@ -17,9 +17,9 @@ protocol MainServiceType: class {
 
 class MainService: MainServiceType {
 		
-	private let provider: MoyaProvider<MainApi>
+	private let provider: MoyaProvider<MainAPI>
 	
-	init(provider: MoyaProvider<MainApi> = MoyaProvider<MainApi>()) {
+	init(provider: MoyaProvider<MainAPI> = MoyaProvider<MainAPI>()) {
 		self.provider = provider
 	}
 	

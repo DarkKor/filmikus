@@ -6,10 +6,10 @@
 //  Copyright © 2020 Андрей Козлов. All rights reserved.
 //
 
-struct MovieModel: Codable {
+struct MovieModel: Decodable {
 	let id: Int
 	let title: String
-	let imageUrl: String
+	let imageUrl: String?
 	let type: MovieType
 	
 	enum CodingKeys: String, CodingKey {
