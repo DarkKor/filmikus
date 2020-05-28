@@ -9,5 +9,5 @@
 enum MovieType: Int, Decodable {
 	case film = 1
 	case serial = 2
-	case fun = 3
+	case funShow = 3
 }

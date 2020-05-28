@@ -9,10 +9,10 @@
 import Moya
 
 protocol VideosServiceType {
-	func getMovies(with filter: FilterModel, completion: @escaping (Result<MoviesModel, Error>) -> Void)
-	func getSeries(with filter: FilterModel, completion: @escaping (Result<MoviesModel, Error>) -> Void)
-	func getFun(with filter: FilterModel, completion: @escaping (Result<MoviesModel, Error>) -> Void)
+	func getMovies(of type: MovieType, with filter: FilterModel, completion: @escaping (Result<MoviesModel, Error>) -> Void)
 	func searchMovies(query: String, completion:  @escaping (Result<[MovieModel], Error>) -> Void)
+	func detailMovie(of type: MovieType, id: Int, completion:  @escaping (Result<DetailMovieModel, Error>) -> Void)
+	func detailEpisode(id: Int, completion:  @escaping (Result<DetailEpisodeModel, Error>) -> Void)
 }
 
 class VideosService: VideosServiceType {
@@ -23,28 +23,8 @@ class VideosService: VideosServiceType {
 		self.provider = provider
 	}
 	
-	func getMovies(with filter: FilterModel, completion: @escaping (Result<MoviesModel, Error>) -> Void) {
-		provider.request(.movies(filter: filter)) { (result) in
-			completion(
-				result.mapError { $0 }.flatMap { response in
-					Result { try response.map(MoviesModel.self) }
-				}
-			)
-		}
-	}
-	
-	func getSeries(with filter: FilterModel, completion: @escaping (Result<MoviesModel, Error>) -> Void) {
-		provider.request(.series(filter: filter)) { (result) in
-			completion(
-				result.mapError { $0 }.flatMap { response in
-					Result { try response.map(MoviesModel.self) }
-				}
-			)
-		}
-	}
-	
-	func getFun(with filter: FilterModel, completion: @escaping (Result<MoviesModel, Error>) -> Void) {
-		provider.request(.fun(filter: filter)) { (result) in
+	func getMovies(of type: MovieType, with filter: FilterModel, completion: @escaping (Result<MoviesModel, Error>) -> Void) {
+		provider.request(.filteredList(type: type, filter: filter)) { (result) in
 			completion(
 				result.mapError { $0 }.flatMap { response in
 					Result { try response.map(MoviesModel.self) }

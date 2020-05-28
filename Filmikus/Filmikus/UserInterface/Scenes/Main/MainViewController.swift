@@ -69,7 +69,7 @@ class MainViewController: UIViewController {
 		var filter = FilterModel()
 		filter.categoryId = 2
 //		filter.startDate
-		categoriesService.getMovies(with: filter) { (result) in
+		categoriesService.getMovies(of: .film, with: filter) { (result) in
 			let a = try? result.get()
 			print(a)
 		}

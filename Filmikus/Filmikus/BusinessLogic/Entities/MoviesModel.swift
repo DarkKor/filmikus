@@ -18,7 +18,3 @@ struct MoviesModel: Decodable {
 		items = try container.decode([MovieItem].self, forKey: CodingKeys.items)
 	}
 }
-
-struct MovieItem: Decodable {
-	let id: Int
-}
