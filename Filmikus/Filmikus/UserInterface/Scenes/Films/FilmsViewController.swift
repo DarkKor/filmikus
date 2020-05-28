@@ -10,8 +10,8 @@ import UIKit
 
 class FilmsViewController: UIViewController {
 	
-	private lazy var filmsCollectionViewController: FilmsCollectionViewController = {
-		let viewController = FilmsCollectionViewController()
+	private lazy var filmsCollectionViewController: MoviesCollectionViewController = {
+		let viewController = MoviesCollectionViewController()
 		viewController.delegate = self
 		return viewController
 	}()
@@ -33,81 +33,6 @@ class FilmsViewController: UIViewController {
         super.viewDidLoad()
 		
 		title = "Фильмы"
-		let films = [
-			Film(
-				imageUrl: "https://filmikus.com/images/1/30/middle/img.jpg",
-				title: "1+1",
-				genres: ["Комедия", "Драма"],
-				country: "Франция",
-				year: "2011",
-				censorship: .sixteenPlus
-			),
-			Film(
-				imageUrl: "https://filmikus.com/images/1/676/middle/img.jpg",
-				title: "Девочка и дельфин",
-				genres: ["Мультфильм"],
-				country: "СССР",
-				year: "1979",
-				censorship: .eighteenPlus
-			),
-			Film(
-				imageUrl: "https://filmikus.com/images/1/446/middle/img.jpg",
-				title: "Женщины",
-				genres: ["Драма", "Мелодрама"],
-				country: "СССР",
-				year: "1965",
-				censorship: .eighteenPlus
-			),
-			Film(
-				imageUrl: "https://filmikus.com/images/1/331/middle/img.jpg",
-				title: "Шинель",
-				genres: ["Драма"],
-				country: "СССР",
-				year: "1959",
-				censorship: .eighteenPlus
-			),
-			Film(
-				imageUrl: "https://filmikus.com/images/1/447/middle/img.jpg",
-				title: "Доживем до понедельника",
-				genres: ["Драма", "Мелодрама"],
-				country: "СССР",
-				year: "1968",
-				censorship: .sixteenPlus
-			),
-			Film(
-				imageUrl: "https://filmikus.com/images/1/448/middle/img.jpg",
-				title: "Дело было в Пенькове",
-				genres: ["Биография", "Драма"],
-				country: "СССР",
-				year: "1957",
-				censorship: .twelvePlus
-			),
-			Film(
-				imageUrl: "https://filmikus.com/images/1/449/middle/img.jpg",
-				title: "Варвара-краса",
-				genres: ["Комедия", "Драма"],
-				country: "СССР",
-				year: "1970",
-				censorship: .twelvePlus
-			),
-			Film(
-				imageUrl: "https://filmikus.com/images/1/450/middle/img.jpg",
-				title: "Добровольцы",
-				genres: ["Боевик", "Военный"],
-				country: "СССР",
-				year: "1958",
-				censorship: .sixteenPlus
-			),
-			Film(
-				imageUrl: "https://filmikus.com/images/1/454/middle/img.jpg",
-				title: "Евдокия",
-				genres: ["Драма"],
-				country: "СССР",
-				year: "1961",
-				censorship: .twelvePlus
-			)
-		]
-		filmsCollectionViewController.update(films: films)
 		
 		let filterItems: [FilterItem] = [
 			.genre(FilterContentItem(title: "Жанр", detail: "Все")),
@@ -122,9 +47,9 @@ class FilmsViewController: UIViewController {
 
 // MARK: - FilmsCollectionViewControllerDelegate
 
-extension FilmsViewController: FilmsCollectionViewControllerDelegate {
+extension FilmsViewController: MoviesCollectionViewControllerDelegate {
 	
-	func filmsCollectionViewController(_ viewController: FilmsCollectionViewController, didSelectFilter item: FilterItem) {
+	func moviesCollectionViewController(_ viewController: MoviesCollectionViewController, didSelectFilter item: FilterItem) {
 		var selectItems: [String] = []
 		switch item {
 		case .genre:
@@ -147,12 +72,12 @@ extension FilmsViewController: FilmsCollectionViewControllerDelegate {
 		navigationController?.pushViewController(selectItemViewController, animated: true)
 	}
 	
-	func filmsCollectionViewControllerShouldShowActivity(_ viewController: FilmsCollectionViewController) -> Bool {
+	func moviesCollectionViewControllerShouldShowActivity(_ viewController: MoviesCollectionViewController) -> Bool {
 		return true
 	}
 	
-	func filmsCollectionViewController(_ viewController: FilmsCollectionViewController, didSelectFilm film: Film) {
-		let detailFilmVC = DetailFilmViewController(film: film)
+	func moviesCollectionViewController(_ viewController: MoviesCollectionViewController, didSelectMovie movie: MovieModel) {
+		let detailFilmVC = DetailMovieViewController(movie: movie)
 		navigationController?.pushViewController(detailFilmVC, animated: true)
 	}
 }

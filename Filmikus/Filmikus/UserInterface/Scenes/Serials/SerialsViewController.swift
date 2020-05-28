@@ -10,8 +10,8 @@ import UIKit
 
 class SerialsViewController: UIViewController {
 	
-	private lazy var filmsCollectionViewController: FilmsCollectionViewController = {
-		let viewController = FilmsCollectionViewController()
+	private lazy var filmsCollectionViewController: MoviesCollectionViewController = {
+		let viewController = MoviesCollectionViewController()
 		viewController.delegate = self
 		return viewController
 	}()
@@ -34,82 +34,6 @@ class SerialsViewController: UIViewController {
 
         title = "Сериалы"
 		
-		let films = [
-				Film(
-					imageUrl: "https://filmikus.com/images/2/1/middle/img.jpg",
-					title: "Улики",
-					genres: ["Криминал", "Детектив"],
-					country: "Россия",
-					year: "2015",
-					censorship: .eighteenPlus
-				),
-				Film(
-					imageUrl: "https://filmikus.com/images/2/2/middle/img.jpg",
-					title: "Полицейский участок",
-					genres: ["Детектив"],
-					country: "Россия",
-					year: "2015",
-					censorship: .eighteenPlus
-				),
-				Film(
-					imageUrl: "https://filmikus.com/images/2/3/middle/img.jpg",
-					title: "Непридуманная жизнь",
-					genres: ["Драма", "Биография"],
-					country: "Россия",
-					year: "2015",
-					censorship: .eighteenPlus
-				),
-				Film(
-					imageUrl: "https://filmikus.com/images/2/4/middle/img.jpg",
-					title: "Мой любимый папа",
-					genres: ["Драма"],
-					country: "Россия",
-					year: "2014",
-					censorship: .sixteenPlus
-				),
-				Film(
-					imageUrl: "https://filmikus.com/images/2/5/middle/img.jpg",
-					title: "Стрелок",
-					genres: ["Боевик"],
-					country: "Россия",
-					year: "2012",
-					censorship: .twelvePlus
-				),
-				Film(
-					imageUrl: "https://filmikus.com/images/2/8/middle/img.jpg",
-					title: "Сибирь",
-					genres: ["Драма", "История"],
-					country: "СССР",
-					year: "1976",
-					censorship: .sixteenPlus
-				),
-				Film(
-					imageUrl: "https://filmikus.com/images/2/10/middle/img.jpg",
-					title: "Мужество",
-					genres: ["Драма", "История"],
-					country: "СССР",
-					year: "1980",
-					censorship: .sixteenPlus
-				),
-				Film(
-					imageUrl: "https://filmikus.com/images/2/13/middle/img.jpg",
-					title: "Фортитьюд",
-					genres: ["Драма"],
-					country: "Великобритания",
-					year: "2015",
-					censorship: .sixteenPlus
-				),
-				Film(
-					imageUrl: "https://filmikus.com/images/2/20/middle/img.jpg",
-					title: "Мата Хари",
-					genres: ["Драма", "Биография"],
-					country: "Россия",
-					year: "2016",
-					censorship: .twelvePlus
-				)
-		]
-		filmsCollectionViewController.update(films: films)
-		
 		let filterItems: [FilterItem] = [
 			.genre(FilterContentItem(title: "Жанр", detail: "Все")),
 			.country(FilterContentItem(title: "Страна", detail: "Все")),
@@ -124,9 +48,9 @@ class SerialsViewController: UIViewController {
 
 // MARK: - FilmsCollectionViewControllerDelegate
 
-extension SerialsViewController: FilmsCollectionViewControllerDelegate {
+extension SerialsViewController: MoviesCollectionViewControllerDelegate {
 	
-	func filmsCollectionViewController(_ viewController: FilmsCollectionViewController, didSelectFilter item: FilterItem) {
+	func moviesCollectionViewController(_ viewController: MoviesCollectionViewController, didSelectFilter item: FilterItem) {
 		let selectItemViewController = SelectItemViewController(items: ["Россия", "Украина", "Белорусь"]) { selectedItem in
 			var item = item
 			let content = item.content
@@ -136,12 +60,12 @@ extension SerialsViewController: FilmsCollectionViewControllerDelegate {
 		navigationController?.pushViewController(selectItemViewController, animated: true)
 	}
 	
-	func filmsCollectionViewControllerShouldShowActivity(_ viewController: FilmsCollectionViewController) -> Bool {
+	func moviesCollectionViewControllerShouldShowActivity(_ viewController: MoviesCollectionViewController) -> Bool {
 		return false
 	}
 	
-	func filmsCollectionViewController(_ viewController: FilmsCollectionViewController, didSelectFilm film: Film) {
-		let detailFilmVC = DetailFilmViewController(film: film)
+	func moviesCollectionViewController(_ viewController: MoviesCollectionViewController, didSelectMovie film: MovieModel) {
+		let detailFilmVC = DetailMovieViewController(movie: film)
 		navigationController?.pushViewController(detailFilmVC, animated: true)
 	}
 }

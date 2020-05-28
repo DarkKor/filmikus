@@ -11,13 +11,24 @@ import SnapKit
 
 class MainViewController: UIViewController {
 	
+	private let mainService: MainServiceType
+	
 	private lazy var categoriesViewController: CategoriesViewController = {
 		let viewController = CategoriesViewController()
 		viewController.delegate = self
 		return viewController
 	}()
 	private lazy var searchController = UISearchController(searchResultsController: nil)
-
+	
+	init(mainService: MainServiceType = MainService()) {
+		self.mainService = mainService
+		super.init(nibName: nil, bundle: nil)
+	}
+	
+	required init?(coder: NSCoder) {
+		fatalError("init(coder:) has not been implemented")
+	}
+	
 	override func loadView() {
 		view = UIView()
 		view.backgroundColor = .appDarkBlue
@@ -40,6 +51,9 @@ class MainViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+		
+		title = "Главная"
+
 		navigationItem.searchController = searchController
 		let textField = searchController.searchBar.searchTextField
 		textField.backgroundColor = UIColor.appDarkBlue.withAlphaComponent(0.3)
@@ -49,142 +63,52 @@ class MainViewController: UIViewController {
 			leftView.image = leftView.image?.withRenderingMode(.alwaysTemplate)
 			leftView.tintColor = UIColor.white
 		}
-		
-		
-		title = "Главная"
-		
-		let categories = [
-			Category(title: "Популярное", films: [
-				Film(
-					imageUrl: "https://filmikus.com/images/1/30/middle/img.jpg",
-					title: "1+1",
-					genres: ["Комедия", "Драма"],
-					country: "Франция",
-					year: "2011",
-					censorship: .sixteenPlus
-				),
-				Film(
-					imageUrl: "https://filmikus.com/images/1/373/middle/img.jpg",
-					title: "Дурак",
-					genres: ["Драма", "Россия"],
-					country: "Россия",
-					year: "2014",
-					censorship: .sixteenPlus
-				),
-				Film(
-					imageUrl: "https://filmikus.com/images/1/592/middle/img.jpg",
-					title: "Танцовщик",
-					genres: ["Биография", "Документальный"],
-					country: "Россия",
-					year: "2016",
-					censorship: .sixteenPlus
-				),
-				Film(
-					imageUrl: "https://filmikus.com/images/1/722/middle/img.jpg",
-					title: "Месть от кутюр",
-					genres: ["Комедия", "Драма"],
-					country: "Австралия",
-					year: "2015",
-					censorship: .sixteenPlus
-				),
-				Film(
-					imageUrl: "https://filmikus.com/images/1/723/middle/img.jpg",
-					title: "28 панфиловцев",
-					genres: ["Драма", "Военный"],
-					country: "Россия",
-					year: "2016",
-					censorship: .sixteenPlus
-				)
-			]),
-			Category(title: "Рекомендуем", films: [
-				Film(
-					imageUrl: "https://filmikus.com/images/1/15/middle/img.jpg",
-					title: "О чем говорят мужчины",
-					genres: ["Комедия"],
-					country: "Россия",
-					year: "2010",
-					censorship: .sixteenPlus
-				),
-				Film(
-					imageUrl: "https://filmikus.com/images/1/520/middle/img.jpg",
-					title: "Антропоид",
-					genres: ["Биография"],
-					country: "Франция",
-					year: "2016",
-					censorship: .sixteenPlus
-				),
-				Film(
-					imageUrl: "https://filmikus.com/images/1/523/middle/img.jpg",
-					title: "Хардкор",
-					genres: ["Фантастика", "Боевик"],
-					country: "Россия",
-					year: "2016",
-					censorship: .sixteenPlus
-				),
-				Film(
-					imageUrl: "https://filmikus.com/images/1/721/middle/img.jpg",
-					title: "Гонка",
-					genres: ["Спорт", "Драма"],
-					country: "США",
-					year: "2013",
-					censorship: .sixteenPlus
-				)
-			]),
-			Category(title: "Сериалы", films: [
-				Film(
-					imageUrl: "https://filmikus.com/images/2/5/middle/img.jpg",
-					title: "Стрелок",
-					genres: ["Боевик"],
-					country: "Россия",
-					year: "2012",
-					censorship: .sixteenPlus
-				)
-			]),
-			Category(title: "Развлекательное видео", films: [
-				Film(
-					imageUrl: "https://filmikus.com/images/3/1/middle/img.jpg",
-					title: "Тест драйв",
-					genres: ["Драма", "Криминал"],
-					country: "Россия",
-					year: "2015",
-					censorship: .sixteenPlus
-				),
-				Film(
-					imageUrl: "https://filmikus.com/images/3/6/middle/img.jpg",
-					title: "Мода",
-					genres: ["Драма", "Криминал"],
-					country: "Россия",
-					year: "2015",
-					censorship: .sixteenPlus
-				),
-				Film(
-					imageUrl: "https://filmikus.com/images/3/7/middle/img.jpg",
-					title: "Стань красиво",
-					genres: ["Драма", "Криминал"],
-					country: "Россия",
-					year: "2015",
-					censorship: .sixteenPlus
-				),
-				Film(
-					imageUrl: "https://filmikus.com/images/3/8/middle/img.jpg",
-					title: "Простые советы",
-					genres: ["Драма", "Криминал"],
-					country: "Россия",
-					year: "2015",
-					censorship: .sixteenPlus
-				),
-				Film(
-					imageUrl: "https://filmikus.com/images/3/9/middle/img.jpg",
-					title: "Мода S",
-					genres: ["Драма", "Криминал"],
-					country: "Россия",
-					year: "2015",
-					censorship: .sixteenPlus
-				),
-			])
-		]
-		categoriesViewController.update(categories: categories)
+		loadData()
     }
+	
+	private func loadData() {
+		mainService.getSlider { [weak self] result in
+			guard let self = self else { return }
+			guard let sliders = try? result.get() else { return }
+			self.categoriesViewController.update(sliders: sliders)
+		}
+		
+		var categories: [Category] = [
+			Category(title: "Популярное"),
+			Category(title: "Рекомендуем"),
+			Category(title: "Сериалы")
+		]
+		let dispatchGroup = DispatchGroup()
+		
+		dispatchGroup.enter()
+		mainService.getPopular { [weak self] result in
+			dispatchGroup.leave()
+			guard let self = self else { return }
+			guard let movies = try? result.get() else { return }
+			categories[0].movies = movies
+		}
+		
+		dispatchGroup.enter()
+		mainService.getRecommendations { [weak self] result in
+			dispatchGroup.leave()
+			guard let self = self else { return }
+			guard let movies = try? result.get() else { return }
+			categories[1].movies = movies
+		}
+		
+		dispatchGroup.enter()
+		mainService.getSeries { [weak self] result in
+			dispatchGroup.leave()
+			guard let self = self else { return }
+			guard let movies = try? result.get() else { return }
+			categories[2].movies = movies
+		}
+		
+		dispatchGroup.notify(queue: .main) { [weak self] in
+			guard let self = self else { return }
+			self.categoriesViewController.update(categories: categories)
+		}
+	}
 
 }
 
@@ -207,8 +131,8 @@ extension MainViewController: CategoriesViewControllerDelegate {
 		}
 	}
 	
-	func categoriesViewController(_ viewController: CategoriesViewController, didSelectFilm film: Film) {
-		let detailFilmVC = DetailFilmViewController(film: film)
-		navigationController?.pushViewController(detailFilmVC, animated: true)
+	func categoriesViewController(_ viewController: CategoriesViewController, didSelectMovie movie: MovieModel) {
+		let detailMovieVC = DetailMovieViewController(movie: movie)
+		navigationController?.pushViewController(detailMovieVC, animated: true)
 	}
 }

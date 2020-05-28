@@ -10,7 +10,7 @@ import UIKit
 
 protocol CategoriesViewControllerDelegate: class {
 	func categoriesViewController(_ viewController: CategoriesViewController, didSelectCategory category: Category)
-	func categoriesViewController(_ viewController: CategoriesViewController, didSelectFilm film: Film)
+	func categoriesViewController(_ viewController: CategoriesViewController, didSelectMovie movie: MovieModel)
 }
 
 class CategoriesViewController: UIViewController {
@@ -25,8 +25,6 @@ class CategoriesViewController: UIViewController {
 		let view = CategoriesHeaderView()
 		view.frame = CGRect(x: 0, y: 0, width: screenSize.width, height: screenSize.width / 2.1)
 		view.clipsToBounds = true
-		let url = URL(string: "https://photo.tvigle.ru/res/tvigle/slider/2019/09/03/6b5adfe1-c5db-4ac1-a3ed-c5db6d5fb10b.jpg")
-		view.setImage(with: url)
 		return view
 	}()
 	
@@ -40,7 +38,7 @@ class CategoriesViewController: UIViewController {
 		table.rowHeight = 220
 		table.tableHeaderView = headerView
 		table.showsVerticalScrollIndicator = false
-		table.register(cell: CategoryTableViewCell<FilmCollectionViewCell>.self)
+		table.register(cell: CategoryTableViewCell<MovieCollectionViewCell>.self)
 		table.register(headerFooterView: CategoryHeaderSectionView.self)
 		return table
 	}()
@@ -53,6 +51,11 @@ class CategoriesViewController: UIViewController {
         super.viewDidLoad()
 
     }
+	
+	func update(sliders: [SliderModel]) {
+		guard let slider = sliders.first else { return }
+		headerView.fill(slider: slider)
+	}
     
 	func update(categories: [Category]) {
 		self.categories = categories
@@ -73,7 +76,7 @@ extension CategoriesViewController: UITableViewDataSource {
 	}
 	
 	func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-		let cell: CategoryTableViewCell<FilmCollectionViewCell> = tableView.dequeueCell(for: indexPath)
+		let cell: CategoryTableViewCell<MovieCollectionViewCell> = tableView.dequeueCell(for: indexPath)
 		cell.setDelegate(delegate: self, withTag: indexPath.section)
 		cell.contentOffset = categoriesOffsets[indexPath.section] ?? 0
 		return cell
@@ -95,7 +98,7 @@ extension CategoriesViewController: UITableViewDelegate {
 	}
 	
 	func tableView(_ tableView: UITableView, didEndDisplaying cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-		guard let cell = cell as? CategoryTableViewCell<FilmCollectionViewCell> else { return }
+		guard let cell = cell as? CategoryTableViewCell<MovieCollectionViewCell> else { return }
 		categoriesOffsets[indexPath.section] = cell.contentOffset
 	}
 }
@@ -105,12 +108,12 @@ extension CategoriesViewController: UITableViewDelegate {
 extension CategoriesViewController: UICollectionViewDataSource {
 	
 	func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-		categories[collectionView.tag].films.count
+		categories[collectionView.tag].movies.count
 	}
 	
 	func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-		let cell: FilmCollectionViewCell = collectionView.dequeueCell(for: indexPath)
-		cell.fill(film: categories[collectionView.tag].films[indexPath.item])
+		let cell: MovieCollectionViewCell = collectionView.dequeueCell(for: indexPath)
+		cell.fill(movie: categories[collectionView.tag].movies[indexPath.item])
 		return cell
 	}
 }
@@ -120,7 +123,7 @@ extension CategoriesViewController: UICollectionViewDataSource {
 extension CategoriesViewController: UICollectionViewDelegate {
 	
 	func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-		let film = categories[collectionView.tag].films[indexPath.item]
-		delegate?.categoriesViewController(self, didSelectFilm: film)
+		let movie = categories[collectionView.tag].movies[indexPath.item]
+		delegate?.categoriesViewController(self, didSelectMovie: movie)
 	}
 }

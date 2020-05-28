@@ -16,8 +16,7 @@ enum FilmAPI {
 extension FilmAPI: TargetType {
 	
 	var baseURL: URL {
-		
-		URL(string: "")!
+		URL(string: "https://api.filmikus.com")!
 	}
 	
 	var path: String {

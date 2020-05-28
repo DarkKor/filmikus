@@ -27,7 +27,8 @@ class CategoriesHeaderView: UIView {
 		fatalError("init(coder:) has not been implemented")
 	}
 	
-	func setImage(with url: URL?) {
+	func fill(slider: SliderModel) {
+		let url = URL(string: slider.imageUrl)
 		imageView.kf.indicatorType = .activity
 		imageView.kf.setImage(
 			with: url,
@@ -37,4 +38,5 @@ class CategoriesHeaderView: UIView {
 			]
 		)
 	}
+	
 }

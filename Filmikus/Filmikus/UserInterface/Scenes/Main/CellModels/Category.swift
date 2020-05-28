@@ -8,5 +8,5 @@
 
 struct Category {
 	let title: String
-	var films: [Film] = []
+	var movies: [MovieModel] = []
 }

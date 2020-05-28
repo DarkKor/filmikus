@@ -9,7 +9,7 @@
 import UIKit
 import Kingfisher
 
-class FilmCollectionViewCell: ReusableCollectionViewCell {
+class MovieCollectionViewCell: ReusableCollectionViewCell {
 	
 	private let imageView = UIImageView()
 	private let labelTitle = UILabel()
@@ -47,8 +47,8 @@ class FilmCollectionViewCell: ReusableCollectionViewCell {
 		return layoutAttributes
 	}
 	
-	func fill(film: Film) {
-		let url = URL(string: film.imageUrl)
+	func fill(movie: MovieModel) {
+		let url = URL(string: movie.imageUrl)
 		imageView.kf.indicatorType = .activity
 		imageView.kf.setImage(
 			with: url,
@@ -57,6 +57,6 @@ class FilmCollectionViewCell: ReusableCollectionViewCell {
 				.transition(.fade(0.25))
 			]
 		)
-		labelTitle.text = film.title
+		labelTitle.text = movie.title
 	}
 }

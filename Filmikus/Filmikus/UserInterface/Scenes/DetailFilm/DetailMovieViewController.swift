@@ -1,5 +1,5 @@
 //
-//  DetailFilmViewController.swift
+//  DetailMovieViewController.swift
 //  Filmikus
 //
 //  Created by Андрей Козлов on 15.05.2020.
@@ -9,15 +9,15 @@
 import UIKit
 import WebKit
 
-class DetailFilmViewController: UIViewController {
+class DetailMovieViewController: UIViewController {
 	
-	private let film: Film
+	private let movie: MovieModel
 	
 	private lazy var scrollView = UIScrollView()
 	private lazy var containerView = UIView()
 	private lazy var webView = WKWebView()
 	private lazy var authRequiredView = AuthRequiredView()
-	private lazy var mainInfoView = FilmMainInfoView()
+	private lazy var mainInfoView = MovieMainInfoView()
 	
 	private lazy var separatorView = UIView()
 	
@@ -26,8 +26,8 @@ class DetailFilmViewController: UIViewController {
 	private lazy var descriptionLabel = UILabel()
 	private lazy var showFilmButton = BlueButton(title: "СМОТРЕТЬ ФИЛЬМ", target: self, action: #selector(onShowFilmButtonTap))
 
-	init(film: Film) {
-		self.film = film
+	init(movie: MovieModel) {
+		self.movie = movie
 		super.init(nibName: nil, bundle: nil)
 	}
 	
@@ -110,9 +110,9 @@ class DetailFilmViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-		title = film.title
+		title = movie.title
 		navigationItem.largeTitleDisplayMode = .never
-		mainInfoView.fill(film: film)
+		mainInfoView.fill(movie: movie)
 		
 		let youtubeUrl = """
 			<iframe width="1024" height="720" src="https://www.youtube.com/embed/T1jIEJ7VjUQ" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>

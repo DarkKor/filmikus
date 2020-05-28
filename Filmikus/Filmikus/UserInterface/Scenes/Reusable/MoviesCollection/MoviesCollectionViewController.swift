@@ -1,5 +1,5 @@
 //
-//  FilmsCollectionViewController.swift
+//  MoviesCollectionViewController.swift
 //  Filmikus
 //
 //  Created by Андрей Козлов on 15.05.2020.
@@ -8,17 +8,17 @@
 
 import UIKit
 
-protocol FilmsCollectionViewControllerDelegate: class {
-	func filmsCollectionViewController(_ viewController: FilmsCollectionViewController, didSelectFilter item: FilterItem)
-	func filmsCollectionViewController(_ viewController: FilmsCollectionViewController, didSelectFilm film: Film)
-	func filmsCollectionViewControllerShouldShowActivity(_ viewController: FilmsCollectionViewController) -> Bool
+protocol MoviesCollectionViewControllerDelegate: class {
+	func moviesCollectionViewController(_ viewController: MoviesCollectionViewController, didSelectFilter item: FilterItem)
+	func moviesCollectionViewController(_ viewController: MoviesCollectionViewController, didSelectMovie movie: MovieModel)
+	func moviesCollectionViewControllerShouldShowActivity(_ viewController: MoviesCollectionViewController) -> Bool
 }
 
-class FilmsCollectionViewController: UIViewController {
+class MoviesCollectionViewController: UIViewController {
 	
-	weak var delegate: FilmsCollectionViewControllerDelegate?
+	weak var delegate: MoviesCollectionViewControllerDelegate?
 	private var filterItems: [FilterItem] = []
-	private var films: [Film] = []
+	private var movies: [MovieModel] = []
 	
 	private lazy var collectionLayout: UICollectionViewFlowLayout = {
 		let layout = UICollectionViewFlowLayout()
@@ -34,7 +34,7 @@ class FilmsCollectionViewController: UIViewController {
 		collection.delegate = self
 		collection.dataSource = self
 		collection.showsVerticalScrollIndicator = false
-		collection.register(cell: FilmCollectionViewCell.self)
+		collection.register(cell: MovieCollectionViewCell.self)
 		collection.register(cell: FilmsFilterCollectionViewCell.self)
 		collection.register(
 			LoadingCollectionFooterView.self,
@@ -49,8 +49,8 @@ class FilmsCollectionViewController: UIViewController {
 		view.backgroundColor = .clear
 	}
 	
-	func update(films: [Film]) {
-		self.films = films
+	func update(movies: [MovieModel]) {
+		self.movies = movies
 		collectionView.reloadData()
 	}
 	
@@ -73,7 +73,7 @@ class FilmsCollectionViewController: UIViewController {
 
 // MARK: - UICollectionViewDataSource
 
-extension FilmsCollectionViewController: UICollectionViewDataSource {
+extension MoviesCollectionViewController: UICollectionViewDataSource {
 	
 	func numberOfSections(in collectionView: UICollectionView) -> Int {
 		2
@@ -82,7 +82,7 @@ extension FilmsCollectionViewController: UICollectionViewDataSource {
 	func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
 		switch section {
 		case 0: return filterItems.count
-		case 1: return films.count
+		case 1: return movies.count
 		default: return 0
 		}
 	}
@@ -94,8 +94,8 @@ extension FilmsCollectionViewController: UICollectionViewDataSource {
 			cell.fill(content: filterItems[indexPath.item].content)
 			return cell
 		case 1:
-			let cell: FilmCollectionViewCell = collectionView.dequeueCell(for: indexPath)
-			cell.fill(film: films[indexPath.item])
+			let cell: MovieCollectionViewCell = collectionView.dequeueCell(for: indexPath)
+			cell.fill(movie: movies[indexPath.item])
 			return cell
 		default:
 			return UICollectionViewCell()
@@ -105,16 +105,16 @@ extension FilmsCollectionViewController: UICollectionViewDataSource {
 
 // MARK: - UICollectionViewDataSource
 
-extension FilmsCollectionViewController: UICollectionViewDelegate {
+extension MoviesCollectionViewController: UICollectionViewDelegate {
 	
 	func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
 		switch indexPath.section {
 		case 0:
 			let filterItem = filterItems[indexPath.item]
-			delegate?.filmsCollectionViewController(self, didSelectFilter: filterItem)
+			delegate?.moviesCollectionViewController(self, didSelectFilter: filterItem)
 		case 1:
-			let film = films[indexPath.item]
-			delegate?.filmsCollectionViewController(self, didSelectFilm: film)
+			let film = movies[indexPath.item]
+			delegate?.moviesCollectionViewController(self, didSelectMovie: film)
 		default:
 			break
 		}
@@ -138,7 +138,7 @@ extension FilmsCollectionViewController: UICollectionViewDelegate {
 	func collectionView(_ collectionView: UICollectionView, willDisplaySupplementaryView view: UICollectionReusableView, forElementKind elementKind: String, at indexPath: IndexPath) {
 		guard indexPath.section == 1 else { return }
 		guard let footerView = view as? LoadingCollectionFooterView else { return }
-		let showActivity = delegate?.filmsCollectionViewControllerShouldShowActivity(self) ?? false
+		let showActivity = delegate?.moviesCollectionViewControllerShouldShowActivity(self) ?? false
 		showActivity ? footerView.startAnimating() : footerView.stopAnimating()
 	}
 	
@@ -146,7 +146,7 @@ extension FilmsCollectionViewController: UICollectionViewDelegate {
 
 // MARK: - UICollectionViewDelegateFlowLayout
 
-extension FilmsCollectionViewController: UICollectionViewDelegateFlowLayout {
+extension MoviesCollectionViewController: UICollectionViewDelegateFlowLayout {
 		
 	func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
 		switch indexPath.section {

@@ -1,5 +1,5 @@
 //
-//  FilmMainInfoView.swift
+//  MovieMainInfoView.swift
 //  Filmikus
 //
 //  Created by Андрей Козлов on 15.05.2020.
@@ -9,7 +9,7 @@
 import UIKit
 import SnapKit
 
-class FilmMainInfoView: UIView {
+class MovieMainInfoView: UIView {
 
 	private let posterImageView = UIImageView()
 	private lazy var stackView: UIStackView = {
@@ -56,8 +56,8 @@ class FilmMainInfoView: UIView {
 		posterImageView.rounded(radius: posterImageView.frame.height / 16)
 	}
 	
-	func fill(film: Film) {
-		let imageUrl = URL(string: film.imageUrl)
+	func fill(movie: MovieModel) {
+		let imageUrl = URL(string: movie.imageUrl)
 		posterImageView.kf.indicatorType = .activity
 		posterImageView.kf.setImage(
 			with: imageUrl,
@@ -66,10 +66,10 @@ class FilmMainInfoView: UIView {
 				.transition(.fade(0.25))
 			]
 		)
-		titleLabel.text = film.title
+		titleLabel.text = movie.title
 		ratingLabel.text = "⭐️8.8"
-		genresLabel.text = film.genres.first
-		countryLabel.text = film.country
+//		genresLabel.text = movie.genres.first
+//		countryLabel.text = movie.country
 	}
 	
 }
