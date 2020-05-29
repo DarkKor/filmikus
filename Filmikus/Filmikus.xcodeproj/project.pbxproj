@@ -248,12 +248,7 @@
 		491C21A4246416D7007CDEC2 /* DataAccess */ = {
 			isa = PBXGroup;
 			children = (
-				49900FB9247EA97A00F18B46 /* MainAPI.swift */,
-				49900FC7247FCF6200F18B46 /* CategoriesAPI.swift */,
-				49900FCD247FD99500F18B46 /* VideosAPI.swift */,
-				49900FD924800B4300F18B46 /* SliderAPI.swift */,
-				49900FDB24800BD600F18B46 /* CountriesAPI.swift */,
-				49900FDD24800E0C00F18B46 /* EpisodesAPI.swift */,
+				49900FFD2481087700F18B46 /* Network */,
 			);
 			path = DataAccess;
 			sourceTree = "<group>";
@@ -448,6 +443,19 @@
 				49684AC72476A5BA00E9BADC /* Video.swift */,
 			);
 			path = CellModels;
+			sourceTree = "<group>";
+		};
+		49900FFD2481087700F18B46 /* Network */ = {
+			isa = PBXGroup;
+			children = (
+				49900FB9247EA97A00F18B46 /* MainAPI.swift */,
+				49900FC7247FCF6200F18B46 /* CategoriesAPI.swift */,
+				49900FCD247FD99500F18B46 /* VideosAPI.swift */,
+				49900FD924800B4300F18B46 /* SliderAPI.swift */,
+				49900FDB24800BD600F18B46 /* CountriesAPI.swift */,
+				49900FDD24800E0C00F18B46 /* EpisodesAPI.swift */,
+			);
+			path = Network;
 			sourceTree = "<group>";
 		};
 		49907C38247B97A400E201B6 /* MoviesCollection */ = {
