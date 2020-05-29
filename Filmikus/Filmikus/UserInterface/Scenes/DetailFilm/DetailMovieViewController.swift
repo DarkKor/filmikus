@@ -48,7 +48,7 @@ class DetailMovieViewController: UIViewController {
 		authRequiredView.isHidden = true
 		webView.scrollView.isScrollEnabled = false
 		separatorView.backgroundColor = .separator
-		webView.backgroundColor = .systemRed
+		webView.backgroundColor = .black
 		directorsLabel.numberOfLines = 0
 		actorsLabel.numberOfLines = 0
 		descriptionLabel.numberOfLines = 0
