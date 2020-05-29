@@ -76,6 +76,10 @@
 		49900FEC2480153100F18B46 /* MovieItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49900FEB2480153100F18B46 /* MovieItem.swift */; };
 		49900FEE2480165600F18B46 /* DetailFunShowModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49900FED2480165600F18B46 /* DetailFunShowModel.swift */; };
 		49900FF2248016FD00F18B46 /* DetailEpisodeModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49900FF1248016FD00F18B46 /* DetailEpisodeModel.swift */; };
+		49900FF42481030700F18B46 /* CountriesService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49900FF32481030700F18B46 /* CountriesService.swift */; };
+		49900FF6248103F400F18B46 /* SliderService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49900FF5248103F400F18B46 /* SliderService.swift */; };
+		49900FFA2481065500F18B46 /* EpisodesService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49900FF92481065500F18B46 /* EpisodesService.swift */; };
+		49900FFC2481078F00F18B46 /* EpisodeModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49900FFB2481078F00F18B46 /* EpisodeModel.swift */; };
 		49907C3F247C0BAF00E201B6 /* VideoCategoryHeaderSectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49907C3E247C0BAF00E201B6 /* VideoCategoryHeaderSectionView.swift */; };
 		DBB5AD7EDA6B8BBB5543CBB9 /* Pods_Filmikus.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 97F5ACE358500956AF72C9A2 /* Pods_Filmikus.framework */; };
 /* End PBXBuildFile section */
@@ -153,6 +157,10 @@
 		49900FEB2480153100F18B46 /* MovieItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieItem.swift; sourceTree = "<group>"; };
 		49900FED2480165600F18B46 /* DetailFunShowModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailFunShowModel.swift; sourceTree = "<group>"; };
 		49900FF1248016FD00F18B46 /* DetailEpisodeModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailEpisodeModel.swift; sourceTree = "<group>"; };
+		49900FF32481030700F18B46 /* CountriesService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountriesService.swift; sourceTree = "<group>"; };
+		49900FF5248103F400F18B46 /* SliderService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SliderService.swift; sourceTree = "<group>"; };
+		49900FF92481065500F18B46 /* EpisodesService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EpisodesService.swift; sourceTree = "<group>"; };
+		49900FFB2481078F00F18B46 /* EpisodeModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EpisodeModel.swift; sourceTree = "<group>"; };
 		49907C3E247C0BAF00E201B6 /* VideoCategoryHeaderSectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoCategoryHeaderSectionView.swift; sourceTree = "<group>"; };
 		5F55A71C0021F60EFFD15EA6 /* Pods-Filmikus.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Filmikus.debug.xcconfig"; path = "Target Support Files/Pods-Filmikus/Pods-Filmikus.debug.xcconfig"; sourceTree = "<group>"; };
 		97F5ACE358500956AF72C9A2 /* Pods_Filmikus.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Filmikus.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -269,6 +277,7 @@
 				49900FE5248013DD00F18B46 /* CountryModel.swift */,
 				49900FE72480146600F18B46 /* DirectorModel.swift */,
 				49900FE92480149B00F18B46 /* ActorModel.swift */,
+				49900FFB2481078F00F18B46 /* EpisodeModel.swift */,
 			);
 			path = Entities;
 			sourceTree = "<group>";
@@ -280,6 +289,9 @@
 				49900FBB247EAA9900F18B46 /* MainService.swift */,
 				49900FC9247FCFD100F18B46 /* CategoriesService.swift */,
 				49900FD5247FE08600F18B46 /* VideosService.swift */,
+				49900FF32481030700F18B46 /* CountriesService.swift */,
+				49900FF5248103F400F18B46 /* SliderService.swift */,
+				49900FF92481065500F18B46 /* EpisodesService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -604,6 +616,7 @@
 				491C21B3246423E0007CDEC2 /* Category.swift in Sources */,
 				49684ACA2476A78000E9BADC /* VideosCollectionViewController.swift in Sources */,
 				49684ACC2476D20A00E9BADC /* LoadingCollectionFooterView.swift in Sources */,
+				49900FFC2481078F00F18B46 /* EpisodeModel.swift in Sources */,
 				49684AB7247671E500E9BADC /* VideoCategoriesViewController.swift in Sources */,
 				49900FE22480120000F18B46 /* DetailMovieModel.swift in Sources */,
 				49684A6B246BE5B600E9BADC /* NavigationController.swift in Sources */,
@@ -615,7 +628,9 @@
 				49900FC0247EACFE00F18B46 /* MovieType.swift in Sources */,
 				49684A5E246AC51600E9BADC /* CategoryHeaderSectionView.swift in Sources */,
 				49684A88246EF9CF00E9BADC /* MoviesCollectionViewController.swift in Sources */,
+				49900FF42481030700F18B46 /* CountriesService.swift in Sources */,
 				49684AC62476A4BF00E9BADC /* VideoCollectionViewCell.swift in Sources */,
+				49900FFA2481065500F18B46 /* EpisodesService.swift in Sources */,
 				49900FBA247EA97A00F18B46 /* MainAPI.swift in Sources */,
 				49900FEE2480165600F18B46 /* DetailFunShowModel.swift in Sources */,
 				49684A76246BED4000E9BADC /* UnderlinedTextField.swift in Sources */,
@@ -624,6 +639,7 @@
 				49684A70246BE70600E9BADC /* SerialsViewController.swift in Sources */,
 				49684AB524742FC500E9BADC /* StoreKitService.swift in Sources */,
 				49684A60246ACD9B00E9BADC /* UIView+Style.swift in Sources */,
+				49900FF6248103F400F18B46 /* SliderService.swift in Sources */,
 				49684A78246C4AAD00E9BADC /* CategoriesHeaderView.swift in Sources */,
 				49684A64246AD78A00E9BADC /* UIColor+Hex.swift in Sources */,
 				491C21C424642A93007CDEC2 /* MovieCollectionViewCell.swift in Sources */,

@@ -10,9 +10,11 @@ import Moya
 
 protocol VideosServiceType {
 	func getMovies(of type: MovieType, with filter: FilterModel, completion: @escaping (Result<MoviesModel, Error>) -> Void)
-	func searchMovies(query: String, completion:  @escaping (Result<[MovieModel], Error>) -> Void)
-	func detailMovie(of type: MovieType, id: Int, completion:  @escaping (Result<DetailMovieModel, Error>) -> Void)
-	func detailEpisode(id: Int, completion:  @escaping (Result<DetailEpisodeModel, Error>) -> Void)
+	func searchMovies(query: String, completion: @escaping (Result<[MovieModel], Error>) -> Void)
+	func detailMovie(id: Int, completion: @escaping (Result<DetailMovieModel, Error>) -> Void)
+	func detailSerial(id: Int, completion: @escaping (Result<DetailMovieModel, Error>) -> Void)
+	func detailFunShow(id: Int, completion: @escaping (Result<DetailFunShowModel, Error>) -> Void)
+	func detailEpisode(id: Int, completion: @escaping (Result<DetailEpisodeModel, Error>) -> Void)
 }
 
 class VideosService: VideosServiceType {
@@ -43,5 +45,44 @@ class VideosService: VideosServiceType {
 		}
 	}
 	
+	func detailMovie(id: Int, completion: @escaping (Result<DetailMovieModel, Error>) -> Void) {
+		provider.request(.item(type: .film, id: id)) { (result) in
+			completion(
+				result.mapError { $0 }.flatMap { response in
+					Result { try response.map(DetailMovieModel.self) }
+				}
+			)
+		}
+	}
+	
+	func detailSerial(id: Int, completion: @escaping (Result<DetailMovieModel, Error>) -> Void) {
+		provider.request(.item(type: .serial, id: id)) { (result) in
+			completion(
+				result.mapError { $0 }.flatMap { response in
+					Result { try response.map(DetailMovieModel.self) }
+				}
+			)
+		}
+	}
+	
+	func detailFunShow(id: Int, completion: @escaping (Result<DetailFunShowModel, Error>) -> Void) {
+		provider.request(.item(type: .funShow, id: id)) { (result) in
+			completion(
+				result.mapError { $0 }.flatMap { response in
+					Result { try response.map(DetailFunShowModel.self) }
+				}
+			)
+		}
+	}
+	
+	func detailEpisode(id: Int, completion: @escaping (Result<DetailEpisodeModel, Error>) -> Void) {
+		provider.request(.episode(id: id)) { (result) in
+			completion(
+				result.mapError { $0 }.flatMap { response in
+					Result { try response.map(DetailEpisodeModel.self) }
+				}
+			)
+		}
+	}
 	
 }
