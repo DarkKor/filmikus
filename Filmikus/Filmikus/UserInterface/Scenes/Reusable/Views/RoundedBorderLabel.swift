@@ -13,6 +13,7 @@ class RoundedBorderLabel: UILabel {
 	private let insets = UIEdgeInsets(top: 5, left: 10, bottom: 5, right: 10)
 	
 	override var intrinsicContentSize: CGSize {
+		guard let text = text, !text.isEmpty else { return .zero }
 		let defaultSize = super.intrinsicContentSize
 		let width = defaultSize.width + insets.left + insets.right
 		let height = defaultSize.height + insets.top + insets.bottom

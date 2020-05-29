@@ -44,7 +44,8 @@ class DetailMovieViewController: UIViewController {
 	override func loadView() {
 		view = UIView()
 		view.backgroundColor = .white
-		webView.isHidden = true
+//		webView.isHidden = true
+		authRequiredView.isHidden = true
 		webView.scrollView.isScrollEnabled = false
 		separatorView.backgroundColor = .separator
 		webView.backgroundColor = .systemRed
@@ -76,12 +77,11 @@ class DetailMovieViewController: UIViewController {
 			$0.edges.equalTo(contentGuide)
 		}
 		webView.snp.makeConstraints {
-			$0.leading.trailing.top.equalToSuperview().inset(16)
-			$0.height.equalTo(200)
+			$0.leading.trailing.top.equalToSuperview().inset(0)
 		}
 		authRequiredView.snp.makeConstraints {
 			$0.left.top.right.equalToSuperview()
-//			$0.height.equalTo(200)
+			$0.bottom.equalTo(webView)
 		}
 		mainInfoView.snp.makeConstraints {
 			$0.top.equalTo(authRequiredView.snp.bottom).offset(10)
@@ -118,26 +118,16 @@ class DetailMovieViewController: UIViewController {
 
 		title = movie.title
 		navigationItem.largeTitleDisplayMode = .never
-//		mainInfoView.fill(movie: movie)
 		loadData()
-		let youtubeUrl = """
-			<iframe width="1024" height="720" src="https://www.youtube.com/embed/T1jIEJ7VjUQ" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-		"""
-		
-		let iframeUrl = """
-		<html>
-		<body>
-				<iframe width="1024" height="720" src="http://cloud.tvigle.ru/video/5318544/?partnerId=10458" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-		</body>
-		</html>
-		"""
-		webView.loadHTMLString(youtubeUrl, baseURL: nil)
     }
 	
 	private func loadData() {
 		videoService.detailMovie(id: movie.id) { [weak self] (result) in
 			guard let self = self else { return }
 			guard let detailModel = try? result.get() else { return }
+			if let movieUrl = URL(string: "http://cloud.tvigle.ru/video/\(detailModel.tvigleId)/") {
+				self.webView.load(URLRequest(url: movieUrl))
+			}
 			self.mainInfoView.fill(movie: detailModel)
 			self.directorsLabel.attributedText = self.formattedString(
 				grayPart: "Режисеры: ",
