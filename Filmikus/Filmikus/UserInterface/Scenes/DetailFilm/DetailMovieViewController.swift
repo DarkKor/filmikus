@@ -13,6 +13,8 @@ class DetailMovieViewController: UIViewController {
 	
 	private let movie: MovieModel
 	
+	private let videoService: VideosServiceType
+	
 	private lazy var scrollView = UIScrollView()
 	private lazy var containerView = UIView()
 	private lazy var webView = WKWebView()
@@ -26,8 +28,12 @@ class DetailMovieViewController: UIViewController {
 	private lazy var descriptionLabel = UILabel()
 	private lazy var showFilmButton = BlueButton(title: "СМОТРЕТЬ ФИЛЬМ", target: self, action: #selector(onShowFilmButtonTap))
 
-	init(movie: MovieModel) {
+	init(
+		movie: MovieModel,
+		videoService: VideosServiceType = VideosService()
+	) {
 		self.movie = movie
+		self.videoService = videoService
 		super.init(nibName: nil, bundle: nil)
 	}
 	
@@ -112,8 +118,8 @@ class DetailMovieViewController: UIViewController {
 
 		title = movie.title
 		navigationItem.largeTitleDisplayMode = .never
-		mainInfoView.fill(movie: movie)
-		
+//		mainInfoView.fill(movie: movie)
+		loadData()
 		let youtubeUrl = """
 			<iframe width="1024" height="720" src="https://www.youtube.com/embed/T1jIEJ7VjUQ" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 		"""
@@ -126,14 +132,29 @@ class DetailMovieViewController: UIViewController {
 		</html>
 		"""
 		webView.loadHTMLString(youtubeUrl, baseURL: nil)
-		
-		
-		directorsLabel.attributedText = formattedString(grayPart: "Режисеры:", blackPart: "  Оливье Накаш ,  Эрик Толедано")
-		actorsLabel.attributedText = formattedString(grayPart: "Актеры:", blackPart: "  Абса Дьяту Тур ,  Альба Гайя Крагеде Беллуджи ,  Анн Ле Ни ,  Жозефин Де Мо ,  Клотильд Молле ,  Одри Флеро ,  Омар Си , Салимата Камате ,  Сирил Менди ,  Франсуа Клюзе  ")
-		descriptionLabel.attributedText = formattedString(grayPart: "Описание:", blackPart: " Пострадав в результате несчастного случая, богатый аристократ Филипп нанимает в помощники человека, который менее всего подходит для этой работы, — молодого жителя предместья Дрисса, только что освободившегося из тюрьмы. Несмотря на то, что Филипп прикован к инвалидному креслу, Дриссу удается привнести в размеренную жизнь аристократа дух приключений.Несмотря на то, что Филипп прикован к инвалидному креслу, Дриссу удается привнести в размеренную жизнь аристократа дух приключений.Несмотря на то, что Филипп прикован к инвалидному креслу, Дриссу удается привнести в размеренную жизнь аристократа дух приключений.Несмотря на то, что Филипп прикован к инвалидному креслу, Дриссу удается привнести в размеренную жизнь аристократа дух приключений.")
     }
+	
+	private func loadData() {
+		videoService.detailMovie(id: movie.id) { [weak self] (result) in
+			guard let self = self else { return }
+			guard let detailModel = try? result.get() else { return }
+			self.mainInfoView.fill(movie: detailModel)
+			self.directorsLabel.attributedText = self.formattedString(
+				grayPart: "Режисеры: ",
+				blackPart: detailModel.directors.map{ $0.name }.joined(separator: ", ")
+			)
+			self.actorsLabel.attributedText = self.formattedString(
+				grayPart: "Режисеры: ",
+				blackPart: detailModel.actors.map{ $0.name }.joined(separator: ", ")
+			)
+			self.descriptionLabel.attributedText = self.formattedString(
+				grayPart: "Режисеры: ",
+				blackPart: detailModel.descr
+			)
+		}
+	}
     
-	func formattedString(grayPart: String, blackPart: String) -> NSAttributedString {
+	private func formattedString(grayPart: String, blackPart: String) -> NSAttributedString {
 		let grayAttributed = NSAttributedString(
 			string: grayPart,
 			attributes: [

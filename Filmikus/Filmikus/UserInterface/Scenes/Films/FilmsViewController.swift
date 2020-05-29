@@ -9,7 +9,7 @@
 import UIKit
 
 class FilmsViewController: UIViewController {
-	
+		
 	private lazy var filmsCollectionViewController: MoviesCollectionViewController = {
 		let viewController = MoviesCollectionViewController()
 		viewController.delegate = self

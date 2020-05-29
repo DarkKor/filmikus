@@ -29,7 +29,7 @@ extension VideosAPI: TargetType {
 		case .search:
 			return "/search"
 		case let .item(type, id):
-			return "/\(type.rawValue)/\(id)"
+			return "/item/\(type.rawValue)/\(id)"
 		case let .episode(id):
 			return "/episode/\(id)"
 		}

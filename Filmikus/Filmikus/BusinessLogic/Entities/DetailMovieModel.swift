@@ -6,6 +6,8 @@
 //  Copyright © 2020 Андрей Козлов. All rights reserved.
 //
 
+import Foundation
+
 struct DetailMovieModel: Decodable {
 	let id: Int
 	let tvigleId: Int
@@ -14,7 +16,7 @@ struct DetailMovieModel: Decodable {
 	let rating: Double
 	let imageUrl: ImageUrlModel
 	let categories: [CategoryModel]
-	let year: Int
+	let year: String
 	let duration: Int
 	let ageRating: String
 	let countries: [CountryModel]
@@ -39,5 +41,33 @@ struct DetailMovieModel: Decodable {
 		case directors = "director"
 		case actors = "actor"
 		case similar = "similar"
+	}
+	
+	init(from decoder: Decoder) throws {
+		let container = try decoder.container(keyedBy: CodingKeys.self)
+		// Сервер почему-то присылает айди строкой. Приходится парсить вручную.
+		if let id = try? container.decode(Int.self, forKey: CodingKeys.id) {
+			self.id = id
+		} else {
+			let strId = try container.decode(String.self, forKey: CodingKeys.id)
+			guard let id = Int(strId) else {
+				throw NSError()
+			}
+			self.id = id
+		}
+		tvigleId = try container.decode(Int.self, forKey: CodingKeys.tvigleId)
+		title = try container.decode(String.self, forKey: CodingKeys.title)
+		descr = try container.decode(String.self, forKey: CodingKeys.descr)
+		rating = try container.decode(Double.self, forKey: CodingKeys.rating)
+		imageUrl = try container.decode(ImageUrlModel.self, forKey: CodingKeys.imageUrl)
+		categories = try container.decode([CategoryModel].self, forKey: CodingKeys.categories)
+		year = try container.decode(String.self, forKey: CodingKeys.year)
+		duration = try container.decode(Int.self, forKey: CodingKeys.duration)
+		ageRating = try container.decode(String.self, forKey: CodingKeys.ageRating)
+		countries = try container.decode([CountryModel].self, forKey: CodingKeys.countries)
+		quality = try container.decode(String.self, forKey: CodingKeys.quality)
+		directors = try container.decode([DirectorModel].self, forKey: CodingKeys.directors)
+		actors = try container.decode([ActorModel].self, forKey: CodingKeys.actors)
+		similar = try container.decode([MovieItem].self, forKey: CodingKeys.similar)
 	}
 }

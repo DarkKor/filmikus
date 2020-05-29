@@ -18,7 +18,7 @@ class MainViewController: UIViewController {
 		viewController.delegate = self
 		return viewController
 	}()
-	private lazy var searchController = UISearchController(searchResultsController: nil)
+	private lazy var searchController = SearchController(searchResultsController: nil)
 	
 	init(mainService: MainServiceType = MainService()) {
 		self.mainService = mainService
@@ -55,24 +55,8 @@ class MainViewController: UIViewController {
 		title = "Главная"
 
 		navigationItem.searchController = searchController
-		let textField = searchController.searchBar.searchTextField
-		textField.backgroundColor = UIColor.appDarkBlue.withAlphaComponent(0.3)
-		textField.attributedPlaceholder = NSAttributedString(string: "Поиск", attributes: [.foregroundColor : UIColor.white])
-		textField.textColor = .white
-		if let leftView = textField.leftView as? UIImageView {
-			leftView.image = leftView.image?.withRenderingMode(.alwaysTemplate)
-			leftView.tintColor = UIColor.white
-		}
-		loadData()
 		
-		let categoriesService = VideosService()
-		var filter = FilterModel()
-		filter.categoryId = 2
-//		filter.startDate
-		categoriesService.getMovies(of: .film, with: filter) { (result) in
-			let a = try? result.get()
-			print(a)
-		}
+		loadData()
     }
 	
 	private func loadData() {

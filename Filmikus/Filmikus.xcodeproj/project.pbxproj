@@ -80,6 +80,8 @@
 		49900FF6248103F400F18B46 /* SliderService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49900FF5248103F400F18B46 /* SliderService.swift */; };
 		49900FFA2481065500F18B46 /* EpisodesService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49900FF92481065500F18B46 /* EpisodesService.swift */; };
 		49900FFC2481078F00F18B46 /* EpisodeModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49900FFB2481078F00F18B46 /* EpisodeModel.swift */; };
+		49900FFF248111E900F18B46 /* SearchController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49900FFE248111E900F18B46 /* SearchController.swift */; };
+		499010012481455800F18B46 /* RoundedBorderLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 499010002481455800F18B46 /* RoundedBorderLabel.swift */; };
 		49907C3F247C0BAF00E201B6 /* VideoCategoryHeaderSectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49907C3E247C0BAF00E201B6 /* VideoCategoryHeaderSectionView.swift */; };
 		DBB5AD7EDA6B8BBB5543CBB9 /* Pods_Filmikus.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 97F5ACE358500956AF72C9A2 /* Pods_Filmikus.framework */; };
 /* End PBXBuildFile section */
@@ -161,6 +163,8 @@
 		49900FF5248103F400F18B46 /* SliderService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SliderService.swift; sourceTree = "<group>"; };
 		49900FF92481065500F18B46 /* EpisodesService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EpisodesService.swift; sourceTree = "<group>"; };
 		49900FFB2481078F00F18B46 /* EpisodeModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EpisodeModel.swift; sourceTree = "<group>"; };
+		49900FFE248111E900F18B46 /* SearchController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchController.swift; sourceTree = "<group>"; };
+		499010002481455800F18B46 /* RoundedBorderLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundedBorderLabel.swift; sourceTree = "<group>"; };
 		49907C3E247C0BAF00E201B6 /* VideoCategoryHeaderSectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoCategoryHeaderSectionView.swift; sourceTree = "<group>"; };
 		5F55A71C0021F60EFFD15EA6 /* Pods-Filmikus.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Filmikus.debug.xcconfig"; path = "Target Support Files/Pods-Filmikus/Pods-Filmikus.debug.xcconfig"; sourceTree = "<group>"; };
 		97F5ACE358500956AF72C9A2 /* Pods_Filmikus.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Filmikus.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -414,6 +418,7 @@
 				49684A79246D76DA00E9BADC /* PasswordUnderlinedTextField.swift */,
 				49684AC12476801A00E9BADC /* UnderlinedSegmentControl.swift */,
 				49684ACB2476D20A00E9BADC /* LoadingCollectionFooterView.swift */,
+				499010002481455800F18B46 /* RoundedBorderLabel.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -422,6 +427,7 @@
 			isa = PBXGroup;
 			children = (
 				49684A8E2472ED1400E9BADC /* SelectItemViewController.swift */,
+				49900FFE248111E900F18B46 /* SearchController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -605,6 +611,7 @@
 				49900FD2247FDAE200F18B46 /* VideoQuality.swift in Sources */,
 				49900FB8247E71DF00F18B46 /* AuthRequiredView.swift in Sources */,
 				49900FC8247FCF6200F18B46 /* CategoriesAPI.swift in Sources */,
+				49900FFF248111E900F18B46 /* SearchController.swift in Sources */,
 				49900FD8247FFB9400F18B46 /* MoviesModel.swift in Sources */,
 				491C21AE24641D61007CDEC2 /* MainViewController.swift in Sources */,
 				491C21B72464240D007CDEC2 /* Censorship.swift in Sources */,
@@ -614,6 +621,7 @@
 				49900FC4247EBBAE00F18B46 /* MovieModel.swift in Sources */,
 				49684A74246BE71200E9BADC /* ProfileViewController.swift in Sources */,
 				49684A66246ADA9900E9BADC /* UIColor+App.swift in Sources */,
+				499010012481455800F18B46 /* RoundedBorderLabel.swift in Sources */,
 				49900FD6247FE08600F18B46 /* VideosService.swift in Sources */,
 				49684AD8247ABAF000E9BADC /* FilmsFilterCollectionViewCell.swift in Sources */,
 				49684AC22476801A00E9BADC /* UnderlinedSegmentControl.swift in Sources */,
