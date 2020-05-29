@@ -65,7 +65,7 @@ class UnderlinedSegmentControl: UIControl {
 		var x: CGFloat = 0
 		for index in buttons.indices {
 			let maxButtonWidth: CGFloat = buttons[index].intrinsicContentSize.width
-			let buttonSize = CGSize(width: maxButtonWidth + 10, height: scrollView.frame.size.height)
+			let buttonSize = CGSize(width: maxButtonWidth + 20, height: scrollView.frame.size.height)
 			buttons[index].frame = CGRect(origin: CGPoint(x: x, y: 0), size: buttonSize)
 			if index == selectedIndex {
 				underlinedView.frame = CGRect(x: x, y: buttonSize.height - 2, width: buttonSize.width, height: 2)
