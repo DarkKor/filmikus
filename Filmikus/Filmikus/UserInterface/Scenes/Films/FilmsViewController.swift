@@ -9,8 +9,12 @@
 import UIKit
 
 class FilmsViewController: UIViewController {
+	
+	private let facade = FilmsFacade()
+	
+	private var filmsFilter = FilmsFilter()
 		
-	private lazy var filmsCollectionViewController: MoviesCollectionViewController = {
+	private lazy var moviesCollectionViewController: MoviesCollectionViewController = {
 		let viewController = MoviesCollectionViewController()
 		viewController.delegate = self
 		return viewController
@@ -20,11 +24,11 @@ class FilmsViewController: UIViewController {
 		view = UIView()
 		view.backgroundColor = .appLightGray
 		
-		addChild(filmsCollectionViewController)
-		view.addSubview(filmsCollectionViewController.view)
-		filmsCollectionViewController.didMove(toParent: self)
+		addChild(moviesCollectionViewController)
+		view.addSubview(moviesCollectionViewController.view)
+		moviesCollectionViewController.didMove(toParent: self)
 		
-		filmsCollectionViewController.view.snp.makeConstraints {
+		moviesCollectionViewController.view.snp.makeConstraints {
 			$0.edges.equalToSuperview()
 		}
 	}
@@ -41,7 +45,23 @@ class FilmsViewController: UIViewController {
 			.quality(FilterContentItem(title: "Качество", detail: "Все")),
 			.sort(FilterContentItem(title: "Сортировать", detail: "По популярности"))
 		]
-		filmsCollectionViewController.update(filterItems: filterItems)
+		moviesCollectionViewController.update(filterItems: filterItems)
+		
+		facade.getFilmsFilter { [weak self] (result) in
+			guard let self = self else { return }
+			guard let filmsFilter = try? result.get() else { return }
+			self.filmsFilter = filmsFilter
+		}
+		
+		facade.getFilms { [weak self] (result) in
+			guard let self = self else { return }
+			guard let moviesModel = try? result.get() else { return }
+			let movies = moviesModel.items.map {
+				MovieModel(id: $0.id, title: $0.title, imageUrl: $0.imageUrl.high, type: .film)
+			}
+			self.moviesCollectionViewController.update(movies: movies)
+		}
+		
     }
 }
 
@@ -53,16 +73,18 @@ extension FilmsViewController: MoviesCollectionViewControllerDelegate {
 		var selectItems: [String] = []
 		switch item {
 		case .genre:
-			selectItems = ["Драма", "Комедия", "Биография"]
+			selectItems = filmsFilter.genres.map { $0.title }
 		case .country:
-			selectItems = ["Россия", "Украина", "Белорусь"]
+			selectItems = filmsFilter.countries.map { $0.title }
 		case .year:
-			selectItems = (1900 ... 2020).map { String($0) }
+			selectItems = (1924 ... 2020).map { String($0) }
 		case .quality:
-			selectItems = ["SD", "HD", "fullHD"]
+			selectItems = VideoQuality.allCases.map { $0.description }
 		case .sort:
-			selectItems = ["По популярности", "По новизне"]
+			selectItems = VideoOrder.allCases.map { $0.description }
 		}
+		
+		// Возможно стоит сделать пикер, который будет вылезать внизу экрана, вместо перехода на новый экран.
 		let selectItemViewController = SelectItemViewController(items: selectItems) { selectedItem in
 			var item = item
 			let content = item.content
@@ -73,7 +95,7 @@ extension FilmsViewController: MoviesCollectionViewControllerDelegate {
 	}
 	
 	func moviesCollectionViewControllerShouldShowActivity(_ viewController: MoviesCollectionViewController) -> Bool {
-		return true
+		return false
 	}
 	
 	func moviesCollectionViewController(_ viewController: MoviesCollectionViewController, didSelectMovie movie: MovieModel) {

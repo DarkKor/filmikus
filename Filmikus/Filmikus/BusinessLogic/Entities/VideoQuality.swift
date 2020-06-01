@@ -6,8 +6,21 @@
 //  Copyright © 2020 Андрей Козлов. All rights reserved.
 //
 
-enum VideoQuality: String, Codable {
+enum VideoQuality: String, Codable, CaseIterable {
 	case sd = "sd"
 	case hd = "hd"
 	case fullHd = "fullhd"
+}
+
+extension VideoQuality: CustomStringConvertible {
+	var description: String {
+		switch self {
+		case .sd:
+			return "SD"
+		case .hd:
+			return "HD"
+		case .fullHd:
+			return "fullHD"
+		}
+	}
 }

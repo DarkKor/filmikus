@@ -10,9 +10,13 @@ import Foundation
 
 struct MovieItem: Decodable {
 	let id: Int
+	let title: String
+	let imageUrl: ImageUrlModel
 	
 	enum CodingKeys: String, CodingKey {
 		case id
+		case title
+		case imageUrl = "image_url"
 	}
 	
 	init(from decoder: Decoder) throws {
@@ -27,6 +31,7 @@ struct MovieItem: Decodable {
 			}
 			self.id = id
 		}
-		
+		self.title = try container.decode(String.self, forKey: CodingKeys.title)
+		self.imageUrl = try container.decode(ImageUrlModel.self, forKey: CodingKeys.imageUrl)
 	}
 }

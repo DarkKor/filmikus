@@ -9,8 +9,8 @@
 import Moya
 
 protocol CountriesServiceType {
-	func getFilmCountries(completion: @escaping (Result<CountryModel, Error>) -> Void)
-	func getSerialCountries(completion: @escaping (Result<CountryModel, Error>) -> Void)
+	func getFilmCountries(completion: @escaping (Result<[CountryModel], Error>) -> Void)
+	func getSerialCountries(completion: @escaping (Result<[CountryModel], Error>) -> Void)
 }
 
 class CountriesService: CountriesServiceType {
@@ -21,21 +21,21 @@ class CountriesService: CountriesServiceType {
 		self.provider = provider
 	}
 	
-	func getFilmCountries(completion: @escaping (Result<CountryModel, Error>) -> Void) {
+	func getFilmCountries(completion: @escaping (Result<[CountryModel], Error>) -> Void) {
 		provider.request(.filmCountries) { (result) in
 			completion(
 				result.mapError { $0 }.flatMap { response in
-					Result { try response.map(CountryModel.self) }
+					Result { try response.map([CountryModel].self) }
 				}
 			)
 		}
 	}
 	
-	func getSerialCountries(completion: @escaping (Result<CountryModel, Error>) -> Void) {
+	func getSerialCountries(completion: @escaping (Result<[CountryModel], Error>) -> Void) {
 		provider.request(.serialCountries) { (result) in
 			completion(
 				result.mapError { $0 }.flatMap { response in
-					Result { try response.map(CountryModel.self) }
+					Result { try response.map([CountryModel].self) }
 				}
 			)
 		}

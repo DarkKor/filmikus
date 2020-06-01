@@ -134,11 +134,11 @@ class DetailMovieViewController: UIViewController {
 				blackPart: detailModel.directors.map{ $0.name }.joined(separator: ", ")
 			)
 			self.actorsLabel.attributedText = self.formattedString(
-				grayPart: "Режисеры: ",
+				grayPart: "Актеры: ",
 				blackPart: detailModel.actors.map{ $0.name }.joined(separator: ", ")
 			)
 			self.descriptionLabel.attributedText = self.formattedString(
-				grayPart: "Режисеры: ",
+				grayPart: "Описание: ",
 				blackPart: detailModel.descr
 			)
 		}

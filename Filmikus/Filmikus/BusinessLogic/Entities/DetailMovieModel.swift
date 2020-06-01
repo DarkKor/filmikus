@@ -23,7 +23,7 @@ struct DetailMovieModel: Decodable {
 	let quality: String
 	let directors: [DirectorModel]
 	let actors: [ActorModel]
-	let similar: [MovieItem]
+//	let similar: [MovieItem]
 	
 	enum CodingKeys: String, CodingKey {
 		case id = "id"
@@ -40,7 +40,7 @@ struct DetailMovieModel: Decodable {
 		case quality = "quality"
 		case directors = "director"
 		case actors = "actor"
-		case similar = "similar"
+//		case similar = "similar"
 	}
 	
 	init(from decoder: Decoder) throws {
@@ -56,18 +56,18 @@ struct DetailMovieModel: Decodable {
 			self.id = id
 		}
 		tvigleId = try container.decode(Int.self, forKey: CodingKeys.tvigleId)
-		title = try container.decode(String.self, forKey: CodingKeys.title)
-		descr = try container.decode(String.self, forKey: CodingKeys.descr)
-		rating = try container.decode(Double.self, forKey: CodingKeys.rating)
-		imageUrl = try container.decode(ImageUrlModel.self, forKey: CodingKeys.imageUrl)
-		categories = try container.decode([CategoryModel].self, forKey: CodingKeys.categories)
-		year = try container.decode(String.self, forKey: CodingKeys.year)
-		duration = try container.decode(Int.self, forKey: CodingKeys.duration)
-		ageRating = try container.decode(String.self, forKey: CodingKeys.ageRating)
-		countries = try container.decode([CountryModel].self, forKey: CodingKeys.countries)
-		quality = try container.decode(String.self, forKey: CodingKeys.quality)
-		directors = try container.decode([DirectorModel].self, forKey: CodingKeys.directors)
-		actors = try container.decode([ActorModel].self, forKey: CodingKeys.actors)
-		similar = try container.decode([MovieItem].self, forKey: CodingKeys.similar)
+		title = try container.decodeIfPresent(String.self, forKey: CodingKeys.title) ?? ""
+		descr = try container.decodeIfPresent(String.self, forKey: CodingKeys.descr) ?? ""
+		rating = try container.decodeIfPresent(Double.self, forKey: CodingKeys.rating) ?? 0.0
+		imageUrl = try container.decodeIfPresent(ImageUrlModel.self, forKey: CodingKeys.imageUrl) ?? ImageUrlModel(low: "", high: "")
+		categories = try container.decodeIfPresent([CategoryModel].self, forKey: CodingKeys.categories) ?? []
+		year = try container.decodeIfPresent(String.self, forKey: CodingKeys.year) ?? ""
+		duration = try container.decodeIfPresent(Int.self, forKey: CodingKeys.duration) ?? 0
+		ageRating = try container.decodeIfPresent(String.self, forKey: CodingKeys.ageRating) ?? ""
+		countries = try container.decodeIfPresent([CountryModel].self, forKey: CodingKeys.countries) ?? []
+		quality = try container.decodeIfPresent(String.self, forKey: CodingKeys.quality) ?? ""
+		directors = try container.decodeIfPresent([DirectorModel].self, forKey: CodingKeys.directors) ?? []
+		actors = try container.decodeIfPresent([ActorModel].self, forKey: CodingKeys.actors) ?? []
+//		similar = try container.decode([MovieItem].self, forKey: CodingKeys.similar)
 	}
 }

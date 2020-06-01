@@ -113,8 +113,8 @@ extension MoviesCollectionViewController: UICollectionViewDelegate {
 			let filterItem = filterItems[indexPath.item]
 			delegate?.moviesCollectionViewController(self, didSelectFilter: filterItem)
 		case 1:
-			let film = movies[indexPath.item]
-			delegate?.moviesCollectionViewController(self, didSelectMovie: film)
+			let movie = movies[indexPath.item]
+			delegate?.moviesCollectionViewController(self, didSelectMovie: movie)
 		default:
 			break
 		}
