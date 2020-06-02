@@ -1,13 +1,14 @@
 //
-//  FilmsFacade.swift
+//  SerialsFacade.swift
 //  Filmikus
 //
-//  Created by Андрей Козлов on 01.06.2020.
+//  Created by Андрей Козлов on 02.06.2020.
 //  Copyright © 2020 Андрей Козлов. All rights reserved.
 //
+
 import Foundation
 
-class FilmsFacade {
+class SerialsFacade {
 	
 	private let categoriesService: CategoriesServiceType
 	private let countriesService: CountriesServiceType
@@ -29,7 +30,7 @@ class FilmsFacade {
 		
 		let dispatchGroup = DispatchGroup()
 		dispatchGroup.enter()
-		categoriesService.getMovieCategories { (result) in
+		categoriesService.getSeriesCategories { (result) in
 			defer {
 				dispatchGroup.leave()
 			}
@@ -37,7 +38,7 @@ class FilmsFacade {
 		}
 		
 		dispatchGroup.enter()
-		countriesService.getFilmCountries { (result) in
+		countriesService.getSerialCountries { (result) in
 			defer {
 				dispatchGroup.leave()
 			}
@@ -53,8 +54,8 @@ class FilmsFacade {
 		}
 	}
 	
-	func getFilms(with filter: FilterModel = FilterModel(), completion: @escaping (Result<MoviesModel, Error>) -> Void) {
-		videosService.getMovies(of: .film, with: filter) { (result) in
+	func getSerials(with filter: FilterModel = FilterModel(), completion: @escaping (Result<MoviesModel, Error>) -> Void) {
+		videosService.getMovies(of: .serial, with: filter) { (result) in
 			completion(result)
 		}
 	}

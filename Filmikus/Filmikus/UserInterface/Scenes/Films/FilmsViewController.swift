@@ -12,7 +12,7 @@ class FilmsViewController: UIViewController {
 	
 	private let facade = FilmsFacade()
 	private var filter = FilterModel()
-	private var filmsFilter = FilmsFilter()
+	private var filmsFilterItems = FilmsFilterItems()
 		
 	private lazy var moviesCollectionViewController: MoviesCollectionViewController = {
 		let viewController = MoviesCollectionViewController()
@@ -45,10 +45,10 @@ class FilmsViewController: UIViewController {
 		
 		title = "Фильмы"
 		
-		facade.getFilmsFilter { [weak self] (result) in
+		facade.getFilmsFilterItems { [weak self] (result) in
 			guard let self = self else { return }
-			guard let filmsFilter = try? result.get() else { return }
-			self.filmsFilter = filmsFilter
+			guard let filmsFilterItems = try? result.get() else { return }
+			self.filmsFilterItems = filmsFilterItems
 			let filterItems: [FilterItem] = [
 				.genre(FilterContentItem(title: "Жанр", detail: "Все")),
 				.country(FilterContentItem(title: "Страна", detail: "Все")),
@@ -83,7 +83,7 @@ extension FilmsViewController: MoviesCollectionViewControllerDelegate {
 	func moviesCollectionViewController(_ viewController: MoviesCollectionViewController, didSelectFilter item: FilterItem) {
 		switch item {
 		case .genre:
-			let genres = filmsFilter.genres.map { $0.title }
+			let genres = filmsFilterItems.genres.map { $0.title }
 			let selectItemViewController = SelectItemViewController(items: genres) { genreItem in
 				let title: String
 				let categoryId: Int?
@@ -92,7 +92,7 @@ extension FilmsViewController: MoviesCollectionViewControllerDelegate {
 					title = "Все"
 					categoryId = nil
 				case let .itemIndex(index):
-					let genre = self.filmsFilter.genres[index]
+					let genre = self.filmsFilterItems.genres[index]
 					title = genre.title
 					categoryId = genre.id
 				}
@@ -103,7 +103,7 @@ extension FilmsViewController: MoviesCollectionViewControllerDelegate {
 			}
 			navigationController?.pushViewController(selectItemViewController, animated: true)
 		case .country:
-			let countries = filmsFilter.countries.map { $0.title }
+			let countries = filmsFilterItems.countries.map { $0.title }
 			let selectItemViewController = SelectItemViewController(items: countries) { countryItem in
 				let title: String
 				let countryId: Int?
@@ -112,7 +112,7 @@ extension FilmsViewController: MoviesCollectionViewControllerDelegate {
 					title = "Все"
 					countryId = nil
 				case let .itemIndex(index):
-					let country = self.filmsFilter.countries[index]
+					let country = self.filmsFilterItems.countries[index]
 					title = country.title
 					countryId = country.id
 				}
