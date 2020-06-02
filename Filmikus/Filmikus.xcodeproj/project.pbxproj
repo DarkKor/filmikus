@@ -20,6 +20,10 @@
 		491C21C424642A93007CDEC2 /* MovieCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 491C21C324642A93007CDEC2 /* MovieCollectionViewCell.swift */; };
 		49378673248520B800C8496E /* FilmsFacade.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49378672248520B800C8496E /* FilmsFacade.swift */; };
 		493786752485225A00C8496E /* FilmsFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 493786742485225A00C8496E /* FilmsFilter.swift */; };
+		4937867924853A3400C8496E /* SelectItemPickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4937867824853A3400C8496E /* SelectItemPickerViewController.swift */; };
+		4937867B24855CDC00C8496E /* FilmsFilterQualityCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4937867A24855CDC00C8496E /* FilmsFilterQualityCollectionViewCell.swift */; };
+		4937867D24855F2600C8496E /* QualityButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4937867C24855F2600C8496E /* QualityButton.swift */; };
+		4937868124869FDB00C8496E /* FilterQualityContentItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4937868024869FDB00C8496E /* FilterQualityContentItem.swift */; };
 		49684A5E246AC51600E9BADC /* CategoryHeaderSectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49684A5D246AC51600E9BADC /* CategoryHeaderSectionView.swift */; };
 		49684A60246ACD9B00E9BADC /* UIView+Style.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49684A5F246ACD9B00E9BADC /* UIView+Style.swift */; };
 		49684A62246ACDDA00E9BADC /* BlueButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49684A61246ACDDA00E9BADC /* BlueButton.swift */; };
@@ -105,6 +109,10 @@
 		491C21C324642A93007CDEC2 /* MovieCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieCollectionViewCell.swift; sourceTree = "<group>"; };
 		49378672248520B800C8496E /* FilmsFacade.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilmsFacade.swift; sourceTree = "<group>"; };
 		493786742485225A00C8496E /* FilmsFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilmsFilter.swift; sourceTree = "<group>"; };
+		4937867824853A3400C8496E /* SelectItemPickerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectItemPickerViewController.swift; sourceTree = "<group>"; };
+		4937867A24855CDC00C8496E /* FilmsFilterQualityCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilmsFilterQualityCollectionViewCell.swift; sourceTree = "<group>"; };
+		4937867C24855F2600C8496E /* QualityButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QualityButton.swift; sourceTree = "<group>"; };
+		4937868024869FDB00C8496E /* FilterQualityContentItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterQualityContentItem.swift; sourceTree = "<group>"; };
 		49684A5D246AC51600E9BADC /* CategoryHeaderSectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryHeaderSectionView.swift; sourceTree = "<group>"; };
 		49684A5F246ACD9B00E9BADC /* UIView+Style.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Style.swift"; sourceTree = "<group>"; };
 		49684A61246ACDDA00E9BADC /* BlueButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlueButton.swift; sourceTree = "<group>"; };
@@ -419,6 +427,7 @@
 		49684A85246EF61300E9BADC /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				4937867C24855F2600C8496E /* QualityButton.swift */,
 				49684A61246ACDDA00E9BADC /* BlueButton.swift */,
 				49684A75246BED4000E9BADC /* UnderlinedTextField.swift */,
 				49684A79246D76DA00E9BADC /* PasswordUnderlinedTextField.swift */,
@@ -433,6 +442,7 @@
 			isa = PBXGroup;
 			children = (
 				49684A8E2472ED1400E9BADC /* SelectItemViewController.swift */,
+				4937867824853A3400C8496E /* SelectItemPickerViewController.swift */,
 				49900FFE248111E900F18B46 /* SearchController.swift */,
 			);
 			path = ViewControllers;
@@ -485,6 +495,7 @@
 			children = (
 				491C21B62464240D007CDEC2 /* Censorship.swift */,
 				49684A8C2472E7ED00E9BADC /* FilterContentItem.swift */,
+				4937868024869FDB00C8496E /* FilterQualityContentItem.swift */,
 				49684A8A2472E7D600E9BADC /* FilterItem.swift */,
 			);
 			path = CellModels;
@@ -495,6 +506,7 @@
 			children = (
 				491C21C324642A93007CDEC2 /* MovieCollectionViewCell.swift */,
 				49684AD7247ABAF000E9BADC /* FilmsFilterCollectionViewCell.swift */,
+				4937867A24855CDC00C8496E /* FilmsFilterQualityCollectionViewCell.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -615,7 +627,9 @@
 			files = (
 				49900FBE247EACC800F18B46 /* SliderModel.swift in Sources */,
 				49900FD2247FDAE200F18B46 /* VideoQuality.swift in Sources */,
+				4937868124869FDB00C8496E /* FilterQualityContentItem.swift in Sources */,
 				49900FB8247E71DF00F18B46 /* AuthRequiredView.swift in Sources */,
+				4937867D24855F2600C8496E /* QualityButton.swift in Sources */,
 				49900FC8247FCF6200F18B46 /* CategoriesAPI.swift in Sources */,
 				49900FFF248111E900F18B46 /* SearchController.swift in Sources */,
 				49900FD8247FFB9400F18B46 /* MoviesModel.swift in Sources */,
@@ -625,6 +639,7 @@
 				49684A81246E87CC00E9BADC /* MovieMainInfoView.swift in Sources */,
 				49900FDA24800B4300F18B46 /* SliderAPI.swift in Sources */,
 				49900FC4247EBBAE00F18B46 /* MovieModel.swift in Sources */,
+				4937867924853A3400C8496E /* SelectItemPickerViewController.swift in Sources */,
 				49684A74246BE71200E9BADC /* ProfileViewController.swift in Sources */,
 				49684A66246ADA9900E9BADC /* UIColor+App.swift in Sources */,
 				499010012481455800F18B46 /* RoundedBorderLabel.swift in Sources */,
@@ -646,6 +661,7 @@
 				49900FE82480146600F18B46 /* DirectorModel.swift in Sources */,
 				49684A72246BE70C00E9BADC /* VideosViewController.swift in Sources */,
 				49900FDC24800BD600F18B46 /* CountriesAPI.swift in Sources */,
+				4937867B24855CDC00C8496E /* FilmsFilterQualityCollectionViewCell.swift in Sources */,
 				49900FBC247EAA9900F18B46 /* MainService.swift in Sources */,
 				49900FC0247EACFE00F18B46 /* MovieType.swift in Sources */,
 				49684A5E246AC51600E9BADC /* CategoryHeaderSectionView.swift in Sources */,

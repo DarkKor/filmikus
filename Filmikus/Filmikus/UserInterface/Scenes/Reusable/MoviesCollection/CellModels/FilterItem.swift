@@ -10,39 +10,8 @@ enum FilterItem {
 	case genre(FilterContentItem)
 	case country(FilterContentItem)
 	case year(FilterContentItem)
-	case quality(FilterContentItem)
+	case quality(FilterQualityContentItem)
 	case sort(FilterContentItem)
-	
-	var content: FilterContentItem {
-		get {
-			switch self {
-			case .genre(let filterItem):
-				return filterItem
-			case .country(let filterItem):
-				return filterItem
-			case .year(let filterItem):
-				return filterItem
-			case .quality(let filterItem):
-				return filterItem
-			case .sort(let filterItem):
-				return filterItem
-			}
-		}
-		set {
-			switch self {
-			case .genre:
-				self = .genre(newValue)
-			case .country:
-				self = .country(newValue)
-			case .year:
-				self = .year(newValue)
-			case .quality:
-				self = .quality(newValue)
-			case .sort:
-				self = .sort(newValue)
-			}
-		}
-	}
 }
 
 extension FilterItem: Equatable {

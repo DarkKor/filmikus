@@ -10,6 +10,8 @@ import UIKit
 
 protocol MoviesCollectionViewControllerDelegate: class {
 	func moviesCollectionViewController(_ viewController: MoviesCollectionViewController, didSelectFilter item: FilterItem)
+	func moviesCollectionViewController(_ viewController: MoviesCollectionViewController, didSelectQuality quality: VideoQuality)
+	func moviesCollectionViewController(_ viewController: MoviesCollectionViewController, didDeselectQuality quality: VideoQuality)
 	func moviesCollectionViewController(_ viewController: MoviesCollectionViewController, didSelectMovie movie: MovieModel)
 	func moviesCollectionViewControllerShouldShowActivity(_ viewController: MoviesCollectionViewController) -> Bool
 }
@@ -36,6 +38,7 @@ class MoviesCollectionViewController: UIViewController {
 		collection.showsVerticalScrollIndicator = false
 		collection.register(cell: MovieCollectionViewCell.self)
 		collection.register(cell: FilmsFilterCollectionViewCell.self)
+		collection.register(cell: FilmsFilterQualityCollectionViewCell.self)
 		collection.register(
 			LoadingCollectionFooterView.self,
 			forSupplementaryViewOfKind: UICollectionView.elementKindSectionFooter,
@@ -90,9 +93,29 @@ extension MoviesCollectionViewController: UICollectionViewDataSource {
 	func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
 		switch indexPath.section {
 		case 0:
-			let cell: FilmsFilterCollectionViewCell = collectionView.dequeueCell(for: indexPath)
-			cell.fill(content: filterItems[indexPath.item].content)
-			return cell
+			switch filterItems[indexPath.item] {
+			case let .genre(content):
+				let cell: FilmsFilterCollectionViewCell = collectionView.dequeueCell(for: indexPath)
+				cell.fill(content: content)
+				return cell
+			case let .country(content):
+				let cell: FilmsFilterCollectionViewCell = collectionView.dequeueCell(for: indexPath)
+				cell.fill(content: content)
+				return cell
+			case let .year(content):
+				let cell: FilmsFilterCollectionViewCell = collectionView.dequeueCell(for: indexPath)
+				cell.fill(content: content)
+				return cell
+			case let .quality(content):
+				let cell: FilmsFilterQualityCollectionViewCell = collectionView.dequeueCell(for: indexPath)
+				cell.fill(content: content)
+				cell.delegate = self
+				return cell
+			case let .sort(content):
+				let cell: FilmsFilterCollectionViewCell = collectionView.dequeueCell(for: indexPath)
+				cell.fill(content: content)
+				return cell
+			}
 		case 1:
 			let cell: MovieCollectionViewCell = collectionView.dequeueCell(for: indexPath)
 			cell.fill(movie: movies[indexPath.item])
@@ -195,5 +218,18 @@ extension MoviesCollectionViewController: UICollectionViewDelegateFlowLayout {
 		default:
 			return .zero
 		}
+	}
+}
+
+// MARK: - FilmsFilterQualityCollectionViewCellDelegate
+
+extension MoviesCollectionViewController: FilmsFilterQualityCollectionViewCellDelegate {
+	
+	func filmsFilterQualityCollectionViewCell(_ cell: FilmsFilterQualityCollectionViewCell, didSelectQuality quality: VideoQuality) {
+		delegate?.moviesCollectionViewController(self, didSelectQuality: quality)
+	}
+	
+	func filmsFilterQualityCollectionViewCell(_ cell: FilmsFilterQualityCollectionViewCell, didDeselectQuality quality: VideoQuality) {
+		delegate?.moviesCollectionViewController(self, didDeselectQuality: quality)
 	}
 }

@@ -13,7 +13,7 @@ struct FilterModel: Codable {
 	var startDate: Int? = nil
 	var endDate: Int? = nil
 	var countryId: Int? = nil
-	var videoQuality: VideoQuality? = nil
+	var qualities: Set<VideoQuality> = []
 	var videoOrder: VideoOrder? = nil
 	
 	enum CodingKeys: String, CodingKey {
@@ -21,7 +21,7 @@ struct FilterModel: Codable {
 		case startDate = "date_start"
 		case endDate = "date_end"
 		case countryId = "country_id"
-		case videoQuality = "video_quality"
+		case qualities = "video_quality"
 		case videoOrder = "order_by"
 	}
 	
@@ -39,8 +39,9 @@ struct FilterModel: Codable {
 		if let countryId = countryId {
 			try container.encode(countryId, forKey: .countryId)
 		}
-		if let videoQuality = videoQuality {
-			try container.encode(videoQuality.rawValue, forKey: .videoQuality)
+		if !qualities.isEmpty {
+			let qualitity = qualities.map { $0.rawValue }.joined(separator: "|")
+			try container.encode(qualitity, forKey: .qualities)
 		}
 		if let videoOrder = videoOrder {
 			try container.encode(videoOrder.rawValue, forKey: .videoOrder)

@@ -41,6 +41,14 @@ extension UIColor {
 		UIColor(named: "appGrayText")!
 	}
 	
+	static var appQualityBackground: UIColor {
+		UIColor(named: "appQualityBackground")!
+	}
+	
+	static var appQualityTextColor: UIColor {
+		UIColor(named: "appQualityTextColor")!
+	}
+	
 	static var appPeach: UIColor {
 		UIColor(named: "appPeach")!
 	}

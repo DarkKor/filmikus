@@ -12,9 +12,14 @@ protocol SelectableItem {
 	var text: String { get }
 }
 
+enum SelectedItem {
+	case all
+	case itemIndex(Int)
+}
+
 class SelectItemViewController<Item: SelectableItem>: UITableViewController {
 	
-	typealias SelectItemBlock = (Item) -> Void
+	typealias SelectItemBlock = (SelectedItem) -> Void
 	
 	private var selectItemBlock: SelectItemBlock
 	
@@ -38,6 +43,12 @@ class SelectItemViewController<Item: SelectableItem>: UITableViewController {
 		tableView.register(cell: ReusableTableViewCell.self)
 		navigationItem.largeTitleDisplayMode = .never
 		
+		navigationItem.rightBarButtonItem = UIBarButtonItem(
+			title: "Сбросить",
+			style: .done,
+			target: self,
+			action: #selector(onResetButtonTap)
+		)
 	}
 	
 	// MARK: - UITableViewDataSource
@@ -55,8 +66,13 @@ class SelectItemViewController<Item: SelectableItem>: UITableViewController {
 	}
 	
 	override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-		selectItemBlock(items[indexPath.row])
+		selectItemBlock(.itemIndex(indexPath.row))
 		navigationController?.popViewController(animated: true)
 	}
     
+	@objc
+	private func onResetButtonTap(sender: UIBarButtonItem) {
+		selectItemBlock(.all)
+		navigationController?.popViewController(animated: true)
+	}
 }
