@@ -15,7 +15,7 @@ class ProfileViewController: UIViewController {
 	private lazy var containerView = UIView()
 	
 	private lazy var segmentControl: UnderlinedSegmentControl = {
-		let segment = UnderlinedSegmentControl(buttons: [
+		let segment = UnderlinedSegmentControl(segments: [
 			"По логину", "По номеру телефона"
 		])
 		segment.addTarget(self, action: #selector(segmentControlChanged), for: .valueChanged)

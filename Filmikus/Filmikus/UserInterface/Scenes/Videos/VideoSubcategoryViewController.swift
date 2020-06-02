@@ -1,5 +1,5 @@
 //
-//  DetailVideoCategoryViewController.swift
+//  VideoSubcategoryViewController.swift
 //  Filmikus
 //
 //  Created by Андрей Козлов on 21.05.2020.
@@ -8,9 +8,12 @@
 
 import UIKit
 
-class DetailVideoCategoryViewController: UIViewController {
+class VideoSubcategoryViewController: UIViewController {
 	
-	private let category: VideoCategory
+	private let subcategory: VideoSubcategory
+	
+	private let episodesServise: EpisodesServiceType = EpisodesService()
+	private let videosService: VideosServiceType = VideosService()
 	
 	private lazy var videosCollectionViewController: VideosCollectionViewController = {
 		let viewController = VideosCollectionViewController()
@@ -18,8 +21,8 @@ class DetailVideoCategoryViewController: UIViewController {
 		return viewController
 	}()
 	
-	init(category: VideoCategory) {
-		self.category = category
+	init(subcategory: VideoSubcategory) {
+		self.subcategory = subcategory
 		super.init(nibName: nil, bundle: nil)
 	}
 	
@@ -43,16 +46,22 @@ class DetailVideoCategoryViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-		title = category.title
-		
-		videosCollectionViewController.update(videos: category.videos)
+		title = subcategory.title
+		navigationItem.largeTitleDisplayMode = .never
+
+		episodesServise.getFunShowEpisodes(funShowId: subcategory.id) { [weak self] (result) in
+			guard let self = self else { return }
+			guard let episodes = try? result.get() else { return }
+			let videos = episodes.items.map { Video(id: $0.id, title: $0.title, imageUrl: "") }
+			self.videosCollectionViewController.update(videos: videos)
+		}
     }
 
 }
 
 // MARK: - VideosCollectionViewControllerDelegate
 
-extension DetailVideoCategoryViewController: VideosCollectionViewControllerDelegate {
+extension VideoSubcategoryViewController: VideosCollectionViewControllerDelegate {
 	
 	func videoCollectionViewController(_ viewController: VideosCollectionViewController, didSelectVideo video: Video) {
 		print(video)

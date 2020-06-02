@@ -33,8 +33,8 @@ class UnderlinedSegmentControl: UIControl {
 		return CGSize(width: 0, height: height + 10)
 	}
 	
-	init(buttons: [String] = []) {
-		self.buttons = buttons.map {
+	init(segments: [String] = []) {
+		self.buttons = segments.map {
 			let button = UIButton()
 			button.setTitle($0, for: .normal)
 			return button
@@ -43,11 +43,9 @@ class UnderlinedSegmentControl: UIControl {
 		backgroundColor = .white
 		addSubview(scrollView)
 		self.buttons.forEach {
-			$0.setTitleColor(normalColor, for: .normal)
 			$0.addTarget(self, action: #selector(onButtonTap), for: .touchUpInside)
 			scrollView.addSubview($0)
 		}
-		self.buttons.first?.setTitleColor(selectedColor, for: .normal)
 		scrollView.addSubview(underlinedView)
 		scrollView.showsHorizontalScrollIndicator = false
 		scrollView.contentInset = UIEdgeInsets(top: 0, left: 12, bottom: 0, right: 12)
@@ -67,12 +65,30 @@ class UnderlinedSegmentControl: UIControl {
 			let maxButtonWidth: CGFloat = buttons[index].intrinsicContentSize.width
 			let buttonSize = CGSize(width: maxButtonWidth + 20, height: scrollView.frame.size.height)
 			buttons[index].frame = CGRect(origin: CGPoint(x: x, y: 0), size: buttonSize)
+			buttons[index].setTitleColor(.black, for: .normal)
 			if index == selectedIndex {
+				buttons[index].setTitleColor(.appBlue, for: .normal)
 				underlinedView.frame = CGRect(x: x, y: buttonSize.height - 2, width: buttonSize.width, height: 2)
 			}
 			x += buttonSize.width
 		}
 		scrollView.contentSize.width = x
+	}
+	
+	func insert(segment: String) {
+		let button = UIButton()
+		buttons.append(button)
+		button.setTitle(segment, for: .normal)
+		button.addTarget(self, action: #selector(onButtonTap), for: .touchUpInside)
+		scrollView.addSubview(button)
+		setNeedsLayout()
+	}
+	
+	func removeAllSegments() {
+		buttons.forEach {
+			$0.removeFromSuperview()
+		}
+		buttons.removeAll()
 	}
 	
 	private func scrollTo(index: Int) {
@@ -92,7 +108,6 @@ class UnderlinedSegmentControl: UIControl {
 	private func onButtonTap(sender: UIButton) {
 		for (index, button) in buttons.enumerated() {
 			let isSelectedButton = button == sender
-			button.setTitleColor(isSelectedButton ? selectedColor : normalColor, for: .normal)
 			if isSelectedButton {
 				selectedIndex = index
 				UIView.animate(withDuration: 0.25) {

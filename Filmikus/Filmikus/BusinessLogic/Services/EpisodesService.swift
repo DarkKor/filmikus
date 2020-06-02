@@ -9,8 +9,8 @@
 import Moya
 
 protocol EpisodesServiceType {
-	func getSerialEpisodes(serialId: Int, completion: @escaping (Result<[EpisodeModel], Error>) -> Void)
-	func getFunShowEpisodes(funShowId: Int, completion: @escaping (Result<[EpisodeModel], Error>) -> Void)
+	func getSerialEpisodes(serialId: Int, completion: @escaping (Result<EpisodesModel, Error>) -> Void)
+	func getFunShowEpisodes(funShowId: Int, completion: @escaping (Result<EpisodesModel, Error>) -> Void)
 }
 
 class EpisodesService: EpisodesServiceType {
@@ -21,21 +21,21 @@ class EpisodesService: EpisodesServiceType {
 		self.provider = provider
 	}
 	
-	func getSerialEpisodes(serialId: Int, completion: @escaping (Result<[EpisodeModel], Error>) -> Void) {
+	func getSerialEpisodes(serialId: Int, completion: @escaping (Result<EpisodesModel, Error>) -> Void) {
 		provider.request(.serial(id: serialId)) { (result) in
 			completion(
 				result.mapError { $0 }.flatMap { response in
-					Result { try response.map([EpisodeModel].self) }
+					Result { try response.map(EpisodesModel.self) }
 				}
 			)
 		}
 	}
 	
-	func getFunShowEpisodes(funShowId: Int, completion: @escaping (Result<[EpisodeModel], Error>) -> Void) {
+	func getFunShowEpisodes(funShowId: Int, completion: @escaping (Result<EpisodesModel, Error>) -> Void) {
 		provider.request(.funShow(id: funShowId)) { (result) in
 			completion(
 				result.mapError { $0 }.flatMap { response in
-					Result { try response.map([EpisodeModel].self) }
+					Result { try response.map(EpisodesModel.self) }
 				}
 			)
 		}

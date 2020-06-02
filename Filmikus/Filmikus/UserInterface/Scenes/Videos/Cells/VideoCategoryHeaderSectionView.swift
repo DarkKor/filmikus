@@ -9,14 +9,20 @@
 import UIKit
 import SnapKit
 
+protocol VideoCategoryHeaderSectionViewDelegate: class {
+	func videoCategoryHeaderSectionView(_ view: VideoCategoryHeaderSectionView, didSelectCategoryAt index:  Int)
+}
+
 class VideoCategoryHeaderSectionView: UICollectionReusableView {
+	
+	weak var delegate: VideoCategoryHeaderSectionViewDelegate?
 	
 	static let reuseId = String(describing: VideoCategoryHeaderSectionView.self)
 	
+	private var categories: [VideoCategory] = []
+	
 	private let segmentControl: UnderlinedSegmentControl = {
-		let segment = UnderlinedSegmentControl(buttons: [
-			"Все видео", "Авто-шоу", "Lifestyle", "Красота", "Мода"
-		])
+		let segment = UnderlinedSegmentControl()
 		segment.addTarget(self, action: #selector(segmentControlChanged), for: .valueChanged)
 		return segment
 	}()
@@ -35,9 +41,22 @@ class VideoCategoryHeaderSectionView: UICollectionReusableView {
 		fatalError("init(coder:) has not been implemented")
 	}
 	
+	override func prepareForReuse() {
+		super.prepareForReuse()
+		categories.removeAll()
+		segmentControl.removeAllSegments()
+	}
+	
+	func fill(categories: [VideoCategory]) {
+		self.categories = categories
+		categories.forEach {
+			self.segmentControl.insert(segment: $0.title)
+		}
+	}
+	
 	@objc
 	private func segmentControlChanged(sender: UnderlinedSegmentControl) {
 		let index = sender.selectedIndex
-		print(sender.buttons[index].title(for: .normal)!)
+		delegate?.videoCategoryHeaderSectionView(self, didSelectCategoryAt: index)
 	}
 }

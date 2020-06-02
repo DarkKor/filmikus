@@ -1,5 +1,5 @@
 //
-//  VideoCategoryCollectionViewCell.swift
+//  VideoSubcategoryCollectionViewCell.swift
 //  Filmikus
 //
 //  Created by Андрей Козлов on 21.05.2020.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class VideoCategoryCollectionViewCell: ReusableCollectionViewCell {
+class VideoSubcategoryCollectionViewCell: ReusableCollectionViewCell {
 	
 	private lazy var imageView = UIImageView()
 	private lazy var titleLabel = UILabel()
@@ -48,8 +48,8 @@ class VideoCategoryCollectionViewCell: ReusableCollectionViewCell {
 		titleLabel.text = nil
 	}
 	
-	func fill(videoCategory: VideoCategory) {
-		let imageUrl = URL(string: videoCategory.imageUrl)
+	func fill(videoSubategory: VideoSubcategory) {
+		let imageUrl = URL(string: videoSubategory.imageUrl)
 		imageView.kf.indicatorType = .activity
 		imageView.kf.setImage(
 			with: imageUrl,
@@ -58,6 +58,6 @@ class VideoCategoryCollectionViewCell: ReusableCollectionViewCell {
 				.transition(.fade(0.25))
 			]
 		)
-		titleLabel.text = videoCategory.title
+		titleLabel.text = videoSubategory.title
 	}
 }

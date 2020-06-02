@@ -7,7 +7,7 @@
 //
 
 struct VideoCategory {
-	let imageUrl: String
+	let id: Int
 	let title: String
-	let videos: [Video]
+	var subcategories: [VideoSubcategory]
 }

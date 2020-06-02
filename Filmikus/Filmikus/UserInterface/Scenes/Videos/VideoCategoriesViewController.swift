@@ -10,6 +10,7 @@ import UIKit
 
 protocol VideoCategoriesViewControllerDelegate: class {
 	func videoCategoriesViewController(_ viewController: VideoCategoriesViewController, didSelectCategory category: VideoCategory)
+	func videoCategoriesViewController(_ viewController: VideoCategoriesViewController, didSelectSubcategory subcategory: VideoSubcategory)
 }
 
 class VideoCategoriesViewController: UIViewController {
@@ -17,6 +18,7 @@ class VideoCategoriesViewController: UIViewController {
 	weak var delegate: VideoCategoriesViewControllerDelegate?
 	
 	private var categories: [VideoCategory] = []
+	private var selectedCategoryIndex = 0
 	
 	private lazy var collectionLayout: UICollectionViewFlowLayout = {
 		let layout = UICollectionViewFlowLayout()
@@ -31,7 +33,7 @@ class VideoCategoriesViewController: UIViewController {
 		collection.delegate = self
 		collection.dataSource = self
 		collection.showsVerticalScrollIndicator = false
-		collection.register(cell: VideoCategoryCollectionViewCell.self)
+		collection.register(cell: VideoSubcategoryCollectionViewCell.self)
 		collection.register(
 			VideoCategoryHeaderSectionView.self,
 			forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
@@ -55,7 +57,12 @@ class VideoCategoriesViewController: UIViewController {
 		self.categories = categories
 		collectionView.reloadData()
 	}
-
+	
+	func update(subcategories: [VideoSubcategory], by categoryId: Int) {
+		guard let categoryIndex = categories.firstIndex(where: { $0.id == categoryId }) else { return }
+		categories[categoryIndex].subcategories = subcategories
+		collectionView.reloadData()
+	}
 }
 
 // MARK: - UICollectionViewDataSource
@@ -63,12 +70,13 @@ class VideoCategoriesViewController: UIViewController {
 extension VideoCategoriesViewController: UICollectionViewDataSource {
 	
 	func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-		categories.count
+		guard !categories.isEmpty else { return 0 }
+		return categories[selectedCategoryIndex].subcategories.count
 	}
 	
 	func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-		let cell: VideoCategoryCollectionViewCell = collectionView.dequeueCell(for: indexPath)
-		cell.fill(videoCategory: categories[indexPath.item])
+		let cell: VideoSubcategoryCollectionViewCell = collectionView.dequeueCell(for: indexPath)
+		cell.fill(videoSubategory: categories[selectedCategoryIndex].subcategories[indexPath.item])
 		return cell
 	}
 }
@@ -84,7 +92,9 @@ extension VideoCategoriesViewController: UICollectionViewDelegate {
 				ofKind: kind,
 				withReuseIdentifier: VideoCategoryHeaderSectionView.reuseId,
 				for: indexPath
-			)
+			) as! VideoCategoryHeaderSectionView
+			headerView.delegate = self
+			headerView.fill(categories: categories)
 			return headerView
 		default:
 			return UICollectionReusableView()
@@ -92,10 +102,12 @@ extension VideoCategoriesViewController: UICollectionViewDelegate {
 	}
 	
 	func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-		let category = categories[indexPath.item]
-		delegate?.videoCategoriesViewController(self, didSelectCategory: category)
+		let subcategory = categories[selectedCategoryIndex].subcategories[indexPath.item]
+		delegate?.videoCategoriesViewController(self, didSelectSubcategory: subcategory)
 	}
 }
+
+// MARK: - UICollectionViewDelegateFlowLayout
 
 extension VideoCategoriesViewController: UICollectionViewDelegateFlowLayout {
 	
@@ -104,5 +116,15 @@ extension VideoCategoriesViewController: UICollectionViewDelegateFlowLayout {
 		let width = (collectionView.bounds.size.width - padding)
 		let height = width / 1.49
 		return CGSize(width: width, height: height)
+	}
+}
+
+// MARK: - VideoCategoryHeaderSectionViewDelegate
+
+extension VideoCategoriesViewController: VideoCategoryHeaderSectionViewDelegate {
+	
+	func videoCategoryHeaderSectionView(_ view: VideoCategoryHeaderSectionView, didSelectCategoryAt index: Int) {
+		selectedCategoryIndex = index
+		delegate?.videoCategoriesViewController(self, didSelectCategory: categories[index])
 	}
 }
