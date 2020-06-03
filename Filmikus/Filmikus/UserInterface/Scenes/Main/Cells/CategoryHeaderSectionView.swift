@@ -21,7 +21,7 @@ class CategoryHeaderSectionView: ReusableTableHeaderFooterView {
 		return label
 	}()
 	
-	private lazy var buttonMore = BlueButton(title: "СМОТРЕТЬ ВСЕ", target: self, action: #selector(onButtonMoreTap))
+	private lazy var buttonMore = BlueBorderButton(title: "СМОТРЕТЬ ВСЕ", target: self, action: #selector(onButtonMoreTap))
 
 	override init(reuseIdentifier: String?) {
 		super.init(reuseIdentifier: reuseIdentifier)

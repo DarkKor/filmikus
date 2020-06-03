@@ -26,7 +26,7 @@ class DetailMovieViewController: UIViewController {
 	private lazy var directorsLabel = UILabel()
 	private lazy var actorsLabel = UILabel()
 	private lazy var descriptionLabel = UILabel()
-	private lazy var showFilmButton = BlueButton(title: "СМОТРЕТЬ ФИЛЬМ", target: self, action: #selector(onShowFilmButtonTap))
+	private lazy var showFilmButton = BlueBorderButton(title: "СМОТРЕТЬ ФИЛЬМ", target: self, action: #selector(onShowFilmButtonTap))
 
 	init(
 		movie: MovieModel,
@@ -122,26 +122,42 @@ class DetailMovieViewController: UIViewController {
     }
 	
 	private func loadData() {
-		videoService.detailMovie(id: movie.id) { [weak self] (result) in
-			guard let self = self else { return }
-			guard let detailModel = try? result.get() else { return }
-			if let movieUrl = URL(string: "http://cloud.tvigle.ru/video/\(detailModel.tvigleId)/") {
-				self.webView.load(URLRequest(url: movieUrl))
+		switch movie.type {
+		case .film:
+			videoService.detailMovie(id: movie.id) { [weak self] (result) in
+				guard let self = self else { return }
+				guard let detailModel = try? result.get() else { return }
+				self.fill(detailModel: detailModel)
 			}
-			self.mainInfoView.fill(movie: detailModel)
-			self.directorsLabel.attributedText = self.formattedString(
-				grayPart: "Режисеры: ",
-				blackPart: detailModel.directors.map{ $0.name }.joined(separator: ", ")
-			)
-			self.actorsLabel.attributedText = self.formattedString(
-				grayPart: "Актеры: ",
-				blackPart: detailModel.actors.map{ $0.name }.joined(separator: ", ")
-			)
-			self.descriptionLabel.attributedText = self.formattedString(
-				grayPart: "Описание: ",
-				blackPart: detailModel.descr
-			)
+		case .serial:
+			videoService.detailSerial(id: movie.id) { [weak self] (result) in
+				guard let self = self else { return }
+				guard let detailModel = try? result.get() else { return }
+				self.fill(detailModel: detailModel)
+			}
+		case .funShow:
+			break
 		}
+	}
+	
+	private func fill(detailModel: DetailMovieModel) {
+		if let tvigleId = detailModel.tvigleId,
+			let movieUrl = URL(string: "http://cloud.tvigle.ru/video/\(tvigleId)/") {
+			self.webView.load(URLRequest(url: movieUrl))
+		}
+		self.mainInfoView.fill(movie: detailModel)
+		self.directorsLabel.attributedText = self.formattedString(
+			grayPart: "Режисеры: ",
+			blackPart: detailModel.directors.map{ $0.name }.joined(separator: ", ")
+		)
+		self.actorsLabel.attributedText = self.formattedString(
+			grayPart: "Актеры: ",
+			blackPart: detailModel.actors.map{ $0.name }.joined(separator: ", ")
+		)
+		self.descriptionLabel.attributedText = self.formattedString(
+			grayPart: "Описание: ",
+			blackPart: detailModel.descr
+		)
 	}
     
 	private func formattedString(grayPart: String, blackPart: String) -> NSAttributedString {

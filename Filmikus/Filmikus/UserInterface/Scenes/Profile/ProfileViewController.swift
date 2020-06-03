@@ -42,8 +42,8 @@ class ProfileViewController: UIViewController {
 		return textField
 	}()
 	
-	private lazy var signUpButton = BlueButton(title: "РЕГИСТРАЦИЯ", target: self, action: #selector(onSignUpButtonTap))
-	private lazy var signInButton = BlueButton(title: "ВОЙТИ", target: self, action: #selector(onSignInButtonTap))
+	private lazy var signUpButton = BlueBorderButton(title: "РЕГИСТРАЦИЯ", target: self, action: #selector(onSignUpButtonTap))
+	private lazy var signInButton = BlueBorderButton(title: "ВОЙТИ", target: self, action: #selector(onSignInButtonTap))
 	
 	override func loadView() {
 		view = UIView()

@@ -24,7 +24,7 @@ class SignUpViewController: UIViewController {
 		return textField
 	}()
 	
-	private lazy var nextButton = BlueButton(title: "ДАЛЕЕ", target: self, action: #selector(onNextButtonTap))
+	private lazy var nextButton = BlueBorderButton(title: "ДАЛЕЕ", target: self, action: #selector(onNextButtonTap))
 	
 	override func loadView() {
 		view = UIView()

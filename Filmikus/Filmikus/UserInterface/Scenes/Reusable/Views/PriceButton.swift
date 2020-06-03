@@ -1,5 +1,5 @@
 //
-//  BlueButton.swift
+//  PriceButton.swift
 //  Filmikus
 //
 //  Created by Андрей Козлов on 03.06.2020.
@@ -8,9 +8,9 @@
 
 import UIKit
 
-class BlueButton: UIButton {
-
-	private let insets = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
+class PriceButton: UIButton {
+		
+	private let insets = UIEdgeInsets(top: 0, left: 12, bottom: 0, right: 12)
 	
 	override var intrinsicContentSize: CGSize {
 		let defaultSize = super.intrinsicContentSize
@@ -19,30 +19,22 @@ class BlueButton: UIButton {
 		return CGSize(width: width, height: height)
 	}
 	
-//	override var isSelected: Bool {
-//		didSet {
-//			backgroundColor = isSelected ? .appBlue : .clear
-//		}
-//	}
-//
-//	override var isHighlighted: Bool {
-//		didSet {
-//			backgroundColor = isHighlighted ? .appBlue : .clear
-//		}
-//	}
+	override var isSelected: Bool {
+		didSet {
+			backgroundColor = isSelected ? .appBlue : .appQualityBackground
+		}
+	}
 	
-	init(title: String = "", target: Any?, action: Selector) {
+	init(text: String, target: Any?, action: Selector) {
 		super.init(frame: .zero)
 		addTarget(target, action: action, for: .touchUpInside)
-		
 		titleLabel?.font = .boldSystemFont(ofSize: 12)
-		setTitle(title, for: .normal)
-		setTitleColor(.white, for: .normal)
-//		setTitleColor(.white, for: .selected)
-//		setTitleColor(.white, for: .highlighted)
-		backgroundColor = .appBlue
-//		layer.borderColor = UIColor.appBlue.cgColor
-//		layer.borderWidth = 1.0
+		titleLabel?.lineBreakMode = .byWordWrapping
+		titleLabel?.textAlignment = .center
+		setTitle(text, for: .normal)
+		backgroundColor = .appQualityBackground
+		setTitleColor(.appQualityTextColor, for: .normal)
+		setTitleColor(.white, for: .selected)
 	}
 	
 	required init?(coder: NSCoder) {
@@ -54,5 +46,4 @@ class BlueButton: UIButton {
 		
 		rounded(radius: bounds.height / 2)
 	}
-	
 }

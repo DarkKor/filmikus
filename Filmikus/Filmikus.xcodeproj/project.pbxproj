@@ -28,9 +28,12 @@
 		493786872486D45100C8496E /* VideosFacade.swift in Sources */ = {isa = PBXBuildFile; fileRef = 493786862486D45100C8496E /* VideosFacade.swift */; };
 		493786892486F2F300C8496E /* VideoSubcategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 493786882486F2F300C8496E /* VideoSubcategory.swift */; };
 		4937868B2486FA6200C8496E /* EpisodesModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4937868A2486FA6200C8496E /* EpisodesModel.swift */; };
+		4937868F2487B92300C8496E /* SubscriptionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4937868E2487B92300C8496E /* SubscriptionViewController.swift */; };
+		493786912487C6BD00C8496E /* BlueButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 493786902487C6BD00C8496E /* BlueButton.swift */; };
+		493786932487D55200C8496E /* PriceButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 493786922487D55200C8496E /* PriceButton.swift */; };
 		49684A5E246AC51600E9BADC /* CategoryHeaderSectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49684A5D246AC51600E9BADC /* CategoryHeaderSectionView.swift */; };
 		49684A60246ACD9B00E9BADC /* UIView+Style.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49684A5F246ACD9B00E9BADC /* UIView+Style.swift */; };
-		49684A62246ACDDA00E9BADC /* BlueButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49684A61246ACDDA00E9BADC /* BlueButton.swift */; };
+		49684A62246ACDDA00E9BADC /* BlueBorderButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49684A61246ACDDA00E9BADC /* BlueBorderButton.swift */; };
 		49684A64246AD78A00E9BADC /* UIColor+Hex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49684A63246AD78A00E9BADC /* UIColor+Hex.swift */; };
 		49684A66246ADA9900E9BADC /* UIColor+App.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49684A65246ADA9900E9BADC /* UIColor+App.swift */; };
 		49684A69246AF49100E9BADC /* FilmsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49684A68246AF49100E9BADC /* FilmsViewController.swift */; };
@@ -121,9 +124,12 @@
 		493786862486D45100C8496E /* VideosFacade.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideosFacade.swift; sourceTree = "<group>"; };
 		493786882486F2F300C8496E /* VideoSubcategory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoSubcategory.swift; sourceTree = "<group>"; };
 		4937868A2486FA6200C8496E /* EpisodesModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EpisodesModel.swift; sourceTree = "<group>"; };
+		4937868E2487B92300C8496E /* SubscriptionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionViewController.swift; sourceTree = "<group>"; };
+		493786902487C6BD00C8496E /* BlueButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlueButton.swift; sourceTree = "<group>"; };
+		493786922487D55200C8496E /* PriceButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PriceButton.swift; sourceTree = "<group>"; };
 		49684A5D246AC51600E9BADC /* CategoryHeaderSectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryHeaderSectionView.swift; sourceTree = "<group>"; };
 		49684A5F246ACD9B00E9BADC /* UIView+Style.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Style.swift"; sourceTree = "<group>"; };
-		49684A61246ACDDA00E9BADC /* BlueButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlueButton.swift; sourceTree = "<group>"; };
+		49684A61246ACDDA00E9BADC /* BlueBorderButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlueBorderButton.swift; sourceTree = "<group>"; };
 		49684A63246AD78A00E9BADC /* UIColor+Hex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Hex.swift"; sourceTree = "<group>"; };
 		49684A65246ADA9900E9BADC /* UIColor+App.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+App.swift"; sourceTree = "<group>"; };
 		49684A68246AF49100E9BADC /* FilmsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilmsViewController.swift; sourceTree = "<group>"; };
@@ -331,6 +337,7 @@
 		491C21A824641A16007CDEC2 /* Scenes */ = {
 			isa = PBXGroup;
 			children = (
+				4937868D2487B8C200C8496E /* Subscription */,
 				49684A7F246E875B00E9BADC /* DetailFilm */,
 				49684A6E246BE6F400E9BADC /* Profile */,
 				49684A6D246BE6F000E9BADC /* Videos */,
@@ -381,6 +388,14 @@
 				491C21BB246424A8007CDEC2 /* CategoryTableViewCell.swift */,
 			);
 			path = Cells;
+			sourceTree = "<group>";
+		};
+		4937868D2487B8C200C8496E /* Subscription */ = {
+			isa = PBXGroup;
+			children = (
+				4937868E2487B92300C8496E /* SubscriptionViewController.swift */,
+			);
+			path = Subscription;
 			sourceTree = "<group>";
 		};
 		49684A67246AF45700E9BADC /* Films */ = {
@@ -439,7 +454,9 @@
 			isa = PBXGroup;
 			children = (
 				4937867C24855F2600C8496E /* QualityButton.swift */,
-				49684A61246ACDDA00E9BADC /* BlueButton.swift */,
+				49684A61246ACDDA00E9BADC /* BlueBorderButton.swift */,
+				493786902487C6BD00C8496E /* BlueButton.swift */,
+				493786922487D55200C8496E /* PriceButton.swift */,
 				49684A75246BED4000E9BADC /* UnderlinedTextField.swift */,
 				49684A79246D76DA00E9BADC /* PasswordUnderlinedTextField.swift */,
 				49684AC12476801A00E9BADC /* UnderlinedSegmentControl.swift */,
@@ -643,6 +660,7 @@
 				49900FB8247E71DF00F18B46 /* AuthRequiredView.swift in Sources */,
 				4937867D24855F2600C8496E /* QualityButton.swift in Sources */,
 				49900FC8247FCF6200F18B46 /* CategoriesAPI.swift in Sources */,
+				4937868F2487B92300C8496E /* SubscriptionViewController.swift in Sources */,
 				49900FFF248111E900F18B46 /* SearchController.swift in Sources */,
 				49900FD8247FFB9400F18B46 /* MoviesModel.swift in Sources */,
 				491C21AE24641D61007CDEC2 /* MainViewController.swift in Sources */,
@@ -657,6 +675,7 @@
 				499010012481455800F18B46 /* RoundedBorderLabel.swift in Sources */,
 				49900FD6247FE08600F18B46 /* VideosService.swift in Sources */,
 				49684AD8247ABAF000E9BADC /* FilmsFilterCollectionViewCell.swift in Sources */,
+				493786932487D55200C8496E /* PriceButton.swift in Sources */,
 				49684AC22476801A00E9BADC /* UnderlinedSegmentControl.swift in Sources */,
 				49907C3F247C0BAF00E201B6 /* VideoCategoryHeaderSectionView.swift in Sources */,
 				49900FD4247FDB6700F18B46 /* VideoOrder.swift in Sources */,
@@ -703,6 +722,7 @@
 				491C218A24641393007CDEC2 /* AppDelegate.swift in Sources */,
 				49900FD0247FDA1300F18B46 /* FilterModel.swift in Sources */,
 				49684A7C246D7A9100E9BADC /* SignUpViewController.swift in Sources */,
+				493786912487C6BD00C8496E /* BlueButton.swift in Sources */,
 				49684AC82476A5BA00E9BADC /* Video.swift in Sources */,
 				49900FEC2480153100F18B46 /* MovieItem.swift in Sources */,
 				491C21B024641E94007CDEC2 /* CategoriesViewController.swift in Sources */,
@@ -717,7 +737,7 @@
 				491C21BC246424A8007CDEC2 /* CategoryTableViewCell.swift in Sources */,
 				49684A912472F2D000E9BADC /* String+SelectableItem.swift in Sources */,
 				49684A69246AF49100E9BADC /* FilmsViewController.swift in Sources */,
-				49684A62246ACDDA00E9BADC /* BlueButton.swift in Sources */,
+				49684A62246ACDDA00E9BADC /* BlueBorderButton.swift in Sources */,
 				49684A8D2472E7ED00E9BADC /* FilterContentItem.swift in Sources */,
 				49684A8B2472E7D600E9BADC /* FilterItem.swift in Sources */,
 				493786872486D45100C8496E /* VideosFacade.swift in Sources */,

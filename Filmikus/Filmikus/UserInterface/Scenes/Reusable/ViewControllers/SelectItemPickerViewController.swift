@@ -30,8 +30,8 @@ class SelectItemPickerViewController: UIViewController {
 		return picker
 	}()
 	
-	private lazy var buttonSearch = BlueButton(title: "НАЙТИ", target: self, action: #selector(onButtonSearchTap))
-	private lazy var buttonAllYears = BlueButton(title: "ВСЕ ГОДЫ", target: self, action: #selector(onButtonAllYearsTap))
+	private lazy var buttonSearch = BlueBorderButton(title: "НАЙТИ", target: self, action: #selector(onButtonSearchTap))
+	private lazy var buttonAllYears = BlueBorderButton(title: "ВСЕ ГОДЫ", target: self, action: #selector(onButtonAllYearsTap))
 
 	init(items: [Int], onSelectDate block: @escaping SelectDateBlock) {
 		self.items = items

@@ -69,7 +69,7 @@ class SerialsViewController: UIViewController {
 			self.activityIndicator.stopAnimating()
 			guard let moviesModel = try? result.get() else { return }
 			let movies = moviesModel.items.map {
-				MovieModel(id: $0.id, title: $0.title, imageUrl: $0.imageUrl.high, type: .film)
+				MovieModel(id: $0.id, title: $0.title, imageUrl: $0.imageUrl.high, type: .serial)
 			}
 			self.moviesCollectionViewController.update(movies: movies)
 		}

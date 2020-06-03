@@ -2,15 +2,15 @@
 //  BlueButton.swift
 //  Filmikus
 //
-//  Created by Андрей Козлов on 03.06.2020.
+//  Created by Андрей Козлов on 12.05.2020.
 //  Copyright © 2020 Андрей Козлов. All rights reserved.
 //
 
 import UIKit
 
-class BlueButton: UIButton {
+class BlueBorderButton: UIButton {
 
-	private let insets = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
+	private let insets = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10)
 	
 	override var intrinsicContentSize: CGSize {
 		let defaultSize = super.intrinsicContentSize
@@ -19,17 +19,17 @@ class BlueButton: UIButton {
 		return CGSize(width: width, height: height)
 	}
 	
-//	override var isSelected: Bool {
-//		didSet {
-//			backgroundColor = isSelected ? .appBlue : .clear
-//		}
-//	}
-//
-//	override var isHighlighted: Bool {
-//		didSet {
-//			backgroundColor = isHighlighted ? .appBlue : .clear
-//		}
-//	}
+	override var isSelected: Bool {
+		didSet {
+			backgroundColor = isSelected ? .appBlue : .clear
+		}
+	}
+	
+	override var isHighlighted: Bool {
+		didSet {
+			backgroundColor = isHighlighted ? .appBlue : .clear
+		}
+	}
 	
 	init(title: String = "", target: Any?, action: Selector) {
 		super.init(frame: .zero)
@@ -37,12 +37,12 @@ class BlueButton: UIButton {
 		
 		titleLabel?.font = .boldSystemFont(ofSize: 12)
 		setTitle(title, for: .normal)
-		setTitleColor(.white, for: .normal)
-//		setTitleColor(.white, for: .selected)
-//		setTitleColor(.white, for: .highlighted)
-		backgroundColor = .appBlue
-//		layer.borderColor = UIColor.appBlue.cgColor
-//		layer.borderWidth = 1.0
+		setTitleColor(.appBlue, for: .normal)
+		setTitleColor(.white, for: .selected)
+		setTitleColor(.white, for: .highlighted)
+		
+		layer.borderColor = UIColor.appBlue.cgColor
+		layer.borderWidth = 1.0
 	}
 	
 	required init?(coder: NSCoder) {

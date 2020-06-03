@@ -10,7 +10,7 @@ import Foundation
 
 struct DetailMovieModel: Decodable {
 	let id: Int
-	let tvigleId: Int
+	let tvigleId: Int?
 	let title: String
 	let descr: String
 	let rating: Double
@@ -55,7 +55,7 @@ struct DetailMovieModel: Decodable {
 			}
 			self.id = id
 		}
-		tvigleId = try container.decode(Int.self, forKey: CodingKeys.tvigleId)
+		tvigleId = try container.decodeIfPresent(Int.self, forKey: CodingKeys.tvigleId)
 		title = try container.decodeIfPresent(String.self, forKey: CodingKeys.title) ?? ""
 		descr = try container.decodeIfPresent(String.self, forKey: CodingKeys.descr) ?? ""
 		rating = try container.decodeIfPresent(Double.self, forKey: CodingKeys.rating) ?? 0.0

@@ -40,9 +40,9 @@ class UnderlinedSegmentControl: UIControl {
 			return button
 		}
 		super.init(frame: .zero)
-		backgroundColor = .white
 		addSubview(scrollView)
 		self.buttons.forEach {
+			$0.backgroundColor = .white
 			$0.addTarget(self, action: #selector(onButtonTap), for: .touchUpInside)
 			scrollView.addSubview($0)
 		}
@@ -108,6 +108,7 @@ class UnderlinedSegmentControl: UIControl {
 	private func onButtonTap(sender: UIButton) {
 		for (index, button) in buttons.enumerated() {
 			let isSelectedButton = button == sender
+			button.setTitleColor(isSelectedButton ? .appBlue : .black, for: .normal)
 			if isSelectedButton {
 				selectedIndex = index
 				UIView.animate(withDuration: 0.25) {
