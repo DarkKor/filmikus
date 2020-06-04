@@ -52,7 +52,7 @@ class VideoSubcategoryViewController: UIViewController {
 		episodesServise.getFunShowEpisodes(funShowId: subcategory.id) { [weak self] (result) in
 			guard let self = self else { return }
 			guard let episodes = try? result.get() else { return }
-			let videos = episodes.items.map { Video(id: $0.id, title: $0.title, imageUrl: "") }
+			let videos = episodes.items.map { Video(id: $0.id, title: $0.title, imageUrl: $0.imageUrl.high) }
 			self.videosCollectionViewController.update(videos: videos)
 		}
     }
