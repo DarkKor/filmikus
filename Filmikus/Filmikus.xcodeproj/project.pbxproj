@@ -33,6 +33,7 @@
 		493786932487D55200C8496E /* PriceButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 493786922487D55200C8496E /* PriceButton.swift */; };
 		49378695248855A700C8496E /* SubscriprionSegmentControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49378694248855A700C8496E /* SubscriprionSegmentControl.swift */; };
 		493786972488EA9000C8496E /* UIColor+Gradient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 493786962488EA9000C8496E /* UIColor+Gradient.swift */; };
+		49378699248900BC00C8496E /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 49378698248900BC00C8496E /* GoogleService-Info.plist */; };
 		49684A5E246AC51600E9BADC /* CategoryHeaderSectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49684A5D246AC51600E9BADC /* CategoryHeaderSectionView.swift */; };
 		49684A60246ACD9B00E9BADC /* UIView+Style.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49684A5F246ACD9B00E9BADC /* UIView+Style.swift */; };
 		49684A62246ACDDA00E9BADC /* BlueBorderButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49684A61246ACDDA00E9BADC /* BlueBorderButton.swift */; };
@@ -131,6 +132,7 @@
 		493786922487D55200C8496E /* PriceButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PriceButton.swift; sourceTree = "<group>"; };
 		49378694248855A700C8496E /* SubscriprionSegmentControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriprionSegmentControl.swift; sourceTree = "<group>"; };
 		493786962488EA9000C8496E /* UIColor+Gradient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Gradient.swift"; sourceTree = "<group>"; };
+		49378698248900BC00C8496E /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		49684A5D246AC51600E9BADC /* CategoryHeaderSectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryHeaderSectionView.swift; sourceTree = "<group>"; };
 		49684A5F246ACD9B00E9BADC /* UIView+Style.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Style.swift"; sourceTree = "<group>"; };
 		49684A61246ACDDA00E9BADC /* BlueBorderButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlueBorderButton.swift; sourceTree = "<group>"; };
@@ -256,6 +258,7 @@
 				491C218924641393007CDEC2 /* AppDelegate.swift */,
 				491C219224641395007CDEC2 /* Assets.xcassets */,
 				491C219424641395007CDEC2 /* LaunchScreen.storyboard */,
+				49378698248900BC00C8496E /* GoogleService-Info.plist */,
 				491C219724641395007CDEC2 /* Info.plist */,
 			);
 			path = Filmikus;
@@ -608,6 +611,7 @@
 			files = (
 				491C219624641395007CDEC2 /* LaunchScreen.storyboard in Resources */,
 				491C219324641395007CDEC2 /* Assets.xcassets in Resources */,
+				49378699248900BC00C8496E /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

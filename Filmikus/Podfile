@@ -8,4 +8,5 @@ target 'Filmikus' do
   pod 'SnapKit'
   pod 'Kingfisher'
   pod 'Moya'
+  pod 'Firebase/Analytics'
 end
