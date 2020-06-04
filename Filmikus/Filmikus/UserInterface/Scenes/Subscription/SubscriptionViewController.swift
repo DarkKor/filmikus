@@ -129,10 +129,19 @@ class SubscriptionViewController: UIViewController {
 			product: selectedProduct,
 			success: {
 				print("PURCHASED!")
+				let alert = UIAlertController(title: "Фильмикус", message: "Вы успешно подписались!", preferredStyle: .alert)
+				alert.addAction(UIAlertAction(title: "ОК", style: .default, handler: { (action) in
+					self.dismiss(animated: true)
+				}))
+				self.present(alert, animated: true)
 				print(StoreKitService.shared.expirationDate(for: selectedProduct.productIdentifier))
-				self.dismiss(animated: true) },
-			failure: {_ in
-				print("ERROR!") }
+				},
+			failure: { error in
+				let alert = UIAlertController(title: "Фильмикус", message: "Ошибка: \(error?.localizedDescription ?? "")", preferredStyle: .alert)
+				alert.addAction(UIAlertAction(title: "ОК", style: .default, handler: { (action) in
+					self.dismiss(animated: true)
+				}))
+				self.present(alert, animated: true) }
 		)
 	}
 }
