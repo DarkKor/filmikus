@@ -19,15 +19,9 @@ class NavigationController: UINavigationController {
 		let gradientColor: UIColor
 		switch gradientStyle {
 		case .orangePurple:
-			gradientColor = self.gradientColor(
-				from: .appPeach,
-				to: .appViolet
-			)
+			gradientColor = UIColor.gradient(from: .appPeach, to: .appViolet)
 		case .bluePurple:
-			gradientColor = self.gradientColor(
-				from: .appGBlue,
-				to: .appGViolet
-			)
+			gradientColor = UIColor.gradient(from: .appGBlue, to: .appGViolet)
 		}
 		
 		let standardAppearance = UINavigationBarAppearance()
@@ -45,18 +39,5 @@ class NavigationController: UINavigationController {
 		navigationBar.barStyle = .black
 		navigationBar.prefersLargeTitles = true
 		navigationBar.tintColor = .white
-	}
-    
-	private func gradientColor(from startColor: UIColor, to endColor: UIColor) -> UIColor {
-		let gradient = CAGradientLayer()
-		gradient.frame = navigationBar.bounds
-		gradient.colors = [startColor.cgColor, endColor.cgColor]
-		gradient.startPoint = CGPoint(x: 0, y: 0)
-		gradient.endPoint = CGPoint(x: 1, y: 0)
-		UIGraphicsBeginImageContext(gradient.frame.size)
-		gradient.render(in: UIGraphicsGetCurrentContext()!)
-		let outputImage = UIGraphicsGetImageFromCurrentImageContext() ?? UIImage()
-		UIGraphicsEndImageContext()
-		return UIColor(patternImage: outputImage)
 	}
 }

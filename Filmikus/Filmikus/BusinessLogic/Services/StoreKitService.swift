@@ -180,9 +180,9 @@ extension StoreKitService: SKProductsRequestDelegate {
 //				print(error?.localizedDescription)
 //		}
 //		)
-//		DispatchQueue.main.async {
-//			NotificationCenter.default.post(name: .storeKitProductsDidLoad, object: nil)
-//		}
+		DispatchQueue.main.async {
+			NotificationCenter.default.post(name: .storeKitProductsDidLoad, object: nil)
+		}
 	}
 }
 

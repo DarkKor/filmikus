@@ -45,6 +45,8 @@ class ProfileViewController: UIViewController {
 	private lazy var signUpButton = BlueBorderButton(title: "РЕГИСТРАЦИЯ", target: self, action: #selector(onSignUpButtonTap))
 	private lazy var signInButton = BlueBorderButton(title: "ВОЙТИ", target: self, action: #selector(onSignInButtonTap))
 	
+	private lazy var subscriptionButton = BlueButton(title: "ПОДПИСАТЬСЯ", target: self, action: #selector(onSubscriptionButtonTap))
+	
 	override func loadView() {
 		view = UIView()
 		view.backgroundColor = .white
@@ -58,6 +60,7 @@ class ProfileViewController: UIViewController {
 		containerView.addSubview(phoneTextField)
 		containerView.addSubview(signUpButton)
 		containerView.addSubview(signInButton)
+		containerView.addSubview(subscriptionButton)
 		
 		scrollView.translatesAutoresizingMaskIntoConstraints = false
 		let frameGuide = scrollView.frameLayoutGuide
@@ -78,31 +81,30 @@ class ProfileViewController: UIViewController {
 
 		loginTextField.snp.makeConstraints {
 			$0.top.equalTo(segmentControl.snp.bottom).offset(40)
-			$0.leading.equalToSuperview().offset(20)
-			$0.trailing.equalToSuperview().offset(-20)
+			$0.leading.trailing.equalToSuperview().inset(20)
 		}
 		passwordTextField.snp.makeConstraints {
 			$0.top.equalTo(loginTextField.snp.bottom).offset(20)
-			$0.leading.equalToSuperview().offset(20)
-			$0.trailing.equalToSuperview().offset(-20)
+			$0.leading.trailing.equalToSuperview().inset(20)
 		}
 		phoneTextField.snp.makeConstraints {
 			$0.top.equalTo(segmentControl.snp.bottom).offset(40)
-			$0.leading.equalToSuperview().offset(20)
-			$0.trailing.equalToSuperview().offset(-20)
+			$0.leading.trailing.equalToSuperview().inset(20)
 		}
 		signUpButton.snp.makeConstraints {
 			$0.top.equalTo(passwordTextField.snp.bottom).offset(20)
 			$0.centerX.equalToSuperview()
-			$0.leading.equalToSuperview().offset(20)
-			$0.trailing.equalToSuperview().offset(-20)
+			$0.leading.trailing.equalToSuperview().inset(20)
 			$0.height.equalTo(44)
 		}
 		signInButton.snp.makeConstraints {
 			$0.top.equalTo(signUpButton.snp.bottom).offset(20)
-			$0.centerX.bottom.equalToSuperview()
-			$0.leading.equalToSuperview().offset(20)
-			$0.trailing.equalToSuperview().offset(-20)
+			$0.leading.trailing.equalToSuperview().inset(20)
+			$0.height.equalTo(44)
+		}
+		subscriptionButton.snp.makeConstraints {
+			$0.top.equalTo(signInButton.snp.bottom).offset(20)
+			$0.leading.trailing.bottom.equalToSuperview().inset(20)
 			$0.height.equalTo(44)
 		}
 	}
@@ -173,6 +175,11 @@ class ProfileViewController: UIViewController {
 		
 	}
 
+	@objc
+	private func onSubscriptionButtonTap(sender: UIButton) {
+		let subscriptionVC = SubscriptionViewController()
+		navigationController?.present(subscriptionVC, animated: true)
+	}
 }
 
 // MARK: - UITextFieldDelegate

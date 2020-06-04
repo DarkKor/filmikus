@@ -31,6 +31,8 @@
 		4937868F2487B92300C8496E /* SubscriptionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4937868E2487B92300C8496E /* SubscriptionViewController.swift */; };
 		493786912487C6BD00C8496E /* BlueButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 493786902487C6BD00C8496E /* BlueButton.swift */; };
 		493786932487D55200C8496E /* PriceButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 493786922487D55200C8496E /* PriceButton.swift */; };
+		49378695248855A700C8496E /* SubscriprionSegmentControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49378694248855A700C8496E /* SubscriprionSegmentControl.swift */; };
+		493786972488EA9000C8496E /* UIColor+Gradient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 493786962488EA9000C8496E /* UIColor+Gradient.swift */; };
 		49684A5E246AC51600E9BADC /* CategoryHeaderSectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49684A5D246AC51600E9BADC /* CategoryHeaderSectionView.swift */; };
 		49684A60246ACD9B00E9BADC /* UIView+Style.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49684A5F246ACD9B00E9BADC /* UIView+Style.swift */; };
 		49684A62246ACDDA00E9BADC /* BlueBorderButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49684A61246ACDDA00E9BADC /* BlueBorderButton.swift */; };
@@ -127,6 +129,8 @@
 		4937868E2487B92300C8496E /* SubscriptionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionViewController.swift; sourceTree = "<group>"; };
 		493786902487C6BD00C8496E /* BlueButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlueButton.swift; sourceTree = "<group>"; };
 		493786922487D55200C8496E /* PriceButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PriceButton.swift; sourceTree = "<group>"; };
+		49378694248855A700C8496E /* SubscriprionSegmentControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriprionSegmentControl.swift; sourceTree = "<group>"; };
+		493786962488EA9000C8496E /* UIColor+Gradient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Gradient.swift"; sourceTree = "<group>"; };
 		49684A5D246AC51600E9BADC /* CategoryHeaderSectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryHeaderSectionView.swift; sourceTree = "<group>"; };
 		49684A5F246ACD9B00E9BADC /* UIView+Style.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Style.swift"; sourceTree = "<group>"; };
 		49684A61246ACDDA00E9BADC /* BlueBorderButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlueBorderButton.swift; sourceTree = "<group>"; };
@@ -329,6 +333,7 @@
 				49684A5F246ACD9B00E9BADC /* UIView+Style.swift */,
 				49684A63246AD78A00E9BADC /* UIColor+Hex.swift */,
 				49684A65246ADA9900E9BADC /* UIColor+App.swift */,
+				493786962488EA9000C8496E /* UIColor+Gradient.swift */,
 				49684A902472F2D000E9BADC /* String+SelectableItem.swift */,
 			);
 			path = Extensions;
@@ -460,6 +465,7 @@
 				49684A75246BED4000E9BADC /* UnderlinedTextField.swift */,
 				49684A79246D76DA00E9BADC /* PasswordUnderlinedTextField.swift */,
 				49684AC12476801A00E9BADC /* UnderlinedSegmentControl.swift */,
+				49378694248855A700C8496E /* SubscriprionSegmentControl.swift */,
 				49684ACB2476D20A00E9BADC /* LoadingCollectionFooterView.swift */,
 				499010002481455800F18B46 /* RoundedBorderLabel.swift */,
 			);
@@ -702,10 +708,12 @@
 				49900FF42481030700F18B46 /* CountriesService.swift in Sources */,
 				49684AC62476A4BF00E9BADC /* VideoCollectionViewCell.swift in Sources */,
 				49900FFA2481065500F18B46 /* EpisodesService.swift in Sources */,
+				493786972488EA9000C8496E /* UIColor+Gradient.swift in Sources */,
 				49900FBA247EA97A00F18B46 /* MainAPI.swift in Sources */,
 				49900FEE2480165600F18B46 /* DetailFunShowModel.swift in Sources */,
 				49684A76246BED4000E9BADC /* UnderlinedTextField.swift in Sources */,
 				49684AC0247676DE00E9BADC /* VideoCategory.swift in Sources */,
+				49378695248855A700C8496E /* SubscriprionSegmentControl.swift in Sources */,
 				49684A7A246D76DA00E9BADC /* PasswordUnderlinedTextField.swift in Sources */,
 				493786752485225A00C8496E /* FilmsFilterItems.swift in Sources */,
 				49684A70246BE70600E9BADC /* SerialsViewController.swift in Sources */,

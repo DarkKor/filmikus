@@ -44,8 +44,15 @@ class DetailMovieViewController: UIViewController {
 	override func loadView() {
 		view = UIView()
 		view.backgroundColor = .white
-//		webView.isHidden = true
-		authRequiredView.isHidden = true
+		webView.isHidden = true
+		
+		for product in StoreKitService.shared.products {
+			if let expiresDate = StoreKitService.shared.expirationDate(for: product.productIdentifier),
+				expiresDate > Date() {
+				authRequiredView.isHidden = true
+				webView.isHidden = false
+			}
+		}
 		webView.scrollView.isScrollEnabled = false
 		separatorView.backgroundColor = .separator
 		webView.backgroundColor = .black

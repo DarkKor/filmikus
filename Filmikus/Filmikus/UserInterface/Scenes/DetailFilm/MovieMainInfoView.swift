@@ -79,7 +79,7 @@ class MovieMainInfoView: UIView {
 	}
 	
 	func fill(movie: DetailMovieModel) {
-		let imageUrl = URL(string: movie.imageUrl.low)
+		let imageUrl = URL(string: movie.imageUrl.high)
 		posterImageView.kf.indicatorType = .activity
 		posterImageView.kf.setImage(
 			with: imageUrl,
