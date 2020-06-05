@@ -50,15 +50,15 @@ class MovieMainInfoView: UIView {
 		qualityLabel.setContentCompressionResistancePriority(.required, for: .vertical)
 
 		posterImageView.snp.makeConstraints {
-			$0.top.left.bottom.equalToSuperview()
+			$0.top.left.bottom.equalToSuperview().inset(16)
 			$0.width.equalToSuperview().multipliedBy(0.33)
 			$0.height.equalTo(posterImageView.snp.width).multipliedBy(1.49)
 		}
 		stackView.snp.makeConstraints {
-			$0.left.equalTo(posterImageView.snp.right).offset(20)
+			$0.left.equalTo(posterImageView.snp.right).offset(16)
 			$0.centerY.right.equalToSuperview()
 			$0.top.equalTo(posterImageView).offset(10)
-			$0.bottom.equalToSuperview()
+			$0.bottom.equalToSuperview().inset(16)
 		}
 		qualityLabel.snp.makeConstraints {
 			$0.top.leading.bottom.equalToSuperview()

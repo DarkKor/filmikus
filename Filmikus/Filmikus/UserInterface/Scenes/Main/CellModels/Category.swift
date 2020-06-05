@@ -7,6 +7,6 @@
 //
 
 struct Category {
-	let title: String
+	let type: CategoryType
 	var movies: [MovieModel] = []
 }

@@ -8,15 +8,28 @@
 
 import UIKit
 
+protocol CategoriesHeaderViewDelegate: class {
+	func categoriesHeaderView(_ view: CategoriesHeaderView, didSelectSlider slider: SliderModel)
+}
+
 class CategoriesHeaderView: UIView {
 	
-	private let imageView = UIImageView()
+	weak var delegate: CategoriesHeaderViewDelegate?
+	
+	private var sliders: [SliderModel] = []
+	
+	private lazy var sliderButton: UIButton = {
+		let button = UIButton()
+		button.addTarget(self, action: #selector(onSliderButtonTap), for: .touchUpInside)
+		return button
+	}()
 
 	init() {
 		super.init(frame: .zero)
-				
-		addSubview(imageView)
-		imageView.snp.makeConstraints {
+		
+		addSubview(sliderButton)
+		
+		sliderButton.snp.makeConstraints {
 			$0.edges.equalToSuperview()
 		}
 	}
@@ -25,16 +38,22 @@ class CategoriesHeaderView: UIView {
 		fatalError("init(coder:) has not been implemented")
 	}
 	
-	func fill(slider: SliderModel) {
+	func fill(sliders: [SliderModel] = []) {
+		self.sliders = sliders
+		guard let slider = sliders.first else { return }
 		let url = URL(string: slider.imageUrl)
-		imageView.kf.indicatorType = .activity
-		imageView.kf.setImage(
+		sliderButton.kf.setImage(
 			with: url,
-			placeholder: nil,
+			for: .normal,
 			options: [
 				.transition(.fade(0.25))
 			]
 		)
 	}
 	
+	@objc
+	private func onSliderButtonTap(sender: UIButton) {
+		guard let slider = sliders.first else { return }
+		delegate?.categoriesHeaderView(self, didSelectSlider: slider)
+	}
 }

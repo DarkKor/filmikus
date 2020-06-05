@@ -1,15 +1,15 @@
 //
-//  DetailMovieViewController.swift
+//  DetailSerialViewController.swift
 //  Filmikus
 //
-//  Created by Андрей Козлов on 15.05.2020.
+//  Created by Андрей Козлов on 05.06.2020.
 //  Copyright © 2020 Андрей Козлов. All rights reserved.
 //
 
 import UIKit
 import WebKit
 
-class DetailMovieViewController: UIViewController {
+class DetailSerialViewController: UIViewController {
 	
 	private let id: Int
 	
@@ -25,7 +25,7 @@ class DetailMovieViewController: UIViewController {
 	
 	private lazy var detailInfoView = MovieDetailInfoView()
 	private lazy var showFilmButton = BlueBorderButton(title: "СМОТРЕТЬ ФИЛЬМ", target: self, action: #selector(onShowFilmButtonTap))
-
+	
 	init(
 		id: Int,
 		videoService: VideosServiceType = VideosService()
@@ -102,40 +102,23 @@ class DetailMovieViewController: UIViewController {
 			$0.bottom.left.right.equalToSuperview().inset(16)
 			$0.height.equalTo(44)
 		}
-
+		
 	}
 	
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
+	override func viewDidLoad() {
+		super.viewDidLoad()
+		
 		navigationItem.largeTitleDisplayMode = .never
 		loadData()
-    }
+	}
 	
 	private func loadData() {
-		videoService.detailMovie(id: id) { [weak self] (result) in
+		videoService.detailSerial(id: id) { [weak self] (result) in
 			guard let self = self else { return }
 			guard let detailModel = try? result.get() else { return }
 			self.title = detailModel.title
 			self.fill(detailModel: detailModel)
 		}
-//		switch movie.type {
-//		case .film:
-//			videoService.detailMovie(id: movie.id) { [weak self] (result) in
-//				guard let self = self else { return }
-//				guard let detailModel = try? result.get() else { return }
-//				self.title = detailModel.title
-//				self.fill(detailModel: detailModel)
-//			}
-//		case .serial:
-//			videoService.detailSerial(id: movie.id) { [weak self] (result) in
-//				guard let self = self else { return }
-//				guard let detailModel = try? result.get() else { return }
-//				self.fill(detailModel: detailModel)
-//			}
-//		case .funShow:
-//			break
-//		}
 	}
 	
 	private func fill(detailModel: DetailMovieModel) {
@@ -146,7 +129,7 @@ class DetailMovieViewController: UIViewController {
 		mainInfoView.fill(movie: detailModel)
 		detailInfoView.fill(detailModel: detailModel)
 	}
-
+	
 	@objc
 	private func onShowFilmButtonTap(sender: UIButton) {
 		

@@ -12,16 +12,38 @@ import SnapKit
 class MainViewController: UIViewController {
 	
 	private let mainService: MainServiceType
+	private let videoService: VideosServiceType
 	
 	private lazy var categoriesViewController: CategoriesViewController = {
 		let viewController = CategoriesViewController()
 		viewController.delegate = self
 		return viewController
 	}()
-	private lazy var searchController = SearchController(searchResultsController: nil)
+	private lazy var searchController: SearchController = {
+		let searchController = SearchController(searchResultsController: searchResultsController)
+		searchController.searchResultsUpdater = self
+		return searchController
+	}()
+	private lazy var searchResultsController: MoviesCollectionViewController = {
+		let viewController = MoviesCollectionViewController()
+		viewController.delegate = self
+		return viewController
+	}()
 	
-	init(mainService: MainServiceType = MainService()) {
+	private lazy var searchButton: UIButton = {
+		let button = UIButton()
+		button.tintColor = .white
+		button.setImage(UIImage(systemName: "magnifyingglass"), for: .normal)
+		button.addTarget(self, action: #selector(onSearchButtonTap), for: .touchUpInside)
+		return button
+	}()
+
+	init(
+		mainService: MainServiceType = MainService(),
+		videoService: VideosServiceType = VideosService()
+	) {
 		self.mainService = mainService
+		self.videoService = videoService
 		super.init(nibName: nil, bundle: nil)
 	}
 	
@@ -46,8 +68,8 @@ class MainViewController: UIViewController {
 		
 		title = "Главная"
 
-		navigationItem.searchController = searchController
-		
+		definesPresentationContext = true
+		navigationItem.rightBarButtonItem = UIBarButtonItem(customView: searchButton)
 		loadData()
     }
 	
@@ -59,9 +81,9 @@ class MainViewController: UIViewController {
 		}
 		
 		var categories: [Category] = [
-			Category(title: "Популярное"),
-			Category(title: "Рекомендуем"),
-			Category(title: "Сериалы")
+			Category(type: .popular),
+			Category(type: .recommendations),
+			Category(type: .series)
 		]
 		let dispatchGroup = DispatchGroup()
 		
@@ -91,6 +113,11 @@ class MainViewController: UIViewController {
 			self.categoriesViewController.update(categories: categories)
 		}
 	}
+	
+	@objc
+	private func onSearchButtonTap(sender: UIButton) {
+		present(searchController, animated: true)
+	}
 
 }
 
@@ -98,23 +125,80 @@ class MainViewController: UIViewController {
 
 extension MainViewController: CategoriesViewControllerDelegate {
 	
-	func categoriesViewController(_ viewController: CategoriesViewController, didSelectCategory category: Category) {
-		switch category.title {
-		case "Популярное":
-			tabBarController?.selectedIndex = 1
-		case "Рекомендуем":
-			tabBarController?.selectedIndex = 1
-		case "Сериалы":
-			tabBarController?.selectedIndex = 2
-		case "Развлекательное видео":
-			tabBarController?.selectedIndex = 3
-		default:
+	func categoriesViewController(_ viewController: CategoriesViewController, didSelectSlider slider: SliderModel) {
+		switch slider.type {
+		case .film:
+			let detailMovieVC = DetailMovieViewController(id: slider.id)
+			navigationController?.pushViewController(detailMovieVC, animated: true)
+		case .serial:
+			let detailSerialVC = DetailSerialViewController(id: slider.id)
+			navigationController?.pushViewController(detailSerialVC, animated: true)
+		case .funShow:
 			break
 		}
 	}
 	
+	func categoriesViewController(_ viewController: CategoriesViewController, didSelectCategory category: Category) {
+		switch category.type {
+		case .popular:
+			tabBarController?.selectedIndex = 1
+		case .recommendations:
+			tabBarController?.selectedIndex = 1
+		case .series:
+			tabBarController?.selectedIndex = 2
+		case .funShow:
+			tabBarController?.selectedIndex = 3
+		}
+	}
+	
 	func categoriesViewController(_ viewController: CategoriesViewController, didSelectMovie movie: MovieModel) {
-		let detailMovieVC = DetailMovieViewController(movie: movie)
-		navigationController?.pushViewController(detailMovieVC, animated: true)
+		switch movie.type {
+		case .film:
+			let detailMovieVC = DetailMovieViewController(id: movie.id)
+			navigationController?.pushViewController(detailMovieVC, animated: true)
+		case .serial:
+			let detailMovieVC = DetailSerialViewController(id: movie.id)
+			navigationController?.pushViewController(detailMovieVC, animated: true)
+		case .funShow:
+			break
+		}
+	}
+}
+
+// MARK: - UISearchResultsUpdating
+
+extension MainViewController: UISearchResultsUpdating {
+	
+	func updateSearchResults(for searchController: UISearchController) {
+		guard let text = searchController.searchBar.text, !text.isEmpty else { return }
+		print(text)
+		guard text.count > 3 else {
+			self.searchController.warningText = "Введите в поле поиска не менее 4-х символов"
+			return
+		}
+		self.searchController.warningText = ""
+		videoService.searchMovies(query: text) { [weak self] (result) in
+			guard let self = self else { return }
+			guard let movies = try? result.get() else { return }
+			self.searchResultsController.update(movies: movies)
+		}
+	}
+}
+
+// MARK: - MoviesCollectionViewControllerDelegate
+
+extension MainViewController: MoviesCollectionViewControllerDelegate {
+	
+	func moviesCollectionViewController(_ viewController: MoviesCollectionViewController, didSelectMovie movie: MovieModel) {
+		switch movie.type {
+		case .film:
+			let detailMovieVC = DetailMovieViewController(id: movie.id)
+			navigationController?.pushViewController(detailMovieVC, animated: true)
+		case .serial:
+			let detailMovieVC = DetailSerialViewController(id: movie.id)
+			navigationController?.pushViewController(detailMovieVC, animated: true)
+		case .funShow:
+			break
+		}
 	}
 }

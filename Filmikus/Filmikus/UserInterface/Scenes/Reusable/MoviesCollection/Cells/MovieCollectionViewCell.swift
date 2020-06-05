@@ -43,7 +43,7 @@ class MovieCollectionViewCell: ReusableCollectionViewCell {
 	}
 	
 	override func preferredLayoutAttributesFitting(_ layoutAttributes: UICollectionViewLayoutAttributes) -> UICollectionViewLayoutAttributes {
-		// disable self-sizing 
+		// disable self-sizing
 		return layoutAttributes
 	}
 	

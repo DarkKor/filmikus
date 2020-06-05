@@ -94,18 +94,25 @@ class ProfileViewController: UIViewController {
 		signUpButton.snp.makeConstraints {
 			$0.top.equalTo(passwordTextField.snp.bottom).offset(20)
 			$0.centerX.equalToSuperview()
-			$0.leading.trailing.equalToSuperview().inset(20)
 			$0.height.equalTo(44)
+			if traitCollection.userInterfaceIdiom == .pad {
+				$0.width.equalToSuperview().dividedBy(2)
+			} else {
+				$0.width.equalToSuperview().inset(20)
+			}
 		}
 		signInButton.snp.makeConstraints {
 			$0.top.equalTo(signUpButton.snp.bottom).offset(20)
-			$0.leading.trailing.equalToSuperview().inset(20)
+			$0.centerX.equalToSuperview()
 			$0.height.equalTo(44)
+			$0.width.equalTo(signUpButton)
 		}
 		subscriptionButton.snp.makeConstraints {
 			$0.top.equalTo(signInButton.snp.bottom).offset(20)
-			$0.leading.trailing.bottom.equalToSuperview().inset(20)
+			$0.centerX.bottom.equalToSuperview()
 			$0.height.equalTo(44)
+			$0.width.equalTo(signInButton)
+
 		}
 	}
 

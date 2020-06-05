@@ -112,8 +112,18 @@ extension VideoCategoriesViewController: UICollectionViewDelegate {
 extension VideoCategoriesViewController: UICollectionViewDelegateFlowLayout {
 	
 	func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+		let elementsInRow: CGFloat
+		switch traitCollection.userInterfaceIdiom {
+		case .phone:
+			elementsInRow = 1
+		case .pad:
+			elementsInRow = 2
+		default:
+			elementsInRow = 0
+		}
+		let spacing = collectionLayout.minimumInteritemSpacing * (elementsInRow - 1)
 		let padding = collectionLayout.sectionInset.left + collectionLayout.sectionInset.right
-		let width = (collectionView.bounds.size.width - padding)
+		let width = (collectionView.bounds.size.width - spacing - padding) / elementsInRow
 		let height = width / 1.49
 		return CGSize(width: width, height: height)
 	}

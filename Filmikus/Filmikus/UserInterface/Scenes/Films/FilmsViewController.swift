@@ -183,7 +183,7 @@ extension FilmsViewController: MoviesCollectionViewControllerDelegate {
 	}
 	
 	func moviesCollectionViewController(_ viewController: MoviesCollectionViewController, didSelectMovie movie: MovieModel) {
-		let detailFilmVC = DetailMovieViewController(movie: movie)
+		let detailFilmVC = DetailMovieViewController(id: movie.id)
 		navigationController?.pushViewController(detailFilmVC, animated: true)
 	}
 }

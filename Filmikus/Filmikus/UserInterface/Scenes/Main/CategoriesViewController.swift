@@ -9,6 +9,7 @@
 import UIKit
 
 protocol CategoriesViewControllerDelegate: class {
+	func categoriesViewController(_ viewController: CategoriesViewController, didSelectSlider slider: SliderModel)
 	func categoriesViewController(_ viewController: CategoriesViewController, didSelectCategory category: Category)
 	func categoriesViewController(_ viewController: CategoriesViewController, didSelectMovie movie: MovieModel)
 }
@@ -23,7 +24,8 @@ class CategoriesViewController: UIViewController {
 	private lazy var headerView: CategoriesHeaderView = {
 		let screenSize = UIScreen.main.bounds
 		let view = CategoriesHeaderView()
-		view.frame = CGRect(x: 0, y: 0, width: screenSize.width, height: screenSize.width / 2.1)
+		view.delegate = self
+		view.frame = CGRect(x: 0, y: 0, width: screenSize.width, height: screenSize.width / 2.82)
 		view.clipsToBounds = true
 		return view
 	}()
@@ -35,7 +37,6 @@ class CategoriesViewController: UIViewController {
 		table.sectionHeaderHeight = 44
 		table.delegate = self
 		table.dataSource = self
-		table.rowHeight = 220
 		table.tableHeaderView = headerView
 		table.showsVerticalScrollIndicator = false
 		table.register(cell: CategoryTableViewCell<MovieCollectionViewCell>.self)
@@ -53,8 +54,7 @@ class CategoriesViewController: UIViewController {
     }
 	
 	func update(sliders: [SliderModel]) {
-		guard let slider = sliders.first else { return }
-		headerView.fill(slider: slider)
+		headerView.fill(sliders: sliders)
 	}
     
 	func update(categories: [Category]) {
@@ -87,10 +87,14 @@ extension CategoriesViewController: UITableViewDataSource {
 
 extension CategoriesViewController: UITableViewDelegate {
 	
+	func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+		tableView.frame.height / 3
+	}
+	
 	func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
 		let header: CategoryHeaderSectionView = tableView.dequeueHeaderFooter()
 		let category = categories[section]
-		header.fill(title: category.title)
+		header.fill(title: category.type.description)
 		header.onTap = {
 			self.delegate?.categoriesViewController(self, didSelectCategory: category)
 		}
@@ -125,5 +129,14 @@ extension CategoriesViewController: UICollectionViewDelegate {
 	func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
 		let movie = categories[collectionView.tag].movies[indexPath.item]
 		delegate?.categoriesViewController(self, didSelectMovie: movie)
+	}
+}
+
+// MARK: - CategoriesHeaderViewDelegate
+
+extension CategoriesViewController: CategoriesHeaderViewDelegate {
+	
+	func categoriesHeaderView(_ view: CategoriesHeaderView, didSelectSlider slider: SliderModel) {
+		delegate?.categoriesViewController(self, didSelectSlider: slider)
 	}
 }

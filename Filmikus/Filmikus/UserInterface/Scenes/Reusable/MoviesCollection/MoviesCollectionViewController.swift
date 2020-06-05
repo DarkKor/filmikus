@@ -16,6 +16,15 @@ protocol MoviesCollectionViewControllerDelegate: class {
 	func moviesCollectionViewControllerShouldShowActivity(_ viewController: MoviesCollectionViewController) -> Bool
 }
 
+extension MoviesCollectionViewControllerDelegate {
+	func moviesCollectionViewController(_ viewController: MoviesCollectionViewController, didSelectFilter item: FilterItem) {}
+	func moviesCollectionViewController(_ viewController: MoviesCollectionViewController, didSelectQuality quality: VideoQuality) {}
+	func moviesCollectionViewController(_ viewController: MoviesCollectionViewController, didDeselectQuality quality: VideoQuality) {}
+	func moviesCollectionViewControllerShouldShowActivity(_ viewController: MoviesCollectionViewController) -> Bool {
+		false
+	}
+}
+
 class MoviesCollectionViewController: UIViewController {
 	
 	weak var delegate: MoviesCollectionViewControllerDelegate?
@@ -176,12 +185,20 @@ extension MoviesCollectionViewController: UICollectionViewDelegateFlowLayout {
 		case 0:
 			return CGSize(width: collectionView.bounds.width, height: 0)
 		case 1:
-			let elementsInRow: CGFloat = 2
+			let elementsInRow: CGFloat
+			switch traitCollection.userInterfaceIdiom {
+			case .phone:
+				elementsInRow = 2
+			case .pad:
+				elementsInRow = 4
+			default:
+				elementsInRow = 0
+			}
 			let spacing = collectionLayout.minimumInteritemSpacing * (elementsInRow - 1)
 			let padding = collectionLayout.sectionInset.left + collectionLayout.sectionInset.right
 			let width = (collectionView.bounds.size.width - spacing - padding) / elementsInRow
 			let height = width * 1.49
-			return CGSize(width: width, height: height)
+			return CGSize(width: width.rounded(.down), height: height)
 		default:
 			return .zero
 		}
