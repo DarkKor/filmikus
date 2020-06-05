@@ -1,5 +1,5 @@
 //
-//  DetailSerialViewController.swift
+//  DetailFunShowViewController.swift
 //  Filmikus
 //
 //  Created by Андрей Козлов on 05.06.2020.
@@ -9,7 +9,7 @@
 import UIKit
 import WebKit
 
-class DetailSerialViewController: UIViewController {
+class DetailFunShowViewController: UIViewController {
 	
 	private let id: Int
 	
@@ -23,12 +23,19 @@ class DetailSerialViewController: UIViewController {
 		view.delegate = self
 		return view
 	}()
-	private lazy var mainInfoView = MovieMainInfoView()
 	
-	private lazy var separatorView = UIView()
-	
-	private lazy var detailInfoView = MovieDetailInfoView()
-	private lazy var showFilmButton = BlueBorderButton(title: "СМОТРЕТЬ СЕРИАЛ", target: self, action: #selector(onShowFilmButtonTap))
+	private lazy var titleLabel: UILabel = {
+		let label = UILabel()
+		label.font = .boldSystemFont(ofSize: 20)
+		return label
+	}()
+	private lazy var descriptionLabel: UILabel = {
+		let label = UILabel()
+		label.font = .systemFont(ofSize: 14)
+		label.numberOfLines = 0
+		return label
+	}()
+	private lazy var showFilmButton = BlueBorderButton(title: "СМОТРЕТЬ ВИДЕО", target: self, action: #selector(onShowFilmButtonTap))
 	
 	init(
 		id: Int,
@@ -57,17 +64,15 @@ class DetailSerialViewController: UIViewController {
 			}
 		}
 		webView.scrollView.isScrollEnabled = false
-		separatorView.backgroundColor = .separator
 		webView.backgroundColor = .black
 		
 		view.addSubview(scrollView)
 		scrollView.addSubview(containerView)
 		containerView.addSubview(webView)
 		containerView.addSubview(authRequiredView)
-		containerView.addSubview(mainInfoView)
-		containerView.addSubview(separatorView)
-		containerView.addSubview(detailInfoView)
 		containerView.addSubview(showFilmButton)
+		containerView.addSubview(titleLabel)
+		containerView.addSubview(descriptionLabel)
 		
 		scrollView.translatesAutoresizingMaskIntoConstraints = false
 		let frameGuide = scrollView.frameLayoutGuide
@@ -88,23 +93,21 @@ class DetailSerialViewController: UIViewController {
 			$0.left.top.right.equalToSuperview()
 			$0.bottom.equalTo(webView)
 		}
-		mainInfoView.snp.makeConstraints {
-			$0.top.equalTo(authRequiredView.snp.bottom)
-			$0.left.right.equalToSuperview()
+		titleLabel.snp.makeConstraints {
+			$0.top.equalTo(authRequiredView.snp.bottom).offset(20)
+			$0.leading.trailing.equalToSuperview().inset(16)
+
 		}
-		separatorView.snp.makeConstraints {
-			$0.top.equalTo(mainInfoView.snp.bottom)
-			$0.left.right.equalToSuperview()
-			$0.height.equalTo(1)
-		}
-		detailInfoView.snp.makeConstraints {
-			$0.top.equalTo(separatorView.snp.bottom)
-			$0.left.right.equalToSuperview()
+		descriptionLabel.snp.makeConstraints {
+			$0.top.equalTo(titleLabel.snp.bottom).offset(20)
+			$0.leading.trailing.equalToSuperview().inset(16)
+
 		}
 		showFilmButton.snp.makeConstraints {
-			$0.top.equalTo(detailInfoView.snp.bottom).offset(10)
+			$0.top.equalTo(descriptionLabel.snp.bottom).offset(10)
 			$0.centerX.equalToSuperview()
-			$0.bottom.left.right.equalToSuperview().inset(16)
+			$0.width.equalToSuperview().dividedBy(2)
+			$0.bottom.equalToSuperview().inset(16)
 			$0.height.equalTo(44)
 		}
 		
@@ -118,7 +121,7 @@ class DetailSerialViewController: UIViewController {
 	}
 	
 	private func loadData() {
-		videoService.detailSerial(id: id) { [weak self] (result) in
+		videoService.detailFunShow(id: id) { [weak self] (result) in
 			guard let self = self else { return }
 			guard let detailModel = try? result.get() else { return }
 			self.title = detailModel.title
@@ -126,13 +129,13 @@ class DetailSerialViewController: UIViewController {
 		}
 	}
 	
-	private func fill(detailModel: DetailMovieModel) {
-		if let tvigleId = detailModel.tvigleId,
-			let movieUrl = URL(string: "http://cloud.tvigle.ru/video/\(tvigleId)/") {
-			webView.load(URLRequest(url: movieUrl))
-		}
-		mainInfoView.fill(movie: detailModel)
-		detailInfoView.fill(detailModel: detailModel)
+	private func fill(detailModel: DetailFunShowModel) {
+		titleLabel.text = detailModel.title
+		descriptionLabel.text = detailModel.descr
+//		if let tvigleId = detailModel.tvigleId,
+//			let movieUrl = URL(string: "http://cloud.tvigle.ru/video/\(tvigleId)/") {
+//			webView.load(URLRequest(url: movieUrl))
+//		}
 	}
 	
 	@objc
@@ -143,7 +146,7 @@ class DetailSerialViewController: UIViewController {
 
 // MARK: - AuthRequiredViewDelegate
 
-extension DetailSerialViewController: AuthRequiredViewDelegate {
+extension DetailFunShowViewController: AuthRequiredViewDelegate {
 	
 	func authRequiredViewDidSelectSignIn(_ view: AuthRequiredView) {
 		tabBarController?.selectedIndex = 4

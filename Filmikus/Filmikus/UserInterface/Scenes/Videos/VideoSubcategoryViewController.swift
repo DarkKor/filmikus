@@ -65,5 +65,7 @@ extension VideoSubcategoryViewController: VideosCollectionViewControllerDelegate
 	
 	func videoCollectionViewController(_ viewController: VideosCollectionViewController, didSelectVideo video: Video) {
 		print(video)
+		let detailVC = DetailFunShowViewController(id: video.id)
+		navigationController?.pushViewController(detailVC, animated: true)
 	}
 }

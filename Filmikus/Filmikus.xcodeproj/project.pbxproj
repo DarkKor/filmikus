@@ -37,6 +37,7 @@
 		4937869B248A400C00C8496E /* MovieDetailInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4937869A248A400C00C8496E /* MovieDetailInfoView.swift */; };
 		4937869E248A42F400C8496E /* DetailSerialViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4937869D248A42F400C8496E /* DetailSerialViewController.swift */; };
 		493786A0248A8BC000C8496E /* CategoryType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4937869F248A8BC000C8496E /* CategoryType.swift */; };
+		493786A3248A93C800C8496E /* DetailFunShowViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 493786A2248A93C800C8496E /* DetailFunShowViewController.swift */; };
 		49684A5E246AC51600E9BADC /* CategoryHeaderSectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49684A5D246AC51600E9BADC /* CategoryHeaderSectionView.swift */; };
 		49684A60246ACD9B00E9BADC /* UIView+Style.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49684A5F246ACD9B00E9BADC /* UIView+Style.swift */; };
 		49684A62246ACDDA00E9BADC /* BlueBorderButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49684A61246ACDDA00E9BADC /* BlueBorderButton.swift */; };
@@ -139,6 +140,7 @@
 		4937869A248A400C00C8496E /* MovieDetailInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieDetailInfoView.swift; sourceTree = "<group>"; };
 		4937869D248A42F400C8496E /* DetailSerialViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailSerialViewController.swift; sourceTree = "<group>"; };
 		4937869F248A8BC000C8496E /* CategoryType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryType.swift; sourceTree = "<group>"; };
+		493786A2248A93C800C8496E /* DetailFunShowViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailFunShowViewController.swift; sourceTree = "<group>"; };
 		49684A5D246AC51600E9BADC /* CategoryHeaderSectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryHeaderSectionView.swift; sourceTree = "<group>"; };
 		49684A5F246ACD9B00E9BADC /* UIView+Style.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Style.swift"; sourceTree = "<group>"; };
 		49684A61246ACDDA00E9BADC /* BlueBorderButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlueBorderButton.swift; sourceTree = "<group>"; };
@@ -351,6 +353,7 @@
 		491C21A824641A16007CDEC2 /* Scenes */ = {
 			isa = PBXGroup;
 			children = (
+				493786A1248A93B500C8496E /* DetailFunShow */,
 				4937869C248A42DE00C8496E /* DetailSerial */,
 				4937868D2487B8C200C8496E /* Subscription */,
 				49684A7F246E875B00E9BADC /* DetailFilm */,
@@ -420,6 +423,14 @@
 				4937869D248A42F400C8496E /* DetailSerialViewController.swift */,
 			);
 			path = DetailSerial;
+			sourceTree = "<group>";
+		};
+		493786A1248A93B500C8496E /* DetailFunShow */ = {
+			isa = PBXGroup;
+			children = (
+				493786A2248A93C800C8496E /* DetailFunShowViewController.swift */,
+			);
+			path = DetailFunShow;
 			sourceTree = "<group>";
 		};
 		49684A67246AF45700E9BADC /* Films */ = {
@@ -686,6 +697,7 @@
 				4937868124869FDB00C8496E /* FilterQualityContentItem.swift in Sources */,
 				49900FB8247E71DF00F18B46 /* AuthRequiredView.swift in Sources */,
 				4937867D24855F2600C8496E /* QualityButton.swift in Sources */,
+				493786A3248A93C800C8496E /* DetailFunShowViewController.swift in Sources */,
 				49900FC8247FCF6200F18B46 /* CategoriesAPI.swift in Sources */,
 				4937868F2487B92300C8496E /* SubscriptionViewController.swift in Sources */,
 				49900FFF248111E900F18B46 /* SearchController.swift in Sources */,

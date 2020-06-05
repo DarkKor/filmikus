@@ -18,7 +18,11 @@ class DetailMovieViewController: UIViewController {
 	private lazy var scrollView = UIScrollView()
 	private lazy var containerView = UIView()
 	private lazy var webView = WKWebView()
-	private lazy var authRequiredView = AuthRequiredView()
+	private lazy var authRequiredView: AuthRequiredView = {
+		let view = AuthRequiredView()
+		view.delegate = self
+		return view
+	}()
 	private lazy var mainInfoView = MovieMainInfoView()
 	
 	private lazy var separatorView = UIView()
@@ -100,7 +104,12 @@ class DetailMovieViewController: UIViewController {
 		showFilmButton.snp.makeConstraints {
 			$0.top.equalTo(detailInfoView.snp.bottom).offset(10)
 			$0.centerX.equalToSuperview()
-			$0.bottom.left.right.equalToSuperview().inset(16)
+			if traitCollection.userInterfaceIdiom == .pad {
+				$0.width.equalToSuperview().dividedBy(2)
+			} else {
+				$0.width.equalToSuperview().inset(16)
+			}
+			$0.bottom.equalToSuperview().inset(16)
 			$0.height.equalTo(44)
 		}
 
@@ -150,7 +159,19 @@ class DetailMovieViewController: UIViewController {
 
 	@objc
 	private func onShowFilmButtonTap(sender: UIButton) {
-		let subscriptionVC = SubscriptionViewController()
-		present(subscriptionVC, animated: true)
+		tabBarController?.selectedIndex = 4
+	}
+}
+
+// MARK: - AuthRequiredViewDelegate
+
+extension DetailMovieViewController: AuthRequiredViewDelegate {
+	
+	func authRequiredViewDidSelectSignIn(_ view: AuthRequiredView) {
+		tabBarController?.selectedIndex = 4
+	}
+	
+	func authRequiredViewDidSelectSignUp(_ view: AuthRequiredView) {
+		tabBarController?.selectedIndex = 4
 	}
 }
