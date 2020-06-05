@@ -25,7 +25,14 @@ class SearchController: UISearchController {
 		label.adjustsFontSizeToFitWidth = true
 		label.minimumScaleFactor = 0.1
 		label.font = .boldSystemFont(ofSize: 17)
+		label.textAlignment = .center
 		return label
+	}()
+	
+	private lazy var activityIndicatorView: UIActivityIndicatorView = {
+		let activity = UIActivityIndicatorView(style: .large)
+		activity.color = .white
+		return activity
 	}()
 	
 	override init(searchResultsController: UIViewController?) {
@@ -43,13 +50,16 @@ class SearchController: UISearchController {
 		//definesPresentationContext = true
 		//obscuresBackgroundDuringPresentation = false
 		
-		view.backgroundColor = UIColor.black.withAlphaComponent(0.3)
+		view.backgroundColor = UIColor.black.withAlphaComponent(0.7)
 		view.addSubview(warningLabel)
+		view.addSubview(activityIndicatorView)
 		warningLabel.snp.makeConstraints {
 			$0.centerY.equalToSuperview()
 			$0.leading.trailing.equalToSuperview().inset(20)
 		}
-		
+		activityIndicatorView.snp.makeConstraints {
+			$0.center.equalToSuperview()
+		}
 		searchBar.barTintColor = .appDarkBlue
 		searchBar.tintColor = .white
 		//searchBar.searchTextField.backgroundColor = UIColor.appDarkBlue.withAlphaComponent(0.3)
@@ -65,4 +75,13 @@ class SearchController: UISearchController {
 		}
 	}
 	
+	func showActivityIndicator() {
+		activityIndicatorView.startAnimating()
+		warningLabel.isHidden = true
+	}
+	
+	func hideActivityIndicator() {
+		activityIndicatorView.stopAnimating()
+		warningLabel.isHidden = false
+	}
 }

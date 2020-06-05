@@ -49,6 +49,7 @@ class DetailMovieViewController: UIViewController {
 				expiresDate > Date() {
 				authRequiredView.isHidden = true
 				webView.isHidden = false
+				showFilmButton.isHidden = true
 			}
 		}
 		webView.scrollView.isScrollEnabled = false
@@ -149,6 +150,7 @@ class DetailMovieViewController: UIViewController {
 
 	@objc
 	private func onShowFilmButtonTap(sender: UIButton) {
-		
+		let subscriptionVC = SubscriptionViewController()
+		present(subscriptionVC, animated: true)
 	}
 }

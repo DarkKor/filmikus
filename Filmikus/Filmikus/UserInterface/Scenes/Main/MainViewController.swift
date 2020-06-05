@@ -176,11 +176,13 @@ extension MainViewController: UISearchResultsUpdating {
 			self.searchController.warningText = "Введите в поле поиска не менее 4-х символов"
 			return
 		}
-		self.searchController.warningText = ""
+		self.searchController.showActivityIndicator()
 		videoService.searchMovies(query: text) { [weak self] (result) in
 			guard let self = self else { return }
+			self.searchController.hideActivityIndicator()
 			guard let movies = try? result.get() else { return }
 			self.searchResultsController.update(movies: movies)
+			self.searchController.warningText = movies.isEmpty ? "По вашему запросу ничего не найдено" : ""
 		}
 	}
 }
