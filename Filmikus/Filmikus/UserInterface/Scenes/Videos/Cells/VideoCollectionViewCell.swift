@@ -19,10 +19,12 @@ class VideoCollectionViewCell: ReusableCollectionViewCell {
 		contentView.backgroundColor = .clear
 		contentView.addSubview(imageView)
 		contentView.addSubview(titleLabel)
-
+		
+		titleLabel.textColor = .appDarkBlue
 		titleLabel.setContentCompressionResistancePriority(.required, for: .vertical)
 		titleLabel.setContentHuggingPriority(.required, for: .vertical)
 		imageView.rounded(radius: frame.height / 16)
+		imageView.contentMode = .scaleAspectFill
 		
 		imageView.snp.makeConstraints {
 			$0.left.top.right.equalToSuperview()
@@ -42,6 +44,11 @@ class VideoCollectionViewCell: ReusableCollectionViewCell {
 		
 		imageView.image = nil
 		titleLabel.text = nil
+	}
+	
+	override func preferredLayoutAttributesFitting(_ layoutAttributes: UICollectionViewLayoutAttributes) -> UICollectionViewLayoutAttributes {
+		// disable self-sizing
+		return layoutAttributes
 	}
 	
 	func fill(video: Video) {

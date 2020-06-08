@@ -87,7 +87,11 @@ extension VideosCollectionViewController: UICollectionViewDelegateFlowLayout {
 		let spacing = collectionLayout.minimumInteritemSpacing * (itemsInRow - 1)
 		let padding = collectionLayout.sectionInset.left + collectionLayout.sectionInset.right
 		let width = (collectionView.bounds.size.width - spacing - padding) / itemsInRow
-		let height = width / 1.49
-		return CGSize(width: width, height: height)
+		let height = width / 1.48
+		let titleHeight = videos[indexPath.item].title.height(
+			withConstrainedWidth: CGFloat.greatestFiniteMagnitude,
+			font: .systemFont(ofSize: 17)
+		)
+		return CGSize(width: width, height: height + titleHeight)
 	}
 }

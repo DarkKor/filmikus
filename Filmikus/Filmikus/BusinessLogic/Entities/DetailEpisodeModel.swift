@@ -18,7 +18,7 @@ id - id объекта
 */
 struct DetailEpisodeModel: Decodable {
 	let id: Int
-	let tvigleId: Int
+	let tvigleId: Int?
 	let title: String
 	let descr: String
 	let series: Int

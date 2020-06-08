@@ -10,7 +10,7 @@ struct DetailFunShowModel: Decodable {
 	let id: Int
 	let title: String
 	let descr: String
-	let categories: [CategoryModel]
+	let category: CategoryModel
 	let imageUrl: ImageUrlModel
 	
 	enum CodingKeys: String, CodingKey {
@@ -18,6 +18,6 @@ struct DetailFunShowModel: Decodable {
 		case title = "title"
 		case descr = "description"
 		case imageUrl = "image_url"
-		case categories = "category"
+		case category = "category"
 	}
 }
