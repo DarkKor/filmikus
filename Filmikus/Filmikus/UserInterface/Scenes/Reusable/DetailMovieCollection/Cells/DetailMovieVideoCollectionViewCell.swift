@@ -1,5 +1,5 @@
 //
-//  DetailFunShowVideoCollectionViewCell.swift
+//  DetailMovieVideoCollectionViewCell.swift
 //  Filmikus
 //
 //  Created by Андрей Козлов on 08.06.2020.
@@ -9,7 +9,7 @@
 import UIKit
 import WebKit
 
-class DetailFunShowVideoCollectionViewCell: ReusableCollectionViewCell {
+class DetailMovieVideoCollectionViewCell: ReusableCollectionViewCell {
 	
 	weak var delegate: AuthRequiredViewDelegate? {
 		get {
@@ -58,10 +58,10 @@ class DetailFunShowVideoCollectionViewCell: ReusableCollectionViewCell {
 		return layoutAttributes
 	}
 	
-	func fill(model: DetailFunShowVideoSection) {
+	func fill(model: DetailMovieVideoSection) {
 		authRequiredView.isHidden = model.isEnabled
 		webView.isHidden = !model.isEnabled
-		guard let url = URL(string: model.videoUrl) else { return }
+		guard let url = URL(string: model.url) else { return }
 		webView.load(URLRequest(url: url))
 	}
 }

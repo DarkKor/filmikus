@@ -1,5 +1,5 @@
 //
-//  DetailFunShowCollectionViewController.swift
+//  DetailMovieCollectionViewController.swift
 //  Filmikus
 //
 //  Created by Андрей Козлов on 08.06.2020.
@@ -8,19 +8,18 @@
 
 import UIKit
 
-protocol DetailFunShowCollectionViewControllerDelegate: class {
-	func detailFunShowCollectionViewController(_ viewController: DetailFunShowCollectionViewController, didSelectVideo video: Video)
-	func detailFunShowCollectionViewControllerSelectSignIn(_ viewController: DetailFunShowCollectionViewController)
-	func detailFunShowCollectionViewControllerSelectSignUp(_ viewController: DetailFunShowCollectionViewController)
-	func detailFunShowCollectionViewControllerSelectShowFilm(_ viewController: DetailFunShowCollectionViewController)
-
+protocol DetailMovieCollectionViewControllerDelegate: class {
+	func detailMovieCollectionViewController(_ viewController: DetailMovieCollectionViewController, didSelectVideo video: Video)
+	func detailMovieCollectionViewControllerSelectSignIn(_ viewController: DetailMovieCollectionViewController)
+	func detailMovieCollectionViewControllerSelectSignUp(_ viewController: DetailMovieCollectionViewController)
+	func detailMovieCollectionViewControllerSelectShowFilm(_ viewController: DetailMovieCollectionViewController)
 }
 
-class DetailFunShowCollectionViewController: UIViewController {
+class DetailMovieCollectionViewController: UIViewController {
 	
-	weak var delegate: DetailFunShowCollectionViewControllerDelegate?
+	weak var delegate: DetailMovieCollectionViewControllerDelegate?
 	
-	private var sections: [DetailFunShowSection] = []
+	private var sections: [DetailMovieSection] = []
 	
 	private lazy var collectionLayout: UICollectionViewFlowLayout = {
 		let layout = UICollectionViewFlowLayout()
@@ -36,19 +35,19 @@ class DetailFunShowCollectionViewController: UIViewController {
 		collection.dataSource = self
 		collection.showsVerticalScrollIndicator = false
 		collection.register(
-			DetailFunShowMoreSectionView.self,
+			DetailMovieRelatedHeaderSectionView.self,
 			forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
-			withReuseIdentifier: DetailFunShowMoreSectionView.reuseId
+			withReuseIdentifier: DetailMovieRelatedHeaderSectionView.reuseId
 		)
-		collection.register(cell: DetailFunShowInfoCollectionViewCell.self)
-		collection.register(cell: DetailFunShowVideoCollectionViewCell.self)
+		collection.register(cell: DetailMovieInfoCollectionViewCell.self)
+		collection.register(cell: DetailMovieVideoCollectionViewCell.self)
 		collection.register(cell: VideoCollectionViewCell.self)
 		return collection
 	}()
 	
 	override func loadView() {
 		view = collectionView
-		view.backgroundColor = .appLightGray
+		view.backgroundColor = .clear
 	}
 
     override func viewDidLoad() {
@@ -56,17 +55,23 @@ class DetailFunShowCollectionViewController: UIViewController {
 
         // Do any additional setup after loading the view.
     }
-		
-	func update(sections: [DetailFunShowSection]) {
+	
+	func update(section: DetailMovieSection) {
+		guard let sectionIndex = sections.firstIndex(where: { $0 == section }) else { return }
+		sections[sectionIndex] = section
+		collectionView.reloadData()
+		collectionView.scrollToItem(at: IndexPath(item: 0, section: sectionIndex), at: .top, animated: true)
+	}
+	
+	func update(sections: [DetailMovieSection]) {
 		self.sections = sections
 		collectionView.reloadData()
-		collectionView.scrollToItem(at: IndexPath(item: 0, section: 0), at: .top, animated: true)
 	}
 }
 
 // MARK: - UICollectionViewDataSource
 
-extension DetailFunShowCollectionViewController: UICollectionViewDataSource {
+extension DetailMovieCollectionViewController: UICollectionViewDataSource {
 	
 	func numberOfSections(in collectionView: UICollectionView) -> Int {
 		sections.count
@@ -78,7 +83,7 @@ extension DetailFunShowCollectionViewController: UICollectionViewDataSource {
 			return 1
 		case .info:
 			return 1
-		case .more(let model):
+		case .related(let model):
 			return model.videos.count
 		}
 	}
@@ -89,12 +94,12 @@ extension DetailFunShowCollectionViewController: UICollectionViewDataSource {
 			return UICollectionReusableView(frame: .zero)
 		case .info:
 			return UICollectionReusableView(frame: .zero)
-		case .more(let model):
+		case .related(let model):
 			let headerView = collectionView.dequeueReusableSupplementaryView(
 				ofKind: UICollectionView.elementKindSectionHeader,
-				withReuseIdentifier: DetailFunShowMoreSectionView.reuseId,
+				withReuseIdentifier: DetailMovieRelatedHeaderSectionView.reuseId,
 				for: indexPath
-			) as! DetailFunShowMoreSectionView
+			) as! DetailMovieRelatedHeaderSectionView
 			headerView.fill(title: model.title)
 			return headerView
 		}
@@ -103,16 +108,16 @@ extension DetailFunShowCollectionViewController: UICollectionViewDataSource {
 	func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
 		switch sections[indexPath.section] {
 		case let .video(model):
-			let cell: DetailFunShowVideoCollectionViewCell = collectionView.dequeueCell(for: indexPath)
+			let cell: DetailMovieVideoCollectionViewCell = collectionView.dequeueCell(for: indexPath)
 			cell.delegate = self
 			cell.fill(model: model)
 			return cell
 		case let .info(model):
-			let cell: DetailFunShowInfoCollectionViewCell = collectionView.dequeueCell(for: indexPath)
+			let cell: DetailMovieInfoCollectionViewCell = collectionView.dequeueCell(for: indexPath)
 			cell.delegate = self
 			cell.fill(model: model)
 			return cell
-		case let .more(model):
+		case let .related(model):
 			let cell: VideoCollectionViewCell = collectionView.dequeueCell(for: indexPath)
 			cell.fill(video: model.videos[indexPath.item])
 			return cell
@@ -123,7 +128,7 @@ extension DetailFunShowCollectionViewController: UICollectionViewDataSource {
 
 // MARK: - UICollectionViewDataSource
 
-extension DetailFunShowCollectionViewController: UICollectionViewDelegate {
+extension DetailMovieCollectionViewController: UICollectionViewDelegate {
 	
 	func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
 		switch sections[indexPath.section] {
@@ -131,16 +136,16 @@ extension DetailFunShowCollectionViewController: UICollectionViewDelegate {
 			break
 		case let .info(model):
 			break
-		case let .more(model):
+		case let .related(model):
 			let video = model.videos[indexPath.item]
-			delegate?.detailFunShowCollectionViewController(self, didSelectVideo: video)
+			delegate?.detailMovieCollectionViewController(self, didSelectVideo: video)
 		}
 	}
 }
 
 // MARK: - UICollectionViewDelegateFlowLayout
 
-extension DetailFunShowCollectionViewController: UICollectionViewDelegateFlowLayout {
+extension DetailMovieCollectionViewController: UICollectionViewDelegateFlowLayout {
 	
 	func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
 		switch sections[section] {
@@ -148,7 +153,7 @@ extension DetailFunShowCollectionViewController: UICollectionViewDelegateFlowLay
 			return .zero
 		case .info(_):
 			return .zero
-		case .more(_):
+		case .related(_):
 			return CGSize(width: 0, height: 30)
 		}
 	}
@@ -161,7 +166,7 @@ extension DetailFunShowCollectionViewController: UICollectionViewDelegateFlowLay
 			return CGSize(width: collectionView.bounds.width - padding, height: 0)
 		case .info:
 			return CGSize(width: collectionView.bounds.width - padding, height: 0)
-		case let .more(model):
+		case let .related(model):
 			let itemsInRow: CGFloat = 2
 			let spacing = collectionLayout.minimumInteritemSpacing * (itemsInRow - 1)
 			let width = (collectionView.bounds.size.width - spacing - padding) / itemsInRow
@@ -180,7 +185,7 @@ extension DetailFunShowCollectionViewController: UICollectionViewDelegateFlowLay
 			return UIEdgeInsets(top: 0, left: 0, bottom: 1, right: 0)
 		case .info:
 			return UIEdgeInsets(top: 0, left: 0, bottom: 24, right: 0)
-		case .more:
+		case .related:
 			return UIEdgeInsets(top: 12, left: 12, bottom: 12, right: 12)
 		}
 	}
@@ -188,22 +193,23 @@ extension DetailFunShowCollectionViewController: UICollectionViewDelegateFlowLay
 
 // MARK: - AuthRequiredViewDelegate
 
-extension DetailFunShowCollectionViewController: AuthRequiredViewDelegate {
+extension DetailMovieCollectionViewController: AuthRequiredViewDelegate {
 	
 	func authRequiredViewDidSelectSignIn(_ view: AuthRequiredView) {
-		delegate?.detailFunShowCollectionViewControllerSelectSignIn(self)
+		delegate?.detailMovieCollectionViewControllerSelectSignIn(self)
 	}
 	
 	func authRequiredViewDidSelectSignUp(_ view: AuthRequiredView) {
-		delegate?.detailFunShowCollectionViewControllerSelectSignUp(self)
+		delegate?.detailMovieCollectionViewControllerSelectSignUp(self)
 	}
 }
 
-// MARK: - DetailFunShowInfoCollectionViewCellDelegate
+// MARK: - DetailMovieInfoCollectionViewCellDelegate
 
-extension DetailFunShowCollectionViewController: DetailFunShowInfoCollectionViewCellDelegate {
+extension DetailMovieCollectionViewController: DetailMovieInfoCollectionViewCellDelegate {
 	
-	func detailFunShowInfoCollectionViewCellShowFilm(_ cell: DetailFunShowInfoCollectionViewCell) {
-		delegate?.detailFunShowCollectionViewControllerSelectShowFilm(self)
+	func detailMovieInfoCollectionViewCellShowFilm(_ cell: DetailMovieInfoCollectionViewCell) {
+		delegate?.detailMovieCollectionViewControllerSelectShowFilm(self)
 	}
 }
+

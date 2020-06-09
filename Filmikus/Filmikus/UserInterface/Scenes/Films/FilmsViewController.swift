@@ -62,7 +62,14 @@ class FilmsViewController: UIViewController {
 		loadFilms()
     }
 	
-	func loadFilms() {
+	func applyFilter(order: VideoOrder) {
+		let content = FilterContentItem(title: "Сортировать", detail: order.description)
+		moviesCollectionViewController.update(filterItem: .sort(content))
+		self.filter.videoOrder = order
+		self.loadFilms()
+	}
+	
+	private func loadFilms() {
 		activityIndicator.startAnimating()
 		facade.getFilms(with: filter) { [weak self] (result) in
 			guard let self = self else { return }
@@ -183,7 +190,7 @@ extension FilmsViewController: MoviesCollectionViewControllerDelegate {
 	}
 	
 	func moviesCollectionViewController(_ viewController: MoviesCollectionViewController, didSelectMovie movie: MovieModel) {
-		let detailFilmVC = DetailMovieViewController(id: movie.id)
+		let detailFilmVC = DetailFilmViewController(id: movie.id)
 		navigationController?.pushViewController(detailFilmVC, animated: true)
 	}
 }

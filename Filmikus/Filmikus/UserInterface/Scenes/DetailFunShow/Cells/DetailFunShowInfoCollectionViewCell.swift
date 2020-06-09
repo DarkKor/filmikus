@@ -71,7 +71,7 @@ class DetailFunShowInfoCollectionViewCell: ReusableCollectionViewCell {
 		return layoutAttributes
 	}
 	
-	func fill(model: DetailFunShowInfo) {
+	func fill(model: DetailFunShowInfoSection) {
 		titleLabel.text = model.title
 		descriptionLabel.text = model.descr
 	}

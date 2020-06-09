@@ -38,7 +38,7 @@ class MovieDetailInfoView: UIView {
 		fatalError("init(coder:) has not been implemented")
 	}
 	
-	func fill(detailModel: DetailMovieModel) {
+	func fill(detailModel: DetailMovieInfoSection) {
 		self.directorsLabel.attributedText = self.formattedString(
 			grayPart: "Режисеры: ",
 			blackPart: detailModel.directors.map{ $0.name }.joined(separator: ", ")

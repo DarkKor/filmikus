@@ -9,7 +9,13 @@
 import UIKit
 import SnapKit
 
+protocol MainViewControllerDelegate: class {
+	func mainViewController(_ viewController: MainViewController, didSelectCategoryType type: CategoryType)
+}
+
 class MainViewController: UIViewController {
+	
+	weak var delegate: MainViewControllerDelegate?
 	
 	private let mainService: MainServiceType
 	private let videoService: VideosServiceType
@@ -128,7 +134,7 @@ extension MainViewController: CategoriesViewControllerDelegate {
 	func categoriesViewController(_ viewController: CategoriesViewController, didSelectSlider slider: SliderModel) {
 		switch slider.type {
 		case .film:
-			let detailMovieVC = DetailMovieViewController(id: slider.id)
+			let detailMovieVC = DetailFilmViewController(id: slider.id)
 			navigationController?.pushViewController(detailMovieVC, animated: true)
 		case .serial:
 			let detailSerialVC = DetailSerialViewController(id: slider.id)
@@ -139,22 +145,13 @@ extension MainViewController: CategoriesViewControllerDelegate {
 	}
 	
 	func categoriesViewController(_ viewController: CategoriesViewController, didSelectCategory category: Category) {
-		switch category.type {
-		case .popular:
-			tabBarController?.selectedIndex = 1
-		case .recommendations:
-			tabBarController?.selectedIndex = 1
-		case .series:
-			tabBarController?.selectedIndex = 2
-		case .funShow:
-			tabBarController?.selectedIndex = 3
-		}
+		delegate?.mainViewController(self, didSelectCategoryType: category.type)
 	}
 	
 	func categoriesViewController(_ viewController: CategoriesViewController, didSelectMovie movie: MovieModel) {
 		switch movie.type {
 		case .film:
-			let detailMovieVC = DetailMovieViewController(id: movie.id)
+			let detailMovieVC = DetailFilmViewController(id: movie.id)
 			navigationController?.pushViewController(detailMovieVC, animated: true)
 		case .serial:
 			let detailMovieVC = DetailSerialViewController(id: movie.id)
@@ -194,7 +191,7 @@ extension MainViewController: MoviesCollectionViewControllerDelegate {
 	func moviesCollectionViewController(_ viewController: MoviesCollectionViewController, didSelectMovie movie: MovieModel) {
 		switch movie.type {
 		case .film:
-			let detailMovieVC = DetailMovieViewController(id: movie.id)
+			let detailMovieVC = DetailFilmViewController(id: movie.id)
 			navigationController?.pushViewController(detailMovieVC, animated: true)
 		case .serial:
 			let detailMovieVC = DetailSerialViewController(id: movie.id)

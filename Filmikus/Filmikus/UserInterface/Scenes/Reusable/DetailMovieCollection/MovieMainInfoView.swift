@@ -78,8 +78,8 @@ class MovieMainInfoView: UIView {
 		posterImageView.rounded(radius: posterImageView.frame.height / 16)
 	}
 	
-	func fill(movie: DetailMovieModel) {
-		let imageUrl = URL(string: movie.imageUrl.high)
+	func fill(movie: DetailMovieInfoSection) {
+		let imageUrl = URL(string: movie.imageUrl)
 		posterImageView.kf.indicatorType = .activity
 		posterImageView.kf.setImage(
 			with: imageUrl,

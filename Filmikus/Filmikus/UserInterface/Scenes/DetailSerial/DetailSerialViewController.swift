@@ -14,28 +14,33 @@ class DetailSerialViewController: UIViewController {
 	private let id: Int
 	
 	private let videoService: VideosServiceType
-	
-	private lazy var scrollView = UIScrollView()
-	private lazy var containerView = UIView()
-	private lazy var webView = WKWebView()
-	private lazy var authRequiredView: AuthRequiredView = {
-		let view = AuthRequiredView()
-		view.delegate = self
-		return view
+	private let episodesService: EpisodesServiceType
+
+	private lazy var collectionViewController: DetailMovieCollectionViewController = {
+		let viewController = DetailMovieCollectionViewController()
+		viewController.delegate = self
+		return viewController
 	}()
-	private lazy var mainInfoView = MovieMainInfoView()
 	
-	private lazy var separatorView = UIView()
-	
-	private lazy var detailInfoView = MovieDetailInfoView()
-	private lazy var showFilmButton = BlueBorderButton(title: "СМОТРЕТЬ СЕРИАЛ", target: self, action: #selector(onShowFilmButtonTap))
+	private var isSignedIn: Bool {
+		return StoreKitService.shared.products.first(where: { product in
+			if let expiresDate = StoreKitService.shared.expirationDate(for: product.productIdentifier),
+			expiresDate > Date() {
+				return true
+			} else {
+				return false
+			}
+		}) != nil
+	}
 	
 	init(
 		id: Int,
-		videoService: VideosServiceType = VideosService()
+		videoService: VideosServiceType = VideosService(),
+		episodesService: EpisodesServiceType = EpisodesService()
 	) {
 		self.id = id
 		self.videoService = videoService
+		self.episodesService = episodesService
 		super.init(nibName: nil, bundle: nil)
 	}
 	
@@ -45,69 +50,15 @@ class DetailSerialViewController: UIViewController {
 	
 	override func loadView() {
 		view = UIView()
-		view.backgroundColor = .white
-		webView.isHidden = true
+		view.backgroundColor = .appLightGray
+
+		addChild(collectionViewController)
+		view.addSubview(collectionViewController.view)
+		collectionViewController.didMove(toParent: self)
 		
-		for product in StoreKitService.shared.products {
-			if let expiresDate = StoreKitService.shared.expirationDate(for: product.productIdentifier),
-				expiresDate > Date() {
-				authRequiredView.isHidden = true
-				webView.isHidden = false
-				showFilmButton.isHidden = true
-			}
+		collectionViewController.view.snp.makeConstraints {
+			$0.edges.equalToSuperview()
 		}
-		webView.scrollView.isScrollEnabled = false
-		separatorView.backgroundColor = .separator
-		webView.backgroundColor = .black
-		
-		view.addSubview(scrollView)
-		scrollView.addSubview(containerView)
-		containerView.addSubview(webView)
-		containerView.addSubview(authRequiredView)
-		containerView.addSubview(mainInfoView)
-		containerView.addSubview(separatorView)
-		containerView.addSubview(detailInfoView)
-		containerView.addSubview(showFilmButton)
-		
-		scrollView.translatesAutoresizingMaskIntoConstraints = false
-		let frameGuide = scrollView.frameLayoutGuide
-		let contentGuide = scrollView.contentLayoutGuide
-		
-		frameGuide.snp.makeConstraints {
-			$0.edges.equalTo(view)
-			$0.width.equalTo(contentGuide)
-		}
-		
-		containerView.snp.makeConstraints {
-			$0.edges.equalTo(contentGuide)
-		}
-		webView.snp.makeConstraints {
-			$0.leading.trailing.top.equalToSuperview()
-		}
-		authRequiredView.snp.makeConstraints {
-			$0.left.top.right.equalToSuperview()
-			$0.bottom.equalTo(webView)
-		}
-		mainInfoView.snp.makeConstraints {
-			$0.top.equalTo(authRequiredView.snp.bottom)
-			$0.left.right.equalToSuperview()
-		}
-		separatorView.snp.makeConstraints {
-			$0.top.equalTo(mainInfoView.snp.bottom)
-			$0.left.right.equalToSuperview()
-			$0.height.equalTo(1)
-		}
-		detailInfoView.snp.makeConstraints {
-			$0.top.equalTo(separatorView.snp.bottom)
-			$0.left.right.equalToSuperview()
-		}
-		showFilmButton.snp.makeConstraints {
-			$0.top.equalTo(detailInfoView.snp.bottom).offset(10)
-			$0.centerX.equalToSuperview()
-			$0.bottom.left.right.equalToSuperview().inset(16)
-			$0.height.equalTo(44)
-		}
-		
 	}
 	
 	override func viewDidLoad() {
@@ -122,34 +73,70 @@ class DetailSerialViewController: UIViewController {
 			guard let self = self else { return }
 			guard let detailModel = try? result.get() else { return }
 			self.title = detailModel.title
-			self.fill(detailModel: detailModel)
+			self.episodesService.getSerialEpisodes(serialId: self.id) { [weak self] (result) in
+				guard let self = self else { return }
+				guard let episodesModel = try? result.get() else { return }
+				
+				var videoUrl = ""
+				if let tvigleId = detailModel.tvigleId {
+					videoUrl = "http://cloud.tvigle.ru/video/\(tvigleId)/"
+				}
+				let isSignedIn = self.isSignedIn
+				let videoSection = DetailMovieVideoSection(url: videoUrl, isEnabled: isSignedIn)
+				let infoSection = DetailMovieInfoSection(
+					title: detailModel.title,
+					descr: detailModel.descr,
+					rating: detailModel.rating,
+					imageUrl: detailModel.imageUrl.high,
+					categories: detailModel.categories,
+					year: detailModel.year,
+					duration: detailModel.duration,
+					ageRating: detailModel.ageRating,
+					countries: detailModel.countries,
+					quality: detailModel.quality,
+					directors: detailModel.directors,
+					actors: detailModel.actors,
+					isEnabled: isSignedIn
+				)
+				let relatedSection = DetailMovieRelatedSection(title: "", videos: episodesModel.items.map {
+					Video(id: $0.id, title: $0.title, imageUrl: $0.imageUrl.high)
+				})
+				self.collectionViewController.update(sections: [
+					.video(videoSection),
+					.info(infoSection),
+					.related(relatedSection)
+				])
+			}
+
 		}
 	}
 	
-	private func fill(detailModel: DetailMovieModel) {
-		if let tvigleId = detailModel.tvigleId,
-			let movieUrl = URL(string: "http://cloud.tvigle.ru/video/\(tvigleId)/") {
-			webView.load(URLRequest(url: movieUrl))
-		}
-		mainInfoView.fill(movie: detailModel)
-		detailInfoView.fill(detailModel: detailModel)
-	}
-	
-	@objc
-	private func onShowFilmButtonTap(sender: UIButton) {
-		tabBarController?.selectedIndex = 4
-	}
 }
 
-// MARK: - AuthRequiredViewDelegate
+// MARK: - DetailMovieCollectionViewControllerDelegate
 
-extension DetailSerialViewController: AuthRequiredViewDelegate {
+extension DetailSerialViewController: DetailMovieCollectionViewControllerDelegate {
+	func detailMovieCollectionViewController(_ viewController: DetailMovieCollectionViewController, didSelectVideo video: Video) {
+		videoService.detailEpisode(id: video.id) { [weak self] (result) in
+			guard let self = self else { return }
+			guard let detailModel = try? result.get() else { return }
+			var videoUrl = ""
+			if let tvigleId = detailModel.tvigleId {
+				videoUrl = "http://cloud.tvigle.ru/video/\(tvigleId)/"
+			}
+			self.collectionViewController.update(section: .video(DetailMovieVideoSection(url: videoUrl, isEnabled: self.isSignedIn)))
+		}
+	}
 	
-	func authRequiredViewDidSelectSignIn(_ view: AuthRequiredView) {
+	func detailMovieCollectionViewControllerSelectSignIn(_ viewController: DetailMovieCollectionViewController) {
 		tabBarController?.selectedIndex = 4
 	}
 	
-	func authRequiredViewDidSelectSignUp(_ view: AuthRequiredView) {
+	func detailMovieCollectionViewControllerSelectSignUp(_ viewController: DetailMovieCollectionViewController) {
+		tabBarController?.selectedIndex = 4
+	}
+	
+	func detailMovieCollectionViewControllerSelectShowFilm(_ viewController: DetailMovieCollectionViewController) {
 		tabBarController?.selectedIndex = 4
 	}
 }

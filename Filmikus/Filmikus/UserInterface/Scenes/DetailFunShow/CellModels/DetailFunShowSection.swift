@@ -7,7 +7,7 @@
 //
 
 enum DetailFunShowSection {
-	case video(DetailFunShowVideo)
-	case info(DetailFunShowInfo)
-	case more(DetailFunShowMore)
+	case video(DetailFunShowVideoSection)
+	case info(DetailFunShowInfoSection)
+	case more(DetailFunShowMoreSection)
 }

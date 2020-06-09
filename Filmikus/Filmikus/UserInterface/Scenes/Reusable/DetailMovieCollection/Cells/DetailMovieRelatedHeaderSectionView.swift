@@ -1,5 +1,5 @@
 //
-//  DetailFunShowMoreSectionView.swift
+//  DetailMovieRelatedHeaderSectionView.swift
 //  Filmikus
 //
 //  Created by Андрей Козлов on 08.06.2020.
@@ -8,13 +8,13 @@
 
 import UIKit
 
-class DetailFunShowMoreSectionView: UICollectionReusableView {
-	
-	static let reuseId = String(describing: DetailFunShowMoreSectionView.self)
+class DetailMovieRelatedHeaderSectionView: UICollectionReusableView {
+
+	static let reuseId = String(describing: DetailMovieRelatedHeaderSectionView.self)
 	
 	private let titleLabel: UILabel = {
 		let label = UILabel()
-		label.textColor = .appDarkBlue
+		label.textColor = .white
 		label.font = .boldSystemFont(ofSize: 20)
 		return label
 	}()

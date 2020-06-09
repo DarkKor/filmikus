@@ -68,10 +68,10 @@ class DetailFunShowViewController: UIViewController {
 		super.viewDidLoad()
 		
 		navigationItem.largeTitleDisplayMode = .never
-		loadData()
+		loadData(with: id)
 	}
 	
-	private func loadData() {
+	private func loadData(with id: Int) {
 		videoService.detailEpisode(id: id) { [weak self] (result) in
 			guard let self = self else { return }
 			guard let detailModel = try? result.get() else { return }
@@ -83,17 +83,17 @@ class DetailFunShowViewController: UIViewController {
 				if let tvigleId = detailModel.tvigleId {
 					videoUrl = "http://cloud.tvigle.ru/video/\(tvigleId)/"
 				}
-				let isSignedIn = self.isSignedIn
-				let detailFunShowVideo = DetailFunShowVideo(
+				let isSignedIn = true// self.isSignedIn
+				let detailFunShowVideo = DetailFunShowVideoSection(
 					videoUrl: videoUrl,
 					isEnabled: isSignedIn
 				)
-				let detailFunShowInfo = DetailFunShowInfo(
+				let detailFunShowInfo = DetailFunShowInfoSection(
 					title: detailModel.title,
 					descr: detailModel.descr,
 					isEnabled: isSignedIn
 				)
-				let detailFunShowMore = DetailFunShowMore(
+				let detailFunShowMore = DetailFunShowMoreSection(
 					title: "Другие сериии из этого цикла",
 					videos: episodesModel.items.map {
 						Video(id: $0.id, title: $0.title, imageUrl: $0.imageUrl.high)
@@ -114,8 +114,9 @@ class DetailFunShowViewController: UIViewController {
 extension DetailFunShowViewController: DetailFunShowCollectionViewControllerDelegate {
 	
 	func detailFunShowCollectionViewController(_ viewController: DetailFunShowCollectionViewController, didSelectVideo video: Video) {
-		let detailVC = DetailFunShowViewController(id: video.id, subcategoryId: subcategoryId)
-		navigationController?.pushViewController(detailVC, animated: true)
+		loadData(with: video.id)
+//		let detailVC = DetailFunShowViewController(id: video.id, subcategoryId: subcategoryId)
+//		navigationController?.pushViewController(detailVC, animated: true)
 	}
 	
 	func detailFunShowCollectionViewControllerSelectSignIn(_ viewController: DetailFunShowCollectionViewController) {
