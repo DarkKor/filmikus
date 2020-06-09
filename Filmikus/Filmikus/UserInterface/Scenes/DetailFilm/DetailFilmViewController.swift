@@ -92,7 +92,7 @@ class DetailFilmViewController: UIViewController {
 				actors: detailModel.actors,
 				isEnabled: isSignedIn
 			)
-			let relatedSection = DetailMovieRelatedSection(title: "Похожие видео", movies: detailModel.similar.map { MovieModel(id: $0.id, title: "\($0.id)", imageUrl: nil, type: .film) })
+			let relatedSection = DetailMovieRelatedSection(title: "Похожие видео", movies: detailModel.similar.map { MovieModel(id: $0.id, title: $0.title, imageUrl: $0.imageUrl.high, type: .film) })
 			self.collectionViewController.update(sections: [
 				.video(videoSection),
 				.info(infoSection),
