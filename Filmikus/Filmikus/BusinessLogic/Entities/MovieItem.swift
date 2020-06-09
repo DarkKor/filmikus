@@ -31,7 +31,7 @@ struct MovieItem: Decodable {
 			}
 			self.id = id
 		}
-		self.title = try container.decode(String.self, forKey: CodingKeys.title)
-		self.imageUrl = try container.decode(ImageUrlModel.self, forKey: CodingKeys.imageUrl)
+		self.title = try container.decodeIfPresent(String.self, forKey: CodingKeys.title) ?? ""
+		self.imageUrl = try container.decodeIfPresent(ImageUrlModel.self, forKey: CodingKeys.imageUrl) ?? ImageUrlModel(low: "", high: "")
 	}
 }

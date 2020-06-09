@@ -83,7 +83,7 @@ class DetailFunShowViewController: UIViewController {
 				if let tvigleId = detailModel.tvigleId {
 					videoUrl = "http://cloud.tvigle.ru/video/\(tvigleId)/"
 				}
-				let isSignedIn = true// self.isSignedIn
+				let isSignedIn = self.isSignedIn
 				let detailFunShowVideo = DetailFunShowVideoSection(
 					videoUrl: videoUrl,
 					isEnabled: isSignedIn
@@ -115,8 +115,6 @@ extension DetailFunShowViewController: DetailFunShowCollectionViewControllerDele
 	
 	func detailFunShowCollectionViewController(_ viewController: DetailFunShowCollectionViewController, didSelectVideo video: Video) {
 		loadData(with: video.id)
-//		let detailVC = DetailFunShowViewController(id: video.id, subcategoryId: subcategoryId)
-//		navigationController?.pushViewController(detailVC, animated: true)
 	}
 	
 	func detailFunShowCollectionViewControllerSelectSignIn(_ viewController: DetailFunShowCollectionViewController) {

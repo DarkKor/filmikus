@@ -17,7 +17,7 @@ class DetailSerialViewController: UIViewController {
 	private let episodesService: EpisodesServiceType
 
 	private lazy var collectionViewController: DetailMovieCollectionViewController = {
-		let viewController = DetailMovieCollectionViewController()
+		let viewController = DetailMovieCollectionViewController(style: .episode)
 		viewController.delegate = self
 		return viewController
 	}()
@@ -98,8 +98,8 @@ class DetailSerialViewController: UIViewController {
 					actors: detailModel.actors,
 					isEnabled: isSignedIn
 				)
-				let relatedSection = DetailMovieRelatedSection(title: "", videos: episodesModel.items.map {
-					Video(id: $0.id, title: $0.title, imageUrl: $0.imageUrl.high)
+				let relatedSection = DetailMovieRelatedSection(title: "", movies: episodesModel.items.map {
+					MovieModel(id: $0.id, title: $0.title, imageUrl: $0.imageUrl.high, type: .serial)
 				})
 				self.collectionViewController.update(sections: [
 					.video(videoSection),
@@ -116,8 +116,9 @@ class DetailSerialViewController: UIViewController {
 // MARK: - DetailMovieCollectionViewControllerDelegate
 
 extension DetailSerialViewController: DetailMovieCollectionViewControllerDelegate {
-	func detailMovieCollectionViewController(_ viewController: DetailMovieCollectionViewController, didSelectVideo video: Video) {
-		videoService.detailEpisode(id: video.id) { [weak self] (result) in
+	
+	func detailMovieCollectionViewController(_ viewController: DetailMovieCollectionViewController, didSelectMovie movie: MovieModel) {
+		videoService.detailEpisode(id: movie.id) { [weak self] (result) in
 			guard let self = self else { return }
 			guard let detailModel = try? result.get() else { return }
 			var videoUrl = ""

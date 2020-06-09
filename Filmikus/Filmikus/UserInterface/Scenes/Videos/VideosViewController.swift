@@ -40,7 +40,7 @@ class VideosViewController: UIViewController {
 			guard let self = self else { return }
 			guard let categories = try? result.get() else { return }
 			print(categories)
-			var videoCategories = categories.map { VideoCategory(id: $0.id, title: $0.title, subcategories: []) }
+			let videoCategories = categories.map { VideoCategory(id: $0.id, title: $0.title, subcategories: []) }
 			self.videoCategoriesViewController.update(categories: videoCategories)
 			guard let videoCategory = videoCategories.first else { return }
 			self.loadSubcategories(with: videoCategory.id)

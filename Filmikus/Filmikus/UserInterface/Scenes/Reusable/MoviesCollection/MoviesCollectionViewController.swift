@@ -197,8 +197,15 @@ extension MoviesCollectionViewController: UICollectionViewDelegateFlowLayout {
 			let spacing = collectionLayout.minimumInteritemSpacing * (elementsInRow - 1)
 			let padding = collectionLayout.sectionInset.left + collectionLayout.sectionInset.right
 			let width = (collectionView.bounds.size.width - spacing - padding) / elementsInRow
-			let height = width * 1.49
-			return CGSize(width: width.rounded(.down), height: height)
+			let aspectRatio: CGFloat = 4 / 3
+			let imageHeight = width * aspectRatio
+			
+			let titleHeight = movies[indexPath.row].title.height(
+				withConstrainedWidth: CGFloat.greatestFiniteMagnitude,
+				font: .systemFont(ofSize: 17)
+			)
+			let titlePadding: CGFloat = 20
+			return CGSize(width: width.rounded(.down), height: imageHeight + titleHeight + titlePadding)
 		default:
 			return .zero
 		}

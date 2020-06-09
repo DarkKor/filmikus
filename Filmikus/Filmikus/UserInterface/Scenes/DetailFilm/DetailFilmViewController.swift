@@ -17,6 +17,7 @@ class DetailFilmViewController: UIViewController {
 
 	private lazy var collectionViewController: DetailMovieCollectionViewController = {
 		let viewController = DetailMovieCollectionViewController()
+		let viewController = DetailMovieCollectionViewController(style: .poster)
 		viewController.delegate = self
 		return viewController
 	}()
@@ -62,10 +63,10 @@ class DetailFilmViewController: UIViewController {
         super.viewDidLoad()
 
 		navigationItem.largeTitleDisplayMode = .never
-		loadData()
+		loadData(with: id)
     }
 	
-	private func loadData() {
+	private func loadData(with id: Int) {
 		videoService.detailMovie(id: id) { [weak self] (result) in
 			guard let self = self else { return }
 			guard let detailModel = try? result.get() else { return }
@@ -92,7 +93,7 @@ class DetailFilmViewController: UIViewController {
 				actors: detailModel.actors,
 				isEnabled: isSignedIn
 			)
-			let relatedSection = DetailMovieRelatedSection(title: "Похожие видео", videos: [])
+			let relatedSection = DetailMovieRelatedSection(title: "Похожие видео", movies: detailModel.similar.map { MovieModel(id: $0.id, title: "\($0.id)", imageUrl: nil, type: .film) })
 			self.collectionViewController.update(sections: [
 				.video(videoSection),
 				.info(infoSection),
@@ -105,9 +106,8 @@ class DetailFilmViewController: UIViewController {
 // MARK: - DetailMovieCollectionViewControllerDelegate
 
 extension DetailFilmViewController: DetailMovieCollectionViewControllerDelegate {
-	func detailMovieCollectionViewController(_ viewController: DetailMovieCollectionViewController, didSelectVideo video: Video) {
-		let detailVC = DetailFilmViewController(id: id)
-		navigationController?.pushViewController(detailVC, animated: true)
+	func detailMovieCollectionViewController(_ viewController: DetailMovieCollectionViewController, didSelectMovie movie: MovieModel) {
+		loadData(with: movie.id)
 	}
 	
 	func detailMovieCollectionViewControllerSelectSignIn(_ viewController: DetailMovieCollectionViewController) {

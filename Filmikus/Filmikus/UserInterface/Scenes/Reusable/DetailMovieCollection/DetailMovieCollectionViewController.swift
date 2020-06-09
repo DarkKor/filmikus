@@ -9,13 +9,20 @@
 import UIKit
 
 protocol DetailMovieCollectionViewControllerDelegate: class {
-	func detailMovieCollectionViewController(_ viewController: DetailMovieCollectionViewController, didSelectVideo video: Video)
+	func detailMovieCollectionViewController(_ viewController: DetailMovieCollectionViewController, didSelectMovie movie: MovieModel)
 	func detailMovieCollectionViewControllerSelectSignIn(_ viewController: DetailMovieCollectionViewController)
 	func detailMovieCollectionViewControllerSelectSignUp(_ viewController: DetailMovieCollectionViewController)
 	func detailMovieCollectionViewControllerSelectShowFilm(_ viewController: DetailMovieCollectionViewController)
 }
 
 class DetailMovieCollectionViewController: UIViewController {
+	
+	enum Style {
+		case poster
+		case episode
+	}
+	
+	let style: Style
 	
 	weak var delegate: DetailMovieCollectionViewControllerDelegate?
 	
@@ -41,9 +48,18 @@ class DetailMovieCollectionViewController: UIViewController {
 		)
 		collection.register(cell: DetailMovieInfoCollectionViewCell.self)
 		collection.register(cell: DetailMovieVideoCollectionViewCell.self)
-		collection.register(cell: VideoCollectionViewCell.self)
+		collection.register(cell: MovieCollectionViewCell.self)
 		return collection
 	}()
+	
+	init(style: Style) {
+		self.style = style
+		super.init(nibName: nil, bundle: nil)
+	}
+	
+	required init?(coder: NSCoder) {
+		fatalError("init(coder:) has not been implemented")
+	}
 	
 	override func loadView() {
 		view = collectionView
@@ -66,6 +82,7 @@ class DetailMovieCollectionViewController: UIViewController {
 	func update(sections: [DetailMovieSection]) {
 		self.sections = sections
 		collectionView.reloadData()
+		collectionView.scrollToItem(at: IndexPath(item: 0, section: 0), at: .top, animated: true)
 	}
 }
 
@@ -84,7 +101,7 @@ extension DetailMovieCollectionViewController: UICollectionViewDataSource {
 		case .info:
 			return 1
 		case .related(let model):
-			return model.videos.count
+			return model.movies.count
 		}
 	}
 	
@@ -118,8 +135,8 @@ extension DetailMovieCollectionViewController: UICollectionViewDataSource {
 			cell.fill(model: model)
 			return cell
 		case let .related(model):
-			let cell: VideoCollectionViewCell = collectionView.dequeueCell(for: indexPath)
-			cell.fill(video: model.videos[indexPath.item])
+			let cell: MovieCollectionViewCell = collectionView.dequeueCell(for: indexPath)
+			cell.fill(movie: model.movies[indexPath.item])
 			return cell
 		}
 	}
@@ -137,8 +154,8 @@ extension DetailMovieCollectionViewController: UICollectionViewDelegate {
 		case let .info(model):
 			break
 		case let .related(model):
-			let video = model.videos[indexPath.item]
-			delegate?.detailMovieCollectionViewController(self, didSelectVideo: video)
+			let movie = model.movies[indexPath.item]
+			delegate?.detailMovieCollectionViewController(self, didSelectMovie: movie)
 		}
 	}
 }
@@ -170,12 +187,14 @@ extension DetailMovieCollectionViewController: UICollectionViewDelegateFlowLayou
 			let itemsInRow: CGFloat = 2
 			let spacing = collectionLayout.minimumInteritemSpacing * (itemsInRow - 1)
 			let width = (collectionView.bounds.size.width - spacing - padding) / itemsInRow
-			let height = width / 1.33
-			let titleHeight = model.videos[indexPath.row].title.height(
+			let aspectRatio: CGFloat = style == .poster ? 4 / 3 : 3 / 4
+			let imageHeight = width * aspectRatio
+			let titleHeight = model.movies[indexPath.row].title.height(
 				withConstrainedWidth: CGFloat.greatestFiniteMagnitude,
 				font: .systemFont(ofSize: 17)
 			)
-			return CGSize(width: width.rounded(.down), height: height + titleHeight)
+			let titlePadding: CGFloat = 20
+			return CGSize(width: width.rounded(.down), height: imageHeight + titleHeight + titlePadding)
 		}
 	}
 	

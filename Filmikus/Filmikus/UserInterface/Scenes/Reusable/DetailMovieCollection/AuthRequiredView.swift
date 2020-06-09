@@ -84,7 +84,10 @@ class AuthRequiredView: UIView {
 	}
 }
 
+// MARK: - UITextViewDelegate
+
 extension AuthRequiredView: UITextViewDelegate {
+	
 	func textView(_ textView: UITextView, shouldInteractWith URL: URL, in characterRange: NSRange, interaction: UITextItemInteraction) -> Bool {
 		guard interaction == .invokeDefaultAction else { return false }
 		switch URL.absoluteString {

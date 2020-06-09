@@ -23,7 +23,7 @@ struct DetailMovieModel: Decodable {
 	let quality: String
 	let directors: [DirectorModel]
 	let actors: [ActorModel]
-//	let similar: [MovieItem]
+	let similar: [MovieItem]
 	
 	enum CodingKeys: String, CodingKey {
 		case id = "id"
@@ -40,7 +40,7 @@ struct DetailMovieModel: Decodable {
 		case quality = "quality"
 		case directors = "director"
 		case actors = "actor"
-//		case similar = "similar"
+		case similar = "similar"
 	}
 	
 	init(from decoder: Decoder) throws {
@@ -68,6 +68,6 @@ struct DetailMovieModel: Decodable {
 		quality = try container.decodeIfPresent(String.self, forKey: CodingKeys.quality) ?? ""
 		directors = try container.decodeIfPresent([DirectorModel].self, forKey: CodingKeys.directors) ?? []
 		actors = try container.decodeIfPresent([ActorModel].self, forKey: CodingKeys.actors) ?? []
-//		similar = try container.decode([MovieItem].self, forKey: CodingKeys.similar)
+		similar = try container.decodeIfPresent([MovieItem].self, forKey: CodingKeys.similar) ?? []
 	}
 }

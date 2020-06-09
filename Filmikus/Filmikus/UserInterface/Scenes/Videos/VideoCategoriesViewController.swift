@@ -124,8 +124,15 @@ extension VideoCategoriesViewController: UICollectionViewDelegateFlowLayout {
 		let spacing = collectionLayout.minimumInteritemSpacing * (elementsInRow - 1)
 		let padding = collectionLayout.sectionInset.left + collectionLayout.sectionInset.right
 		let width = (collectionView.bounds.size.width - spacing - padding) / elementsInRow
-		let height = width / 1.49
-		return CGSize(width: width, height: height)
+		let aspectRatio: CGFloat = 16 / 9
+		let imageHeight = width / aspectRatio
+		let subcategory = categories[selectedCategoryIndex].subcategories[indexPath.item]
+		let titleHeight = subcategory.title.height(
+			withConstrainedWidth: CGFloat.greatestFiniteMagnitude,
+			font: UIFont.boldSystemFont(ofSize: 16)
+		)
+		let titlePadding: CGFloat = 20
+		return CGSize(width: width, height: imageHeight + titleHeight + titlePadding)
 	}
 }
 

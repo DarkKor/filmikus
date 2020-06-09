@@ -388,9 +388,9 @@
 		491C21A824641A16007CDEC2 /* Scenes */ = {
 			isa = PBXGroup;
 			children = (
+				4937868D2487B8C200C8496E /* Subscription */,
 				493786A1248A93B500C8496E /* DetailFunShow */,
 				4937869C248A42DE00C8496E /* DetailSerial */,
-				4937868D2487B8C200C8496E /* Subscription */,
 				49684A7F246E875B00E9BADC /* DetailFilm */,
 				49684A6E246BE6F400E9BADC /* Profile */,
 				49684A6D246BE6F000E9BADC /* Videos */,

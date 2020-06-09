@@ -8,5 +8,5 @@
 
 struct DetailMovieRelatedSection {
 	let title: String
-	let videos: [Video]
+	let movies: [MovieModel]
 }
