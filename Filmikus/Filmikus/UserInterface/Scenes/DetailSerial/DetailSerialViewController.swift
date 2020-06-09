@@ -98,9 +98,20 @@ class DetailSerialViewController: UIViewController {
 					actors: detailModel.actors,
 					isEnabled: isSignedIn
 				)
-				let relatedSection = DetailMovieRelatedSection(title: "", movies: episodesModel.items.map {
-					MovieModel(id: $0.id, title: $0.title, imageUrl: $0.imageUrl.high, type: .serial)
+				// При открытии сериала открывается видео первой серии поэтому приходится его выделять.
+				let selectedId = episodesModel.items.first?.id ?? -1
+				let relatedSection = DetailMovieRelatedSection(
+					title: "",
+					relatedMovies: episodesModel.items.map {
+						RelatedMovie(
+							id: $0.id,
+							title: $0.title,
+							imageUrl: $0.imageUrl.high,
+							type: .serial,
+							isSelected: $0.id == selectedId
+						)
 				})
+
 				self.collectionViewController.update(sections: [
 					.video(videoSection),
 					.info(infoSection),
@@ -111,22 +122,45 @@ class DetailSerialViewController: UIViewController {
 		}
 	}
 	
-}
-
-// MARK: - DetailMovieCollectionViewControllerDelegate
-
-extension DetailSerialViewController: DetailMovieCollectionViewControllerDelegate {
-	
-	func detailMovieCollectionViewController(_ viewController: DetailMovieCollectionViewController, didSelectMovie movie: MovieModel) {
-		videoService.detailEpisode(id: movie.id) { [weak self] (result) in
+	private func updateEpisode(episodeId: Int) {
+		videoService.detailEpisode(id: episodeId) { [weak self] (result) in
 			guard let self = self else { return }
 			guard let detailModel = try? result.get() else { return }
 			var videoUrl = ""
 			if let tvigleId = detailModel.tvigleId {
 				videoUrl = "http://cloud.tvigle.ru/video/\(tvigleId)/"
 			}
-			self.collectionViewController.update(section: .video(DetailMovieVideoSection(url: videoUrl, isEnabled: self.isSignedIn)))
+			let sections = self.collectionViewController.sections
+			self.collectionViewController.update(sections: sections.map {
+				switch $0 {
+				case .video(_):
+					return .video(DetailMovieVideoSection(url: videoUrl, isEnabled: self.isSignedIn))
+				case let .info(infoSection):
+					return .info(infoSection)
+				case var .related(relatedSection):
+					relatedSection.relatedMovies = relatedSection.relatedMovies.map {
+						RelatedMovie(
+							id: $0.id,
+							title: $0.title,
+							imageUrl: $0.imageUrl,
+							type: $0.type,
+							isSelected: $0.id == episodeId
+						)
+					}
+					return .related(relatedSection)
+				}
+			})
 		}
+	}
+	
+}
+
+// MARK: - DetailMovieCollectionViewControllerDelegate
+
+extension DetailSerialViewController: DetailMovieCollectionViewControllerDelegate {
+	
+	func detailMovieCollectionViewController(_ viewController: DetailMovieCollectionViewController, didSelectMovie movie: RelatedMovie) {
+		updateEpisode(episodeId: movie.id)
 	}
 	
 	func detailMovieCollectionViewControllerSelectSignIn(_ viewController: DetailMovieCollectionViewController) {

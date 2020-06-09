@@ -9,7 +9,7 @@
 import UIKit
 
 protocol DetailMovieCollectionViewControllerDelegate: class {
-	func detailMovieCollectionViewController(_ viewController: DetailMovieCollectionViewController, didSelectMovie movie: MovieModel)
+	func detailMovieCollectionViewController(_ viewController: DetailMovieCollectionViewController, didSelectMovie movie: RelatedMovie)
 	func detailMovieCollectionViewControllerSelectSignIn(_ viewController: DetailMovieCollectionViewController)
 	func detailMovieCollectionViewControllerSelectSignUp(_ viewController: DetailMovieCollectionViewController)
 	func detailMovieCollectionViewControllerSelectShowFilm(_ viewController: DetailMovieCollectionViewController)
@@ -26,7 +26,7 @@ class DetailMovieCollectionViewController: UIViewController {
 	
 	weak var delegate: DetailMovieCollectionViewControllerDelegate?
 	
-	private var sections: [DetailMovieSection] = []
+	private(set) var sections: [DetailMovieSection] = []
 	
 	private lazy var collectionLayout: UICollectionViewFlowLayout = {
 		let layout = UICollectionViewFlowLayout()
@@ -48,7 +48,7 @@ class DetailMovieCollectionViewController: UIViewController {
 		)
 		collection.register(cell: DetailMovieInfoCollectionViewCell.self)
 		collection.register(cell: DetailMovieVideoCollectionViewCell.self)
-		collection.register(cell: MovieCollectionViewCell.self)
+		collection.register(cell: DetailMovieRelatedCollectionViewCell.self)
 		return collection
 	}()
 	
@@ -72,13 +72,6 @@ class DetailMovieCollectionViewController: UIViewController {
         // Do any additional setup after loading the view.
     }
 	
-	func update(section: DetailMovieSection) {
-		guard let sectionIndex = sections.firstIndex(where: { $0 == section }) else { return }
-		sections[sectionIndex] = section
-		collectionView.reloadData()
-		collectionView.scrollToItem(at: IndexPath(item: 0, section: sectionIndex), at: .top, animated: true)
-	}
-	
 	func update(sections: [DetailMovieSection]) {
 		self.sections = sections
 		collectionView.reloadData()
@@ -101,7 +94,7 @@ extension DetailMovieCollectionViewController: UICollectionViewDataSource {
 		case .info:
 			return 1
 		case .related(let model):
-			return model.movies.count
+			return model.relatedMovies.count
 		}
 	}
 	
@@ -135,8 +128,8 @@ extension DetailMovieCollectionViewController: UICollectionViewDataSource {
 			cell.fill(model: model)
 			return cell
 		case let .related(model):
-			let cell: MovieCollectionViewCell = collectionView.dequeueCell(for: indexPath)
-			cell.fill(movie: model.movies[indexPath.item])
+			let cell: DetailMovieRelatedCollectionViewCell = collectionView.dequeueCell(for: indexPath)
+			cell.fill(movie: model.relatedMovies[indexPath.item])
 			return cell
 		}
 	}
@@ -154,7 +147,7 @@ extension DetailMovieCollectionViewController: UICollectionViewDelegate {
 		case let .info(model):
 			break
 		case let .related(model):
-			let movie = model.movies[indexPath.item]
+			let movie = model.relatedMovies[indexPath.item]
 			delegate?.detailMovieCollectionViewController(self, didSelectMovie: movie)
 		}
 	}
@@ -189,7 +182,7 @@ extension DetailMovieCollectionViewController: UICollectionViewDelegateFlowLayou
 			let width = (collectionView.bounds.size.width - spacing - padding) / itemsInRow
 			let aspectRatio: CGFloat = style == .poster ? 4 / 3 : 3 / 4
 			let imageHeight = width * aspectRatio
-			let titleHeight = model.movies[indexPath.row].title.height(
+			let titleHeight = model.relatedMovies[indexPath.row].title.height(
 				withConstrainedWidth: CGFloat.greatestFiniteMagnitude,
 				font: .systemFont(ofSize: 17)
 			)

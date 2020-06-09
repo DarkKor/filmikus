@@ -35,6 +35,8 @@
 		4922684B248E82E900B05A51 /* DetailMovieInfoSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4922684A248E82E900B05A51 /* DetailMovieInfoSection.swift */; };
 		4922684D248E858900B05A51 /* DetailMovieVideoCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4922684C248E858900B05A51 /* DetailMovieVideoCollectionViewCell.swift */; };
 		4922684F248E85DB00B05A51 /* DetailMovieInfoCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4922684E248E85DB00B05A51 /* DetailMovieInfoCollectionViewCell.swift */; };
+		49226852248FD5B100B05A51 /* DetailMovieRelatedCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49226851248FD5B100B05A51 /* DetailMovieRelatedCollectionViewCell.swift */; };
+		49226854248FD69900B05A51 /* RelatedMovie.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49226853248FD69900B05A51 /* RelatedMovie.swift */; };
 		49378673248520B800C8496E /* FilmsFacade.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49378672248520B800C8496E /* FilmsFacade.swift */; };
 		493786752485225A00C8496E /* FilmsFilterItems.swift in Sources */ = {isa = PBXBuildFile; fileRef = 493786742485225A00C8496E /* FilmsFilterItems.swift */; };
 		4937867924853A3400C8496E /* SelectItemPickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4937867824853A3400C8496E /* SelectItemPickerViewController.swift */; };
@@ -155,6 +157,8 @@
 		4922684A248E82E900B05A51 /* DetailMovieInfoSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailMovieInfoSection.swift; sourceTree = "<group>"; };
 		4922684C248E858900B05A51 /* DetailMovieVideoCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailMovieVideoCollectionViewCell.swift; sourceTree = "<group>"; };
 		4922684E248E85DB00B05A51 /* DetailMovieInfoCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailMovieInfoCollectionViewCell.swift; sourceTree = "<group>"; };
+		49226851248FD5B100B05A51 /* DetailMovieRelatedCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailMovieRelatedCollectionViewCell.swift; sourceTree = "<group>"; };
+		49226853248FD69900B05A51 /* RelatedMovie.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RelatedMovie.swift; sourceTree = "<group>"; };
 		49378672248520B800C8496E /* FilmsFacade.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilmsFacade.swift; sourceTree = "<group>"; };
 		493786742485225A00C8496E /* FilmsFilterItems.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilmsFilterItems.swift; sourceTree = "<group>"; };
 		4937867824853A3400C8496E /* SelectItemPickerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectItemPickerViewController.swift; sourceTree = "<group>"; };
@@ -471,6 +475,7 @@
 			children = (
 				4922684C248E858900B05A51 /* DetailMovieVideoCollectionViewCell.swift */,
 				4922684E248E85DB00B05A51 /* DetailMovieInfoCollectionViewCell.swift */,
+				49226851248FD5B100B05A51 /* DetailMovieRelatedCollectionViewCell.swift */,
 				4922683C248E7E4500B05A51 /* DetailMovieRelatedHeaderSectionView.swift */,
 			);
 			path = Cells;
@@ -483,6 +488,7 @@
 				49226844248E808E00B05A51 /* DetailMovieVideoSection.swift */,
 				4922684A248E82E900B05A51 /* DetailMovieInfoSection.swift */,
 				49226848248E80AE00B05A51 /* DetailMovieRelatedSection.swift */,
+				49226853248FD69900B05A51 /* RelatedMovie.swift */,
 			);
 			path = CellModels;
 			sourceTree = "<group>";
@@ -866,6 +872,7 @@
 				49900FD0247FDA1300F18B46 /* FilterModel.swift in Sources */,
 				49226823248E3D1C00B05A51 /* String+Size.swift in Sources */,
 				49684A7C246D7A9100E9BADC /* SignUpViewController.swift in Sources */,
+				49226852248FD5B100B05A51 /* DetailMovieRelatedCollectionViewCell.swift in Sources */,
 				493786912487C6BD00C8496E /* BlueButton.swift in Sources */,
 				49684AC82476A5BA00E9BADC /* Video.swift in Sources */,
 				49226849248E80AE00B05A51 /* DetailMovieRelatedSection.swift in Sources */,
@@ -876,6 +883,7 @@
 				49684AC42476A38900E9BADC /* VideoSubcategoryViewController.swift in Sources */,
 				493786A0248A8BC000C8496E /* CategoryType.swift in Sources */,
 				4922682A248E42F800B05A51 /* DetailFunShowSection.swift in Sources */,
+				49226854248FD69900B05A51 /* RelatedMovie.swift in Sources */,
 				49900FDE24800E0C00F18B46 /* EpisodesAPI.swift in Sources */,
 				49900FEA2480149B00F18B46 /* ActorModel.swift in Sources */,
 				49226831248E43FC00B05A51 /* DetailFunShowVideoSection.swift in Sources */,
@@ -1031,7 +1039,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 3;
 				DEVELOPMENT_TEAM = 3RN7L9A98V;
 				INFOPLIST_FILE = Filmikus/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -1053,7 +1061,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 3;
 				DEVELOPMENT_TEAM = 3RN7L9A98V;
 				INFOPLIST_FILE = Filmikus/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (

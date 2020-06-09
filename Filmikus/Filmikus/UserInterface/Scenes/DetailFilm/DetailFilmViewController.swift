@@ -92,7 +92,17 @@ class DetailFilmViewController: UIViewController {
 				actors: detailModel.actors,
 				isEnabled: isSignedIn
 			)
-			let relatedSection = DetailMovieRelatedSection(title: "Похожие видео", movies: detailModel.similar.map { MovieModel(id: $0.id, title: $0.title, imageUrl: $0.imageUrl.high, type: .film) })
+			let relatedSection = DetailMovieRelatedSection(
+				title: "Похожие видео",
+				relatedMovies: detailModel.similar.map {
+					RelatedMovie(
+						id: $0.id,
+						title: $0.title,
+						imageUrl: $0.imageUrl.high,
+						type: .film,
+						isSelected: false
+					)
+			})
 			self.collectionViewController.update(sections: [
 				.video(videoSection),
 				.info(infoSection),
@@ -105,8 +115,9 @@ class DetailFilmViewController: UIViewController {
 // MARK: - DetailMovieCollectionViewControllerDelegate
 
 extension DetailFilmViewController: DetailMovieCollectionViewControllerDelegate {
-	func detailMovieCollectionViewController(_ viewController: DetailMovieCollectionViewController, didSelectMovie movie: MovieModel) {
-		loadData(with: movie.id)
+	func detailMovieCollectionViewController(_ viewController: DetailMovieCollectionViewController, didSelectMovie movie: RelatedMovie) {
+		let detailVC = DetailFilmViewController(id: movie.id)
+		navigationController?.pushViewController(detailVC, animated: true)
 	}
 	
 	func detailMovieCollectionViewControllerSelectSignIn(_ viewController: DetailMovieCollectionViewController) {
