@@ -16,7 +16,6 @@ class DetailFilmViewController: UIViewController {
 	private let videoService: VideosServiceType
 
 	private lazy var collectionViewController: DetailMovieCollectionViewController = {
-		let viewController = DetailMovieCollectionViewController()
 		let viewController = DetailMovieCollectionViewController(style: .poster)
 		viewController.delegate = self
 		return viewController
