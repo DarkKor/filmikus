@@ -28,7 +28,13 @@ class SignUpViewController: ViewController {
 	
 	private lazy var nextButton = BlueBorderButton(title: "ДАЛЕЕ", target: self, action: #selector(onNextButtonTap))
 	
-	private lazy var userTextView = UITextView()
+	private lazy var userTextView: UITextView = {
+		let textView = UITextView()
+		textView.text = "Ваш логин: user.username\nВаш пароль: user.password"
+		textView.font = .boldSystemFont(ofSize: 20)
+		textView.isEditable = false
+		return textView
+	}()
 	
 	override func loadView() {
 		view = UIView()
@@ -58,8 +64,8 @@ class SignUpViewController: ViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-		
-        title = "Регистрация"
+
+		title = "Регистрация"
 		navigationItem.largeTitleDisplayMode = .never
     }
 
