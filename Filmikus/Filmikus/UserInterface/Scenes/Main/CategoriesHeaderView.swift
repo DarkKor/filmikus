@@ -18,42 +18,61 @@ class CategoriesHeaderView: UIView {
 	
 	private var sliders: [SliderModel] = []
 	
-	private lazy var sliderButton: UIButton = {
-		let button = UIButton()
-		button.addTarget(self, action: #selector(onSliderButtonTap), for: .touchUpInside)
-		return button
+	private lazy var scrollView: UIScrollView = {
+		let scrollView = UIScrollView()
+		scrollView.isPagingEnabled = true
+		scrollView.showsHorizontalScrollIndicator = false
+		return scrollView
 	}()
+	
+	private var buttons: [UIButton] = []
 
 	init() {
 		super.init(frame: .zero)
-		
-		addSubview(sliderButton)
-		
-		sliderButton.snp.makeConstraints {
-			$0.edges.equalToSuperview()
-		}
+		addSubview(scrollView)
 	}
 	
 	required init?(coder: NSCoder) {
 		fatalError("init(coder:) has not been implemented")
 	}
 	
+	override func layoutSubviews() {
+		super.layoutSubviews()
+		scrollView.frame = bounds
+		let buttonSize = bounds.size
+		var x: CGFloat = 0
+		for index in buttons.indices {
+			buttons[index].frame = CGRect(origin: CGPoint(x: x, y: 0), size: buttonSize)
+			x += buttonSize.width
+		}
+		scrollView.contentSize.width = x
+	}
+	
 	func fill(sliders: [SliderModel] = []) {
 		self.sliders = sliders
-		guard let slider = sliders.first else { return }
-		let url = URL(string: slider.imageUrl)
-		sliderButton.kf.setImage(
-			with: url,
-			for: .normal,
-			options: [
-				.transition(.fade(0.25))
-			]
-		)
+		buttons.forEach {
+			$0.removeFromSuperview()
+		}
+		buttons = sliders.map {
+			let button = UIButton()
+			button.addTarget(self, action: #selector(onSliderButtonTap), for: .touchUpInside)
+			scrollView.addSubview(button)
+			let url = URL(string: $0.imageUrl)
+			button.kf.setImage(
+				with: url,
+				for: .normal,
+				options: [
+					.transition(.fade(0.25))
+				]
+			)
+			return button
+		}
+		setNeedsLayout()
 	}
 	
 	@objc
 	private func onSliderButtonTap(sender: UIButton) {
-		guard let slider = sliders.first else { return }
-		delegate?.categoriesHeaderView(self, didSelectSlider: slider)
+		guard let index = buttons.firstIndex(of: sender) else { return }
+		delegate?.categoriesHeaderView(self, didSelectSlider: sliders[index])
 	}
 }
