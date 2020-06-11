@@ -8,7 +8,7 @@
 
 import UIKit
 
-class SerialsViewController: UIViewController {
+class SerialsViewController: ViewController {
 
 	private let facade = SerialsFacade()
 	private var filter = FilterModel()
@@ -20,8 +20,6 @@ class SerialsViewController: UIViewController {
 		return viewController
 	}()
 	
-	private lazy var activityIndicator = UIActivityIndicatorView()
-
 	override func loadView() {
 		view = UIView()
 		view.backgroundColor = .appLightGray
@@ -29,14 +27,9 @@ class SerialsViewController: UIViewController {
 		addChild(moviesCollectionViewController)
 		view.addSubview(moviesCollectionViewController.view)
 		moviesCollectionViewController.didMove(toParent: self)
-		
-		view.addSubview(activityIndicator)
-		
+				
 		moviesCollectionViewController.view.snp.makeConstraints {
 			$0.edges.equalToSuperview()
-		}
-		activityIndicator.snp.makeConstraints {
-			$0.center.equalToSuperview()
 		}
 	}
 	
@@ -63,10 +56,10 @@ class SerialsViewController: UIViewController {
     }
 	
 	func loadSerials() {
-		activityIndicator.startAnimating()
+		showActivityIndicator()
 		facade.getSerials(with: filter) { [weak self] (result) in
 			guard let self = self else { return }
-			self.activityIndicator.stopAnimating()
+			self.hideActivityIndicator()
 			guard let moviesModel = try? result.get() else { return }
 			let movies = moviesModel.items.map {
 				MovieModel(id: $0.id, title: $0.title, imageUrl: $0.imageUrl.high, type: .serial)

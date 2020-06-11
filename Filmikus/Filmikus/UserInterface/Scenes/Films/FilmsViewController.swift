@@ -8,7 +8,7 @@
 
 import UIKit
 
-class FilmsViewController: UIViewController {
+class FilmsViewController: ViewController {
 	
 	private let facade = FilmsFacade()
 	private var filter = FilterModel()
@@ -19,9 +19,7 @@ class FilmsViewController: UIViewController {
 		viewController.delegate = self
 		return viewController
 	}()
-	
-	private lazy var activityIndicator = UIActivityIndicatorView()
-	
+		
 	override func loadView() {
 		view = UIView()
 		view.backgroundColor = .appLightGray
@@ -29,14 +27,9 @@ class FilmsViewController: UIViewController {
 		addChild(moviesCollectionViewController)
 		view.addSubview(moviesCollectionViewController.view)
 		moviesCollectionViewController.didMove(toParent: self)
-		
-		view.addSubview(activityIndicator)
-		
+				
 		moviesCollectionViewController.view.snp.makeConstraints {
 			$0.edges.equalToSuperview()
-		}
-		activityIndicator.snp.makeConstraints {
-			$0.center.equalToSuperview()
 		}
 	}
 
@@ -70,10 +63,10 @@ class FilmsViewController: UIViewController {
 	}
 	
 	private func loadFilms() {
-		activityIndicator.startAnimating()
+		showActivityIndicator()
 		facade.getFilms(with: filter) { [weak self] (result) in
 			guard let self = self else { return }
-			self.activityIndicator.stopAnimating()
+			self.hideActivityIndicator()
 			guard let moviesModel = try? result.get() else { return }
 			let movies = moviesModel.items.map {
 				MovieModel(id: $0.id, title: $0.title, imageUrl: $0.imageUrl.high, type: .film)

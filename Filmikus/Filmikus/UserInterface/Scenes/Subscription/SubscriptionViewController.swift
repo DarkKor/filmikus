@@ -9,7 +9,7 @@
 import UIKit
 import SnapKit
 
-class SubscriptionViewController: UIViewController {
+class SubscriptionViewController: ViewController {
 			
 	private lazy var closeButton: UIButton = {
 		let button = UIButton()
@@ -124,24 +124,24 @@ class SubscriptionViewController: UIViewController {
 	
 	@objc
 	private func onContinueButtonTap(sender: UIButton) {
+		showActivityIndicator()
 		let selectedProduct = StoreKitService.shared.products[segmentControl.selectedIndex]
 		StoreKitService.shared.purchase(
 			product: selectedProduct,
 			success: {
-				print("PURCHASED!")
-				let alert = UIAlertController(title: "Фильмикус", message: "Вы успешно подписались!", preferredStyle: .alert)
-				alert.addAction(UIAlertAction(title: "ОК", style: .default, handler: { (action) in
-					self.dismiss(animated: true)
-				}))
-				self.present(alert, animated: true)
-				print(StoreKitService.shared.expirationDate(for: selectedProduct.productIdentifier))
-				},
+				self.hideActivityIndicator()
+				self.showAlert(
+					title: "Фильмикус",
+					message: "Вы успешно подписались!",
+					completion: { self.dismiss(animated: true) }
+				) },
 			failure: { error in
-				let alert = UIAlertController(title: "Фильмикус", message: "Ошибка: \(error?.localizedDescription ?? "")", preferredStyle: .alert)
-				alert.addAction(UIAlertAction(title: "ОК", style: .default, handler: { (action) in
-					self.dismiss(animated: true)
-				}))
-				self.present(alert, animated: true) }
+				self.hideActivityIndicator()
+				self.showAlert(
+					title: "Фильмикус",
+					message: "Ошибка: \(error?.localizedDescription ?? "")",
+					completion: { self.dismiss(animated: true) }
+				) }
 		)
 	}
 }
