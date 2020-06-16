@@ -118,14 +118,17 @@ extension DetailFunShowViewController: DetailFunShowCollectionViewControllerDele
 	}
 	
 	func detailFunShowCollectionViewControllerSelectSignIn(_ viewController: DetailFunShowCollectionViewController) {
-		tabBarController?.selectedIndex = 4
+		let signInVC = SignInViewController()
+		navigationController?.present(signInVC, animated: true)
 	}
 	
 	func detailFunShowCollectionViewControllerSelectSignUp(_ viewController: DetailFunShowCollectionViewController) {
-		tabBarController?.selectedIndex = 4
+		let signUpVC = SignUpViewController()
+		navigationController?.present(signUpVC, animated: true)
 	}
 	
 	func detailFunShowCollectionViewControllerSelectShowFilm(_ viewController: DetailFunShowCollectionViewController) {
-		tabBarController?.selectedIndex = 4
+		let signInVC = SignInViewController()
+		navigationController?.present(signInVC, animated: true)
 	}
 }

@@ -129,6 +129,7 @@
 		49900FFF248111E900F18B46 /* SearchController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49900FFE248111E900F18B46 /* SearchController.swift */; };
 		499010012481455800F18B46 /* RoundedBorderLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 499010002481455800F18B46 /* RoundedBorderLabel.swift */; };
 		49907C3F247C0BAF00E201B6 /* VideoCategoryHeaderSectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49907C3E247C0BAF00E201B6 /* VideoCategoryHeaderSectionView.swift */; };
+		49ECBF0F249923CD00F9A854 /* SignInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49ECBF0E249923CD00F9A854 /* SignInViewController.swift */; };
 		DBB5AD7EDA6B8BBB5543CBB9 /* Pods_Filmikus.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 97F5ACE358500956AF72C9A2 /* Pods_Filmikus.framework */; };
 /* End PBXBuildFile section */
 
@@ -258,6 +259,7 @@
 		49900FFE248111E900F18B46 /* SearchController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchController.swift; sourceTree = "<group>"; };
 		499010002481455800F18B46 /* RoundedBorderLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundedBorderLabel.swift; sourceTree = "<group>"; };
 		49907C3E247C0BAF00E201B6 /* VideoCategoryHeaderSectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoCategoryHeaderSectionView.swift; sourceTree = "<group>"; };
+		49ECBF0E249923CD00F9A854 /* SignInViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInViewController.swift; sourceTree = "<group>"; };
 		5F55A71C0021F60EFFD15EA6 /* Pods-Filmikus.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Filmikus.debug.xcconfig"; path = "Target Support Files/Pods-Filmikus/Pods-Filmikus.debug.xcconfig"; sourceTree = "<group>"; };
 		97F5ACE358500956AF72C9A2 /* Pods_Filmikus.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Filmikus.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -598,6 +600,7 @@
 			isa = PBXGroup;
 			children = (
 				49684A73246BE71200E9BADC /* ProfileViewController.swift */,
+				49ECBF0E249923CD00F9A854 /* SignInViewController.swift */,
 				49684A7B246D7A9100E9BADC /* SignUpViewController.swift */,
 			);
 			path = Profile;
@@ -926,6 +929,7 @@
 				49900FCA247FCFD100F18B46 /* CategoriesService.swift in Sources */,
 				491C21AA24641ADD007CDEC2 /* TabBarController.swift in Sources */,
 				49684ABD247675CF00E9BADC /* VideoSubcategoryCollectionViewCell.swift in Sources */,
+				49ECBF0F249923CD00F9A854 /* SignInViewController.swift in Sources */,
 				49378673248520B800C8496E /* FilmsFacade.swift in Sources */,
 				49900FE6248013DD00F18B46 /* CountryModel.swift in Sources */,
 				491C21BC246424A8007CDEC2 /* CategoryTableViewCell.swift in Sources */,

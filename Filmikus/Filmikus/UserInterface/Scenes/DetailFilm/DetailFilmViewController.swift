@@ -121,14 +121,17 @@ extension DetailFilmViewController: DetailMovieCollectionViewControllerDelegate 
 	}
 	
 	func detailMovieCollectionViewControllerSelectSignIn(_ viewController: DetailMovieCollectionViewController) {
-		tabBarController?.selectedIndex = 4
+		let signInVC = SignInViewController()
+		navigationController?.present(signInVC, animated: true)
 	}
 	
 	func detailMovieCollectionViewControllerSelectSignUp(_ viewController: DetailMovieCollectionViewController) {
-		tabBarController?.selectedIndex = 4
+		let signInVC = SignUpViewController()
+		navigationController?.present(signInVC, animated: true)
 	}
 	
 	func detailMovieCollectionViewControllerSelectShowFilm(_ viewController: DetailMovieCollectionViewController) {
-		tabBarController?.selectedIndex = 4
+		let signInVC = SignInViewController()
+		navigationController?.present(signInVC, animated: true)
 	}
 }

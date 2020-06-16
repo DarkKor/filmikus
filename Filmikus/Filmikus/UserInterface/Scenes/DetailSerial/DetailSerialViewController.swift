@@ -164,14 +164,17 @@ extension DetailSerialViewController: DetailMovieCollectionViewControllerDelegat
 	}
 	
 	func detailMovieCollectionViewControllerSelectSignIn(_ viewController: DetailMovieCollectionViewController) {
-		tabBarController?.selectedIndex = 4
+		let signInVC = SignInViewController()
+		navigationController?.present(signInVC, animated: true)
 	}
 	
 	func detailMovieCollectionViewControllerSelectSignUp(_ viewController: DetailMovieCollectionViewController) {
-		tabBarController?.selectedIndex = 4
+		let signUpVC = SignUpViewController()
+		navigationController?.present(signUpVC, animated: true)
 	}
 	
 	func detailMovieCollectionViewControllerSelectShowFilm(_ viewController: DetailMovieCollectionViewController) {
-		tabBarController?.selectedIndex = 4
+		let signInVC = SignInViewController()
+		navigationController?.present(signInVC, animated: true)
 	}
 }
