@@ -8,6 +8,7 @@
 
 import UIKit
 
+/// Used for ViewControllers that need to present an alert.
 protocol AlertPresenter {
 	func showAlert(title: String, message: String, completion: (() -> Void)?)
 }

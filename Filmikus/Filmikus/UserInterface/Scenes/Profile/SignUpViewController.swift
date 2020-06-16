@@ -30,7 +30,6 @@ class SignUpViewController: ViewController {
 	
 	private lazy var userTextView: UITextView = {
 		let textView = UITextView()
-		textView.text = "Ваш логин: user.username\nВаш пароль: user.password"
 		textView.font = .boldSystemFont(ofSize: 20)
 		textView.isEditable = false
 		return textView
