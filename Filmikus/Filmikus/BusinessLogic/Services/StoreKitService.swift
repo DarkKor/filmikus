@@ -14,14 +14,10 @@ extension Notification.Name {
 
 class StoreKitService: NSObject {
 	
-	public typealias SuccessBlock = () -> Void
-	public typealias FailureBlock = (Error?) -> Void
+	typealias SubscriptionBlock = (Result<Void, Error>) -> Void
 	
-	private var successBlock: SuccessBlock?
-	private var failureBlock: FailureBlock?
-	
-	private var refreshSubscriptionSuccessBlock: SuccessBlock?
-	private var refreshSubscriptionFailureBlock: FailureBlock?
+	private var subscriptionBlock: SubscriptionBlock?
+	private var refreshSubscriptionBlock: SubscriptionBlock?
 	
 	private var sharedSecret = ""
 	
@@ -45,26 +41,23 @@ class StoreKitService: NSObject {
 		UserDefaults.standard.object(forKey: identifier) as? Date
 	}
 	
-	func purchase(product: SKProduct, success: @escaping SuccessBlock, failure: @escaping FailureBlock) {
+	func purchase(product: SKProduct, completion: SubscriptionBlock? = nil) {
 		guard SKPaymentQueue.canMakePayments() else { return }
 		guard SKPaymentQueue.default().transactions.last?.transactionState != .purchasing else { return }
-		self.successBlock = success
-		self.failureBlock = failure
+		subscriptionBlock = completion
 		let payment = SKPayment(product: product)
 		SKPaymentQueue.default().add(payment)
 	}
 	
-	func restorePurchases(success: @escaping SuccessBlock, failure: @escaping FailureBlock) {
-		self.successBlock = success
-		self.failureBlock = failure
+	func restorePurchases(completion: SubscriptionBlock? = nil) {
+		subscriptionBlock = completion
 		SKPaymentQueue.default().restoreCompletedTransactions()
 	}
 	/* It's the most simple way to send verify receipt request. Consider this code as for learning purposes. You shouldn't use current code in production apps.
 	This code doesn't handle errors.
 	*/
-	func refreshSubscriptionsStatus(success: @escaping SuccessBlock, failure: @escaping FailureBlock) {
-		self.refreshSubscriptionSuccessBlock = success
-		self.refreshSubscriptionFailureBlock = failure
+	func refreshSubscriptionsStatus(completion: SubscriptionBlock? = nil) {
+		self.refreshSubscriptionBlock = completion
 		guard let receiptUrl = Bundle.main.appStoreReceiptURL else {
 			refreshReceipt()
 			// do not call block in this case. It will be called inside after receipt refreshing finishes.
@@ -90,8 +83,8 @@ class StoreKitService: NSObject {
 			DispatchQueue.main.async {
 				guard let data = data, let json = try? JSONSerialization.jsonObject(with: data, options: .allowFragments) else {
 					print("error validating receipt: \(error?.localizedDescription ?? "")")
-					self.refreshSubscriptionFailureBlock?(error)
-					self.cleanUpRefeshReceiptBlocks()
+					self.refreshSubscriptionBlock?(.failure(error ?? NSError()))
+					self.refreshSubscriptionBlock = nil
 					return
 				}
 				self.parseReceipt(json as! [String: Any])
@@ -103,8 +96,8 @@ class StoreKitService: NSObject {
 	*/
 	private func parseReceipt(_ json: [String: Any]) {
 		guard let receipts = json["latest_receipt_info"] as? [[String: Any]] else {
-			self.refreshSubscriptionFailureBlock?(nil)
-			self.cleanUpRefeshReceiptBlocks()
+			self.refreshSubscriptionBlock?(.failure(NSError()))
+			self.refreshSubscriptionBlock = nil
 			return
 		}
 		let formatter = DateFormatter()
@@ -117,8 +110,8 @@ class StoreKitService: NSObject {
 				UserDefaults.standard.set(expiresDate, forKey: productID)
 			}
 		}
-		self.refreshSubscriptionSuccessBlock?()
-		self.cleanUpRefeshReceiptBlocks()
+		self.refreshSubscriptionBlock?(.success(()))
+		self.refreshSubscriptionBlock = nil
 	}
 	/*
 	Private method. Should not be called directly. Call refreshSubscriptionsStatus instead.
@@ -134,11 +127,6 @@ class StoreKitService: NSObject {
 		request.delegate = self
 		request.start()
 	}
-	
-	private func cleanUpRefeshReceiptBlocks() {
-		self.refreshSubscriptionSuccessBlock = nil
-		self.refreshSubscriptionFailureBlock = nil
-	}
 }
 
 // MARK: - SKRequestDelegate
@@ -147,14 +135,14 @@ extension StoreKitService: SKRequestDelegate {
 	
 	func requestDidFinish(_ request: SKRequest) {
 		if request is SKReceiptRefreshRequest {
-			refreshSubscriptionsStatus(success: self.successBlock ?? {}, failure: self.failureBlock ?? {_ in})
+			refreshSubscriptionsStatus(completion: subscriptionBlock)
 		}
 	}
 	
 	func request(_ request: SKRequest, didFailWithError error: Error){
 		if request is SKReceiptRefreshRequest {
-			self.refreshSubscriptionFailureBlock?(error)
-			self.cleanUpRefeshReceiptBlocks()
+			refreshSubscriptionBlock?(.failure(error))
+			refreshSubscriptionBlock = nil
 		}
 		print("error: \(error.localizedDescription)")
 	}
@@ -166,20 +154,6 @@ extension StoreKitService: SKProductsRequestDelegate {
 	
 	public func productsRequest(_ request: SKProductsRequest, didReceive response: SKProductsResponse) {
 		products = response.products
-		refreshSubscriptionsStatus(success: {
-			print("success!")
-		}) { (error) in
-			print(error?.localizedDescription)
-		}
-//		purchase(
-//			product: products.last!,
-//			success: {
-//				print("success!")
-//		},
-//			failure: { error in
-//				print(error?.localizedDescription)
-//		}
-//		)
 		DispatchQueue.main.async {
 			NotificationCenter.default.post(name: .storeKitProductsDidLoad, object: nil)
 		}
@@ -195,33 +169,20 @@ extension StoreKitService: SKPaymentTransactionObserver {
 			switch (transaction.transactionState) {
 			case .purchased, .restored:
 				SKPaymentQueue.default().finishTransaction(transaction)
-				notifyIsPurchased(transaction: transaction)
+				refreshSubscriptionsStatus { result in
+					self.subscriptionBlock?(result)
+					self.subscriptionBlock = nil
+				}
 			case .failed:
 				SKPaymentQueue.default().finishTransaction(transaction)
 				print("purchase error : \(transaction.error?.localizedDescription ?? "")")
-				self.failureBlock?(transaction.error)
-				cleanUp()
+				subscriptionBlock?(.failure(transaction.error ?? NSError()))
+				subscriptionBlock = nil
 			case .deferred, .purchasing:
 				break
 			default:
 				break
 			}
 		}
-	}
-	
-	private func notifyIsPurchased(transaction: SKPaymentTransaction) {
-		refreshSubscriptionsStatus(
-			success: {
-				self.successBlock?()
-				self.cleanUp() },
-			failure: { (error) in
-				self.failureBlock?(error)
-				self.cleanUp() }
-		)
-	}
-	
-	func cleanUp(){
-		self.successBlock = nil
-		self.failureBlock = nil
 	}
 }
