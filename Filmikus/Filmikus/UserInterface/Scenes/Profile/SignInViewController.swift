@@ -10,8 +10,18 @@ import UIKit
 
 class SignInViewController: UIViewController {
 	
+	private let usersService: UsersServiceType = UsersService()
+	
 	private lazy var scrollView = UIScrollView()
 	private lazy var containerView = UIView()
+	
+	private lazy var closeButton: UIButton = {
+		let button = UIButton()
+		button.tintColor = .appBlue
+		button.setImage(UIImage(systemName: "xmark"), for: .normal)
+		button.addTarget(self, action: #selector(onCloseButtonTap), for: .touchUpInside)
+		return button
+	}()
 	
 	private lazy var segmentControl: UnderlinedSegmentControl = {
 		let segment = UnderlinedSegmentControl(segments: [
@@ -43,7 +53,6 @@ class SignInViewController: UIViewController {
 	
 	private lazy var signInButton = BlueBorderButton(title: "ВОЙТИ", target: self, action: #selector(onSignInButtonTap))
 	
-	
 	override func loadView() {
 		view = UIView()
 		view.backgroundColor = .white
@@ -51,6 +60,7 @@ class SignInViewController: UIViewController {
 		view.addSubview(scrollView)
 		scrollView.addSubview(containerView)
 		
+		containerView.addSubview(closeButton)
 		containerView.addSubview(segmentControl)
 		containerView.addSubview(loginTextField)
 		containerView.addSubview(passwordTextField)
@@ -69,8 +79,12 @@ class SignInViewController: UIViewController {
 			$0.edges.equalTo(contentGuide)
 		}
 		
+		closeButton.snp.makeConstraints {
+			$0.top.right.equalTo(containerView.safeAreaLayoutGuide).inset(20)
+		}
+		
 		segmentControl.snp.makeConstraints {
-			$0.top.equalToSuperview().offset(30)
+			$0.top.equalTo(closeButton.snp.bottom).offset(10)
 			$0.left.right.equalToSuperview().inset(0)
 		}
 		
@@ -138,17 +152,16 @@ class SignInViewController: UIViewController {
 	}
 	
 	@objc
+	private func onCloseButtonTap(sender: UIButton) {
+		dismiss(animated: true)
+	}
+	
+	@objc
 	private func segmentControlChanged(sender: UnderlinedSegmentControl) {
 		let isLoginAuth = sender.selectedIndex == 0
 		self.loginTextField.isHidden = !isLoginAuth
 		self.passwordTextField.isHidden = !isLoginAuth
 		self.phoneTextField.isHidden = isLoginAuth
-	}
-	
-	@objc
-	private func onSignUpButtonTap(sender: UIButton) {
-		let signUpVC = SignUpViewController()
-		navigationController?.pushViewController(signUpVC, animated: true)
 	}
 	
 	@objc

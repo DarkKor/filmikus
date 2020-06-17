@@ -9,6 +9,10 @@
 import UIKit
 import SnapKit
 
+extension Notification.Name {
+	static let userSubscribed: Notification.Name = .init("userSubscribed")
+}
+
 class SubscriptionViewController: ViewController {
 			
 	private lazy var closeButton: UIButton = {
@@ -77,11 +81,13 @@ class SubscriptionViewController: ViewController {
 		view.addSubview(closeButton)
 		view.addSubview(mainStackView)
 
+		closeButton.setContentHuggingPriority(.required, for: .vertical)
 		closeButton.snp.makeConstraints {
-			$0.top.trailing.equalTo(view.safeAreaLayoutGuide).inset(10)
+			$0.top.trailing.equalTo(view.safeAreaLayoutGuide).inset(20)
 		}
 		mainStackView.snp.makeConstraints {
-			$0.edges.equalTo(view.safeAreaLayoutGuide).inset(20)
+			$0.top.equalTo(closeButton.snp.bottom)
+			$0.left.right.bottom.equalTo(view.safeAreaLayoutGuide).inset(20)
 		}
 	}
 
@@ -130,6 +136,7 @@ class SubscriptionViewController: ViewController {
 			product: selectedProduct,
 			success: {
 				self.hideActivityIndicator()
+				NotificationCenter.default.post(name: .userSubscribed, object: nil)
 				self.showAlert(
 					title: "Фильмикус",
 					message: "Вы успешно подписались!",

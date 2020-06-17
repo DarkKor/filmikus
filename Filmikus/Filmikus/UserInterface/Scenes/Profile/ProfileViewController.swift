@@ -11,44 +11,33 @@ import SnapKit
 
 class ProfileViewController: UIViewController {
 	
-	private lazy var registerLabel = UILabel()
-	private lazy var signUpButton = BlueBorderButton(title: "РЕГИСТРАЦИЯ", target: self, action: #selector(onSignUpButtonTap))
-	private lazy var signInButton = BlueButton(title: "ВОЙТИ", target: self, action: #selector(onSignInButtonTap))
+	private lazy var loginView: LoginView = {
+		let view = LoginView()
+		view.delegate = self
+		return view
+	}()
+	
+	private lazy var profileView: ProfileView = {
+		let view = ProfileView()
+		view.delegate = self
+		view.isHidden = true
+		return view
+	}()
 	
 	override func loadView() {
 		view = UIView()
 		view.backgroundColor = .white
 		
-		view.addSubview(registerLabel)
-		view.addSubview(signUpButton)
-		view.addSubview(signInButton)
+		view.addSubview(loginView)
+		view.addSubview(profileView)
 		
-		registerLabel.text = "Авторизуйтесь, чтобы получить доступ к контенту"
-		registerLabel.textColor = .appDarkBlue
-		registerLabel.font = .boldSystemFont(ofSize: 20)
-		registerLabel.numberOfLines = 0
-		registerLabel.textAlignment = .center
-		registerLabel.snp.makeConstraints {
-			$0.centerY.equalToSuperview().priority(.medium)
-			$0.bottom.equalTo(signUpButton.snp.top).offset(-20)
-			$0.leading.trailing.equalToSuperview().inset(20)
+		loginView.snp.makeConstraints {
+			$0.edges.equalTo(view.safeAreaLayoutGuide)
 		}
-		signUpButton.snp.makeConstraints {
-			$0.bottom.equalTo(signInButton.snp.top).offset(-20)
-			$0.centerX.equalToSuperview()
-			$0.height.equalTo(44)
-			if traitCollection.userInterfaceIdiom == .pad {
-				$0.width.equalToSuperview().dividedBy(2)
-			} else {
-				$0.width.equalToSuperview().inset(20)
-			}
+		profileView.snp.makeConstraints {
+			$0.edges.equalTo(view.safeAreaLayoutGuide)
 		}
-		signInButton.snp.makeConstraints {
-			$0.bottom.equalTo(view.safeAreaLayoutGuide).inset(20)
-			$0.centerX.equalToSuperview()
-			$0.height.equalTo(44)
-			$0.width.equalTo(signUpButton)
-		}
+
 	}
 
     override func viewDidLoad() {
@@ -56,18 +45,49 @@ class ProfileViewController: UIViewController {
 
 		title = "Профиль"
 		
-
+		NotificationCenter.default.addObserver(
+			self,
+			selector: #selector(handleUserSubscribedNotification),
+			name: .userSubscribed,
+			object: nil
+		)
 	}
 	
 	@objc
-	private func onSignUpButtonTap(sender: UIButton) {
-		let signUpVC = SignUpViewController()
-		navigationController?.present(signUpVC, animated: true)
+	private func handleUserSubscribedNotification(notification: Notification) {
+		
 	}
-    
-	@objc
-	private func onSignInButtonTap(sender: UIButton) {
+}
+
+//MARK: - LoginViewDelegate
+
+extension ProfileViewController: LoginViewDelegate {
+	
+	func loginViewDidSelectSignUp(_ view: LoginView) {
+		let signUpVC = SignUpViewController()
+		present(signUpVC, animated: true)
+	}
+	
+	func loginViewDidSelectSignIn(_ view: LoginView) {
 		let signInVC = SignInViewController()
-		navigationController?.present(signInVC, animated: true)
+		present(signInVC, animated: true)
+	}
+}
+
+//MARK: - ProfileViewDelegate
+
+extension ProfileViewController: ProfileViewDelegate {
+	
+	func profileViewDidSelectSubscribe(_ view: ProfileView) {
+		let subscriptionVC = SubscriptionViewController()
+		present(subscriptionVC, animated: true)
+	}
+	
+	func profileViewDidSelectRestorePurchases(_ view: ProfileView) {
+		print("restore")
+	}
+	
+	func profileViewDidSelectLogout(_ view: ProfileView) {
+		print("logout")
 	}
 }

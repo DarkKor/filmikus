@@ -12,6 +12,14 @@ class SignUpViewController: ViewController {
 		
 	private let usersService: UsersServiceType = UsersService()
 	
+	private lazy var closeButton: UIButton = {
+		let button = UIButton()
+		button.tintColor = .appBlue
+		button.setImage(UIImage(systemName: "xmark"), for: .normal)
+		button.addTarget(self, action: #selector(onCloseButtonTap), for: .touchUpInside)
+		return button
+	}()
+	
 	private lazy var descriptionLabel: UILabel = {
 		let label = UILabel()
 		label.text = "Для того, чтобы получить доступ к нашему сайту, пожалуйста зарегистрируйтесь.\nНа указанный email придет информация о доступе к сайту, и чеки о покупках, если вы будете их совершать."
@@ -38,26 +46,32 @@ class SignUpViewController: ViewController {
 	override func loadView() {
 		view = UIView()
 		view.backgroundColor = .white
+		
+		view.addSubview(closeButton)
 		view.addSubview(descriptionLabel)
 		view.addSubview(emailTextField)
 		view.addSubview(nextButton)
 		view.addSubview(userTextView)
 		
+		closeButton.snp.makeConstraints {
+			$0.top.right.equalTo(view.safeAreaLayoutGuide).inset(20)
+		}
 		descriptionLabel.snp.makeConstraints {
-			$0.top.leading.trailing.equalTo(view.safeAreaLayoutGuide).inset(16)
+			$0.top.equalTo(closeButton.snp.bottom).offset(10)
+			$0.leading.trailing.equalTo(view.safeAreaLayoutGuide).inset(20)
 		}
 		emailTextField.snp.makeConstraints {
 			$0.top.equalTo(descriptionLabel.snp.bottom).offset(20)
-			$0.leading.trailing.equalToSuperview().inset(16)
+			$0.leading.trailing.equalToSuperview().inset(20)
 		}
 		nextButton.snp.makeConstraints {
 			$0.top.equalTo(emailTextField.snp.bottom).offset(20)
-			$0.leading.trailing.equalToSuperview().inset(16)
+			$0.leading.trailing.equalToSuperview().inset(20)
 			$0.height.equalTo(44)
 		}
 		userTextView.snp.makeConstraints {
 			$0.top.equalTo(nextButton.snp.bottom).offset(20)
-			$0.leading.trailing.bottom.equalToSuperview().inset(16)
+			$0.leading.trailing.bottom.equalToSuperview().inset(20)
 		}
 	}
 
@@ -67,6 +81,11 @@ class SignUpViewController: ViewController {
 		title = "Регистрация"
 		navigationItem.largeTitleDisplayMode = .never
     }
+	
+	@objc
+	private func onCloseButtonTap(sender: UIButton) {
+		dismiss(animated: true)
+	}
 
 	@objc
 	private func onNextButtonTap(sender: UIButton) {
@@ -83,6 +102,7 @@ class SignUpViewController: ViewController {
 				completion: {
 					guard let user = userModel.user else { return }
 					self.userTextView.text = "Ваш логин: \(user.username)\nВаш пароль: \(user.password)"
+					self.present(SubscriptionViewController(), animated: true)
 				}
 			)
 		}
