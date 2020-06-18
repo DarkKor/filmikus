@@ -48,7 +48,7 @@ class ProfileViewController: UIViewController {
 		NotificationCenter.default.addObserver(
 			self,
 			selector: #selector(handleUserSubscribedNotification),
-			name: .userSubscribed,
+			name: .userDidSubscribe,
 			object: nil
 		)
 	}

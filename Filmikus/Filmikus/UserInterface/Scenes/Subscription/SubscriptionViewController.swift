@@ -10,7 +10,7 @@ import UIKit
 import SnapKit
 
 extension Notification.Name {
-	static let userSubscribed: Notification.Name = .init("userSubscribed")
+	static let userDidSubscribe: Notification.Name = .init("userSubscribed")
 }
 
 class SubscriptionViewController: ViewController {
@@ -137,7 +137,7 @@ class SubscriptionViewController: ViewController {
 			self.hideActivityIndicator()
 			switch result {
 			case .success:
-				NotificationCenter.default.post(name: .userSubscribed, object: nil)
+				NotificationCenter.default.post(name: .userDidSubscribe, object: nil)
 				self.showAlert(
 					title: "Фильмикус",
 					message: "Вы успешно подписались!",

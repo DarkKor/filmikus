@@ -8,16 +8,14 @@
 
 import StoreKit
 
-extension Notification.Name {
-	static let storeKitProductsDidLoad = Notification.Name("storeKitProductsDidLoad")
-}
-
 class StoreKitService: NSObject {
 	
 	typealias SubscriptionBlock = (Result<Void, Error>) -> Void
+	typealias ProductsBlock = (Result<[SKProduct], Error>) -> Void
 	
 	private var subscriptionBlock: SubscriptionBlock?
 	private var refreshSubscriptionBlock: SubscriptionBlock?
+	private var productsBlock: ProductsBlock?
 	
 	private var sharedSecret = ""
 	
@@ -53,7 +51,8 @@ class StoreKitService: NSObject {
 		subscriptionBlock = completion
 		SKPaymentQueue.default().restoreCompletedTransactions()
 	}
-	/* It's the most simple way to send verify receipt request. Consider this code as for learning purposes. You shouldn't use current code in production apps.
+	/*
+	It's the most simple way to send verify receipt request. You shouldn't use current code in production apps.
 	This code doesn't handle errors.
 	*/
 	func refreshSubscriptionsStatus(completion: SubscriptionBlock? = nil) {
@@ -81,20 +80,27 @@ class StoreKitService: NSObject {
 		request.httpBody = httpBody
 		URLSession.shared.dataTask(with: request)  { (data, response, error) in
 			DispatchQueue.main.async {
-				guard let data = data, let json = try? JSONSerialization.jsonObject(with: data, options: .allowFragments) else {
-					print("error validating receipt: \(error?.localizedDescription ?? "")")
-					self.refreshSubscriptionBlock?(.failure(error ?? NSError()))
+				if let error = error {
+					self.refreshSubscriptionBlock?(.failure(error))
 					self.refreshSubscriptionBlock = nil
 					return
 				}
-				self.parseReceipt(json as! [String: Any])
+				guard let data = data,
+					let json = try? JSONSerialization.jsonObject(with: data, options: .allowFragments) as? [String: Any] else {
+					let error = NSError(domain: "error validating receipt", code: 0, userInfo: nil)
+					self.refreshSubscriptionBlock?(.failure(error))
+					self.refreshSubscriptionBlock = nil
+					return
+				}
+				self.parseReceipt(json: json)
 			}
 		}.resume()
 	}
-	/* It's the most simple way to get latest expiration date. Consider this code as for learning purposes. You shouldn't use current code in production apps.
+	/*
+	It's the most simple way to get latest expiration date. You shouldn't use current code in production apps.
 	This code doesn't handle errors or some situations like cancellation date.
 	*/
-	private func parseReceipt(_ json: [String: Any]) {
+	private func parseReceipt(json: [String: Any]) {
 		guard let receipts = json["latest_receipt_info"] as? [[String: Any]] else {
 			self.refreshSubscriptionBlock?(.failure(NSError()))
 			self.refreshSubscriptionBlock = nil
@@ -114,7 +120,7 @@ class StoreKitService: NSObject {
 		self.refreshSubscriptionBlock = nil
 	}
 	/*
-	Private method. Should not be called directly. Call refreshSubscriptionsStatus instead.
+	Should not be called directly. Call refreshSubscriptionsStatus instead.
 	*/
 	private func refreshReceipt() {
 		let request = SKReceiptRefreshRequest(receiptProperties: nil)
@@ -127,6 +133,13 @@ class StoreKitService: NSObject {
 		request.delegate = self
 		request.start()
 	}
+	
+	private func loadProducts(with productIds: Set<String>, completion: ProductsBlock? = nil) {
+		let request = SKProductsRequest(productIdentifiers: productIds)
+		productsBlock = completion
+		request.delegate = self
+		request.start()
+	}
 }
 
 // MARK: - SKRequestDelegate
@@ -134,17 +147,14 @@ class StoreKitService: NSObject {
 extension StoreKitService: SKRequestDelegate {
 	
 	func requestDidFinish(_ request: SKRequest) {
-		if request is SKReceiptRefreshRequest {
-			refreshSubscriptionsStatus(completion: subscriptionBlock)
-		}
+		guard request is SKReceiptRefreshRequest else { return }
+		refreshSubscriptionsStatus(completion: subscriptionBlock)
 	}
 	
 	func request(_ request: SKRequest, didFailWithError error: Error){
-		if request is SKReceiptRefreshRequest {
-			refreshSubscriptionBlock?(.failure(error))
-			refreshSubscriptionBlock = nil
-		}
-		print("error: \(error.localizedDescription)")
+		guard request is SKReceiptRefreshRequest else { return }
+		refreshSubscriptionBlock?(.failure(error))
+		refreshSubscriptionBlock = nil
 	}
 }
 
@@ -154,9 +164,7 @@ extension StoreKitService: SKProductsRequestDelegate {
 	
 	public func productsRequest(_ request: SKProductsRequest, didReceive response: SKProductsResponse) {
 		products = response.products
-		DispatchQueue.main.async {
-			NotificationCenter.default.post(name: .storeKitProductsDidLoad, object: nil)
-		}
+		productsBlock?(.success(response.products))
 	}
 }
 
