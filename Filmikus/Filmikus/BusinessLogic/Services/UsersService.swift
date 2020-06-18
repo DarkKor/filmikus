@@ -16,7 +16,9 @@ class UsersService: UsersServiceType {
 	
 	private let provider: MoyaProvider<UsersAPI>
 	
-	init(provider: MoyaProvider<UsersAPI> = MoyaProvider<UsersAPI>()) {
+	init(
+		provider: MoyaProvider<UsersAPI> = MoyaProvider<UsersAPI>()
+	) {
 		self.provider = provider
 	}
 	

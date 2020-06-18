@@ -19,18 +19,6 @@ class BlueButton: UIButton {
 		return CGSize(width: width, height: height)
 	}
 	
-//	override var isSelected: Bool {
-//		didSet {
-//			backgroundColor = isSelected ? .appBlue : .clear
-//		}
-//	}
-//
-//	override var isHighlighted: Bool {
-//		didSet {
-//			backgroundColor = isHighlighted ? .appBlue : .clear
-//		}
-//	}
-	
 	init(title: String = "", target: Any?, action: Selector) {
 		super.init(frame: .zero)
 		addTarget(target, action: action, for: .touchUpInside)
@@ -38,11 +26,7 @@ class BlueButton: UIButton {
 		titleLabel?.font = .boldSystemFont(ofSize: 12)
 		setTitle(title, for: .normal)
 		setTitleColor(.white, for: .normal)
-//		setTitleColor(.white, for: .selected)
-//		setTitleColor(.white, for: .highlighted)
 		backgroundColor = .appBlue
-//		layer.borderColor = UIColor.appBlue.cgColor
-//		layer.borderWidth = 1.0
 	}
 	
 	required init?(coder: NSCoder) {

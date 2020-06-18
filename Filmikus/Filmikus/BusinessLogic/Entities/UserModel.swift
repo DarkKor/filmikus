@@ -6,7 +6,7 @@
 //  Copyright © 2020 Андрей Козлов. All rights reserved.
 //
 
-struct UserModel: Decodable {
+struct UserModel: Codable {
 	let id: Int
 	let username: String
 	let password: String

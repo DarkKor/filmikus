@@ -10,8 +10,8 @@ import UIKit
 
 class SignUpViewController: ViewController {
 		
-	private let usersService: UsersServiceType = UsersService()
-	
+	private let userProvider: UserProviderType = UserProvider()
+
 	private lazy var closeButton: UIButton = {
 		let button = UIButton()
 		button.tintColor = .appBlue
@@ -92,7 +92,7 @@ class SignUpViewController: ViewController {
 		guard let text = emailTextField.text else { return }
 		guard !text.isEmpty else { return }
 		showActivityIndicator()
-		usersService.register(email: text) { [weak self] (result) in
+		userProvider.register(email: text) { [weak self] (result) in
 			guard let self = self else { return }
 			self.hideActivityIndicator()
 			guard let userModel = try? result.get() else { return }
@@ -101,6 +101,7 @@ class SignUpViewController: ViewController {
 				message: userModel.message,
 				completion: {
 					guard let user = userModel.user else { return }
+					self.userProvider.login(userModel: user)
 					self.userTextView.text = "Ваш логин: \(user.username)\nВаш пароль: \(user.password)"
 					self.present(SubscriptionViewController(), animated: true)
 				}

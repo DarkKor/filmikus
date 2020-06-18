@@ -14,6 +14,8 @@ extension Notification.Name {
 }
 
 class SubscriptionViewController: ViewController {
+	
+	private let storeKitService: StoreKitServiceType = StoreKitService.shared
 			
 	private lazy var closeButton: UIButton = {
 		let button = UIButton()
@@ -93,29 +95,33 @@ class SubscriptionViewController: ViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-		let products = StoreKitService.shared.products
 		
-		let segments: [String] = products.map {
-			var result: String = ""
-			guard let period = $0.subscriptionPeriod else { return result }
-			result += "\(period.numberOfUnits)\n"
-			switch period.unit {
-			case .day:
-				result += "день\n"
-			case .week:
-				result += "неделя\n"
-			case .month:
-				result += "месяц\n"
-			case .year:
-				result += "год\n"
-			@unknown default:
-				break
+		showActivityIndicator()
+		storeKitService.loadProducts { [weak self] (result) in
+			guard let self = self else { return }
+			self.hideActivityIndicator()
+			guard let products = try? result.get() else { return }
+			let segments: [String] = products.map {
+				var result: String = ""
+				guard let period = $0.subscriptionPeriod else { return result }
+				result += "\(period.numberOfUnits)\n"
+				switch period.unit {
+				case .day:
+					result += "день\n"
+				case .week:
+					result += "неделя\n"
+				case .month:
+					result += "месяц\n"
+				case .year:
+					result += "год\n"
+				@unknown default:
+					break
+				}
+				result += "\($0.price) RUB"
+				return result
 			}
-			result += "\($0.price) RUB"
-			return result
-		}
-		segments.forEach(segmentControl.insert)
+			segments.forEach(self.segmentControl.insert)
+		}		
     }
 
 	@objc

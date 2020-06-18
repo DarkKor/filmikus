@@ -20,14 +20,14 @@ class ProfileView: UIView {
 	
 	private lazy var stackView: UIStackView = {
 		let stack = UIStackView(arrangedSubviews: [
-			nicknameLabel, subscribeButton, restorePurchasesButton, logoutButton
+			usernameLabel, subscribeButton, restorePurchasesButton, logoutButton
 		])
 		stack.axis = .vertical
 		stack.spacing = 20
 		return stack
 	}()
 
-	private lazy var nicknameLabel: UILabel = {
+	private lazy var usernameLabel: UILabel = {
 		let label = UILabel()
 		label.font = .boldSystemFont(ofSize: 20)
 		return label
@@ -53,8 +53,18 @@ class ProfileView: UIView {
 		fatalError("init(coder:) has not been implemented")
 	}
 	
-	func fill(nickname: String) {
-		nicknameLabel.text = nickname
+	func fill(username: String) {
+		usernameLabel.text = username
+	}
+	
+	func showSubscribeButtons() {
+		subscribeButton.isHidden = false
+		restorePurchasesButton.isHidden = false
+	}
+	
+	func hideSubscribeButtons() {
+		subscribeButton.isHidden = true
+		restorePurchasesButton.isHidden = true
 	}
 	
 	@objc

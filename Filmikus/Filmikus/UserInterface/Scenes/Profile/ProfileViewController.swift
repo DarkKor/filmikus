@@ -11,6 +11,8 @@ import SnapKit
 
 class ProfileViewController: UIViewController {
 	
+	private let userProvider: UserProviderType = UserProvider()
+	
 	private lazy var loginView: LoginView = {
 		let view = LoginView()
 		view.delegate = self
@@ -44,18 +46,44 @@ class ProfileViewController: UIViewController {
         super.viewDidLoad()
 
 		title = "Профиль"
-		
+		userProvider.isSubscribed ? profileView.hideSubscribeButtons() : profileView.showSubscribeButtons()
+		 
 		NotificationCenter.default.addObserver(
 			self,
 			selector: #selector(handleUserSubscribedNotification),
 			name: .userDidSubscribe,
 			object: nil
 		)
+		NotificationCenter.default.addObserver(
+			self,
+			selector: #selector(handleUserLoggedInNotification),
+			name: .userDidLogin,
+			object: nil
+		)
+		NotificationCenter.default.addObserver(
+			self,
+			selector: #selector(handleUserLogoutNotification),
+			name: .userDidLogout,
+			object: nil
+		)
 	}
 	
 	@objc
 	private func handleUserSubscribedNotification(notification: Notification) {
-		
+		profileView.hideSubscribeButtons()
+	}
+	
+	@objc
+	private func handleUserLoggedInNotification(notification: Notification) {
+		loginView.isHidden = true
+		profileView.isHidden = false
+		profileView.fill(username: userProvider.user?.username ?? "")
+	}
+	
+	@objc
+	private func handleUserLogoutNotification(notification: Notification) {
+		loginView.isHidden = false
+		profileView.isHidden = true
 	}
 }
 
@@ -88,6 +116,6 @@ extension ProfileViewController: ProfileViewDelegate {
 	}
 	
 	func profileViewDidSelectLogout(_ view: ProfileView) {
-		print("logout")
+		userProvider.logout()
 	}
 }

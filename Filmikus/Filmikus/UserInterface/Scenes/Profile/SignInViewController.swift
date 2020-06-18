@@ -8,9 +8,9 @@
 
 import UIKit
 
-class SignInViewController: UIViewController {
+class SignInViewController: ViewController {
 	
-	private let usersService: UsersServiceType = UsersService()
+	private let userProvider: UserProviderType = UserProvider()
 	
 	private lazy var scrollView = UIScrollView()
 	private lazy var containerView = UIView()
@@ -166,7 +166,16 @@ class SignInViewController: UIViewController {
 	
 	@objc
 	private func onSignInButtonTap(sender: UIButton) {
-		
+		view.endEditing(true)
+		guard let username = self.loginTextField.text, !username.isEmpty else { return }
+		guard let password = self.passwordTextField.text, !password.isEmpty else { return }
+
+		showActivityIndicator()
+		DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+			self.hideActivityIndicator()
+			self.userProvider.login(userModel: UserModel(id: 0, username: username, password: password))
+			self.dismiss(animated: true)
+		}
 	}
 }
 
