@@ -16,7 +16,9 @@ extension Notification.Name {
 class SubscriptionViewController: ViewController {
 	
 	private let storeKitService: StoreKitServiceType = StoreKitService.shared
-			
+				
+	private var products: [SKProduct] = []
+	
 	private lazy var closeButton: UIButton = {
 		let button = UIButton()
 		button.setImage(UIImage(systemName: "xmark"), for: .normal)
@@ -123,6 +125,8 @@ class SubscriptionViewController: ViewController {
 			segments.forEach(self.segmentControl.insert)
 		}		
     }
+	
+	
 
 	@objc
 	private func onCloseButtonTap(sender: UIButton) {
@@ -137,8 +141,12 @@ class SubscriptionViewController: ViewController {
 	@objc
 	private func onContinueButtonTap(sender: UIButton) {
 		showActivityIndicator()
-		let selectedProduct = StoreKitService.shared.products[segmentControl.selectedIndex]
-		StoreKitService.shared.purchase(product: selectedProduct) { [weak self] result in
+		storeKitService.loadProducts { (result) in
+			guard let products = try? result.get() else { return }
+			let selectedProduct = products[self.segmentControl.selectedIndex]
+			
+		}
+		storeKitService.purchase(product: selectedProduct) { [weak self] result in
 			guard let self = self else { return }
 			self.hideActivityIndicator()
 			switch result {

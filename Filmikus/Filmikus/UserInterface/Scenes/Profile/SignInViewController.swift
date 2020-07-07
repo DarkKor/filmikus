@@ -171,7 +171,7 @@ class SignInViewController: ViewController {
 		guard let password = self.passwordTextField.text, !password.isEmpty else { return }
 
 		showActivityIndicator()
-		DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+		DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
 			self.hideActivityIndicator()
 			self.userProvider.login(userModel: UserModel(id: 0, username: username, password: password))
 			self.dismiss(animated: true)
