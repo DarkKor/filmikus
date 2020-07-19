@@ -10,15 +10,13 @@ import UIKit
 import SnapKit
 
 extension Notification.Name {
-	static let userDidSubscribe: Notification.Name = .init("userSubscribed")
+	static let userDidSubscribe = Notification.Name("userSubscribed")
 }
 
 class SubscriptionViewController: ViewController {
 	
 	private let storeKitService: StoreKitServiceType = StoreKitService.shared
-				
-	private var products: [SKProduct] = []
-	
+					
 	private lazy var closeButton: UIButton = {
 		let button = UIButton()
 		button.setImage(UIImage(systemName: "xmark"), for: .normal)
@@ -125,8 +123,6 @@ class SubscriptionViewController: ViewController {
 			segments.forEach(self.segmentControl.insert)
 		}		
     }
-	
-	
 
 	@objc
 	private func onCloseButtonTap(sender: UIButton) {
@@ -145,25 +141,26 @@ class SubscriptionViewController: ViewController {
 			guard let products = try? result.get() else { return }
 			let selectedProduct = products[self.segmentControl.selectedIndex]
 			
-		}
-		storeKitService.purchase(product: selectedProduct) { [weak self] result in
-			guard let self = self else { return }
-			self.hideActivityIndicator()
-			switch result {
-			case .success:
-				NotificationCenter.default.post(name: .userDidSubscribe, object: nil)
-				self.showAlert(
-					title: "Фильмикус",
-					message: "Вы успешно подписались!",
-					completion: { self.dismiss(animated: true) }
-				)
-			case .failure(let error):
-				self.showAlert(
-					title: "Фильмикус",
-					message: "Ошибка: \(error.localizedDescription)",
-					completion: { self.dismiss(animated: true) }
-				)
+			self.storeKitService.purchase(product: selectedProduct) { [weak self] result in
+				guard let self = self else { return }
+				self.hideActivityIndicator()
+				switch result {
+				case .success:
+					NotificationCenter.default.post(name: .userDidSubscribe, object: nil)
+					self.showAlert(
+						title: "Фильмикус",
+						message: "Вы успешно подписались!",
+						completion: { self.dismiss(animated: true) }
+					)
+				case .failure(let error):
+					self.showAlert(
+						title: "Фильмикус",
+						message: "Ошибка: \(error.localizedDescription)",
+						completion: { self.dismiss(animated: true) }
+					)
+				}
 			}
 		}
+		
 	}
 }

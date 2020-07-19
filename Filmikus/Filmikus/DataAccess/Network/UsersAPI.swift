@@ -7,9 +7,10 @@
 //
 
 import Moya
+import CommonCrypto
 
 enum UsersAPI {
-	case register(email: String)
+	case register(userData: String)
 }
 
 extension UsersAPI: TargetType {
@@ -42,11 +43,10 @@ extension UsersAPI: TargetType {
 	
 	var task: Task {
 		switch self {
-		case let .register(email):
+		case let .register(userData):
 			return .requestParameters(
 				parameters: [
-					"email": email,
-					"type": 3
+					"data": userData
 				],
 				encoding: JSONEncoding.default
 			)

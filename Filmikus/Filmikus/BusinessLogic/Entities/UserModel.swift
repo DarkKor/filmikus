@@ -10,4 +10,10 @@ struct UserModel: Codable {
 	let id: Int
 	let username: String
 	let password: String
+	
+	enum CodingKeys: String, CodingKey {
+		case id = "user_id"
+		case username = "user_name"
+		case password = "user_pass"
+	}
 }
