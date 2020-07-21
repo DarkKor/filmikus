@@ -17,6 +17,8 @@ class SubscriptionViewController: ViewController {
 	
 	private let storeKitService: StoreKitServiceType = StoreKitService.shared
 					
+	private let userFacade: UserFacadeType = UserFacade()
+	
 	private lazy var closeButton: UIButton = {
 		let button = UIButton()
 		button.setImage(UIImage(systemName: "xmark"), for: .normal)
@@ -140,18 +142,28 @@ class SubscriptionViewController: ViewController {
 		storeKitService.loadProducts { (result) in
 			guard let products = try? result.get() else { return }
 			let selectedProduct = products[self.segmentControl.selectedIndex]
-			
+
 			self.storeKitService.purchase(product: selectedProduct) { [weak self] result in
 				guard let self = self else { return }
 				self.hideActivityIndicator()
 				switch result {
 				case .success:
-					NotificationCenter.default.post(name: .userDidSubscribe, object: nil)
-					self.showAlert(
-						title: "Фильмикус",
-						message: "Вы успешно подписались!",
-						completion: { self.dismiss(animated: true) }
-					)
+					self.storeKitService.loadReceipt { [weak self] (result) in
+						guard let self = self else { return }
+						self.hideActivityIndicator()
+						guard let receipt = try? result.get() else { return }
+						guard let userId = self.userFacade.user?.id else { return }
+						self.userFacade.receipt(userId: userId, receipt: receipt) { (status) in
+							print(status)
+							guard self.userFacade.isSubscribed else { return }
+							NotificationCenter.default.post(name: .userDidSubscribe, object: nil)
+							self.showAlert(
+								title: "Фильмикус",
+								message: "Вы успешно подписались!",
+								completion: { self.dismiss(animated: true) }
+							)
+						}
+					}
 				case .failure(let error):
 					self.showAlert(
 						title: "Фильмикус",

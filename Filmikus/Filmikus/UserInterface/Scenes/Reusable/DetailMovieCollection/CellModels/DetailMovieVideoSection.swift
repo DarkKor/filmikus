@@ -8,5 +8,5 @@
 
 struct DetailMovieVideoSection {
 	let url: String
-	let isEnabled: Bool
+	var isEnabled: Bool
 }

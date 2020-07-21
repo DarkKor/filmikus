@@ -9,9 +9,11 @@
 import UIKit
 import SnapKit
 
-class ProfileViewController: UIViewController {
+class ProfileViewController: ViewController {
 	
-	private let userProvider: UserProviderType = UserProvider()
+	private let userFacade: UserFacadeType = UserFacade()
+	
+	private let storeKitService: StoreKitServiceType = StoreKitService.shared
 	
 	private lazy var loginView: LoginView = {
 		let view = LoginView()
@@ -25,6 +27,10 @@ class ProfileViewController: UIViewController {
 		view.isHidden = true
 		return view
 	}()
+	
+	deinit {
+		NotificationCenter.default.removeObserver(self)
+	}
 	
 	override func loadView() {
 		view = UIView()
@@ -46,8 +52,9 @@ class ProfileViewController: UIViewController {
         super.viewDidLoad()
 
 		title = "Профиль"
-		userProvider.isSubscribed ? profileView.hideSubscribeButtons() : profileView.showSubscribeButtons()
-		 
+		
+		updateUI()
+		
 		NotificationCenter.default.addObserver(
 			self,
 			selector: #selector(handleUserSubscribedNotification),
@@ -68,16 +75,24 @@ class ProfileViewController: UIViewController {
 		)
 	}
 	
+	private func updateUI() {
+		loginView.isHidden = userFacade.isSignedIn
+		profileView.isHidden = !userFacade.isSignedIn
+		profileView.fill(
+			username: userFacade.user?.username ?? "",
+			isSubscribed: userFacade.isSubscribed,
+			expirationDate: userFacade.expirationDate
+		)
+	}
+	
 	@objc
 	private func handleUserSubscribedNotification(notification: Notification) {
-		profileView.hideSubscribeButtons()
+		updateUI()
 	}
 	
 	@objc
 	private func handleUserLoggedInNotification(notification: Notification) {
-		loginView.isHidden = true
-		profileView.isHidden = false
-		profileView.fill(username: userProvider.user?.username ?? "")
+		updateUI()
 	}
 	
 	@objc
@@ -112,10 +127,24 @@ extension ProfileViewController: ProfileViewDelegate {
 	}
 	
 	func profileViewDidSelectRestorePurchases(_ view: ProfileView) {
-		print("restore")
+		showActivityIndicator()
+		storeKitService.restorePurchases { [weak self] (result) in
+			guard let self = self else { return }
+			guard let userId = self.userFacade.user?.id else { return }
+			self.storeKitService.loadReceipt { [weak self] (result) in
+				guard let self = self else { return }
+				guard let receipt = try? result.get() else { return }
+				self.userFacade.receipt(userId: userId, receipt: receipt) { [weak self] (model) in
+					guard let self = self else { return }
+					self.hideActivityIndicator()
+					guard self.userFacade.isSubscribed else { return }
+					NotificationCenter.default.post(name: .userDidSubscribe, object: nil)
+				}
+			}
+		}
 	}
 	
 	func profileViewDidSelectLogout(_ view: ProfileView) {
-		userProvider.logout()
+		userFacade.signOut()
 	}
 }

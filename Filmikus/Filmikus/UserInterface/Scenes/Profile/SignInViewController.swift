@@ -10,7 +10,7 @@ import UIKit
 
 class SignInViewController: ViewController {
 	
-	private let userProvider: UserProviderType = UserProvider()
+	private let userFacade: UserFacadeType = UserFacade()
 	
 	private lazy var scrollView = UIScrollView()
 	private lazy var containerView = UIView()
@@ -171,10 +171,15 @@ class SignInViewController: ViewController {
 		guard let password = self.passwordTextField.text, !password.isEmpty else { return }
 
 		showActivityIndicator()
-		DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+		self.userFacade.signIn(email: username, password: password) { [weak self] (loginStatus) in
+			guard let self = self else { return }
 			self.hideActivityIndicator()
-			self.userProvider.login(userModel: UserModel(id: 0, username: username, password: password))
-			self.dismiss(animated: true)
+			switch loginStatus {
+			case .success:
+				self.dismiss(animated: true)
+			case let .failure(model):
+				self.showAlert(title: "Фильмикус", message: model.errorDescription)
+			}
 		}
 	}
 }

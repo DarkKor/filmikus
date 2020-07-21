@@ -16,6 +16,7 @@ class DetailFunShowViewController: UIViewController {
 	
 	private let videoService: VideosServiceType
 	private let episodesService: EpisodesServiceType
+	private let userFacade: UserFacadeType
 	
 	private lazy var collectionViewController: DetailFunShowCollectionViewController = {
 		let viewController = DetailFunShowCollectionViewController()
@@ -23,32 +24,27 @@ class DetailFunShowViewController: UIViewController {
 		return viewController
 	}()
 	
-	private var isSignedIn: Bool {
-		return StoreKitService.shared.products.first(where: { product in
-			if let expiresDate = StoreKitService.shared.expirationDate(for: product.productIdentifier),
-			expiresDate > Date() {
-				return true
-			} else {
-				return false
-			}
-		}) != nil
-	}
-	
 	init(
 		id: Int,
 		subcategoryId: Int,
 		videoService: VideosServiceType = VideosService(),
-		episodesService: EpisodesServiceType = EpisodesService()
+		episodesService: EpisodesServiceType = EpisodesService(),
+		userFacade: UserFacadeType = UserFacade()
 	) {
 		self.id = id
 		self.subcategoryId = subcategoryId
 		self.videoService = videoService
 		self.episodesService = episodesService
+		self.userFacade = userFacade
 		super.init(nibName: nil, bundle: nil)
 	}
 	
 	required init?(coder: NSCoder) {
 		fatalError("init(coder:) has not been implemented")
+	}
+	
+	deinit {
+		NotificationCenter.default.removeObserver(self)
 	}
 	
 	override func loadView() {
@@ -69,6 +65,25 @@ class DetailFunShowViewController: UIViewController {
 		
 		navigationItem.largeTitleDisplayMode = .never
 		loadData(with: id)
+		
+		NotificationCenter.default.addObserver(
+			self,
+			selector: #selector(handleUserSubscribedNotification),
+			name: .userDidSubscribe,
+			object: nil
+		)
+		NotificationCenter.default.addObserver(
+			self,
+			selector: #selector(handleUserLoggedInNotification),
+			name: .userDidLogin,
+			object: nil
+		)
+		NotificationCenter.default.addObserver(
+			self,
+			selector: #selector(handleUserLogoutNotification),
+			name: .userDidLogout,
+			object: nil
+		)
 	}
 	
 	private func loadData(with id: Int) {
@@ -83,15 +98,15 @@ class DetailFunShowViewController: UIViewController {
 				if let tvigleId = detailModel.tvigleId {
 					videoUrl = "http://cloud.tvigle.ru/video/\(tvigleId)/"
 				}
-				let isSignedIn = self.isSignedIn
+				let isEnabled = self.userFacade.isSignedIn && self.userFacade.isSubscribed
 				let detailFunShowVideo = DetailFunShowVideoSection(
 					videoUrl: videoUrl,
-					isEnabled: isSignedIn
+					isEnabled: isEnabled
 				)
 				let detailFunShowInfo = DetailFunShowInfoSection(
 					title: detailModel.title,
 					descr: detailModel.descr,
-					isEnabled: isSignedIn
+					isEnabled: isEnabled
 				)
 				let detailFunShowMore = DetailFunShowMoreSection(
 					title: "Другие сериии из этого цикла",
@@ -106,6 +121,38 @@ class DetailFunShowViewController: UIViewController {
 				])
 			}
 		}
+	}
+	
+	private func updateContentAccess() {
+		let isContentAvailable = self.userFacade.isSignedIn && self.userFacade.isSubscribed
+		let sections: [DetailFunShowSection] = collectionViewController.sections.map { section in
+			switch section {
+			case var .video(model):
+				model.isEnabled = isContentAvailable
+				return .video(model)
+			case var .info(model):
+				model.isEnabled = isContentAvailable
+				return .info(model)
+			default:
+				return section
+			}
+		}
+		collectionViewController.update(sections: sections)
+	}
+	
+	@objc
+	private func handleUserSubscribedNotification(notification: Notification) {
+		updateContentAccess()
+	}
+	
+	@objc
+	private func handleUserLoggedInNotification(notification: Notification) {
+		updateContentAccess()
+	}
+	
+	@objc
+	private func handleUserLogoutNotification(notification: Notification) {
+		updateContentAccess()
 	}
 }
 

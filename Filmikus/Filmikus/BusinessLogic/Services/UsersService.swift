@@ -9,7 +9,9 @@
 import Moya
 
 protocol UsersServiceType {
-	func register(email: String, completion: @escaping (Result<UserResponseModel, Error>) -> Void)
+	func register(email: String, completion: @escaping (Result<SignUpStatusModel, Error>) -> Void)
+	func login(email: String, password: String, completion: @escaping (Result<SignInStatusModel, Error>) -> Void)
+	func receipt(userId: Int, receipt: String, completion: @escaping (Result<ReceiptStatusModel, Error>) -> Void)
 }
 
 class UsersService: UsersServiceType {
@@ -22,31 +24,33 @@ class UsersService: UsersServiceType {
 		self.provider = provider
 	}
 	
-	func register(email: String, completion: @escaping (Result<UserResponseModel, Error>) -> Void) {
-        let params: [String: Any] = ["email" : email, "type" : 3]
-        let privateKey = "691cc955d8e511af995ade60215672da"
-        
-        do {
-			let jsonData = try JSONSerialization.data(withJSONObject: params, options: .fragmentsAllowed)
-            let key = privateKey.data(using: .utf8)!
-            let iv = AES256.randomIv()
-            
-            let aes = try AES256(key: key, iv: iv)
-            let encrypted = try aes.encrypt(jsonData)
-            let hmac = encrypted.HMAC(withKey: key, using: .SHA256)
-            
-            let resultData = iv + hmac + encrypted
-            let base64 = resultData.base64EncodedString()
-            
-			provider.request(.register(userData: base64)) { (result) in
-				completion(
-					result.mapError { $0 }.flatMap { response in
-						Result { try response.map(UserResponseModel.self) }
-					}
-				)
-			}
-        } catch {
-			completion(.failure(error))
-        }
+	func register(email: String, completion: @escaping (Result<SignUpStatusModel, Error>) -> Void) {
+		provider.request(.register(email: email)) { (result) in
+			completion(
+				result.mapError { $0 }.flatMap { response in
+					Result { try response.map(SignUpStatusModel.self) }
+				}
+			)
+		}
+	}
+	
+	func login(email: String, password: String, completion: @escaping (Result<SignInStatusModel, Error>) -> Void) {
+		provider.request(.login(email: email, password: password)) { (result) in
+			completion(
+				result.mapError { $0 }.flatMap { response in
+					Result { try response.map(SignInStatusModel.self) }
+				}
+			)
+		}
+	}
+	
+	func receipt(userId: Int, receipt: String, completion: @escaping (Result<ReceiptStatusModel, Error>) -> Void) {
+		provider.request(.appstoreReceipt(userId: userId, receipt: receipt)) { (result) in
+			completion(
+				result.mapError { $0 }.flatMap { response in
+					Result { try response.map(ReceiptStatusModel.self) }
+				}
+			)
+		}
 	}
 }

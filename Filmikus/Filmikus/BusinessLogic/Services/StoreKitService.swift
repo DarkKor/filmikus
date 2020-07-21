@@ -11,17 +11,20 @@ import StoreKit
 protocol StoreKitServiceType: class {
 	func loadProducts(completion: ((Result<[SKProduct], Error>) -> Void)?)
 	func purchase(product: SKProduct, completion: ((Result<Void, Error>) -> Void)?)
-	func refreshSubscriptionsStatus(completion: ((Result<Void, Error>) -> Void)?)
+	func restorePurchases(completion: ((Result<Void, Error>) -> Void)?)
+	func loadReceipt(completion: ((Result<String, Error>) -> Void)?)
 }
 
 class StoreKitService: NSObject, StoreKitServiceType {
 	
 	typealias SubscriptionBlock = (Result<Void, Error>) -> Void
 	typealias ProductsBlock = (Result<[SKProduct], Error>) -> Void
+	typealias ReceiptBlock = (Result<String, Error>) -> Void
 	
 	private var subscriptionBlock: SubscriptionBlock?
 	private var refreshSubscriptionBlock: SubscriptionBlock?
 	private var productsBlock: ProductsBlock?
+	private var receiptBlock: ReceiptBlock?
 		
 	private(set) var products: [SKProduct] = []
 
@@ -33,10 +36,6 @@ class StoreKitService: NSObject, StoreKitServiceType {
 	}
 	
 	// MARK:- Main methods
-	
-	func expirationDate(for identifier: String) -> Date? {
-		UserDefaults.standard.object(forKey: identifier) as? Date
-	}
 	
 	func purchase(product: SKProduct, completion: SubscriptionBlock? = nil) {
 		guard SKPaymentQueue.canMakePayments() else { return }
@@ -50,26 +49,17 @@ class StoreKitService: NSObject, StoreKitServiceType {
 		subscriptionBlock = completion
 		SKPaymentQueue.default().restoreCompletedTransactions()
 	}
-	/*
-	It's the most simple way to send verify receipt request. You shouldn't use current code in production apps.
-	This code doesn't handle errors.
-	*/
-	func refreshSubscriptionsStatus(completion: SubscriptionBlock? = nil) {
-		self.refreshSubscriptionBlock = completion
+	
+	func loadReceipt(completion: ReceiptBlock? = nil) {
+		self.receiptBlock = completion
 		guard let receiptUrl = Bundle.main.appStoreReceiptURL else {
 			refreshReceipt()
-			// do not call block in this case. It will be called inside after receipt refreshing finishes.
 			return
 		}
 		guard let receiptData = try? Data(contentsOf: receiptUrl).base64EncodedString() else { return }
-		print(receiptData)
-		// Then we must send receipt data to the server for validation
-		//
+		completion?(.success(receiptData))
 	}
 
-	/*
-	Should not be called directly. Call refreshSubscriptionsStatus instead.
-	*/
 	private func refreshReceipt() {
 		let request = SKReceiptRefreshRequest(receiptProperties: nil)
 		request.delegate = self
@@ -98,14 +88,14 @@ extension StoreKitService: SKRequestDelegate {
 	
 	func requestDidFinish(_ request: SKRequest) {
 		guard request is SKReceiptRefreshRequest else { return }
-		refreshSubscriptionsStatus(completion: subscriptionBlock)
+		loadReceipt(completion: receiptBlock)
 	}
 	
 	func request(_ request: SKRequest, didFailWithError error: Error){
 		guard request is SKReceiptRefreshRequest else { return }
 		DispatchQueue.main.async {
-			self.refreshSubscriptionBlock?(.failure(error))
-			self.refreshSubscriptionBlock = nil
+			self.receiptBlock?(.failure(error))
+			self.receiptBlock = nil
 		}
 	}
 }
@@ -131,9 +121,10 @@ extension StoreKitService: SKPaymentTransactionObserver {
 			switch (transaction.transactionState) {
 			case .purchased, .restored:
 				SKPaymentQueue.default().finishTransaction(transaction)
-				refreshSubscriptionsStatus { result in
+				loadReceipt() { result in
 					DispatchQueue.main.async {
-						self.subscriptionBlock?(result)
+						let subscriptionResult = result.map { _ in Void() }
+						self.subscriptionBlock?(subscriptionResult)
 						self.subscriptionBlock = nil
 					}
 				}

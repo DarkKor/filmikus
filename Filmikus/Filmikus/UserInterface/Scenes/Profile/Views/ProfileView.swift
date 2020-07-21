@@ -20,7 +20,7 @@ class ProfileView: UIView {
 	
 	private lazy var stackView: UIStackView = {
 		let stack = UIStackView(arrangedSubviews: [
-			usernameLabel, subscribeButton, restorePurchasesButton, logoutButton
+			usernameLabel, userStatusLabel, subscribeButton, restorePurchasesButton, logoutButton
 		])
 		stack.axis = .vertical
 		stack.spacing = 20
@@ -33,6 +33,13 @@ class ProfileView: UIView {
 		return label
 	}()
 	
+	private lazy var userStatusLabel: UILabel = {
+		let label = UILabel()
+		label.numberOfLines = 0
+		label.font = .systemFont(ofSize: 20)
+		return label
+	}()
+	
 	private lazy var subscribeButton = BlueButton(title: "ПОДПИСАТЬСЯ", target: self, action: #selector(onSubscribeButtonTap))
 	private lazy var restorePurchasesButton = BlueButton(title: "ВОССТАНОВИТЬ ПОКУПКИ", target: self, action: #selector(onRestorePurchasesButtonTap))
 	private lazy var logoutButton = BlueBorderButton(title: "ВЫЙТИ", target: self, action: #selector(onLogoutButtonTap))
@@ -40,8 +47,12 @@ class ProfileView: UIView {
 	init() {
 		super.init(frame: .zero)
 		addSubview(stackView)
+//		stackView.snp.makeConstraints {
+//			$0.edges.equalToSuperview().inset(20)
+//		}
 		stackView.snp.makeConstraints {
-			$0.edges.equalToSuperview().inset(20)
+			$0.center.equalToSuperview()
+			$0.leading.trailing.equalToSuperview().inset(20)
 		}
 		
 		logoutButton.snp.makeConstraints {
@@ -53,18 +64,17 @@ class ProfileView: UIView {
 		fatalError("init(coder:) has not been implemented")
 	}
 	
-	func fill(username: String) {
+	func fill(username: String, isSubscribed: Bool, expirationDate: Date?) {
 		usernameLabel.text = username
-	}
-	
-	func showSubscribeButtons() {
-		subscribeButton.isHidden = false
-		restorePurchasesButton.isHidden = false
-	}
-	
-	func hideSubscribeButtons() {
-		subscribeButton.isHidden = true
-		restorePurchasesButton.isHidden = true
+		subscribeButton.isHidden = isSubscribed
+		restorePurchasesButton.isHidden = isSubscribed
+		var userStatusText = isSubscribed ? "Подписка активна" : "Нет доступа к контенту. Для получения доступа - нажмите кнопку 'Подписаться'"
+		if isSubscribed, let expirationDate = expirationDate {
+			let formatter = DateFormatter()
+			formatter.dateFormat = "dd.MM.yyyy"
+			userStatusText += " до \(formatter.string(from: expirationDate))"
+		}
+		userStatusLabel.text = userStatusText
 	}
 	
 	@objc

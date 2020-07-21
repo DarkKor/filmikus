@@ -10,7 +10,7 @@ import UIKit
 
 class SignUpViewController: ViewController {
 		
-	private let userProvider: UserProviderType = UserProvider()
+	private let userFacade: UserFacadeType = UserFacade()
 
 	private lazy var closeButton: UIButton = {
 		let button = UIButton()
@@ -92,20 +92,36 @@ class SignUpViewController: ViewController {
 		guard let text = emailTextField.text else { return }
 		guard !text.isEmpty else { return }
 		showActivityIndicator()
-		userProvider.register(email: text) { [weak self] (result) in
+		userFacade.signUp(email: text) { [weak self] (result) in
 			guard let self = self else { return }
-			self.hideActivityIndicator()
-			guard let userModel = try? result.get() else { return }
-			self.showAlert(
-				title: "Фильмикус",
-				message: userModel.message,
-				completion: {
-					guard let user = userModel.user else { return }
-					self.userProvider.login(userModel: user)
-					self.userTextView.text = "Ваш логин: \(user.username)\nВаш пароль: \(user.password)"
-					self.present(SubscriptionViewController(), animated: true)
-				}
-			)
+			switch result {
+			case let .success(model):
+				self.userFacade.signIn(
+					email: model.username,
+					password: model.password,
+					completion: { [weak self] (loginStatus) in
+						guard let self = self else { return }
+						self.hideActivityIndicator()
+						switch loginStatus {
+						case let .success(loginModel):
+							self.userTextView.text = "Ваш логин: \(model.username)\nВаш пароль: \(model.password)"
+							self.present(SubscriptionViewController(), animated: true)
+						case let .failure(loginModel):
+							self.showAlert(
+								title: "Фильмикус",
+								message: loginModel.errorDescription
+							)
+						}
+					}
+				)
+			case let .failure(model):
+				self.hideActivityIndicator()
+				self.showAlert(
+					title: "Фильмикус",
+					message: model.message
+				)
+			}
+			
 		}
 	}
 }

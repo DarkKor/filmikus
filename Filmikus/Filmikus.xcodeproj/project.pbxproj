@@ -21,7 +21,6 @@
 		491D037F2492343700093293 /* UsersAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 491D037E2492343700093293 /* UsersAPI.swift */; };
 		491D0381249236F900093293 /* UsersService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 491D0380249236F900093293 /* UsersService.swift */; };
 		491D03832492374F00093293 /* UserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 491D03822492374F00093293 /* UserModel.swift */; };
-		491D038524923CBF00093293 /* UserResponseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 491D038424923CBF00093293 /* UserResponseModel.swift */; };
 		491D03882492411C00093293 /* ActivityIndicatorPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 491D03872492411C00093293 /* ActivityIndicatorPresenter.swift */; };
 		491D038A249243B900093293 /* AlertPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 491D0389249243B900093293 /* AlertPresenter.swift */; };
 		491D038C249266D000093293 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 491D038B249266D000093293 /* ViewController.swift */; };
@@ -131,11 +130,14 @@
 		49907C3F247C0BAF00E201B6 /* VideoCategoryHeaderSectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49907C3E247C0BAF00E201B6 /* VideoCategoryHeaderSectionView.swift */; };
 		49CED94224C509C700BCCB6C /* AES256.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49CED94124C509C700BCCB6C /* AES256.swift */; };
 		49CED94424C50A2800BCCB6C /* Data+HMAC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49CED94324C50A2800BCCB6C /* Data+HMAC.swift */; };
+		49CED94624C5B86900BCCB6C /* SignInStatusModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49CED94524C5B86900BCCB6C /* SignInStatusModel.swift */; };
+		49CED94824C5C53000BCCB6C /* SignUpStatusModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49CED94724C5C53000BCCB6C /* SignUpStatusModel.swift */; };
+		49CED94A24C5E23E00BCCB6C /* ReceiptStatusModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49CED94924C5E23E00BCCB6C /* ReceiptStatusModel.swift */; };
 		49ECBF0F249923CD00F9A854 /* SignInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49ECBF0E249923CD00F9A854 /* SignInViewController.swift */; };
 		49ECBF13249A472E00F9A854 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49ECBF12249A472E00F9A854 /* LoginView.swift */; };
 		49ECBF15249A48B000F9A854 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49ECBF14249A48B000F9A854 /* ProfileView.swift */; };
 		49ECBF18249B76FF00F9A854 /* UserStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49ECBF17249B76FF00F9A854 /* UserStorage.swift */; };
-		49ECBF1A249B981500F9A854 /* UserProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49ECBF19249B981500F9A854 /* UserProvider.swift */; };
+		49ECBF1A249B981500F9A854 /* UserFacade.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49ECBF19249B981500F9A854 /* UserFacade.swift */; };
 		DBB5AD7EDA6B8BBB5543CBB9 /* Pods_Filmikus.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 97F5ACE358500956AF72C9A2 /* Pods_Filmikus.framework */; };
 /* End PBXBuildFile section */
 
@@ -159,7 +161,6 @@
 		491D037E2492343700093293 /* UsersAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsersAPI.swift; sourceTree = "<group>"; };
 		491D0380249236F900093293 /* UsersService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsersService.swift; sourceTree = "<group>"; };
 		491D03822492374F00093293 /* UserModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserModel.swift; sourceTree = "<group>"; };
-		491D038424923CBF00093293 /* UserResponseModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserResponseModel.swift; sourceTree = "<group>"; };
 		491D03872492411C00093293 /* ActivityIndicatorPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityIndicatorPresenter.swift; sourceTree = "<group>"; };
 		491D0389249243B900093293 /* AlertPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertPresenter.swift; sourceTree = "<group>"; };
 		491D038B249266D000093293 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -269,11 +270,14 @@
 		49907C3E247C0BAF00E201B6 /* VideoCategoryHeaderSectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoCategoryHeaderSectionView.swift; sourceTree = "<group>"; };
 		49CED94124C509C700BCCB6C /* AES256.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AES256.swift; sourceTree = "<group>"; };
 		49CED94324C50A2800BCCB6C /* Data+HMAC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Data+HMAC.swift"; sourceTree = "<group>"; };
+		49CED94524C5B86900BCCB6C /* SignInStatusModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInStatusModel.swift; sourceTree = "<group>"; };
+		49CED94724C5C53000BCCB6C /* SignUpStatusModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpStatusModel.swift; sourceTree = "<group>"; };
+		49CED94924C5E23E00BCCB6C /* ReceiptStatusModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReceiptStatusModel.swift; sourceTree = "<group>"; };
 		49ECBF0E249923CD00F9A854 /* SignInViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInViewController.swift; sourceTree = "<group>"; };
 		49ECBF12249A472E00F9A854 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		49ECBF14249A48B000F9A854 /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
 		49ECBF17249B76FF00F9A854 /* UserStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserStorage.swift; sourceTree = "<group>"; };
-		49ECBF19249B981500F9A854 /* UserProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProvider.swift; sourceTree = "<group>"; };
+		49ECBF19249B981500F9A854 /* UserFacade.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserFacade.swift; sourceTree = "<group>"; };
 		5F55A71C0021F60EFFD15EA6 /* Pods-Filmikus.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Filmikus.debug.xcconfig"; path = "Target Support Files/Pods-Filmikus/Pods-Filmikus.debug.xcconfig"; sourceTree = "<group>"; };
 		97F5ACE358500956AF72C9A2 /* Pods_Filmikus.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Filmikus.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -392,7 +396,9 @@
 				49900FFB2481078F00F18B46 /* EpisodeModel.swift */,
 				4937868A2486FA6200C8496E /* EpisodesModel.swift */,
 				491D03822492374F00093293 /* UserModel.swift */,
-				491D038424923CBF00093293 /* UserResponseModel.swift */,
+				49CED94724C5C53000BCCB6C /* SignUpStatusModel.swift */,
+				49CED94524C5B86900BCCB6C /* SignInStatusModel.swift */,
+				49CED94924C5E23E00BCCB6C /* ReceiptStatusModel.swift */,
 			);
 			path = Entities;
 			sourceTree = "<group>";
@@ -409,7 +415,7 @@
 				49900FF92481065500F18B46 /* EpisodesService.swift */,
 				491D0380249236F900093293 /* UsersService.swift */,
 				49ECBF17249B76FF00F9A854 /* UserStorage.swift */,
-				49ECBF19249B981500F9A854 /* UserProvider.swift */,
+				49ECBF19249B981500F9A854 /* UserFacade.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -894,6 +900,7 @@
 				493786932487D55200C8496E /* PriceButton.swift in Sources */,
 				49CED94224C509C700BCCB6C /* AES256.swift in Sources */,
 				49684AC22476801A00E9BADC /* UnderlinedSegmentControl.swift in Sources */,
+				49CED94624C5B86900BCCB6C /* SignInStatusModel.swift in Sources */,
 				49907C3F247C0BAF00E201B6 /* VideoCategoryHeaderSectionView.swift in Sources */,
 				49900FD4247FDB6700F18B46 /* VideoOrder.swift in Sources */,
 				49900FCC247FD1D500F18B46 /* CategoryModel.swift in Sources */,
@@ -907,11 +914,13 @@
 				49684AB7247671E500E9BADC /* VideoCategoriesViewController.swift in Sources */,
 				49900FE22480120000F18B46 /* DetailMovieModel.swift in Sources */,
 				49684A6B246BE5B600E9BADC /* NavigationController.swift in Sources */,
+				49CED94824C5C53000BCCB6C /* SignUpStatusModel.swift in Sources */,
 				491C21BE246424F4007CDEC2 /* ReusableView.swift in Sources */,
 				49900FE82480146600F18B46 /* DirectorModel.swift in Sources */,
 				491D03882492411C00093293 /* ActivityIndicatorPresenter.swift in Sources */,
 				49684A72246BE70C00E9BADC /* VideosViewController.swift in Sources */,
 				49900FDC24800BD600F18B46 /* CountriesAPI.swift in Sources */,
+				49CED94A24C5E23E00BCCB6C /* ReceiptStatusModel.swift in Sources */,
 				4937867B24855CDC00C8496E /* FilmsFilterQualityCollectionViewCell.swift in Sources */,
 				4937869E248A42F400C8496E /* DetailSerialViewController.swift in Sources */,
 				49900FBC247EAA9900F18B46 /* MainService.swift in Sources */,
@@ -921,7 +930,6 @@
 				49684A88246EF9CF00E9BADC /* MoviesCollectionViewController.swift in Sources */,
 				49900FF42481030700F18B46 /* CountriesService.swift in Sources */,
 				4922684D248E858900B05A51 /* DetailMovieVideoCollectionViewCell.swift in Sources */,
-				491D038524923CBF00093293 /* UserResponseModel.swift in Sources */,
 				49684AC62476A4BF00E9BADC /* VideoCollectionViewCell.swift in Sources */,
 				491D038C249266D000093293 /* ViewController.swift in Sources */,
 				49900FFA2481065500F18B46 /* EpisodesService.swift in Sources */,
@@ -979,7 +987,7 @@
 				49378673248520B800C8496E /* FilmsFacade.swift in Sources */,
 				49900FE6248013DD00F18B46 /* CountryModel.swift in Sources */,
 				491C21BC246424A8007CDEC2 /* CategoryTableViewCell.swift in Sources */,
-				49ECBF1A249B981500F9A854 /* UserProvider.swift in Sources */,
+				49ECBF1A249B981500F9A854 /* UserFacade.swift in Sources */,
 				49684A912472F2D000E9BADC /* String+SelectableItem.swift in Sources */,
 				49684A69246AF49100E9BADC /* FilmsViewController.swift in Sources */,
 				49226840248E7F0D00B05A51 /* DetailMovieCollectionViewController.swift in Sources */,
@@ -1125,7 +1133,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 4;
 				DEVELOPMENT_TEAM = 3RN7L9A98V;
@@ -1137,7 +1145,7 @@
 				LIBRARY_SEARCH_PATHS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = com.filmikustest.testapp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = Filmikus_adhoc;
+				PROVISIONING_PROFILE_SPECIFIER = Filmikus_development;
 				SWIFT_INCLUDE_PATHS = "";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -1151,7 +1159,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 4;
 				DEVELOPMENT_TEAM = 3RN7L9A98V;
@@ -1163,7 +1171,7 @@
 				LIBRARY_SEARCH_PATHS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = com.filmikustest.testapp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = Filmikus_adhoc;
+				PROVISIONING_PROFILE_SPECIFIER = Filmikus_development;
 				SWIFT_INCLUDE_PATHS = "";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";

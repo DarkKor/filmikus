@@ -20,7 +20,7 @@ class DetailFunShowCollectionViewController: UIViewController {
 	
 	weak var delegate: DetailFunShowCollectionViewControllerDelegate?
 	
-	private var sections: [DetailFunShowSection] = []
+	private(set) var sections: [DetailFunShowSection] = []
 	
 	private lazy var collectionLayout: UICollectionViewFlowLayout = {
 		let layout = UICollectionViewFlowLayout()
