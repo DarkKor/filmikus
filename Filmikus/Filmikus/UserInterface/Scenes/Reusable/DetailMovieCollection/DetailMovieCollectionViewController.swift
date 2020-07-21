@@ -142,9 +142,9 @@ extension DetailMovieCollectionViewController: UICollectionViewDelegate {
 	
 	func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
 		switch sections[indexPath.section] {
-		case let .video(model):
+		case .video(_):
 			break
-		case let .info(model):
+		case .info(_):
 			break
 		case let .related(model):
 			let movie = model.relatedMovies[indexPath.item]

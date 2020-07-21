@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 52;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -800,7 +800,6 @@
 			);
 			mainGroup = 491C217D24641393007CDEC2;
 			packageReferences = (
-				49879A5824C1F352008F7A4C /* XCRemoteSwiftPackageReference "OpenSSL" */,
 			);
 			productRefGroup = 491C218724641393007CDEC2 /* Products */;
 			projectDirPath = "";
@@ -1205,17 +1204,6 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
-
-/* Begin XCRemoteSwiftPackageReference section */
-		49879A5824C1F352008F7A4C /* XCRemoteSwiftPackageReference "OpenSSL" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/IBM-Swift/OpenSSL.git";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 2.2.2;
-			};
-		};
-/* End XCRemoteSwiftPackageReference section */
 	};
 	rootObject = 491C217E24641393007CDEC2 /* Project object */;
 }

@@ -46,10 +46,17 @@ extension Data {
 	
 	func HMAC(withKey key: Data, using algorithm: CryptoAlgorithm) -> Data {
 		var result = Data(count: Int(algorithm.digestLength))
-		result.withUnsafeMutableBytes({ resultBytes in
-			self.withUnsafeBytes({ dataBytes in
-				key.withUnsafeBytes({ keyBytes in
-					CCHmac(algorithm.HMACAlgorithm, keyBytes, key.count, dataBytes, self.count, resultBytes)
+		result.withUnsafeMutableBytes({ resultRawBufferPointer in
+			self.withUnsafeBytes({ dataRawBufferPointer in
+				key.withUnsafeBytes({ keyRawBufferPointer -> Void in
+					CCHmac(
+						algorithm.HMACAlgorithm,
+						keyRawBufferPointer.baseAddress,
+						key.count,
+						dataRawBufferPointer.baseAddress,
+						self.count,
+						resultRawBufferPointer.baseAddress
+					)
 				})
 			})
 		})

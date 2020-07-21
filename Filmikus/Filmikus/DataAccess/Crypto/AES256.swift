@@ -43,20 +43,22 @@ struct AES256 {
 		var outLength = Int(0)
 		var outBytes = [UInt8](repeating: 0, count: input.count + kCCBlockSizeAES128)
 		var status: CCCryptorStatus = CCCryptorStatus(kCCSuccess)
-		input.withUnsafeBytes { (encryptedBytes: UnsafePointer<UInt8>!) -> () in
-			iv.withUnsafeBytes { (ivBytes: UnsafePointer<UInt8>!) in
-				key.withUnsafeBytes { (keyBytes: UnsafePointer<UInt8>!) -> () in
-					status = CCCrypt(operation,
-									 CCAlgorithm(kCCAlgorithmAES128),            // algorithm
-						CCOptions(kCCOptionPKCS7Padding),           // options
-						keyBytes,                                   // key
-						key.count,                                  // keylength
-						ivBytes,                                    // iv
-						encryptedBytes,                             // dataIn
-						input.count,                                // dataInLength
-						&outBytes,                                  // dataOut
-						outBytes.count,                             // dataOutAvailable
-						&outLength)                                 // dataOutMoved
+		input.withUnsafeBytes { (inputRawBufferPointer) -> Void in
+			iv.withUnsafeBytes { (ivRawBufferPointer) -> Void in
+				key.withUnsafeBytes { (keyRawBufferPointer) -> Void in
+					status = CCCrypt(
+						operation,
+						CCAlgorithm(kCCAlgorithmAES128), // algorithm
+						CCOptions(kCCOptionPKCS7Padding), // options
+						keyRawBufferPointer.baseAddress, // key
+						key.count, // keylength
+						ivRawBufferPointer.baseAddress, // iv
+						inputRawBufferPointer.baseAddress, // dataIn
+						input.count, // dataInLength
+						&outBytes, // dataOut
+						outBytes.count, // dataOutAvailable
+						&outLength // dataOutMoved
+					)
 				}
 			}
 		}
@@ -76,8 +78,9 @@ struct AES256 {
 	
 	static func randomData(length: Int) -> Data {
 		var data = Data(count: length)
-		let status = data.withUnsafeMutableBytes { mutableBytes in
-			SecRandomCopyBytes(kSecRandomDefault, length, mutableBytes)
+		let status = data.withUnsafeMutableBytes { statusRawBufferPointer -> Int32 in
+			let statusPointer = statusRawBufferPointer.baseAddress!
+			return SecRandomCopyBytes(kSecRandomDefault, length, statusPointer)
 		}
 		assert(status == Int32(0))
 		return data

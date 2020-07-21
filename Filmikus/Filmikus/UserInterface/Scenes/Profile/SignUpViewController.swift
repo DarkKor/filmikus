@@ -104,7 +104,7 @@ class SignUpViewController: ViewController {
 						guard let self = self else { return }
 						self.hideActivityIndicator()
 						switch loginStatus {
-						case let .success(loginModel):
+						case .success(_):
 							self.userTextView.text = "Ваш логин: \(model.username)\nВаш пароль: \(model.password)"
 							self.present(SubscriptionViewController(), animated: true)
 						case let .failure(loginModel):
