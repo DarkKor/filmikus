@@ -91,6 +91,7 @@ class SignUpViewController: ViewController {
 	private func onNextButtonTap(sender: UIButton) {
 		guard let text = emailTextField.text else { return }
 		guard !text.isEmpty else { return }
+		view.endEditing(true)
 		showActivityIndicator()
 		userFacade.signUp(email: text) { [weak self] (result) in
 			guard let self = self else { return }

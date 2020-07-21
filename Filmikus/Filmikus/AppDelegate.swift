@@ -13,25 +13,21 @@ import Firebase
 class AppDelegate: UIResponder, UIApplicationDelegate {
 	
 	var window: UIWindow?
+	
+	private let receiptStatusUpdater = ReceiptStatusUpdater()
 
 	func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
 		
 		FirebaseApp.configure()
-
-//		StoreKitService.shared.startWith(
-//			productIds: [
-//				"com.filmikustestsubscription.testapp",
-//				"com.filmikustestsubscription.year.testapp"
-//			],
-//			sharedSecret: "325bac5a10fd4dcd9274233dcf980c17"
-//		)
 
 		window = UIWindow(frame: UIScreen.main.bounds)
 		window?.rootViewController = TabBarController()
 		window?.makeKeyAndVisible()
 		return true
 	}
-
-
+	
+	func applicationDidBecomeActive(_ application: UIApplication) {
+		receiptStatusUpdater.updateReceipt()
+	}
 }
 

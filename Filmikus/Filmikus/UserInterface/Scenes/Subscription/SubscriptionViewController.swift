@@ -156,7 +156,6 @@ class SubscriptionViewController: ViewController {
 						self.userFacade.receipt(userId: userId, receipt: receipt) { (status) in
 							print(status)
 							guard self.userFacade.isSubscribed else { return }
-							NotificationCenter.default.post(name: .userDidSubscribe, object: nil)
 							self.showAlert(
 								title: "Фильмикус",
 								message: "Вы успешно подписались!",

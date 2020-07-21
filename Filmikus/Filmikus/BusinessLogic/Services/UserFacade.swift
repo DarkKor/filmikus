@@ -86,6 +86,8 @@ class UserFacade: UserFacadeType {
 			guard let status = try? result.get() else { return }
 			self.storage.expirationDate = status.expirationDate
 			completion(status)
+			guard self.isSubscribed else { return }
+			NotificationCenter.default.post(name: .userDidSubscribe, object: nil)
 		}
 	}
 }
