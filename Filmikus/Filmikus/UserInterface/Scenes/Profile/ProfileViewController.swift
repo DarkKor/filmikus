@@ -130,16 +130,9 @@ extension ProfileViewController: ProfileViewDelegate {
 		showActivityIndicator()
 		storeKitService.restorePurchases { [weak self] (result) in
 			guard let self = self else { return }
-			guard let userId = self.userFacade.user?.id else { return }
-			self.storeKitService.loadReceipt { [weak self] (result) in
+			self.userFacade.updateReceipt { [weak self] (model) in
 				guard let self = self else { return }
-				guard let receipt = try? result.get() else { return }
-				self.userFacade.receipt(userId: userId, receipt: receipt) { [weak self] (model) in
-					guard let self = self else { return }
-					self.hideActivityIndicator()
-					guard self.userFacade.isSubscribed else { return }
-					NotificationCenter.default.post(name: .userDidSubscribe, object: nil)
-				}
+				self.hideActivityIndicator()
 			}
 		}
 	}

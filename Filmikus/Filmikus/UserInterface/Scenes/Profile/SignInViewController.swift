@@ -175,8 +175,13 @@ class SignInViewController: ViewController {
 			guard let self = self else { return }
 			self.hideActivityIndicator()
 			switch loginStatus {
-			case .success:
-				self.dismiss(animated: true)
+			case let .success(model):
+				if model.isPaid {
+					self.dismiss(animated: true)
+				} else {
+					let subscriptionVC = SubscriptionViewController()
+					self.present(subscriptionVC, animated: true)
+				}
 			case let .failure(model):
 				self.showAlert(title: "Фильмикус", message: model.errorDescription)
 			}

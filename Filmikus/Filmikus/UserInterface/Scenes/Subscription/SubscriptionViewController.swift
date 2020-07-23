@@ -148,20 +148,13 @@ class SubscriptionViewController: ViewController {
 				self.hideActivityIndicator()
 				switch result {
 				case .success:
-					self.storeKitService.loadReceipt { [weak self] (result) in
-						guard let self = self else { return }
-						self.hideActivityIndicator()
-						guard let receipt = try? result.get() else { return }
-						guard let userId = self.userFacade.user?.id else { return }
-						self.userFacade.receipt(userId: userId, receipt: receipt) { (status) in
-							print(status)
-							guard self.userFacade.isSubscribed else { return }
-							self.showAlert(
-								title: "Фильмикус",
-								message: "Вы успешно подписались!",
-								completion: { self.dismiss(animated: true) }
-							)
-						}
+					self.userFacade.updateReceipt { (status) in
+						guard self.userFacade.isSubscribed else { return }
+						self.showAlert(
+							title: "Фильмикус",
+							message: "Вы успешно подписались!",
+							completion: { self.dismiss(animated: true) }
+						)
 					}
 				case .failure(let error):
 					self.showAlert(

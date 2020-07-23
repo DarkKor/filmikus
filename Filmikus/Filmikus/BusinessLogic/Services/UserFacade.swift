@@ -21,7 +21,7 @@ protocol UserFacadeType {
 	func signIn(email: String, password: String, completion: @escaping (SignInStatusModel) -> Void)
 	func signOut()
 	func signUp(email: String, completion: @escaping (SignUpStatusModel) -> Void)
-	func receipt(userId: Int, receipt: String, completion: @escaping (ReceiptStatusModel) -> Void)
+	func updateReceipt(completion: @escaping (ReceiptStatusModel) -> Void)
 }
 
 class UserFacade: UserFacadeType {
@@ -44,13 +44,16 @@ class UserFacade: UserFacadeType {
 	
 	private let service: UsersServiceType
 	private let storage: UserStorageType
+	private let storeKit: StoreKitServiceType
 	
 	init(
 		service: UsersServiceType = UsersService(),
-		storage: UserStorageType = UserStorage()
+		storage: UserStorageType = UserStorage(),
+		storeKit: StoreKitServiceType = StoreKitService.shared
 	) {
 		self.service = service
 		self.storage = storage
+		self.storeKit = storeKit
 	}
 	
 	func signIn(email: String, password: String, completion: @escaping (SignInStatusModel) -> Void) {
@@ -59,7 +62,6 @@ class UserFacade: UserFacadeType {
 			guard let userStatus = try? result.get() else { return }
 			switch userStatus {
 			case let .success(model):
-				guard model.isPaid else { return }
 				self.storage.user = UserModel(id: model.userId, username: email, password: password)
 				NotificationCenter.default.post(name: .userDidLogin, object: nil)
 			case .failure(_):
@@ -82,13 +84,18 @@ class UserFacade: UserFacadeType {
 		}
 	}
 	
-	func receipt(userId: Int, receipt: String, completion: @escaping (ReceiptStatusModel) -> Void) {
-		service.receipt(userId: userId, receipt: receipt) { result in
-			guard let status = try? result.get() else { return }
-			self.storage.expirationDate = status.expirationDate
-			completion(status)
-			guard self.isSubscribed else { return }
-			NotificationCenter.default.post(name: .userDidSubscribe, object: nil)
+	func updateReceipt(completion: @escaping (ReceiptStatusModel) -> Void) {
+		guard let userId = user?.id else { return }
+		storeKit.loadReceipt { (result) in
+			guard let receipt = try? result.get() else { return }
+			self.service.updateReceipt(userId: userId, receipt: receipt) { [weak self] result in
+				guard let self = self else { return }
+				guard let status = try? result.get() else { return }
+				self.storage.expirationDate = status.expirationDate
+				completion(status)
+				guard self.isSubscribed else { return }
+				NotificationCenter.default.post(name: .userDidSubscribe, object: nil)
+			}
 		}
 	}
 }

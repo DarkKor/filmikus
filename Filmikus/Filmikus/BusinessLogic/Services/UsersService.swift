@@ -11,7 +11,7 @@ import Moya
 protocol UsersServiceType {
 	func register(email: String, completion: @escaping (Result<SignUpStatusModel, Error>) -> Void)
 	func login(email: String, password: String, completion: @escaping (Result<SignInStatusModel, Error>) -> Void)
-	func receipt(userId: Int, receipt: String, completion: @escaping (Result<ReceiptStatusModel, Error>) -> Void)
+	func updateReceipt(userId: Int, receipt: String, completion: @escaping (Result<ReceiptStatusModel, Error>) -> Void)
 }
 
 class UsersService: UsersServiceType {
@@ -44,7 +44,7 @@ class UsersService: UsersServiceType {
 		}
 	}
 	
-	func receipt(userId: Int, receipt: String, completion: @escaping (Result<ReceiptStatusModel, Error>) -> Void) {
+	func updateReceipt(userId: Int, receipt: String, completion: @escaping (Result<ReceiptStatusModel, Error>) -> Void) {
 		provider.request(.appstoreReceipt(userId: userId, receipt: receipt)) { (result) in
 			completion(
 				result.mapError { $0 }.flatMap { response in

@@ -16,7 +16,6 @@ class ReceiptStatusUpdater {
 	
 	private let storage = UserDefaults.standard
 	
-	private let storeKitService: StoreKitServiceType = StoreKitService.shared
 	private let userFacade: UserFacadeType = UserFacade()
 	
 	func updateReceipt() {
@@ -28,14 +27,9 @@ class ReceiptStatusUpdater {
 				return
 			}
 		}
-		storeKitService.loadReceipt { [weak self] (result) in
+		userFacade.updateReceipt { [weak self] (model) in
 			guard let self = self else { return }
-			guard let userId = self.userFacade.user?.id else { return }
-			guard let receipt = try? result.get() else { return }
-			self.userFacade.receipt(userId: userId, receipt: receipt) { [weak self] (model) in
-				guard let self = self else { return }
-				self.storage.set(today, forKey: Keys.lastReceiptUpdate)
-			}
+			self.storage.set(today, forKey: Keys.lastReceiptUpdate)
 		}
 	}
 }
