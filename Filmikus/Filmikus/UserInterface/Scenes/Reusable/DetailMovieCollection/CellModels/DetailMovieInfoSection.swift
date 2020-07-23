@@ -19,5 +19,4 @@ struct DetailMovieInfoSection {
 	let quality: String
 	let directors: [DirectorModel]
 	let actors: [ActorModel]
-	var isEnabled: Bool
 }

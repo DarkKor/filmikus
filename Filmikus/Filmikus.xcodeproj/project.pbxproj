@@ -138,6 +138,8 @@
 		49CED95224C9849D00BCCB6C /* SignInFailureModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49CED95124C9849D00BCCB6C /* SignInFailureModel.swift */; };
 		49CED95424C984DD00BCCB6C /* SignUpSuccessModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49CED95324C984DD00BCCB6C /* SignUpSuccessModel.swift */; };
 		49CED95624C984F500BCCB6C /* SignUpFailureModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49CED95524C984F500BCCB6C /* SignUpFailureModel.swift */; };
+		49CED95924C9BE9600BCCB6C /* DetailMovieVideoState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49CED95824C9BE9600BCCB6C /* DetailMovieVideoState.swift */; };
+		49CED95B24C9C86C00BCCB6C /* NeedSubscriptionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49CED95A24C9C86C00BCCB6C /* NeedSubscriptionView.swift */; };
 		49ECBF0F249923CD00F9A854 /* SignInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49ECBF0E249923CD00F9A854 /* SignInViewController.swift */; };
 		49ECBF13249A472E00F9A854 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49ECBF12249A472E00F9A854 /* LoginView.swift */; };
 		49ECBF15249A48B000F9A854 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49ECBF14249A48B000F9A854 /* ProfileView.swift */; };
@@ -283,6 +285,8 @@
 		49CED95124C9849D00BCCB6C /* SignInFailureModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInFailureModel.swift; sourceTree = "<group>"; };
 		49CED95324C984DD00BCCB6C /* SignUpSuccessModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpSuccessModel.swift; sourceTree = "<group>"; };
 		49CED95524C984F500BCCB6C /* SignUpFailureModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpFailureModel.swift; sourceTree = "<group>"; };
+		49CED95824C9BE9600BCCB6C /* DetailMovieVideoState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailMovieVideoState.swift; sourceTree = "<group>"; };
+		49CED95A24C9C86C00BCCB6C /* NeedSubscriptionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NeedSubscriptionView.swift; sourceTree = "<group>"; };
 		49ECBF0E249923CD00F9A854 /* SignInViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInViewController.swift; sourceTree = "<group>"; };
 		49ECBF12249A472E00F9A854 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		49ECBF14249A48B000F9A854 /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
@@ -552,6 +556,7 @@
 				4922684A248E82E900B05A51 /* DetailMovieInfoSection.swift */,
 				49226848248E80AE00B05A51 /* DetailMovieRelatedSection.swift */,
 				49226853248FD69900B05A51 /* RelatedMovie.swift */,
+				49CED95824C9BE9600BCCB6C /* DetailMovieVideoState.swift */,
 			);
 			path = CellModels;
 			sourceTree = "<group>";
@@ -565,6 +570,7 @@
 				49684A80246E87CC00E9BADC /* MovieMainInfoView.swift */,
 				4937869A248A400C00C8496E /* MovieDetailInfoView.swift */,
 				49900FB7247E71DF00F18B46 /* AuthRequiredView.swift */,
+				49CED95A24C9C86C00BCCB6C /* NeedSubscriptionView.swift */,
 			);
 			path = DetailMovieCollection;
 			sourceTree = "<group>";
@@ -890,6 +896,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				49CED95B24C9C86C00BCCB6C /* NeedSubscriptionView.swift in Sources */,
 				49900FBE247EACC800F18B46 /* SliderModel.swift in Sources */,
 				49900FD2247FDAE200F18B46 /* VideoQuality.swift in Sources */,
 				4937868124869FDB00C8496E /* FilterQualityContentItem.swift in Sources */,
@@ -990,6 +997,7 @@
 				493786912487C6BD00C8496E /* BlueButton.swift in Sources */,
 				49684AC82476A5BA00E9BADC /* Video.swift in Sources */,
 				49226849248E80AE00B05A51 /* DetailMovieRelatedSection.swift in Sources */,
+				49CED95924C9BE9600BCCB6C /* DetailMovieVideoState.swift in Sources */,
 				49900FEC2480153100F18B46 /* MovieItem.swift in Sources */,
 				4922682F248E43C600B05A51 /* DetailFunShowMoreSection.swift in Sources */,
 				491C21B024641E94007CDEC2 /* CategoriesViewController.swift in Sources */,

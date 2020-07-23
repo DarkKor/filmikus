@@ -67,7 +67,7 @@ class SubscriptionViewController: ViewController {
 		return label
 	}()
 	
-	private lazy var continueButton = BlueButton(title: "Продолжить", target: self, action: #selector(onContinueButtonTap))
+	private lazy var continueButton = BlueButton(title: "ПРОДОЛЖИТЬ", target: self, action: #selector(onContinueButtonTap))
 	
 	private lazy var subscriptionDescriptionLabel: UILabel = {
 		let label = UILabel()

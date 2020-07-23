@@ -12,6 +12,8 @@ class SignInViewController: ViewController {
 	
 	private let userFacade: UserFacadeType = UserFacade()
 	
+	var completion: ((Bool) -> Void)?
+	
 	private lazy var scrollView = UIScrollView()
 	private lazy var containerView = UIView()
 	
@@ -153,7 +155,9 @@ class SignInViewController: ViewController {
 	
 	@objc
 	private func onCloseButtonTap(sender: UIButton) {
-		dismiss(animated: true)
+		dismiss(animated: true) {
+			self.completion?(false)
+		}
 	}
 	
 	@objc
@@ -175,12 +179,9 @@ class SignInViewController: ViewController {
 			guard let self = self else { return }
 			self.hideActivityIndicator()
 			switch loginStatus {
-			case let .success(model):
-				if model.isPaid {
-					self.dismiss(animated: true)
-				} else {
-					let subscriptionVC = SubscriptionViewController()
-					self.present(subscriptionVC, animated: true)
+			case .success:
+				self.dismiss(animated: true) {
+					self.completion?(true)
 				}
 			case let .failure(model):
 				self.showAlert(title: "Фильмикус", message: model.errorDescription)

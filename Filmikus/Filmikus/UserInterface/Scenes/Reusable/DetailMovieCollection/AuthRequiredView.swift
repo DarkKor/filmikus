@@ -17,6 +17,11 @@ class AuthRequiredView: UIView {
 	
 	weak var delegate: AuthRequiredViewDelegate?
 	
+	enum Link {
+		static let signIn = "filmikus://com.signIn.app"
+		static let signUp = "filmikus://com.signUp.app"
+	}
+	
 	private let eyeImageView = UIImageView(image: UIImage(named: "eye"))
 	private let textContainer = UIView()
 	private lazy var authTextView: UITextView = {
@@ -34,13 +39,13 @@ class AuthRequiredView: UIView {
 		let authAttributedText = NSMutableAttributedString(string: "Для просмотра видео ")
 		let authLink = NSAttributedString(
 			string: "войдите",
-			attributes: [.link: "filmikus://com.signIn.app"]
+			attributes: [.link: Link.signIn]
 		)
 		authAttributedText.append(authLink)
 		authAttributedText.append(NSAttributedString(string: " или "))
 		let registerLink = NSAttributedString(
 			string: "зарегистрируйтесь",
-			attributes: [.link: "filmikus://com.signUp.app"]
+			attributes: [.link: Link.signUp]
 		)
 		authAttributedText.append(registerLink)
 		authTextView.linkTextAttributes = [
@@ -91,9 +96,9 @@ extension AuthRequiredView: UITextViewDelegate {
 	func textView(_ textView: UITextView, shouldInteractWith URL: URL, in characterRange: NSRange, interaction: UITextItemInteraction) -> Bool {
 		guard interaction == .invokeDefaultAction else { return false }
 		switch URL.absoluteString {
-		case "filmikus://com.signIn.app":
+		case Link.signIn:
 			delegate?.authRequiredViewDidSelectSignIn(self)
-		case "filmikus://com.signUp.app":
+		case Link.signUp:
 			delegate?.authRequiredViewDidSelectSignUp(self)
 		default:
 			break

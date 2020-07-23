@@ -15,6 +15,16 @@ class DetailFilmViewController: UIViewController {
 	
 	private let videoService: VideosServiceType
 	private let userFacade: UserFacadeType
+	
+	var videoState: DetailMovieVideoState {
+		if !self.userFacade.isSignedIn {
+			return .needAuthentication
+		} else if !self.userFacade.isSubscribed {
+			return .needSubscription
+		} else {
+			return .watchMovie
+		}
+	}
 
 	private lazy var collectionViewController: DetailMovieCollectionViewController = {
 		let viewController = DetailMovieCollectionViewController(style: .poster)
@@ -90,8 +100,7 @@ class DetailFilmViewController: UIViewController {
 			if let tvigleId = detailModel.tvigleId {
 				videoUrl = "http://cloud.tvigle.ru/video/\(tvigleId)/"
 			}
-			let isContentAvailable = self.userFacade.isSignedIn && self.userFacade.isSubscribed
-			let videoSection = DetailMovieVideoSection(url: videoUrl, isEnabled: isContentAvailable)
+			let videoSection = DetailMovieVideoSection(url: videoUrl, state: self.videoState)
 			let infoSection = DetailMovieInfoSection(
 				title: detailModel.title,
 				descr: detailModel.descr,
@@ -104,8 +113,7 @@ class DetailFilmViewController: UIViewController {
 				countries: detailModel.countries,
 				quality: detailModel.quality,
 				directors: detailModel.directors,
-				actors: detailModel.actors,
-				isEnabled: isContentAvailable
+				actors: detailModel.actors
 			)
 			let relatedSection = DetailMovieRelatedSection(
 				title: "Похожие видео",
@@ -127,15 +135,11 @@ class DetailFilmViewController: UIViewController {
 	}
 	
 	private func updateContentAccess() {
-		let isContentAvailable = self.userFacade.isSignedIn && self.userFacade.isSubscribed
 		let sections: [DetailMovieSection] = collectionViewController.sections.map { section in
 			switch section {
 			case var .video(model):
-				model.isEnabled = isContentAvailable
+				model.state = self.videoState
 				return .video(model)
-			case var .info(model):
-				model.isEnabled = isContentAvailable
-				return .info(model)
 			default:
 				return section
 			}
@@ -169,16 +173,28 @@ extension DetailFilmViewController: DetailMovieCollectionViewControllerDelegate 
 	
 	func detailMovieCollectionViewControllerSelectSignIn(_ viewController: DetailMovieCollectionViewController) {
 		let signInVC = SignInViewController()
-		navigationController?.present(signInVC, animated: true)
+		signInVC.completion = { isSignedIn in
+			guard isSignedIn else { return }
+			self.present(SubscriptionViewController(), animated: true)
+		}
+		present(signInVC, animated: true)
 	}
 	
 	func detailMovieCollectionViewControllerSelectSignUp(_ viewController: DetailMovieCollectionViewController) {
 		let signInVC = SignUpViewController()
-		navigationController?.present(signInVC, animated: true)
+		present(signInVC, animated: true)
+	}
+	
+	func detailMovieCollectionViewControllerSelectSubscribe(_ viewController: DetailMovieCollectionViewController) {
+		present(SubscriptionViewController(), animated: true)
 	}
 	
 	func detailMovieCollectionViewControllerSelectShowFilm(_ viewController: DetailMovieCollectionViewController) {
 		let signInVC = SignInViewController()
-		navigationController?.present(signInVC, animated: true)
+		signInVC.completion = { isSignedIn in
+			guard isSignedIn else { return }
+			self.present(SubscriptionViewController(), animated: true)
+		}
+		present(signInVC, animated: true)
 	}
 }

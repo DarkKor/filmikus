@@ -9,14 +9,14 @@
 import UIKit
 import WebKit
 
+typealias DetailFunShowVideoCollectionViewCellDelegate = AuthRequiredViewDelegate & NeedSubscriptionViewDelegate
+
 class DetailFunShowVideoCollectionViewCell: ReusableCollectionViewCell {
 	
-	weak var delegate: AuthRequiredViewDelegate? {
-		get {
-			authRequiredView.delegate
-		}
-		set {
-			authRequiredView.delegate = newValue
+	weak var delegate: DetailFunShowVideoCollectionViewCellDelegate? {
+		didSet {
+			authRequiredView.delegate = delegate
+			needSubscriptionView.delegate = delegate
 		}
 	}
 	
@@ -28,17 +28,23 @@ class DetailFunShowVideoCollectionViewCell: ReusableCollectionViewCell {
 	}()
 
 	private lazy var authRequiredView = AuthRequiredView()
-	
+	private lazy var needSubscriptionView = NeedSubscriptionView()
+
 	override init(frame: CGRect) {
 		super.init(frame: frame)
 		
 		contentView.addSubview(webView)
 		contentView.addSubview(authRequiredView)
+		contentView.addSubview(needSubscriptionView)
 
 		webView.snp.makeConstraints {
 			$0.edges.equalToSuperview()
 		}
 		authRequiredView.snp.makeConstraints {
+			$0.left.top.right.equalToSuperview()
+			$0.bottom.equalTo(webView)
+		}
+		needSubscriptionView.snp.makeConstraints {
 			$0.left.top.right.equalToSuperview()
 			$0.bottom.equalTo(webView)
 		}
@@ -59,8 +65,20 @@ class DetailFunShowVideoCollectionViewCell: ReusableCollectionViewCell {
 	}
 	
 	func fill(model: DetailFunShowVideoSection) {
-		authRequiredView.isHidden = model.isEnabled
-		webView.isHidden = !model.isEnabled
+		switch model.state {
+		case .needAuthentication:
+			authRequiredView.isHidden = false
+			webView.isHidden = true
+			needSubscriptionView.isHidden = true
+		case .needSubscription:
+			authRequiredView.isHidden = true
+			webView.isHidden = true
+			needSubscriptionView.isHidden = false
+		case .watchMovie:
+			authRequiredView.isHidden = true
+			webView.isHidden = false
+			needSubscriptionView.isHidden = true
+		}
 		guard let url = URL(string: model.videoUrl) else { return }
 		webView.load(URLRequest(url: url))
 	}

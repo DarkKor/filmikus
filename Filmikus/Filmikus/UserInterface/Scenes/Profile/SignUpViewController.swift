@@ -106,7 +106,7 @@ class SignUpViewController: ViewController {
 						switch loginStatus {
 						case .success(_):
 							self.userTextView.text = "Ваш логин: \(model.username)\nВаш пароль: \(model.password)"
-							self.present(SubscriptionViewController(), animated: true)
+//							self.present(SubscriptionViewController(), animated: true)
 						case let .failure(loginModel):
 							self.showAlert(
 								title: "Фильмикус",

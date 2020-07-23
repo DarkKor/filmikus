@@ -12,6 +12,7 @@ protocol DetailMovieCollectionViewControllerDelegate: class {
 	func detailMovieCollectionViewController(_ viewController: DetailMovieCollectionViewController, didSelectMovie movie: RelatedMovie)
 	func detailMovieCollectionViewControllerSelectSignIn(_ viewController: DetailMovieCollectionViewController)
 	func detailMovieCollectionViewControllerSelectSignUp(_ viewController: DetailMovieCollectionViewController)
+	func detailMovieCollectionViewControllerSelectSubscribe(_ viewController: DetailMovieCollectionViewController)
 	func detailMovieCollectionViewControllerSelectShowFilm(_ viewController: DetailMovieCollectionViewController)
 }
 
@@ -213,6 +214,15 @@ extension DetailMovieCollectionViewController: AuthRequiredViewDelegate {
 	
 	func authRequiredViewDidSelectSignUp(_ view: AuthRequiredView) {
 		delegate?.detailMovieCollectionViewControllerSelectSignUp(self)
+	}
+}
+
+// MARK: - NeedSubscriptionViewDelegate
+
+extension DetailMovieCollectionViewController: NeedSubscriptionViewDelegate {
+	
+	func needSubscriptionViewDidSelectSubscribe(_ view: NeedSubscriptionView) {
+		delegate?.detailMovieCollectionViewControllerSelectSubscribe(self)
 	}
 }
 

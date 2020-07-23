@@ -18,6 +18,16 @@ class DetailFunShowViewController: UIViewController {
 	private let episodesService: EpisodesServiceType
 	private let userFacade: UserFacadeType
 	
+	var videoState: DetailMovieVideoState {
+		if !self.userFacade.isSignedIn {
+			return .needAuthentication
+		} else if !self.userFacade.isSubscribed {
+			return .needSubscription
+		} else {
+			return .watchMovie
+		}
+	}
+	
 	private lazy var collectionViewController: DetailFunShowCollectionViewController = {
 		let viewController = DetailFunShowCollectionViewController()
 		viewController.delegate = self
@@ -98,15 +108,13 @@ class DetailFunShowViewController: UIViewController {
 				if let tvigleId = detailModel.tvigleId {
 					videoUrl = "http://cloud.tvigle.ru/video/\(tvigleId)/"
 				}
-				let isEnabled = self.userFacade.isSignedIn && self.userFacade.isSubscribed
 				let detailFunShowVideo = DetailFunShowVideoSection(
 					videoUrl: videoUrl,
-					isEnabled: isEnabled
+					state: self.videoState
 				)
 				let detailFunShowInfo = DetailFunShowInfoSection(
 					title: detailModel.title,
-					descr: detailModel.descr,
-					isEnabled: isEnabled
+					descr: detailModel.descr
 				)
 				let detailFunShowMore = DetailFunShowMoreSection(
 					title: "Другие сериии из этого цикла",
@@ -124,15 +132,11 @@ class DetailFunShowViewController: UIViewController {
 	}
 	
 	private func updateContentAccess() {
-		let isContentAvailable = self.userFacade.isSignedIn && self.userFacade.isSubscribed
 		let sections: [DetailFunShowSection] = collectionViewController.sections.map { section in
 			switch section {
 			case var .video(model):
-				model.isEnabled = isContentAvailable
+				model.state = self.videoState
 				return .video(model)
-			case var .info(model):
-				model.isEnabled = isContentAvailable
-				return .info(model)
 			default:
 				return section
 			}
@@ -166,7 +170,11 @@ extension DetailFunShowViewController: DetailFunShowCollectionViewControllerDele
 	
 	func detailFunShowCollectionViewControllerSelectSignIn(_ viewController: DetailFunShowCollectionViewController) {
 		let signInVC = SignInViewController()
-		navigationController?.present(signInVC, animated: true)
+		signInVC.completion = { isSignedIn in
+			guard isSignedIn else { return }
+			self.present(SubscriptionViewController(), animated: true)
+		}
+		present(signInVC, animated: true)
 	}
 	
 	func detailFunShowCollectionViewControllerSelectSignUp(_ viewController: DetailFunShowCollectionViewController) {
@@ -174,8 +182,16 @@ extension DetailFunShowViewController: DetailFunShowCollectionViewControllerDele
 		navigationController?.present(signUpVC, animated: true)
 	}
 	
+	func detailFunShowCollectionViewControllerSelectSubscribe(_ viewController: DetailFunShowCollectionViewController) {
+		present(SubscriptionViewController(), animated: true)
+	}
+	
 	func detailFunShowCollectionViewControllerSelectShowFilm(_ viewController: DetailFunShowCollectionViewController) {
 		let signInVC = SignInViewController()
-		navigationController?.present(signInVC, animated: true)
+		signInVC.completion = { isSignedIn in
+			guard isSignedIn else { return }
+			self.present(SubscriptionViewController(), animated: true)
+		}
+		present(signInVC, animated: true)
 	}
 }

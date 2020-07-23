@@ -113,6 +113,10 @@ extension ProfileViewController: LoginViewDelegate {
 	
 	func loginViewDidSelectSignIn(_ view: LoginView) {
 		let signInVC = SignInViewController()
+		signInVC.completion = { isSignedIn in
+			guard isSignedIn else { return }
+			self.present(SubscriptionViewController(), animated: true)
+		}
 		present(signInVC, animated: true)
 	}
 }

@@ -9,6 +9,8 @@
 import UIKit
 
 class TabBarController: UITabBarController {
+		
+	private let userFacade: UserFacadeType = UserFacade()
 	
 	private lazy var mainViewController: MainViewController = {
 		let viewController = MainViewController()
@@ -68,7 +70,6 @@ class TabBarController: UITabBarController {
 		
         viewControllers = [mainNavVC, filmsNavVC, serialsNavVC, videosNavVC, profileNavVC]
     }
-
 }
 
 // MARK: - MainViewControllerDelegate

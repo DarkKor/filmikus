@@ -12,8 +12,8 @@ protocol DetailFunShowCollectionViewControllerDelegate: class {
 	func detailFunShowCollectionViewController(_ viewController: DetailFunShowCollectionViewController, didSelectVideo video: Video)
 	func detailFunShowCollectionViewControllerSelectSignIn(_ viewController: DetailFunShowCollectionViewController)
 	func detailFunShowCollectionViewControllerSelectSignUp(_ viewController: DetailFunShowCollectionViewController)
+	func detailFunShowCollectionViewControllerSelectSubscribe(_ viewController: DetailFunShowCollectionViewController)
 	func detailFunShowCollectionViewControllerSelectShowFilm(_ viewController: DetailFunShowCollectionViewController)
-
 }
 
 class DetailFunShowCollectionViewController: UIViewController {
@@ -196,6 +196,15 @@ extension DetailFunShowCollectionViewController: AuthRequiredViewDelegate {
 	
 	func authRequiredViewDidSelectSignUp(_ view: AuthRequiredView) {
 		delegate?.detailFunShowCollectionViewControllerSelectSignUp(self)
+	}
+}
+
+// MARK: - NeedSubscriptionViewDelegate
+
+extension DetailFunShowCollectionViewController: NeedSubscriptionViewDelegate {
+	
+	func needSubscriptionViewDidSelectSubscribe(_ view: NeedSubscriptionView) {
+		delegate?.detailFunShowCollectionViewControllerSelectSubscribe(self)
 	}
 }
 

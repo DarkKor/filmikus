@@ -16,6 +16,16 @@ class DetailSerialViewController: UIViewController {
 	private let videoService: VideosServiceType
 	private let episodesService: EpisodesServiceType
 	private let userFacade: UserFacadeType
+	
+	var videoState: DetailMovieVideoState {
+		if !self.userFacade.isSignedIn {
+			return .needAuthentication
+		} else if !self.userFacade.isSubscribed {
+			return .needSubscription
+		} else {
+			return .watchMovie
+		}
+	}
 
 	private lazy var collectionViewController: DetailMovieCollectionViewController = {
 		let viewController = DetailMovieCollectionViewController(style: .episode)
@@ -96,8 +106,7 @@ class DetailSerialViewController: UIViewController {
 				if let tvigleId = detailModel.tvigleId {
 					videoUrl = "http://cloud.tvigle.ru/video/\(tvigleId)/"
 				}
-				let isContentAvailable = self.userFacade.isSignedIn && self.userFacade.isSubscribed
-				let videoSection = DetailMovieVideoSection(url: videoUrl, isEnabled: isContentAvailable)
+				let videoSection = DetailMovieVideoSection(url: videoUrl, state: self.videoState)
 				let infoSection = DetailMovieInfoSection(
 					title: detailModel.title,
 					descr: detailModel.descr,
@@ -110,8 +119,7 @@ class DetailSerialViewController: UIViewController {
 					countries: detailModel.countries,
 					quality: detailModel.quality,
 					directors: detailModel.directors,
-					actors: detailModel.actors,
-					isEnabled: isContentAvailable
+					actors: detailModel.actors
 				)
 				// При открытии сериала открывается видео первой серии поэтому приходится его выделять.
 				let selectedId = episodesModel.items.first?.id ?? -1
@@ -149,8 +157,7 @@ class DetailSerialViewController: UIViewController {
 			self.collectionViewController.update(sections: sections.map {
 				switch $0 {
 				case .video(_):
-					let isContentAvailable = self.userFacade.isSignedIn && self.userFacade.isSubscribed
-					return .video(DetailMovieVideoSection(url: videoUrl, isEnabled: isContentAvailable))
+					return .video(DetailMovieVideoSection(url: videoUrl, state: self.videoState))
 				case let .info(infoSection):
 					return .info(infoSection)
 				case var .related(relatedSection):
@@ -170,15 +177,11 @@ class DetailSerialViewController: UIViewController {
 	}
 	
 	private func updateContentAccess() {
-		let isContentAvailable = self.userFacade.isSignedIn && self.userFacade.isSubscribed
 		let sections: [DetailMovieSection] = collectionViewController.sections.map { section in
 			switch section {
 			case var .video(model):
-				model.isEnabled = isContentAvailable
+				model.state = self.videoState
 				return .video(model)
-			case var .info(model):
-				model.isEnabled = isContentAvailable
-				return .info(model)
 			default:
 				return section
 			}
@@ -212,7 +215,11 @@ extension DetailSerialViewController: DetailMovieCollectionViewControllerDelegat
 	
 	func detailMovieCollectionViewControllerSelectSignIn(_ viewController: DetailMovieCollectionViewController) {
 		let signInVC = SignInViewController()
-		navigationController?.present(signInVC, animated: true)
+		signInVC.completion = { isSignedIn in
+			guard isSignedIn else { return }
+			self.present(SubscriptionViewController(), animated: true)
+		}
+		present(signInVC, animated: true)
 	}
 	
 	func detailMovieCollectionViewControllerSelectSignUp(_ viewController: DetailMovieCollectionViewController) {
@@ -220,8 +227,16 @@ extension DetailSerialViewController: DetailMovieCollectionViewControllerDelegat
 		navigationController?.present(signUpVC, animated: true)
 	}
 	
+	func detailMovieCollectionViewControllerSelectSubscribe(_ viewController: DetailMovieCollectionViewController) {
+		present(SubscriptionViewController(), animated: true)
+	}
+	
 	func detailMovieCollectionViewControllerSelectShowFilm(_ viewController: DetailMovieCollectionViewController) {
 		let signInVC = SignInViewController()
-		navigationController?.present(signInVC, animated: true)
+		signInVC.completion = { isSignedIn in
+			guard isSignedIn else { return }
+			self.present(SubscriptionViewController(), animated: true)
+		}
+		present(signInVC, animated: true)
 	}
 }

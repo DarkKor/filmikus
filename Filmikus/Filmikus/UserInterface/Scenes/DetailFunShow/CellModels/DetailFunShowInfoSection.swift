@@ -9,5 +9,4 @@
 struct DetailFunShowInfoSection {
 	let title: String
 	let descr: String
-	var isEnabled: Bool
 }
