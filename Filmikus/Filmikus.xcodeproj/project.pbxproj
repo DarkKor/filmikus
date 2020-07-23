@@ -134,6 +134,10 @@
 		49CED94824C5C53000BCCB6C /* SignUpStatusModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49CED94724C5C53000BCCB6C /* SignUpStatusModel.swift */; };
 		49CED94A24C5E23E00BCCB6C /* ReceiptStatusModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49CED94924C5E23E00BCCB6C /* ReceiptStatusModel.swift */; };
 		49CED94E24C72A7600BCCB6C /* ReceiptStatusUpdater.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49CED94D24C72A7600BCCB6C /* ReceiptStatusUpdater.swift */; };
+		49CED95024C9847F00BCCB6C /* SignInSuccessModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49CED94F24C9847F00BCCB6C /* SignInSuccessModel.swift */; };
+		49CED95224C9849D00BCCB6C /* SignInFailureModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49CED95124C9849D00BCCB6C /* SignInFailureModel.swift */; };
+		49CED95424C984DD00BCCB6C /* SignUpSuccessModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49CED95324C984DD00BCCB6C /* SignUpSuccessModel.swift */; };
+		49CED95624C984F500BCCB6C /* SignUpFailureModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49CED95524C984F500BCCB6C /* SignUpFailureModel.swift */; };
 		49ECBF0F249923CD00F9A854 /* SignInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49ECBF0E249923CD00F9A854 /* SignInViewController.swift */; };
 		49ECBF13249A472E00F9A854 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49ECBF12249A472E00F9A854 /* LoginView.swift */; };
 		49ECBF15249A48B000F9A854 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49ECBF14249A48B000F9A854 /* ProfileView.swift */; };
@@ -275,6 +279,10 @@
 		49CED94724C5C53000BCCB6C /* SignUpStatusModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpStatusModel.swift; sourceTree = "<group>"; };
 		49CED94924C5E23E00BCCB6C /* ReceiptStatusModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReceiptStatusModel.swift; sourceTree = "<group>"; };
 		49CED94D24C72A7600BCCB6C /* ReceiptStatusUpdater.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReceiptStatusUpdater.swift; sourceTree = "<group>"; };
+		49CED94F24C9847F00BCCB6C /* SignInSuccessModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInSuccessModel.swift; sourceTree = "<group>"; };
+		49CED95124C9849D00BCCB6C /* SignInFailureModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInFailureModel.swift; sourceTree = "<group>"; };
+		49CED95324C984DD00BCCB6C /* SignUpSuccessModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpSuccessModel.swift; sourceTree = "<group>"; };
+		49CED95524C984F500BCCB6C /* SignUpFailureModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpFailureModel.swift; sourceTree = "<group>"; };
 		49ECBF0E249923CD00F9A854 /* SignInViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInViewController.swift; sourceTree = "<group>"; };
 		49ECBF12249A472E00F9A854 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		49ECBF14249A48B000F9A854 /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
@@ -398,10 +406,7 @@
 				49900FE92480149B00F18B46 /* ActorModel.swift */,
 				49900FFB2481078F00F18B46 /* EpisodeModel.swift */,
 				4937868A2486FA6200C8496E /* EpisodesModel.swift */,
-				491D03822492374F00093293 /* UserModel.swift */,
-				49CED94724C5C53000BCCB6C /* SignUpStatusModel.swift */,
-				49CED94524C5B86900BCCB6C /* SignInStatusModel.swift */,
-				49CED94924C5E23E00BCCB6C /* ReceiptStatusModel.swift */,
+				49CED95724C985FE00BCCB6C /* User */,
 			);
 			path = Entities;
 			sourceTree = "<group>";
@@ -744,6 +749,21 @@
 			path = Crypto;
 			sourceTree = "<group>";
 		};
+		49CED95724C985FE00BCCB6C /* User */ = {
+			isa = PBXGroup;
+			children = (
+				491D03822492374F00093293 /* UserModel.swift */,
+				49CED94724C5C53000BCCB6C /* SignUpStatusModel.swift */,
+				49CED95324C984DD00BCCB6C /* SignUpSuccessModel.swift */,
+				49CED95524C984F500BCCB6C /* SignUpFailureModel.swift */,
+				49CED94524C5B86900BCCB6C /* SignInStatusModel.swift */,
+				49CED94F24C9847F00BCCB6C /* SignInSuccessModel.swift */,
+				49CED95124C9849D00BCCB6C /* SignInFailureModel.swift */,
+				49CED94924C5E23E00BCCB6C /* ReceiptStatusModel.swift */,
+			);
+			path = User;
+			sourceTree = "<group>";
+		};
 		49ECBF16249A532700F9A854 /* Views */ = {
 			isa = PBXGroup;
 			children = (
@@ -912,6 +932,7 @@
 				4937868B2486FA6200C8496E /* EpisodesModel.swift in Sources */,
 				49684ACC2476D20A00E9BADC /* LoadingCollectionFooterView.swift in Sources */,
 				493786892486F2F300C8496E /* VideoSubcategory.swift in Sources */,
+				49CED95224C9849D00BCCB6C /* SignInFailureModel.swift in Sources */,
 				49900FFC2481078F00F18B46 /* EpisodeModel.swift in Sources */,
 				49684AB7247671E500E9BADC /* VideoCategoriesViewController.swift in Sources */,
 				49900FE22480120000F18B46 /* DetailMovieModel.swift in Sources */,
@@ -935,6 +956,7 @@
 				49684AC62476A4BF00E9BADC /* VideoCollectionViewCell.swift in Sources */,
 				491D038C249266D000093293 /* ViewController.swift in Sources */,
 				49900FFA2481065500F18B46 /* EpisodesService.swift in Sources */,
+				49CED95024C9847F00BCCB6C /* SignInSuccessModel.swift in Sources */,
 				493786972488EA9000C8496E /* UIColor+Gradient.swift in Sources */,
 				49900FBA247EA97A00F18B46 /* MainAPI.swift in Sources */,
 				49900FEE2480165600F18B46 /* DetailFunShowModel.swift in Sources */,
@@ -975,6 +997,7 @@
 				491D037F2492343700093293 /* UsersAPI.swift in Sources */,
 				49684AC42476A38900E9BADC /* VideoSubcategoryViewController.swift in Sources */,
 				493786A0248A8BC000C8496E /* CategoryType.swift in Sources */,
+				49CED95424C984DD00BCCB6C /* SignUpSuccessModel.swift in Sources */,
 				4922682A248E42F800B05A51 /* DetailFunShowSection.swift in Sources */,
 				491D038A249243B900093293 /* AlertPresenter.swift in Sources */,
 				49226854248FD69900B05A51 /* RelatedMovie.swift in Sources */,
@@ -998,6 +1021,7 @@
 				49684A62246ACDDA00E9BADC /* BlueBorderButton.swift in Sources */,
 				49684A8D2472E7ED00E9BADC /* FilterContentItem.swift in Sources */,
 				49684A8B2472E7D600E9BADC /* FilterItem.swift in Sources */,
+				49CED95624C984F500BCCB6C /* SignUpFailureModel.swift in Sources */,
 				493786872486D45100C8496E /* VideosFacade.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

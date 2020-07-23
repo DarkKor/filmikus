@@ -32,25 +32,3 @@ enum SignUpStatusModel: Decodable {
 		}
 	}
 }
-
-struct SignUpSuccessModel: Decodable {
-	let id: Int
-	let username: String
-	let password: String
-	
-	enum CodingKeys: String, CodingKey {
-		case id = "user_id"
-		case username = "user_name"
-		case password = "user_pass"
-	}
-}
-
-struct SignUpFailureModel: Decodable {
-	let message: String
-	let code: String
-	
-	enum CodingKeys: String, CodingKey {
-		case message = "err_desc"
-		case code = "err_code"
-	}
-}

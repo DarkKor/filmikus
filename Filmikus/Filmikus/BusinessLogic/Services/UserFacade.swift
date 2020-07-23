@@ -59,6 +59,7 @@ class UserFacade: UserFacadeType {
 			guard let userStatus = try? result.get() else { return }
 			switch userStatus {
 			case let .success(model):
+				guard model.isPaid else { return }
 				self.storage.user = UserModel(id: model.userId, username: email, password: password)
 				NotificationCenter.default.post(name: .userDidLogin, object: nil)
 			case .failure(_):
