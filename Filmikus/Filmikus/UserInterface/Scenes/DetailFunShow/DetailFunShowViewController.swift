@@ -170,15 +170,13 @@ extension DetailFunShowViewController: DetailFunShowCollectionViewControllerDele
 	
 	func detailFunShowCollectionViewControllerSelectSignIn(_ viewController: DetailFunShowCollectionViewController) {
 		let signInVC = SignInViewController()
-		signInVC.completion = { isSignedIn in
-			guard isSignedIn else { return }
-			self.present(SubscriptionViewController(), animated: true)
-		}
+		signInVC.delegate = self
 		present(signInVC, animated: true)
 	}
 	
 	func detailFunShowCollectionViewControllerSelectSignUp(_ viewController: DetailFunShowCollectionViewController) {
 		let signUpVC = SignUpViewController()
+		signUpVC.delegate = self
 		navigationController?.present(signUpVC, animated: true)
 	}
 	
@@ -188,10 +186,44 @@ extension DetailFunShowViewController: DetailFunShowCollectionViewControllerDele
 	
 	func detailFunShowCollectionViewControllerSelectShowFilm(_ viewController: DetailFunShowCollectionViewController) {
 		let signInVC = SignInViewController()
-		signInVC.completion = { isSignedIn in
-			guard isSignedIn else { return }
-			self.present(SubscriptionViewController(), animated: true)
-		}
+		signInVC.delegate = self
 		present(signInVC, animated: true)
+	}
+}
+
+// MARK: - SignUpViewControllerDelegate
+
+extension DetailFunShowViewController: SignUpViewControllerDelegate {
+	
+	func signUpViewControllerDidSelectClose(_ viewController: SignUpViewController) {
+		navigationController?.dismiss(animated: true)
+	}
+	
+	func signUpViewControllerDidSignUp(_ viewController: SignUpViewController) {
+		let subscriptionVC = SubscriptionViewController()
+		subscriptionVC.onClose = {
+			viewController.dismiss(animated: true)
+			viewController.showAlert(message: "Чтобы пользоваться приложением необходимо купить подписку")
+		}
+		viewController.present(subscriptionVC, animated: true)
+	}
+}
+
+// MARK: - SignInViewControllerDelegate
+
+extension DetailFunShowViewController: SignInViewControllerDelegate {
+	
+	func signInViewControllerDidSelectClose(_ viewController: SignInViewController) {
+		navigationController?.dismiss(animated: true)
+	}
+	
+	func signInViewController(_ viewController: SignInViewController, didSignInWithPaidStatus isPaid: Bool) {
+		guard !isPaid else { return }
+		let subscriptionVC = SubscriptionViewController()
+		subscriptionVC.onClose = {
+			viewController.dismiss(animated: true)
+			self.dismiss(animated: true)
+		}
+		viewController.present(subscriptionVC, animated: true)
 	}
 }

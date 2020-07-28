@@ -9,7 +9,15 @@
 import UIKit
 import SnapKit
 
+protocol ProfileViewControllerDelegate: class {
+	func profileViewControllerDidSelectSignUp(_ viewController: ProfileViewController)
+	func profileViewControllerDidSelectSignIn(_ viewController: ProfileViewController)
+	func profileViewControllerDidSelectSubscribe(_ viewController: ProfileViewController)
+}
+
 class ProfileViewController: ViewController {
+	
+	weak var delegate: ProfileViewControllerDelegate?
 	
 	private let userFacade: UserFacadeType = UserFacade()
 	
@@ -75,6 +83,10 @@ class ProfileViewController: ViewController {
 		)
 	}
 	
+	func signOut() {
+		userFacade.signOut()
+	}
+	
 	private func updateUI() {
 		loginView.isHidden = userFacade.isSignedIn
 		profileView.isHidden = !userFacade.isSignedIn
@@ -107,17 +119,11 @@ class ProfileViewController: ViewController {
 extension ProfileViewController: LoginViewDelegate {
 	
 	func loginViewDidSelectSignUp(_ view: LoginView) {
-		let signUpVC = SignUpViewController()
-		present(signUpVC, animated: true)
+		delegate?.profileViewControllerDidSelectSignUp(self)
 	}
 	
 	func loginViewDidSelectSignIn(_ view: LoginView) {
-		let signInVC = SignInViewController()
-		signInVC.completion = { isSignedIn in
-			guard isSignedIn else { return }
-			self.present(SubscriptionViewController(), animated: true)
-		}
-		present(signInVC, animated: true)
+		delegate?.profileViewControllerDidSelectSignIn(self)
 	}
 }
 
@@ -126,8 +132,7 @@ extension ProfileViewController: LoginViewDelegate {
 extension ProfileViewController: ProfileViewDelegate {
 	
 	func profileViewDidSelectSubscribe(_ view: ProfileView) {
-		let subscriptionVC = SubscriptionViewController()
-		present(subscriptionVC, animated: true)
+		delegate?.profileViewControllerDidSelectSubscribe(self)
 	}
 	
 	func profileViewDidSelectRestorePurchases(_ view: ProfileView) {

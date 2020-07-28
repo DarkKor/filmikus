@@ -73,6 +73,10 @@ class DetailMovieCollectionViewController: UIViewController {
         // Do any additional setup after loading the view.
     }
 	
+	func showMovie() {
+		collectionView.scrollToItem(at: IndexPath(item: 0, section: 0), at: .top, animated: true)
+	}
+	
 	func update(sections: [DetailMovieSection]) {
 		self.sections = sections
 		collectionView.reloadData()

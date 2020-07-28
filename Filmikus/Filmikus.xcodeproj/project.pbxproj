@@ -63,6 +63,7 @@
 		4937869E248A42F400C8496E /* DetailSerialViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4937869D248A42F400C8496E /* DetailSerialViewController.swift */; };
 		493786A0248A8BC000C8496E /* CategoryType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4937869F248A8BC000C8496E /* CategoryType.swift */; };
 		493786A3248A93C800C8496E /* DetailFunShowViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 493786A2248A93C800C8496E /* DetailFunShowViewController.swift */; };
+		495D769124D022950026B7A2 /* AuthenticationCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 495D769024D022950026B7A2 /* AuthenticationCoordinator.swift */; };
 		49684A5E246AC51600E9BADC /* CategoryHeaderSectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49684A5D246AC51600E9BADC /* CategoryHeaderSectionView.swift */; };
 		49684A60246ACD9B00E9BADC /* UIView+Style.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49684A5F246ACD9B00E9BADC /* UIView+Style.swift */; };
 		49684A62246ACDDA00E9BADC /* BlueBorderButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49684A61246ACDDA00E9BADC /* BlueBorderButton.swift */; };
@@ -140,6 +141,9 @@
 		49CED95624C984F500BCCB6C /* SignUpFailureModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49CED95524C984F500BCCB6C /* SignUpFailureModel.swift */; };
 		49CED95924C9BE9600BCCB6C /* DetailMovieVideoState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49CED95824C9BE9600BCCB6C /* DetailMovieVideoState.swift */; };
 		49CED95B24C9C86C00BCCB6C /* NeedSubscriptionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49CED95A24C9C86C00BCCB6C /* NeedSubscriptionView.swift */; };
+		49D34C1924CEF19E00DD39C9 /* AccessTypeModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49D34C1824CEF19E00DD39C9 /* AccessTypeModel.swift */; };
+		49D34C1C24CF0D7400DD39C9 /* LaunchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49D34C1B24CF0D7400DD39C9 /* LaunchViewController.swift */; };
+		49D34C1E24CF134F00DD39C9 /* AppCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49D34C1D24CF134F00DD39C9 /* AppCoordinator.swift */; };
 		49ECBF0F249923CD00F9A854 /* SignInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49ECBF0E249923CD00F9A854 /* SignInViewController.swift */; };
 		49ECBF13249A472E00F9A854 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49ECBF12249A472E00F9A854 /* LoginView.swift */; };
 		49ECBF15249A48B000F9A854 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49ECBF14249A48B000F9A854 /* ProfileView.swift */; };
@@ -210,6 +214,7 @@
 		4937869D248A42F400C8496E /* DetailSerialViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailSerialViewController.swift; sourceTree = "<group>"; };
 		4937869F248A8BC000C8496E /* CategoryType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryType.swift; sourceTree = "<group>"; };
 		493786A2248A93C800C8496E /* DetailFunShowViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailFunShowViewController.swift; sourceTree = "<group>"; };
+		495D769024D022950026B7A2 /* AuthenticationCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationCoordinator.swift; sourceTree = "<group>"; };
 		49684A5D246AC51600E9BADC /* CategoryHeaderSectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryHeaderSectionView.swift; sourceTree = "<group>"; };
 		49684A5F246ACD9B00E9BADC /* UIView+Style.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Style.swift"; sourceTree = "<group>"; };
 		49684A61246ACDDA00E9BADC /* BlueBorderButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlueBorderButton.swift; sourceTree = "<group>"; };
@@ -287,6 +292,9 @@
 		49CED95524C984F500BCCB6C /* SignUpFailureModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpFailureModel.swift; sourceTree = "<group>"; };
 		49CED95824C9BE9600BCCB6C /* DetailMovieVideoState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailMovieVideoState.swift; sourceTree = "<group>"; };
 		49CED95A24C9C86C00BCCB6C /* NeedSubscriptionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NeedSubscriptionView.swift; sourceTree = "<group>"; };
+		49D34C1824CEF19E00DD39C9 /* AccessTypeModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessTypeModel.swift; sourceTree = "<group>"; };
+		49D34C1B24CF0D7400DD39C9 /* LaunchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchViewController.swift; sourceTree = "<group>"; };
+		49D34C1D24CF134F00DD39C9 /* AppCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCoordinator.swift; sourceTree = "<group>"; };
 		49ECBF0E249923CD00F9A854 /* SignInViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInViewController.swift; sourceTree = "<group>"; };
 		49ECBF12249A472E00F9A854 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		49ECBF14249A48B000F9A854 /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
@@ -352,6 +360,8 @@
 				491C21A3246416D1007CDEC2 /* BusinessLogic */,
 				491C21A2246416B9007CDEC2 /* UserInterface */,
 				491C218924641393007CDEC2 /* AppDelegate.swift */,
+				49D34C1D24CF134F00DD39C9 /* AppCoordinator.swift */,
+				495D769024D022950026B7A2 /* AuthenticationCoordinator.swift */,
 				491C219224641395007CDEC2 /* Assets.xcassets */,
 				491C219424641395007CDEC2 /* LaunchScreen.storyboard */,
 				49378698248900BC00C8496E /* GoogleService-Info.plist */,
@@ -392,6 +402,7 @@
 		491C21A5246418AE007CDEC2 /* Entities */ = {
 			isa = PBXGroup;
 			children = (
+				49D34C1824CEF19E00DD39C9 /* AccessTypeModel.swift */,
 				49900FBD247EACC800F18B46 /* SliderModel.swift */,
 				49900FBF247EACFE00F18B46 /* MovieType.swift */,
 				49900FC3247EBBAE00F18B46 /* MovieModel.swift */,
@@ -459,6 +470,7 @@
 				49684A67246AF45700E9BADC /* Films */,
 				491C21AC24641D51007CDEC2 /* Main */,
 				491C21AB24641B3A007CDEC2 /* Reusable */,
+				49D34C1A24CF0D5200DD39C9 /* Launch */,
 				491C21A924641ADD007CDEC2 /* TabBarController.swift */,
 				49684A6A246BE5B600E9BADC /* NavigationController.swift */,
 				491D038B249266D000093293 /* ViewController.swift */,
@@ -770,6 +782,14 @@
 			path = User;
 			sourceTree = "<group>";
 		};
+		49D34C1A24CF0D5200DD39C9 /* Launch */ = {
+			isa = PBXGroup;
+			children = (
+				49D34C1B24CF0D7400DD39C9 /* LaunchViewController.swift */,
+			);
+			path = Launch;
+			sourceTree = "<group>";
+		};
 		49ECBF16249A532700F9A854 /* Views */ = {
 			isa = PBXGroup;
 			children = (
@@ -902,6 +922,7 @@
 				4937868124869FDB00C8496E /* FilterQualityContentItem.swift in Sources */,
 				49900FB8247E71DF00F18B46 /* AuthRequiredView.swift in Sources */,
 				4937867D24855F2600C8496E /* QualityButton.swift in Sources */,
+				49D34C1E24CF134F00DD39C9 /* AppCoordinator.swift in Sources */,
 				493786A3248A93C800C8496E /* DetailFunShowViewController.swift in Sources */,
 				49900FC8247FCF6200F18B46 /* CategoriesAPI.swift in Sources */,
 				4937868F2487B92300C8496E /* SubscriptionViewController.swift in Sources */,
@@ -968,6 +989,7 @@
 				49900FBA247EA97A00F18B46 /* MainAPI.swift in Sources */,
 				49900FEE2480165600F18B46 /* DetailFunShowModel.swift in Sources */,
 				49684A76246BED4000E9BADC /* UnderlinedTextField.swift in Sources */,
+				495D769124D022950026B7A2 /* AuthenticationCoordinator.swift in Sources */,
 				49684AC0247676DE00E9BADC /* VideoCategory.swift in Sources */,
 				49CED94424C50A2800BCCB6C /* Data+HMAC.swift in Sources */,
 				49378695248855A700C8496E /* SubscriprionSegmentControl.swift in Sources */,
@@ -1005,6 +1027,8 @@
 				491D037F2492343700093293 /* UsersAPI.swift in Sources */,
 				49684AC42476A38900E9BADC /* VideoSubcategoryViewController.swift in Sources */,
 				493786A0248A8BC000C8496E /* CategoryType.swift in Sources */,
+				49D34C1924CEF19E00DD39C9 /* AccessTypeModel.swift in Sources */,
+				49D34C1C24CF0D7400DD39C9 /* LaunchViewController.swift in Sources */,
 				49CED95424C984DD00BCCB6C /* SignUpSuccessModel.swift in Sources */,
 				4922682A248E42F800B05A51 /* DetailFunShowSection.swift in Sources */,
 				491D038A249243B900093293 /* AlertPresenter.swift in Sources */,

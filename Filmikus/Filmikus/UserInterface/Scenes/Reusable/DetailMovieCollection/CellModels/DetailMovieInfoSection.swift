@@ -19,4 +19,5 @@ struct DetailMovieInfoSection {
 	let quality: String
 	let directors: [DirectorModel]
 	let actors: [ActorModel]
+	let showButtonText: String
 }

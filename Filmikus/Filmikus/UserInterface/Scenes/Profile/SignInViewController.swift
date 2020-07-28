@@ -8,12 +8,17 @@
 
 import UIKit
 
+protocol SignInViewControllerDelegate: class {
+	func signInViewControllerDidSelectClose(_ viewController: SignInViewController)
+	func signInViewController(_ viewController: SignInViewController, didSignInWithPaidStatus isPaid: Bool)
+}
+
 class SignInViewController: ViewController {
 	
+	weak var delegate: SignInViewControllerDelegate?
+	
 	private let userFacade: UserFacadeType = UserFacade()
-	
-	var completion: ((Bool) -> Void)?
-	
+		
 	private lazy var scrollView = UIScrollView()
 	private lazy var containerView = UIView()
 	
@@ -155,9 +160,7 @@ class SignInViewController: ViewController {
 	
 	@objc
 	private func onCloseButtonTap(sender: UIButton) {
-		dismiss(animated: true) {
-			self.completion?(false)
-		}
+		delegate?.signInViewControllerDidSelectClose(self)
 	}
 	
 	@objc
@@ -179,12 +182,12 @@ class SignInViewController: ViewController {
 			guard let self = self else { return }
 			self.hideActivityIndicator()
 			switch loginStatus {
-			case .success:
-				self.dismiss(animated: true) {
-					self.completion?(true)
-				}
+			case .success(let model):
+				self.delegate?.signInViewController(self, didSignInWithPaidStatus: model.isPaid)
+				guard model.isPaid else { return }
+				self.userFacade.updateReceipt(completion: { _ in })
 			case let .failure(model):
-				self.showAlert(title: "Фильмикус", message: model.errorDescription)
+				self.showAlert(message: model.errorDescription)
 			}
 		}
 	}

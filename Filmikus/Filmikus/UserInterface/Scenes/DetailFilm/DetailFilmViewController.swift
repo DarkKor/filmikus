@@ -113,7 +113,8 @@ class DetailFilmViewController: UIViewController {
 				countries: detailModel.countries,
 				quality: detailModel.quality,
 				directors: detailModel.directors,
-				actors: detailModel.actors
+				actors: detailModel.actors,
+				showButtonText: "СМОТРЕТЬ ФИЛЬМ"
 			)
 			let relatedSection = DetailMovieRelatedSection(
 				title: "Похожие видео",
@@ -173,16 +174,14 @@ extension DetailFilmViewController: DetailMovieCollectionViewControllerDelegate 
 	
 	func detailMovieCollectionViewControllerSelectSignIn(_ viewController: DetailMovieCollectionViewController) {
 		let signInVC = SignInViewController()
-		signInVC.completion = { isSignedIn in
-			guard isSignedIn else { return }
-			self.present(SubscriptionViewController(), animated: true)
-		}
+		signInVC.delegate = self
 		present(signInVC, animated: true)
 	}
 	
 	func detailMovieCollectionViewControllerSelectSignUp(_ viewController: DetailMovieCollectionViewController) {
-		let signInVC = SignUpViewController()
-		present(signInVC, animated: true)
+		let signUpVC = SignUpViewController()
+		signUpVC.delegate = self
+		present(signUpVC, animated: true)
 	}
 	
 	func detailMovieCollectionViewControllerSelectSubscribe(_ viewController: DetailMovieCollectionViewController) {
@@ -190,11 +189,58 @@ extension DetailFilmViewController: DetailMovieCollectionViewControllerDelegate 
 	}
 	
 	func detailMovieCollectionViewControllerSelectShowFilm(_ viewController: DetailMovieCollectionViewController) {
-		let signInVC = SignInViewController()
-		signInVC.completion = { isSignedIn in
-			guard isSignedIn else { return }
-			self.present(SubscriptionViewController(), animated: true)
+		guard !userFacade.isSignedIn else {
+			if userFacade.isSubscribed {
+				viewController.showMovie()
+			} else {
+				let subscriptionVC = SubscriptionViewController()
+				subscriptionVC.onClose = {
+					self.dismiss(animated: true)
+				}
+				present(subscriptionVC, animated: true)
+			}
+			return
 		}
+		let signInVC = SignInViewController()
+		signInVC.delegate = self
 		present(signInVC, animated: true)
 	}
 }
+
+// MARK: - SignUpViewControllerDelegate
+
+extension DetailFilmViewController: SignUpViewControllerDelegate {
+	
+	func signUpViewControllerDidSelectClose(_ viewController: SignUpViewController) {
+		navigationController?.dismiss(animated: true)
+	}
+	
+	func signUpViewControllerDidSignUp(_ viewController: SignUpViewController) {
+		let subscriptionVC = SubscriptionViewController()
+		subscriptionVC.onClose = {
+			viewController.dismiss(animated: true)
+			viewController.showAlert(message: "Чтобы пользоваться приложением необходимо купить подписку")
+		}
+		viewController.present(subscriptionVC, animated: true)
+	}
+}
+
+// MARK: - SignInViewControllerDelegate
+
+extension DetailFilmViewController: SignInViewControllerDelegate {
+	
+	func signInViewControllerDidSelectClose(_ viewController: SignInViewController) {
+		navigationController?.dismiss(animated: true)
+	}
+	
+	func signInViewController(_ viewController: SignInViewController, didSignInWithPaidStatus isPaid: Bool) {
+		guard !isPaid else { return }
+		let subscriptionVC = SubscriptionViewController()
+		subscriptionVC.onClose = {
+			viewController.dismiss(animated: true)
+			self.dismiss(animated: true)
+		}
+		viewController.present(subscriptionVC, animated: true)
+	}
+}
+

@@ -11,6 +11,7 @@ import Foundation
 protocol UserStorageType: class {
 	var user: UserModel? { get set }
 	var expirationDate: Date? { get set }
+	var accessType: AccessTypeModel? { get set }
 }
 
 class UserStorage: UserStorageType {
@@ -18,6 +19,7 @@ class UserStorage: UserStorageType {
 	enum Keys {
 		static let user = "com.userStorage.user"
 		static let expirationDate = "com.userStorage.expirationDate"
+		static let accessType = "com.userStorage.accessType"
 	}
 	
 	var user: UserModel? {
@@ -38,6 +40,17 @@ class UserStorage: UserStorageType {
 		}
 		set {
 			storage.set(newValue, forKey: Keys.expirationDate)
+			storage.synchronize()
+		}
+	}
+	
+	var accessType: AccessTypeModel? {
+		get {
+			let accessType = storage.integer(forKey: Keys.accessType)
+			return AccessTypeModel(rawValue: accessType)
+		}
+		set {
+			storage.set(newValue?.rawValue, forKey: Keys.accessType)
 			storage.synchronize()
 		}
 	}

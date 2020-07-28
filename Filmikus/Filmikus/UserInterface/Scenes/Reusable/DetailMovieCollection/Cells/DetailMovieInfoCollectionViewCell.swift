@@ -74,6 +74,7 @@ class DetailMovieInfoCollectionViewCell: ReusableCollectionViewCell {
 	func fill(model: DetailMovieInfoSection) {
 		mainInfoView.fill(movie: model)
 		detailInfoView.fill(detailModel: model)
+		showFilmButton.setTitle(model.showButtonText, for: .normal)
 	}
 	
 	@objc

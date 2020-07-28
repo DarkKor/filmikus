@@ -19,6 +19,8 @@ class SubscriptionViewController: ViewController {
 					
 	private let userFacade: UserFacadeType = UserFacade()
 	
+	var onClose: (() -> Void)?
+	
 	private lazy var closeButton: UIButton = {
 		let button = UIButton()
 		button.setImage(UIImage(systemName: "xmark"), for: .normal)
@@ -79,6 +81,15 @@ class SubscriptionViewController: ViewController {
 		return label
 	}()
 	
+	init() {
+		super.init(nibName: nil, bundle: nil)
+		self.modalPresentationStyle = .overFullScreen
+	}
+	
+	required init?(coder: NSCoder) {
+		fatalError("init(coder:) has not been implemented")
+	}
+	
 	override func loadView() {
 		view = UIView()
 		view.backgroundColor = UIColor.gradient(from: .appPeach, to: .appViolet)
@@ -128,7 +139,7 @@ class SubscriptionViewController: ViewController {
 
 	@objc
 	private func onCloseButtonTap(sender: UIButton) {
-		dismiss(animated: true)
+		onClose?()
 	}
 	
 	@objc
@@ -151,14 +162,12 @@ class SubscriptionViewController: ViewController {
 					self.userFacade.updateReceipt { (status) in
 						guard self.userFacade.isSubscribed else { return }
 						self.showAlert(
-							title: "Фильмикус",
 							message: "Вы успешно подписались!",
 							completion: { self.dismiss(animated: true) }
 						)
 					}
 				case .failure(let error):
 					self.showAlert(
-						title: "Фильмикус",
 						message: "Ошибка: \(error.localizedDescription)",
 						completion: { self.dismiss(animated: true) }
 					)

@@ -22,6 +22,7 @@ protocol UserFacadeType {
 	func signOut()
 	func signUp(email: String, completion: @escaping (SignUpStatusModel) -> Void)
 	func updateReceipt(completion: @escaping (ReceiptStatusModel) -> Void)
+	func accessType(completion: @escaping (Result<AccessTypeModel, Error>) -> Void)
 }
 
 class UserFacade: UserFacadeType {
@@ -97,5 +98,15 @@ class UserFacade: UserFacadeType {
 				NotificationCenter.default.post(name: .userDidSubscribe, object: nil)
 			}
 		}
+	}
+	
+	func accessType(completion: @escaping (Result<AccessTypeModel, Error>) -> Void) {
+		guard let accessType = storage.accessType else {
+			service.accessType { (result) in
+				completion(result)
+			}
+			return
+		}
+		completion(.success(accessType))
 	}
 }

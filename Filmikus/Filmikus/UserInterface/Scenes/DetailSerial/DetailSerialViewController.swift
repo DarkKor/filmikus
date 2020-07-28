@@ -119,7 +119,8 @@ class DetailSerialViewController: UIViewController {
 					countries: detailModel.countries,
 					quality: detailModel.quality,
 					directors: detailModel.directors,
-					actors: detailModel.actors
+					actors: detailModel.actors,
+					showButtonText: "СМОТРЕТЬ СЕРИАЛ"
 				)
 				// При открытии сериала открывается видео первой серии поэтому приходится его выделять.
 				let selectedId = episodesModel.items.first?.id ?? -1
@@ -215,15 +216,13 @@ extension DetailSerialViewController: DetailMovieCollectionViewControllerDelegat
 	
 	func detailMovieCollectionViewControllerSelectSignIn(_ viewController: DetailMovieCollectionViewController) {
 		let signInVC = SignInViewController()
-		signInVC.completion = { isSignedIn in
-			guard isSignedIn else { return }
-			self.present(SubscriptionViewController(), animated: true)
-		}
+		signInVC.delegate = self
 		present(signInVC, animated: true)
 	}
 	
 	func detailMovieCollectionViewControllerSelectSignUp(_ viewController: DetailMovieCollectionViewController) {
 		let signUpVC = SignUpViewController()
+		signUpVC.delegate = self
 		navigationController?.present(signUpVC, animated: true)
 	}
 	
@@ -232,11 +231,53 @@ extension DetailSerialViewController: DetailMovieCollectionViewControllerDelegat
 	}
 	
 	func detailMovieCollectionViewControllerSelectShowFilm(_ viewController: DetailMovieCollectionViewController) {
-		let signInVC = SignInViewController()
-		signInVC.completion = { isSignedIn in
-			guard isSignedIn else { return }
-			self.present(SubscriptionViewController(), animated: true)
+		guard !userFacade.isSignedIn else {
+			if userFacade.isSubscribed {
+				viewController.showMovie()
+			} else {
+				present(SubscriptionViewController(), animated: true)
+			}
+			return
 		}
+		let signInVC = SignInViewController()
+		signInVC.delegate = self
 		present(signInVC, animated: true)
+	}
+}
+
+// MARK: - SignUpViewControllerDelegate
+
+extension DetailSerialViewController: SignUpViewControllerDelegate {
+	
+	func signUpViewControllerDidSelectClose(_ viewController: SignUpViewController) {
+		navigationController?.dismiss(animated: true)
+	}
+	
+	func signUpViewControllerDidSignUp(_ viewController: SignUpViewController) {
+		let subscriptionVC = SubscriptionViewController()
+		subscriptionVC.onClose = {
+			viewController.dismiss(animated: true)
+			viewController.showAlert(message: "Чтобы пользоваться приложением необходимо купить подписку")
+		}
+		viewController.present(subscriptionVC, animated: true)
+	}
+}
+
+// MARK: - SignInViewControllerDelegate
+
+extension DetailSerialViewController: SignInViewControllerDelegate {
+	
+	func signInViewControllerDidSelectClose(_ viewController: SignInViewController) {
+		navigationController?.dismiss(animated: true)
+	}
+	
+	func signInViewController(_ viewController: SignInViewController, didSignInWithPaidStatus isPaid: Bool) {
+		guard !isPaid else { return }
+		let subscriptionVC = SubscriptionViewController()
+		subscriptionVC.onClose = {
+			viewController.dismiss(animated: true)
+			self.dismiss(animated: true)
+		}
+		viewController.present(subscriptionVC, animated: true)
 	}
 }

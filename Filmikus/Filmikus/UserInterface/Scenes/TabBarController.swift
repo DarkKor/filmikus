@@ -20,7 +20,11 @@ class TabBarController: UITabBarController {
 	private lazy var filmsViewController = FilmsViewController()
 	private lazy var serialsViewController = SerialsViewController()
 	private lazy var videosViewController = VideosViewController()
-	private lazy var profileViewController = ProfileViewController()
+	private lazy var profileViewController: ProfileViewController = {
+		let viewController = ProfileViewController()
+		viewController.delegate = self
+		return viewController
+	}()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -89,5 +93,67 @@ extension TabBarController: MainViewControllerDelegate {
 		case .funShow:
 			selectedIndex = 3
 		}
+	}
+}
+
+// MARK: - ProfileViewControllerDelegate
+
+extension TabBarController: ProfileViewControllerDelegate {
+	
+	func profileViewControllerDidSelectSignUp(_ viewController: ProfileViewController) {
+		let signUpVC = SignUpViewController()
+		signUpVC.delegate = self
+		present(signUpVC, animated: true)
+	}
+	
+	func profileViewControllerDidSelectSignIn(_ viewController: ProfileViewController) {
+		let signInVC = SignInViewController()
+		signInVC.delegate = self
+		present(signInVC, animated: true)
+	}
+	
+	func profileViewControllerDidSelectSubscribe(_ viewController: ProfileViewController) {
+		let subscriptionVC = SubscriptionViewController()
+		subscriptionVC.onClose = {
+			viewController.dismiss(animated: true)
+		}
+		present(subscriptionVC, animated: true)
+	}
+}
+
+// MARK: - SignUpViewControllerDelegate
+
+extension TabBarController: SignUpViewControllerDelegate {
+	
+	func signUpViewControllerDidSelectClose(_ viewController: SignUpViewController) {
+		dismiss(animated: true)
+	}
+	
+	func signUpViewControllerDidSignUp(_ viewController: SignUpViewController) {
+		let subscriptionVC = SubscriptionViewController()
+		subscriptionVC.onClose = {
+			viewController.dismiss(animated: true)
+			viewController.showAlert(message: "Чтобы пользоваться приложением необходимо купить подписку")
+		}
+		viewController.present(subscriptionVC, animated: true)
+	}
+}
+
+// MARK: - SignInViewControllerDelegate
+
+extension TabBarController: SignInViewControllerDelegate {
+	
+	func signInViewControllerDidSelectClose(_ viewController: SignInViewController) {
+		dismiss(animated: true)
+	}
+	
+	func signInViewController(_ viewController: SignInViewController, didSignInWithPaidStatus isPaid: Bool) {
+		guard !isPaid else { return }
+		let subscriptionVC = SubscriptionViewController()
+		subscriptionVC.onClose = {
+			viewController.dismiss(animated: true)
+			self.dismiss(animated: true)
+		}
+		viewController.present(subscriptionVC, animated: true)
 	}
 }

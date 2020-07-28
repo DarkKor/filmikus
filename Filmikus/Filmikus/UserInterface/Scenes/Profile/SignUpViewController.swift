@@ -8,7 +8,14 @@
 
 import UIKit
 
+protocol SignUpViewControllerDelegate: class {
+	func signUpViewControllerDidSelectClose(_ viewController: SignUpViewController)
+	func signUpViewControllerDidSignUp(_ viewController: SignUpViewController)
+}
+
 class SignUpViewController: ViewController {
+	
+	weak var delegate: SignUpViewControllerDelegate?
 		
 	private let userFacade: UserFacadeType = UserFacade()
 
@@ -84,7 +91,7 @@ class SignUpViewController: ViewController {
 	
 	@objc
 	private func onCloseButtonTap(sender: UIButton) {
-		dismiss(animated: true)
+		self.delegate?.signUpViewControllerDidSelectClose(self)
 	}
 
 	@objc
@@ -106,21 +113,15 @@ class SignUpViewController: ViewController {
 						switch loginStatus {
 						case .success(_):
 							self.userTextView.text = "Ваш логин: \(model.username)\nВаш пароль: \(model.password)"
-//							self.present(SubscriptionViewController(), animated: true)
+							self.delegate?.signUpViewControllerDidSignUp(self)
 						case let .failure(loginModel):
-							self.showAlert(
-								title: "Фильмикус",
-								message: loginModel.errorDescription
-							)
+							self.showAlert(message: loginModel.errorDescription)
 						}
 					}
 				)
 			case let .failure(model):
 				self.hideActivityIndicator()
-				self.showAlert(
-					title: "Фильмикус",
-					message: model.message
-				)
+				self.showAlert(message: model.message)
 			}
 			
 		}
