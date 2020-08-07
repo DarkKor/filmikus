@@ -8,6 +8,5 @@
 
 enum DetailMovieVideoState {
 	case watchMovie
-	case needAuthentication
 	case needSubscription
 }

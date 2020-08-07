@@ -18,15 +18,13 @@ class DetailFunShowViewController: UIViewController {
 	private let episodesService: EpisodesServiceType
 	private let userFacade: UserFacadeType
 	
-	var videoState: DetailMovieVideoState {
-		if !self.userFacade.isSignedIn {
-			return .needAuthentication
-		} else if !self.userFacade.isSubscribed {
-			return .needSubscription
-		} else {
-			return .watchMovie
-		}
-	}
+    var videoState: DetailMovieVideoState {
+        if !self.userFacade.isSubscribed {
+            return .needSubscription
+        } else {
+            return .watchMovie
+        }
+    }
 	
 	private lazy var collectionViewController: DetailFunShowCollectionViewController = {
 		let viewController = DetailFunShowCollectionViewController()
@@ -181,7 +179,11 @@ extension DetailFunShowViewController: DetailFunShowCollectionViewControllerDele
 	}
 	
 	func detailFunShowCollectionViewControllerSelectSubscribe(_ viewController: DetailFunShowCollectionViewController) {
-		present(SubscriptionViewController(), animated: true)
+		let subscriptionVC = SubscriptionViewController()
+        subscriptionVC.onClose = {
+            self.dismiss(animated: true)
+        }
+        present(subscriptionVC, animated: true)
 	}
 	
 	func detailFunShowCollectionViewControllerSelectShowFilm(_ viewController: DetailFunShowCollectionViewController) {

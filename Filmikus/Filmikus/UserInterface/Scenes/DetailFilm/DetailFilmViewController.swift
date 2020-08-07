@@ -17,9 +17,7 @@ class DetailFilmViewController: UIViewController {
 	private let userFacade: UserFacadeType
 	
 	var videoState: DetailMovieVideoState {
-		if !self.userFacade.isSignedIn {
-			return .needAuthentication
-		} else if !self.userFacade.isSubscribed {
+		 if !self.userFacade.isSubscribed {
 			return .needSubscription
 		} else {
 			return .watchMovie
@@ -185,7 +183,11 @@ extension DetailFilmViewController: DetailMovieCollectionViewControllerDelegate 
 	}
 	
 	func detailMovieCollectionViewControllerSelectSubscribe(_ viewController: DetailMovieCollectionViewController) {
-		present(SubscriptionViewController(), animated: true)
+        let subscriptionVC = SubscriptionViewController()
+        subscriptionVC.onClose = {
+            self.dismiss(animated: true)
+        }
+		present(subscriptionVC, animated: true)
 	}
 	
 	func detailMovieCollectionViewControllerSelectShowFilm(_ viewController: DetailMovieCollectionViewController) {

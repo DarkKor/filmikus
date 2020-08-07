@@ -11,6 +11,7 @@ import UIKit
 protocol LoginViewDelegate: class {
 	func loginViewDidSelectSignUp(_ view: LoginView)
 	func loginViewDidSelectSignIn(_ view: LoginView)
+    func loginViewDidSelectRestorePurchase(_ view: LoginView)
 }
 
 class LoginView: UIView {
@@ -28,6 +29,7 @@ class LoginView: UIView {
 	}()
 	private lazy var signUpButton = BlueBorderButton(title: "РЕГИСТРАЦИЯ", target: self, action: #selector(onSignUpButtonTap))
 	private lazy var signInButton = BlueButton(title: "ВОЙТИ", target: self, action: #selector(onSignInButtonTap))
+    private lazy var restorePurchaseButton = BlueButton(title: "Восстановить покупки", target: self, action: #selector(onRestorePurchaseButtonTap))
 	
 	init() {
 		super.init(frame: .zero)
@@ -35,6 +37,7 @@ class LoginView: UIView {
 		addSubview(registerLabel)
 		addSubview(signUpButton)
 		addSubview(signInButton)
+        addSubview(restorePurchaseButton)
 		
 		registerLabel.snp.makeConstraints {
 			$0.centerY.equalToSuperview().priority(.medium)
@@ -49,15 +52,22 @@ class LoginView: UIView {
 				$0.width.equalToSuperview().dividedBy(2)
 			} else {
 				$0.width.equalToSuperview().inset(20)
-			}
-		}
-		signInButton.snp.makeConstraints {
-			$0.bottom.equalTo(safeAreaLayoutGuide).inset(20)
-			$0.centerX.equalToSuperview()
-			$0.height.equalTo(44)
-			$0.width.equalTo(signUpButton)
-		}
-	}
+            }
+        }
+        signInButton.snp.makeConstraints {
+            $0.bottom.equalTo(restorePurchaseButton.snp.top).offset(-20)
+            $0.centerX.equalToSuperview()
+            $0.height.equalTo(44)
+            $0.width.equalTo(signUpButton)
+        }
+        
+        restorePurchaseButton.snp.makeConstraints {
+            $0.bottom.equalTo(safeAreaLayoutGuide).inset(20)
+            $0.centerX.equalToSuperview()
+            $0.height.equalTo(44)
+            $0.width.equalTo(signUpButton)
+        }
+}
 	
 	required init?(coder: NSCoder) {
 		fatalError("init(coder:) has not been implemented")
@@ -72,4 +82,9 @@ class LoginView: UIView {
 	private func onSignInButtonTap(sender: UIButton) {
 		delegate?.loginViewDidSelectSignIn(self)
 	}
+    
+    @objc
+    private func onRestorePurchaseButtonTap(sender: UIButton) {
+        delegate?.loginViewDidSelectRestorePurchase(self)
+    }
 }

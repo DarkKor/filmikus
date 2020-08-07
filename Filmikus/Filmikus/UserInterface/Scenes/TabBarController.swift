@@ -9,7 +9,31 @@
 import UIKit
 
 class TabBarController: UITabBarController {
-		
+    
+    enum TabTypes {
+        case main
+        case films
+        case serial
+        case video
+        case profile
+    }
+    
+    var selectedTab: TabTypes = .main {
+        didSet {
+            switch selectedTab {
+            case .main:
+                selectedIndex = 0
+            case .films:
+                selectedIndex = 1
+            case .serial:
+                selectedIndex = 2
+            case .video:
+                selectedIndex = 3
+            case .profile:
+                selectedIndex = 4
+            }
+        }
+    }
 	private let userFacade: UserFacadeType = UserFacade()
 	
 	private lazy var mainViewController: MainViewController = {
@@ -74,6 +98,14 @@ class TabBarController: UITabBarController {
 		
         viewControllers = [mainNavVC, filmsNavVC, serialsNavVC, videosNavVC, profileNavVC]
     }
+    
+    @objc
+    private func handleUserSubscribedNotification(notification: Notification) {
+        let signUpVC = SignUpViewController()
+        signUpVC.delegate = self
+        present(signUpVC, animated: true)
+        NotificationCenter.default.removeObserver(self, name: .userDidSubscribe, object: nil)
+    }
 }
 
 // MARK: - MainViewControllerDelegate
@@ -99,11 +131,26 @@ extension TabBarController: MainViewControllerDelegate {
 // MARK: - ProfileViewControllerDelegate
 
 extension TabBarController: ProfileViewControllerDelegate {
-	
-	func profileViewControllerDidSelectSignUp(_ viewController: ProfileViewController) {
-		let signUpVC = SignUpViewController()
-		signUpVC.delegate = self
-		present(signUpVC, animated: true)
+    func profileViewControllerDidSelectSignUp(_ viewController: ProfileViewController) {
+        if !userFacade.isSubscribed  {
+            let subscriptionVC = SubscriptionViewController()
+            subscriptionVC.onClose = {
+                self.dismiss(animated: true)
+                NotificationCenter.default.removeObserver(self, name: .userDidSubscribe, object: nil)
+            }
+            present(subscriptionVC, animated: true)
+            
+            NotificationCenter.default.addObserver(
+                self,
+                selector: #selector(handleUserSubscribedNotification),
+                name: .userDidSubscribe,
+                object: nil
+            )
+        } else {
+            let signUpVC = SignUpViewController()
+            signUpVC.delegate = self
+            present(signUpVC, animated: true)
+        }
 	}
 	
 	func profileViewControllerDidSelectSignIn(_ viewController: ProfileViewController) {
@@ -129,14 +176,14 @@ extension TabBarController: SignUpViewControllerDelegate {
 		dismiss(animated: true)
 	}
 	
-	func signUpViewControllerDidSignUp(_ viewController: SignUpViewController) {
-		let subscriptionVC = SubscriptionViewController()
-		subscriptionVC.onClose = {
-			viewController.dismiss(animated: true)
-			viewController.showAlert(message: "Чтобы пользоваться приложением необходимо купить подписку")
-		}
-		viewController.present(subscriptionVC, animated: true)
-	}
+    func signUpViewControllerDidSignUp(_ viewController: SignUpViewController) {
+        let subscriptionVC = SubscriptionViewController()
+        subscriptionVC.onClose = {
+            viewController.dismiss(animated: true)
+            viewController.showAlert(message: "Чтобы пользоваться приложением необходимо купить подписку")
+        }
+        viewController.present(subscriptionVC, animated: true)
+    }
 }
 
 // MARK: - SignInViewControllerDelegate

@@ -208,19 +208,6 @@ extension DetailMovieCollectionViewController: UICollectionViewDelegateFlowLayou
 	}
 }
 
-// MARK: - AuthRequiredViewDelegate
-
-extension DetailMovieCollectionViewController: AuthRequiredViewDelegate {
-	
-	func authRequiredViewDidSelectSignIn(_ view: AuthRequiredView) {
-		delegate?.detailMovieCollectionViewControllerSelectSignIn(self)
-	}
-	
-	func authRequiredViewDidSelectSignUp(_ view: AuthRequiredView) {
-		delegate?.detailMovieCollectionViewControllerSelectSignUp(self)
-	}
-}
-
 // MARK: - NeedSubscriptionViewDelegate
 
 extension DetailMovieCollectionViewController: NeedSubscriptionViewDelegate {

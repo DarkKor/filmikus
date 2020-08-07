@@ -18,9 +18,7 @@ class DetailSerialViewController: UIViewController {
 	private let userFacade: UserFacadeType
 	
 	var videoState: DetailMovieVideoState {
-		if !self.userFacade.isSignedIn {
-			return .needAuthentication
-		} else if !self.userFacade.isSubscribed {
+		 if !self.userFacade.isSubscribed {
 			return .needSubscription
 		} else {
 			return .watchMovie
@@ -227,22 +225,30 @@ extension DetailSerialViewController: DetailMovieCollectionViewControllerDelegat
 	}
 	
 	func detailMovieCollectionViewControllerSelectSubscribe(_ viewController: DetailMovieCollectionViewController) {
-		present(SubscriptionViewController(), animated: true)
+		let subscriptionVC = SubscriptionViewController()
+        subscriptionVC.onClose = {
+            self.dismiss(animated: true)
+        }
+        present(subscriptionVC, animated: true)
 	}
 	
-	func detailMovieCollectionViewControllerSelectShowFilm(_ viewController: DetailMovieCollectionViewController) {
-		guard !userFacade.isSignedIn else {
-			if userFacade.isSubscribed {
-				viewController.showMovie()
-			} else {
-				present(SubscriptionViewController(), animated: true)
-			}
-			return
-		}
-		let signInVC = SignInViewController()
-		signInVC.delegate = self
-		present(signInVC, animated: true)
-	}
+    func detailMovieCollectionViewControllerSelectShowFilm(_ viewController: DetailMovieCollectionViewController) {
+        guard !userFacade.isSignedIn else {
+            if userFacade.isSubscribed {
+                viewController.showMovie()
+            } else {
+                let subscriptionVC = SubscriptionViewController()
+                subscriptionVC.onClose = {
+                    self.dismiss(animated: true)
+                }
+                present(subscriptionVC, animated: true)
+            }
+            return
+        }
+        let signInVC = SignInViewController()
+        signInVC.delegate = self
+        present(signInVC, animated: true)
+    }
 }
 
 // MARK: - SignUpViewControllerDelegate

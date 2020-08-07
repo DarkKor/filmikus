@@ -11,7 +11,8 @@ import Foundation
 protocol UserStorageType: class {
 	var user: UserModel? { get set }
 	var expirationDate: Date? { get set }
-	var accessType: AccessTypeModel? { get set }
+	var accessType: WelcomeTypeModel? { get set }
+    var isLaunchedBefore: Bool { get set }
 }
 
 class UserStorage: UserStorageType {
@@ -20,6 +21,7 @@ class UserStorage: UserStorageType {
 		static let user = "com.userStorage.user"
 		static let expirationDate = "com.userStorage.expirationDate"
 		static let accessType = "com.userStorage.accessType"
+        static let isLaunchedBefore = "com.userStorage.isLaunchedBefore"
 	}
 	
 	var user: UserModel? {
@@ -44,16 +46,27 @@ class UserStorage: UserStorageType {
 		}
 	}
 	
-	var accessType: AccessTypeModel? {
+	var accessType: WelcomeTypeModel? {
 		get {
 			let accessType = storage.integer(forKey: Keys.accessType)
-			return AccessTypeModel(rawValue: accessType)
+			return WelcomeTypeModel(rawValue: accessType)
 		}
 		set {
 			storage.set(newValue?.rawValue, forKey: Keys.accessType)
 			storage.synchronize()
 		}
 	}
+    
+    var isLaunchedBefore: Bool {
+        get {
+            return storage.bool(forKey: Keys.isLaunchedBefore)
+        }
+        set {
+            storage.set(newValue, forKey: Keys.isLaunchedBefore)
+            storage.synchronize()
+        }
+    }
+    
 	
 	private let storage: UserDefaults
 	private let encoder: JSONEncoder = JSONEncoder()

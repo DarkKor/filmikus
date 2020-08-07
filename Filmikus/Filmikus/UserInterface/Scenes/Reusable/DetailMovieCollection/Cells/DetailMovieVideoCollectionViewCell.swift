@@ -9,13 +9,10 @@
 import UIKit
 import WebKit
 
-typealias DetailMovieVideoCollectionViewCellDelegate = AuthRequiredViewDelegate & NeedSubscriptionViewDelegate
-
 class DetailMovieVideoCollectionViewCell: ReusableCollectionViewCell {
 	
-	weak var delegate: DetailMovieVideoCollectionViewCellDelegate? {
+	weak var delegate: NeedSubscriptionViewDelegate? {
 		didSet {
-			authRequiredView.delegate = delegate
 			needSubscriptionView.delegate = delegate
 		}
 	}
@@ -27,22 +24,16 @@ class DetailMovieVideoCollectionViewCell: ReusableCollectionViewCell {
 		return webView
 	}()
 
-	private lazy var authRequiredView = AuthRequiredView()
 	private lazy var needSubscriptionView = NeedSubscriptionView()
 	
 	override init(frame: CGRect) {
 		super.init(frame: frame)
 		
 		contentView.addSubview(webView)
-		contentView.addSubview(authRequiredView)
 		contentView.addSubview(needSubscriptionView)
 		
 		webView.snp.makeConstraints {
 			$0.edges.equalToSuperview()
-		}
-		authRequiredView.snp.makeConstraints {
-			$0.left.top.right.equalToSuperview()
-			$0.bottom.equalTo(webView)
 		}
 		needSubscriptionView.snp.makeConstraints {
 			$0.left.top.right.equalToSuperview()
@@ -66,16 +57,10 @@ class DetailMovieVideoCollectionViewCell: ReusableCollectionViewCell {
 	
 	func fill(model: DetailMovieVideoSection) {
 		switch model.state {
-		case .needAuthentication:
-			authRequiredView.isHidden = false
-			webView.isHidden = true
-			needSubscriptionView.isHidden = true
 		case .needSubscription:
-			authRequiredView.isHidden = true
 			webView.isHidden = true
 			needSubscriptionView.isHidden = false
 		case .watchMovie:
-			authRequiredView.isHidden = true
 			webView.isHidden = false
 			needSubscriptionView.isHidden = true
 		}

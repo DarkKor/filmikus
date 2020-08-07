@@ -12,7 +12,7 @@ protocol UsersServiceType {
 	func register(email: String, completion: @escaping (Result<SignUpStatusModel, Error>) -> Void)
 	func login(email: String, password: String, completion: @escaping (Result<SignInStatusModel, Error>) -> Void)
 	func updateReceipt(userId: Int, receipt: String, completion: @escaping (Result<ReceiptStatusModel, Error>) -> Void)
-	func accessType(completion: @escaping (Result<AccessTypeModel, Error>) -> Void)
+	func accessType(completion: @escaping (Result<WelcomeTypeModel, Error>) -> Void)
 }
 
 class UsersService: UsersServiceType {
@@ -55,11 +55,11 @@ class UsersService: UsersServiceType {
 		}
 	}
 	
-	func accessType(completion: @escaping (Result<AccessTypeModel, Error>) -> Void) {
+	func accessType(completion: @escaping (Result<WelcomeTypeModel, Error>) -> Void) {
 		provider.request(.accessType) { (result) in
 			completion(
 				result.mapError { $0 }.flatMap { response in
-					Result { try response.map(AccessTypeModel.self) }
+					Result { try response.map(WelcomeTypeModel.self) }
 				}
 			)
 		}

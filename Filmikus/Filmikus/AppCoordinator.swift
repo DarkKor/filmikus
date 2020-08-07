@@ -12,12 +12,12 @@ class AppCoordinator {
 	
 	private let window: UIWindow
 	
-	private lazy var authenticationCoordinator: AuthenticationCoordinator = {
-		let controller = NavigationController()
-		controller.apply(gradientStyle: .bluePurple)
-		let coordinator = AuthenticationCoordinator(navigationController: controller)
-		return coordinator
-	}()
+//	private lazy var authenticationCoordinator: AuthenticationCoordinator = {
+//		let controller = NavigationController()
+//		controller.apply(gradientStyle: .bluePurple)
+//		let coordinator = AuthenticationCoordinator(navigationController: controller)
+//		return coordinator
+//	}()
 	
 	init(window: UIWindow) {
 		self.window = window
@@ -51,20 +51,28 @@ class AppCoordinator {
 // MARK: - LaunchViewControllerDelegate
 
 extension AppCoordinator: LaunchViewControllerDelegate {
+    func launchViewControllerDidShowAllContent(_ viewController: LaunchViewController) {
+        setRoot(viewController: TabBarController())
+    }
+    
 	
-	func launchViewController(_ viewController: LaunchViewController, didReceiveAccess type: AccessTypeModel) {
-		switch type {
-		case .onlyAuthorization:
-			setRoot(viewController: authenticationCoordinator.navigationController)
-			authenticationCoordinator.start()
-			NotificationCenter.default.addObserver(
-				self,
-				selector: #selector(handleUserSubscribedNotification),
-				name: .userDidSubscribe,
-				object: nil
-			)
-		case .allAppWithoutContent:
-			setRoot(viewController: TabBarController())
-		}
+	func launchViewController(_ viewController: LaunchViewController, didReceiveAccess type: WelcomeTypeModel) {
+        let welcomeTourVC = WelcomeTourViewController(welcomeType: type)
+        welcomeTourVC.welcomeTourDelegate = self
+        setRoot(viewController: welcomeTourVC)
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(handleUserSubscribedNotification),
+            name: .userDidSubscribe,
+            object: nil
+        )
 	}
+}
+
+extension AppCoordinator: WelcomeTourViewControllerDelegate {
+    func welcomeTourViewControllerDidClose(_ viewController: WelcomeTourViewController) {
+        let tabBarVC = TabBarController()
+        tabBarVC.selectedTab = .profile
+        setRoot(viewController: tabBarVC)
+    }
 }

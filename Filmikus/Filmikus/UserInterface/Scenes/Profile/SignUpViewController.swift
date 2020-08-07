@@ -10,7 +10,6 @@ import UIKit
 
 protocol SignUpViewControllerDelegate: class {
 	func signUpViewControllerDidSelectClose(_ viewController: SignUpViewController)
-	func signUpViewControllerDidSignUp(_ viewController: SignUpViewController)
 }
 
 class SignUpViewController: ViewController {
@@ -113,7 +112,6 @@ class SignUpViewController: ViewController {
 						switch loginStatus {
 						case .success(_):
 							self.userTextView.text = "Ваш логин: \(model.username)\nВаш пароль: \(model.password)"
-							self.delegate?.signUpViewControllerDidSignUp(self)
 						case let .failure(loginModel):
 							self.showAlert(message: loginModel.errorDescription)
 						}

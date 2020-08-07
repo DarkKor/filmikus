@@ -9,13 +9,18 @@
 import Foundation
 
 struct ReceiptStatusModel: Decodable {
-	let userId: Int
+	let userId: Int?
 	let expirationDate: Date?
 	
 	enum CodingKeys: String, CodingKey {
 		case userId = "user_id"
 		case expirationDate = "exp_date"
 	}
+    
+    init(userId: Int?, expirationDate: Date?) {
+        self.userId = userId
+        self.expirationDate = expirationDate
+    }
 	
 	init(from decoder: Decoder) throws {
 		let container = try decoder.container(keyedBy: CodingKeys.self)

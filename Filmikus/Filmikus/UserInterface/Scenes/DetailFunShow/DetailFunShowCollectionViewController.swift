@@ -186,19 +186,6 @@ extension DetailFunShowCollectionViewController: UICollectionViewDelegateFlowLay
 	}
 }
 
-// MARK: - AuthRequiredViewDelegate
-
-extension DetailFunShowCollectionViewController: AuthRequiredViewDelegate {
-	
-	func authRequiredViewDidSelectSignIn(_ view: AuthRequiredView) {
-		delegate?.detailFunShowCollectionViewControllerSelectSignIn(self)
-	}
-	
-	func authRequiredViewDidSelectSignUp(_ view: AuthRequiredView) {
-		delegate?.detailFunShowCollectionViewControllerSelectSignUp(self)
-	}
-}
-
 // MARK: - NeedSubscriptionViewDelegate
 
 extension DetailFunShowCollectionViewController: NeedSubscriptionViewDelegate {

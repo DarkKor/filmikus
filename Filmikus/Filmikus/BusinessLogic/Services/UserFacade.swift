@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import Moya
 
 extension Notification.Name {
 	static let userDidLogin = Notification.Name(rawValue: "userDidLogin")
@@ -18,11 +19,13 @@ protocol UserFacadeType {
 	var expirationDate: Date? { get }
 	var isSubscribed: Bool { get }
 	var isSignedIn: Bool { get }
+    var isLaunchedBefore: Bool { get }
 	func signIn(email: String, password: String, completion: @escaping (SignInStatusModel) -> Void)
 	func signOut()
 	func signUp(email: String, completion: @escaping (SignUpStatusModel) -> Void)
 	func updateReceipt(completion: @escaping (ReceiptStatusModel) -> Void)
-	func accessType(completion: @escaping (Result<AccessTypeModel, Error>) -> Void)
+	func welcomeType(completion: @escaping (Result<WelcomeTypeModel, Error>) -> Void)
+    func setLaunchBefore()
 }
 
 class UserFacade: UserFacadeType {
@@ -42,10 +45,15 @@ class UserFacade: UserFacadeType {
 	var isSignedIn: Bool {
 		storage.user != nil
 	}
+    
+    var isLaunchedBefore: Bool {
+        storage.isLaunchedBefore
+    }
 	
 	private let service: UsersServiceType
 	private let storage: UserStorageType
 	private let storeKit: StoreKitServiceType
+    private let provider = MoyaProvider<ValidateReceiptAPI>()
 	
 	init(
 		service: UsersServiceType = UsersService(),
@@ -85,22 +93,38 @@ class UserFacade: UserFacadeType {
 		}
 	}
 	
-	func updateReceipt(completion: @escaping (ReceiptStatusModel) -> Void) {
-		guard let userId = user?.id else { return }
-		storeKit.loadReceipt { (result) in
-			guard let receipt = try? result.get() else { return }
-			self.service.updateReceipt(userId: userId, receipt: receipt) { [weak self] result in
-				guard let self = self else { return }
-				guard let status = try? result.get() else { return }
-				self.storage.expirationDate = status.expirationDate
-				completion(status)
-				guard self.isSubscribed else { return }
-				NotificationCenter.default.post(name: .userDidSubscribe, object: nil)
-			}
-		}
-	}
+    func updateReceipt(completion: @escaping (ReceiptStatusModel) -> Void) {
+        storeKit.loadReceipt { (result) in
+            guard let receipt = try? result.get() else { return }
+            if let userId = self.user?.id {
+                self.service.updateReceipt(userId: userId, receipt: receipt) { [weak self] result in
+                    guard let self = self else { return }
+                    guard let status = try? result.get() else { return }
+                    self.storage.expirationDate = status.expirationDate
+                    completion(status)
+                    guard self.isSubscribed else { return }
+                    NotificationCenter.default.post(name: .userDidSubscribe, object: nil)
+                }
+            } else {
+                self.provider.request(.validate(receipt: receipt)) { result in
+                    switch result {
+                    case let .success(response):
+                        guard let receipts = try? JSONDecoder().decode(ReceiptsModel.self, from: response.data).receipts else { return }
+                        let dates = receipts.compactMap{ $0.expirationDate }
+                        guard let expirationDate = dates.sorted().last else { return }
+                        self.storage.expirationDate = expirationDate
+                        completion(ReceiptStatusModel(userId: nil, expirationDate: expirationDate))
+                        guard self.isSubscribed else { return }
+                        NotificationCenter.default.post(name: .userDidSubscribe, object: nil)
+                    default:
+                        break
+                    }
+                }
+            }
+        }
+    }
 	
-	func accessType(completion: @escaping (Result<AccessTypeModel, Error>) -> Void) {
+	func welcomeType(completion: @escaping (Result<WelcomeTypeModel, Error>) -> Void) {
 		guard let accessType = storage.accessType else {
 			service.accessType { (result) in
 				completion(result)
@@ -109,4 +133,8 @@ class UserFacade: UserFacadeType {
 		}
 		completion(.success(accessType))
 	}
+    
+    func setLaunchBefore() {
+        storage.isLaunchedBefore = true
+    }
 }

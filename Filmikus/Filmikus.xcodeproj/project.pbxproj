@@ -149,6 +149,10 @@
 		49ECBF15249A48B000F9A854 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49ECBF14249A48B000F9A854 /* ProfileView.swift */; };
 		49ECBF18249B76FF00F9A854 /* UserStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49ECBF17249B76FF00F9A854 /* UserStorage.swift */; };
 		49ECBF1A249B981500F9A854 /* UserFacade.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49ECBF19249B981500F9A854 /* UserFacade.swift */; };
+		8A860F8024DD79E20049356D /* ReceiptsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A860F7F24DD79E20049356D /* ReceiptsModel.swift */; };
+		8A860F8224DD79F50049356D /* ReceiptModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A860F8124DD79F50049356D /* ReceiptModel.swift */; };
+		8A860F8424DD92F60049356D /* ValidateReceiptAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A860F8324DD92F60049356D /* ValidateReceiptAPI.swift */; };
+		8A8970C224DC01E9009314B1 /* WelcomeTourViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A8970C124DC01E9009314B1 /* WelcomeTourViewController.swift */; };
 		DBB5AD7EDA6B8BBB5543CBB9 /* Pods_Filmikus.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 97F5ACE358500956AF72C9A2 /* Pods_Filmikus.framework */; };
 /* End PBXBuildFile section */
 
@@ -301,6 +305,10 @@
 		49ECBF17249B76FF00F9A854 /* UserStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserStorage.swift; sourceTree = "<group>"; };
 		49ECBF19249B981500F9A854 /* UserFacade.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserFacade.swift; sourceTree = "<group>"; };
 		5F55A71C0021F60EFFD15EA6 /* Pods-Filmikus.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Filmikus.debug.xcconfig"; path = "Target Support Files/Pods-Filmikus/Pods-Filmikus.debug.xcconfig"; sourceTree = "<group>"; };
+		8A860F7F24DD79E20049356D /* ReceiptsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReceiptsModel.swift; sourceTree = "<group>"; };
+		8A860F8124DD79F50049356D /* ReceiptModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReceiptModel.swift; sourceTree = "<group>"; };
+		8A860F8324DD92F60049356D /* ValidateReceiptAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValidateReceiptAPI.swift; sourceTree = "<group>"; };
+		8A8970C124DC01E9009314B1 /* WelcomeTourViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeTourViewController.swift; sourceTree = "<group>"; };
 		97F5ACE358500956AF72C9A2 /* Pods_Filmikus.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Filmikus.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -421,6 +429,8 @@
 				49900FE92480149B00F18B46 /* ActorModel.swift */,
 				49900FFB2481078F00F18B46 /* EpisodeModel.swift */,
 				4937868A2486FA6200C8496E /* EpisodesModel.swift */,
+				8A860F7F24DD79E20049356D /* ReceiptsModel.swift */,
+				8A860F8124DD79F50049356D /* ReceiptModel.swift */,
 				49CED95724C985FE00BCCB6C /* User */,
 			);
 			path = Entities;
@@ -460,6 +470,7 @@
 		491C21A824641A16007CDEC2 /* Scenes */ = {
 			isa = PBXGroup;
 			children = (
+				8A8970C024DC01CB009314B1 /* WelcomeTour */,
 				4937868D2487B8C200C8496E /* Subscription */,
 				493786A1248A93B500C8496E /* DetailFunShow */,
 				4937869C248A42DE00C8496E /* DetailSerial */,
@@ -723,6 +734,7 @@
 				49900FDB24800BD600F18B46 /* CountriesAPI.swift */,
 				49900FDD24800E0C00F18B46 /* EpisodesAPI.swift */,
 				491D037E2492343700093293 /* UsersAPI.swift */,
+				8A860F8324DD92F60049356D /* ValidateReceiptAPI.swift */,
 			);
 			path = Network;
 			sourceTree = "<group>";
@@ -797,6 +809,14 @@
 				49ECBF12249A472E00F9A854 /* LoginView.swift */,
 			);
 			path = Views;
+			sourceTree = "<group>";
+		};
+		8A8970C024DC01CB009314B1 /* WelcomeTour */ = {
+			isa = PBXGroup;
+			children = (
+				8A8970C124DC01E9009314B1 /* WelcomeTourViewController.swift */,
+			);
+			path = WelcomeTour;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -937,6 +957,7 @@
 				49684A7E246E84E000E9BADC /* DetailFilmViewController.swift in Sources */,
 				49684A81246E87CC00E9BADC /* MovieMainInfoView.swift in Sources */,
 				4922684B248E82E900B05A51 /* DetailMovieInfoSection.swift in Sources */,
+				8A860F8424DD92F60049356D /* ValidateReceiptAPI.swift in Sources */,
 				49900FDA24800B4300F18B46 /* SliderAPI.swift in Sources */,
 				49900FC4247EBBAE00F18B46 /* MovieModel.swift in Sources */,
 				4937867924853A3400C8496E /* SelectItemPickerViewController.swift in Sources */,
@@ -999,8 +1020,10 @@
 				49684A70246BE70600E9BADC /* SerialsViewController.swift in Sources */,
 				49684AB524742FC500E9BADC /* StoreKitService.swift in Sources */,
 				493786852486D17D00C8496E /* SerialsFacade.swift in Sources */,
+				8A8970C224DC01E9009314B1 /* WelcomeTourViewController.swift in Sources */,
 				49ECBF13249A472E00F9A854 /* LoginView.swift in Sources */,
 				49684A60246ACD9B00E9BADC /* UIView+Style.swift in Sources */,
+				8A860F8224DD79F50049356D /* ReceiptModel.swift in Sources */,
 				49900FF6248103F400F18B46 /* SliderService.swift in Sources */,
 				49684A78246C4AAD00E9BADC /* CategoriesHeaderView.swift in Sources */,
 				49684A64246AD78A00E9BADC /* UIColor+Hex.swift in Sources */,
@@ -1009,6 +1032,7 @@
 				49900FCE247FD99500F18B46 /* VideosAPI.swift in Sources */,
 				49ECBF15249A48B000F9A854 /* ProfileView.swift in Sources */,
 				49226843248E7FFE00B05A51 /* DetailMovieSection.swift in Sources */,
+				8A860F8024DD79E20049356D /* ReceiptsModel.swift in Sources */,
 				49684A8F2472ED1400E9BADC /* SelectItemViewController.swift in Sources */,
 				49900FF2248016FD00F18B46 /* DetailEpisodeModel.swift in Sources */,
 				491C218A24641393007CDEC2 /* AppDelegate.swift in Sources */,

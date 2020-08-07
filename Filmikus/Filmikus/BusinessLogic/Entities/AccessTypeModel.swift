@@ -8,29 +8,25 @@
 
 import Foundation
 
-enum AccessTypeModel: Int, Codable {
-	/// Если доступ не оплачен, то юзеру не доступен даже просмотр контента.
-	/// Он может видеть только страничку с оформления заказа / продления доступа
-	case onlyAuthorization = 0
+enum WelcomeTypeModel: Int, Codable {
+    // В зависимости от значения показываем разные Welcome Tour
+	case firstWelcomeType = 0
+	case secondWelcomeType = 1
 	
-	/// Если доступ не оплачен, то юзеру доступен список контента на просмотр,
-	/// но при попытке  просмотра – показываем страничку с оформлением заказа / продлением доступа
-	case allAppWithoutContent = 1
-	
-	// Access_type=2 и более – пока не задействованы, но будут .
+	// Access_type=2 и более – пока не задействованы, но будут.
 	
 	enum CodingKeys: String, CodingKey {
-		case accessType = "access_type"
+		case welcomeType = "welcome_type"
 	}
 		
 	init(from decoder: Decoder) throws {
 		let container = try decoder.container(keyedBy: CodingKeys.self)
-		let accessType = try container.decode(Int.self, forKey: .accessType)
+		let accessType = try container.decode(Int.self, forKey: .welcomeType)
 		switch accessType {
 		case 0:
-			self = .onlyAuthorization
+			self = .firstWelcomeType
 		case 1:
-			self = .allAppWithoutContent
+			self = .secondWelcomeType
 		default:
 			throw NSError()
 		}
