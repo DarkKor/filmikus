@@ -53,16 +53,18 @@ class UserFacade: UserFacadeType {
 	private let service: UsersServiceType
 	private let storage: UserStorageType
 	private let storeKit: StoreKitServiceType
-    private let provider = MoyaProvider<ValidateReceiptAPI>()
+    private let provider: MoyaProvider<ValidateReceiptAPI>
 	
 	init(
 		service: UsersServiceType = UsersService(),
 		storage: UserStorageType = UserStorage(),
-		storeKit: StoreKitServiceType = StoreKitService.shared
+        storeKit: StoreKitServiceType = StoreKitService.shared,
+        provider: MoyaProvider<ValidateReceiptAPI> = MoyaProvider<ValidateReceiptAPI>()
 	) {
 		self.service = service
 		self.storage = storage
 		self.storeKit = storeKit
+        self.provider = provider
 	}
 	
 	func signIn(email: String, password: String, completion: @escaping (SignInStatusModel) -> Void) {
@@ -82,7 +84,7 @@ class UserFacade: UserFacadeType {
 	
 	func signOut() {
 		storage.user = nil
-		storage.expirationDate = nil
+//		storage.expirationDate = nil
 		NotificationCenter.default.post(name: .userDidLogout, object: nil)
 	}
 	
@@ -110,10 +112,10 @@ class UserFacade: UserFacadeType {
                     switch result {
                     case let .success(response):
                         guard let receipts = try? JSONDecoder().decode(ReceiptsModel.self, from: response.data).receipts else { return }
-                        let dates = receipts.compactMap{ $0.expirationDate }
-                        guard let expirationDate = dates.sorted().last else { return }
-                        self.storage.expirationDate = expirationDate
-                        completion(ReceiptStatusModel(userId: nil, expirationDate: expirationDate))
+                        let expirationDates = receipts.compactMap{ $0.expirationDate }
+                        guard let latestExpirationDate = expirationDates.sorted().last else { return }
+                        self.storage.expirationDate = latestExpirationDate
+                        completion(ReceiptStatusModel(userId: nil, expirationDate: latestExpirationDate))
                         guard self.isSubscribed else { return }
                         NotificationCenter.default.post(name: .userDidSubscribe, object: nil)
                     default:

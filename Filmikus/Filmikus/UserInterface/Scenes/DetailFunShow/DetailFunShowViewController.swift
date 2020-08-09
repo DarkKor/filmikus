@@ -166,18 +166,6 @@ extension DetailFunShowViewController: DetailFunShowCollectionViewControllerDele
 		loadData(with: video.id)
 	}
 	
-	func detailFunShowCollectionViewControllerSelectSignIn(_ viewController: DetailFunShowCollectionViewController) {
-		let signInVC = SignInViewController()
-		signInVC.delegate = self
-		present(signInVC, animated: true)
-	}
-	
-	func detailFunShowCollectionViewControllerSelectSignUp(_ viewController: DetailFunShowCollectionViewController) {
-		let signUpVC = SignUpViewController()
-		signUpVC.delegate = self
-		navigationController?.present(signUpVC, animated: true)
-	}
-	
 	func detailFunShowCollectionViewControllerSelectSubscribe(_ viewController: DetailFunShowCollectionViewController) {
 		let subscriptionVC = SubscriptionViewController()
         subscriptionVC.onClose = {
@@ -190,24 +178,6 @@ extension DetailFunShowViewController: DetailFunShowCollectionViewControllerDele
 		let signInVC = SignInViewController()
 		signInVC.delegate = self
 		present(signInVC, animated: true)
-	}
-}
-
-// MARK: - SignUpViewControllerDelegate
-
-extension DetailFunShowViewController: SignUpViewControllerDelegate {
-	
-	func signUpViewControllerDidSelectClose(_ viewController: SignUpViewController) {
-		navigationController?.dismiss(animated: true)
-	}
-	
-	func signUpViewControllerDidSignUp(_ viewController: SignUpViewController) {
-		let subscriptionVC = SubscriptionViewController()
-		subscriptionVC.onClose = {
-			viewController.dismiss(animated: true)
-			viewController.showAlert(message: "Чтобы пользоваться приложением необходимо купить подписку")
-		}
-		viewController.present(subscriptionVC, animated: true)
 	}
 }
 

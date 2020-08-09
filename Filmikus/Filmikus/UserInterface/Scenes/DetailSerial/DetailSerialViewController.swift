@@ -212,18 +212,6 @@ extension DetailSerialViewController: DetailMovieCollectionViewControllerDelegat
 		updateEpisode(episodeId: movie.id)
 	}
 	
-	func detailMovieCollectionViewControllerSelectSignIn(_ viewController: DetailMovieCollectionViewController) {
-		let signInVC = SignInViewController()
-		signInVC.delegate = self
-		present(signInVC, animated: true)
-	}
-	
-	func detailMovieCollectionViewControllerSelectSignUp(_ viewController: DetailMovieCollectionViewController) {
-		let signUpVC = SignUpViewController()
-		signUpVC.delegate = self
-		navigationController?.present(signUpVC, animated: true)
-	}
-	
 	func detailMovieCollectionViewControllerSelectSubscribe(_ viewController: DetailMovieCollectionViewController) {
 		let subscriptionVC = SubscriptionViewController()
         subscriptionVC.onClose = {
@@ -249,24 +237,6 @@ extension DetailSerialViewController: DetailMovieCollectionViewControllerDelegat
         signInVC.delegate = self
         present(signInVC, animated: true)
     }
-}
-
-// MARK: - SignUpViewControllerDelegate
-
-extension DetailSerialViewController: SignUpViewControllerDelegate {
-	
-	func signUpViewControllerDidSelectClose(_ viewController: SignUpViewController) {
-		navigationController?.dismiss(animated: true)
-	}
-	
-	func signUpViewControllerDidSignUp(_ viewController: SignUpViewController) {
-		let subscriptionVC = SubscriptionViewController()
-		subscriptionVC.onClose = {
-			viewController.dismiss(animated: true)
-			viewController.showAlert(message: "Чтобы пользоваться приложением необходимо купить подписку")
-		}
-		viewController.present(subscriptionVC, animated: true)
-	}
 }
 
 // MARK: - SignInViewControllerDelegate
