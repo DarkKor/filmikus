@@ -112,6 +112,7 @@ class SignUpViewController: ViewController {
 						switch loginStatus {
 						case .success(_):
 							self.userTextView.text = "Ваш логин: \(model.username)\nВаш пароль: \(model.password)"
+                            self.userFacade.updateReceipt { _ in }
 						case let .failure(loginModel):
 							self.showAlert(message: loginModel.errorDescription)
 						}
