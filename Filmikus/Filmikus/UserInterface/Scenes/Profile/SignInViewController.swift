@@ -183,8 +183,9 @@ class SignInViewController: ViewController {
 			self.hideActivityIndicator()
 			switch loginStatus {
 			case .success(let model):
-				self.delegate?.signInViewController(self, didSignInWithPaidStatus: model.isPaid)
-				guard model.isPaid else { return }
+                let isPaid = model.isPaid ? model.isPaid : self.userFacade.isSubscribed
+				self.delegate?.signInViewController(self, didSignInWithPaidStatus: isPaid)
+				guard isPaid else { return }
 				self.userFacade.updateReceipt(completion: { _ in })
 			case let .failure(model):
 				self.showAlert(message: model.errorDescription)
