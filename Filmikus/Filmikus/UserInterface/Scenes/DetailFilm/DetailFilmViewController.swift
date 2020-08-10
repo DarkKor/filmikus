@@ -206,7 +206,10 @@ extension DetailFilmViewController: SignInViewControllerDelegate {
 	}
 	
 	func signInViewController(_ viewController: SignInViewController, didSignInWithPaidStatus isPaid: Bool) {
-		guard !isPaid else { return }
+		guard !isPaid else {
+            dismiss(animated: true)
+            return
+        }
 		let subscriptionVC = SubscriptionViewController()
 		subscriptionVC.onClose = {
 			viewController.dismiss(animated: true)
