@@ -41,7 +41,7 @@ extension ValidateReceiptAPI: TargetType {
         case let .validate(receipt):
             json["receipt-data"] = receipt
             json["password"] = sharedSecretKey
-            json["exclude-old-transactions"] = false
+            json["exclude-old-transactions"] = true
             return .requestParameters(parameters: json, encoding: JSONEncoding.default)
         }
     }
