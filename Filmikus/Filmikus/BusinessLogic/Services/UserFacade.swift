@@ -113,7 +113,10 @@ class UserFacade: UserFacadeType {
                     case let .success(response):
                         guard let receipts = try? JSONDecoder().decode(ReceiptsModel.self, from: response.data).receipts else { return }
                         let expirationDates = receipts.compactMap{ $0.expirationDate }
-                        guard let latestExpirationDate = expirationDates.sorted().last else { return }
+                        guard let latestExpirationDate = expirationDates.sorted().last else {
+                            self.storage.expirationDate = nil
+                            return
+                        }
                         self.storage.expirationDate = latestExpirationDate
                         completion(ReceiptStatusModel(userId: nil, expirationDate: latestExpirationDate))
                         guard self.isSubscribed else { return }
