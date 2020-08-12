@@ -13,8 +13,17 @@ protocol WelcomeTourViewControllerDelegate: class {
 }
 
 class WelcomeTourViewController: UIPageViewController {
-
+    
     weak var welcomeTourDelegate: WelcomeTourViewControllerDelegate?
+    
+    private lazy var skipButton: UIButton = {
+        let btn = UIButton()
+        btn.setTitle("Пропустить", for: .normal)
+        btn.setTitleColor(.white, for: .normal)
+        btn.alpha = 0.4
+        btn.addTarget(self, action: #selector(onSkipButtonTap), for: .touchUpInside)
+        return btn
+    }()
     
     private var controllers = [ViewController]()
     
@@ -22,11 +31,10 @@ class WelcomeTourViewController: UIPageViewController {
         super.init(transitionStyle: .scroll, navigationOrientation: .horizontal, options: nil)
         switch welcomeType {
         case .firstWelcomeType:
-            let subscribeVC = SubscriptionViewController()
-            subscribeVC.onClose = {
-                self.welcomeTourDelegate?.welcomeTourViewControllerDidClose(self)
-            }
-            controllers.append(subscribeVC)
+            let firstWelcomeVC = ReuseWelcomeViewController(imgContentName: "welcomeFirst", contentText: "Более чем 5000 фильмов и сериалов")
+            let secondWelcomeVC = ReuseWelcomeViewController(imgContentName: "welcomeSecond", contentText: "Смотри онлайн на любом устройстве")
+            let thirdWelcomeVC = ReuseWelcomeViewController(imgContentName: "welcomeThird", contentText: "Море развлекательного контента")
+            controllers = [firstWelcomeVC, secondWelcomeVC, thirdWelcomeVC]
             setViewControllers([controllers[0]], direction: .forward, animated: true)
         case .secondWelcomeType:
             break
@@ -38,20 +46,35 @@ class WelcomeTourViewController: UIPageViewController {
     }
     
     override func viewDidLayoutSubviews() {
-           super.viewDidLayoutSubviews()
-           for view in view.subviews{
-               if view is UIScrollView{
-                   view.frame = UIScreen.main.bounds
-               }
-               else if view is UIPageControl {
-                   view.backgroundColor = UIColor.clear
-               }
-           }
-       }
+        super.viewDidLayoutSubviews()
+        for view in view.subviews{
+            if view is UIScrollView{
+                view.frame = UIScreen.main.bounds
+            }
+            else if view is UIPageControl {
+                view.frame.origin.y = self.view.frame.size.height - 80
+            }
+        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         dataSource = self
+        let pageControl = UIPageControl.appearance()
+        pageControl.currentPageIndicatorTintColor = .appBlue
+        pageControl.backgroundColor = .clear
+        
+        view.addSubview(skipButton)
+        
+        skipButton.snp.makeConstraints {
+            $0.bottom.equalTo(view.safeAreaLayoutGuide).inset(15)
+            $0.centerX.equalToSuperview()
+        }
+    }
+    
+    @objc
+    private func onSkipButtonTap(sender: UIButton) {
+        welcomeTourDelegate?.welcomeTourViewControllerDidClose(self)
     }
 }
 

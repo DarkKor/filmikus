@@ -153,6 +153,7 @@
 		8A860F8224DD79F50049356D /* ReceiptModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A860F8124DD79F50049356D /* ReceiptModel.swift */; };
 		8A860F8424DD92F60049356D /* ValidateReceiptAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A860F8324DD92F60049356D /* ValidateReceiptAPI.swift */; };
 		8A8970C224DC01E9009314B1 /* WelcomeTourViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A8970C124DC01E9009314B1 /* WelcomeTourViewController.swift */; };
+		A72AF6E724E448EE00EBE8DC /* ReuseWelcomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A72AF6E624E448EE00EBE8DC /* ReuseWelcomeViewController.swift */; };
 		DBB5AD7EDA6B8BBB5543CBB9 /* Pods_Filmikus.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 97F5ACE358500956AF72C9A2 /* Pods_Filmikus.framework */; };
 /* End PBXBuildFile section */
 
@@ -310,6 +311,7 @@
 		8A860F8324DD92F60049356D /* ValidateReceiptAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValidateReceiptAPI.swift; sourceTree = "<group>"; };
 		8A8970C124DC01E9009314B1 /* WelcomeTourViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeTourViewController.swift; sourceTree = "<group>"; };
 		97F5ACE358500956AF72C9A2 /* Pods_Filmikus.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Filmikus.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		A72AF6E624E448EE00EBE8DC /* ReuseWelcomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReuseWelcomeViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -815,6 +817,7 @@
 			isa = PBXGroup;
 			children = (
 				8A8970C124DC01E9009314B1 /* WelcomeTourViewController.swift */,
+				A72AF6E624E448EE00EBE8DC /* ReuseWelcomeViewController.swift */,
 			);
 			path = WelcomeTour;
 			sourceTree = "<group>";
@@ -988,6 +991,7 @@
 				49684A6B246BE5B600E9BADC /* NavigationController.swift in Sources */,
 				49CED94824C5C53000BCCB6C /* SignUpStatusModel.swift in Sources */,
 				491C21BE246424F4007CDEC2 /* ReusableView.swift in Sources */,
+				A72AF6E724E448EE00EBE8DC /* ReuseWelcomeViewController.swift in Sources */,
 				49900FE82480146600F18B46 /* DirectorModel.swift in Sources */,
 				491D03882492411C00093293 /* ActivityIndicatorPresenter.swift in Sources */,
 				49684A72246BE70C00E9BADC /* VideosViewController.swift in Sources */,
