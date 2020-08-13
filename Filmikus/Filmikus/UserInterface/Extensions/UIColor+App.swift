@@ -68,4 +68,12 @@ extension UIColor {
 	static var appGViolet: UIColor {
 		UIColor(named: "appGViolet")!
 	}
+    
+    static var appLightPurple: UIColor {
+        UIColor(named: "appLightPurple")!
+    }
+    
+    static var appTransparentLightPurple: UIColor {
+        UIColor(named: "appTransparentLightPurple")!
+    }
 }

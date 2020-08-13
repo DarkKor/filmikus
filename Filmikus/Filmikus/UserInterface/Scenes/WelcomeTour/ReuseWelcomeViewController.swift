@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SnapKit
 
 class ReuseWelcomeViewController: ViewController {
     
@@ -19,8 +20,6 @@ class ReuseWelcomeViewController: ViewController {
     
     private lazy var contentImageView: UIImageView = {
         let imageView = UIImageView()
-        imageView.contentMode = .center
-        imageView.clipsToBounds = true
         return imageView
     }()
     
@@ -37,6 +36,8 @@ class ReuseWelcomeViewController: ViewController {
         }
         return lbl
     }()
+    
+    private var contentImageViewLeadingTrailing: Constraint?
     
     init(imgContentName: String, contentText: String) {
         super.init(nibName: nil, bundle: nil)
@@ -59,7 +60,6 @@ class ReuseWelcomeViewController: ViewController {
             contentImageView.addSubview(logoImageView)
             contentImageView.addSubview(lblContent)
         }
-       
         
         logoImageView.snp.makeConstraints {
             $0.top.equalTo(view.safeAreaLayoutGuide).inset(25)
@@ -68,9 +68,11 @@ class ReuseWelcomeViewController: ViewController {
         
         contentImageView.snp.makeConstraints {
             if traitCollection.userInterfaceIdiom == .pad {
-                $0.top.equalTo(logoImageView).inset(65)
-                $0.leading.trailing.equalTo(view.safeAreaLayoutGuide).inset(119)
-                $0.width.equalTo(contentImageView)
+                $0.top.lessThanOrEqualTo(logoImageView).inset(50)
+                $0.centerY.equalToSuperview().offset(-40)
+                $0.centerX.equalToSuperview()
+                contentImageViewLeadingTrailing =  $0.leading.trailing.lessThanOrEqualTo(view.safeAreaLayoutGuide).inset(20).constraint
+                $0.bottom.lessThanOrEqualTo(lblContent).inset(20)
             } else {
                 $0.edges.equalToSuperview()
             }
@@ -80,6 +82,36 @@ class ReuseWelcomeViewController: ViewController {
             $0.bottom.equalTo(view.safeAreaLayoutGuide).inset(104)
             $0.leading.trailing.equalTo(view.safeAreaLayoutGuide).inset(44)
         }
+        
+        ipadOrientationCheck()
+    }
+    
+    override func viewDidLoad() {
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(orientationDidChanged),
+            name: UIDevice.orientationDidChangeNotification,
+            object: nil
+        )
+    }
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self)
+    }
+    
+    private func ipadOrientationCheck() {
+        if traitCollection.userInterfaceIdiom == .pad {
+            if UIDevice.current.orientation.isLandscape {
+                contentImageViewLeadingTrailing?.deactivate()
+            } else {
+                contentImageViewLeadingTrailing?.activate()
+            }
+        }
+    }
+    
+    @objc
+    private func orientationDidChanged(sender: Notification) {
+        ipadOrientationCheck()
     }
 }
 

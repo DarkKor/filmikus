@@ -12,9 +12,15 @@ protocol WelcomeTourViewControllerDelegate: class {
     func welcomeTourViewControllerDidClose(_ viewController: WelcomeTourViewController)
 }
 
-class WelcomeTourViewController: UIPageViewController {
+class WelcomeTourViewController: ViewController {
     
-    weak var welcomeTourDelegate: WelcomeTourViewControllerDelegate?
+    weak var delegate: WelcomeTourViewControllerDelegate?
+    
+    private lazy var pageControl: UIPageControl = {
+        let pageControl = UIPageControl()
+        pageControl.currentPageIndicatorTintColor = .appBlue
+        return pageControl
+    }()
     
     private lazy var skipButton: UIButton = {
         let btn = UIButton()
@@ -25,91 +31,113 @@ class WelcomeTourViewController: UIPageViewController {
         return btn
     }()
     
-    private var controllers = [ViewController]()
+    private lazy var contentView = UIView()
     
-    init(welcomeType: WelcomeTypeModel) {
-        super.init(transitionStyle: .scroll, navigationOrientation: .horizontal, options: nil)
-        switch welcomeType {
-        case .firstWelcomeType:
-            let firstWelcomeVC = ReuseWelcomeViewController(imgContentName: "welcomeFirst", contentText: "Более чем 5000 фильмов и сериалов")
-            let secondWelcomeVC = ReuseWelcomeViewController(imgContentName: "welcomeSecond", contentText: "Смотри онлайн на любом устройстве")
-            let thirdWelcomeVC = ReuseWelcomeViewController(imgContentName: "welcomeThird", contentText: "Море развлекательного контента")
-            controllers = [firstWelcomeVC, secondWelcomeVC, thirdWelcomeVC]
-            setViewControllers([controllers[0]], direction: .forward, animated: true)
-        case .secondWelcomeType:
-            break
+    private lazy var scrollView: UIScrollView = {
+        let sv = UIScrollView()
+        sv.isPagingEnabled = true
+        sv.showsHorizontalScrollIndicator = false
+        sv.delegate = self
+        return sv
+    }()
+    
+    override func loadView() {
+        view = UIView()
+        view.addSubviews(scrollView, pageControl, skipButton)
+        scrollView.addSubviews(contentView)
+        let firstWelcomeVC = ReuseWelcomeViewController(imgContentName: "welcomeFirst", contentText: "Более чем 5000 фильмов и сериалов")
+        let secondWelcomeVC = ReuseWelcomeViewController(imgContentName: "welcomeSecond", contentText: "Смотри онлайн на любом устройстве")
+        let thirdWelcomeVC = ReuseWelcomeViewController(imgContentName: "welcomeThird", contentText: "Море развлекательного контента")
+        let welcomePayVC = FirstWelcomeTourPayViewController()
+        addChildViewController(viewController: firstWelcomeVC)
+        addChildViewController(viewController: secondWelcomeVC)
+        addChildViewController(viewController: thirdWelcomeVC)
+        addChildViewController(viewController: welcomePayVC)
+        pageControl.numberOfPages = 4
+        pageControl.currentPage = 0
+        
+        scrollView.snp.makeConstraints {
+            $0.edges.equalTo(view)
         }
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        for view in view.subviews{
-            if view is UIScrollView{
-                view.frame = UIScreen.main.bounds
-            }
-            else if view is UIPageControl {
-                view.frame.origin.y = self.view.frame.size.height - 80
-            }
+        
+        pageControl.snp.makeConstraints {
+            $0.bottom.equalToSuperview().inset(60)
+            $0.centerX.equalToSuperview()
         }
+        
+        contentView.snp.makeConstraints {
+            $0.edges.equalToSuperview()
+            $0.height.equalTo(scrollView.snp.height)
+        }
+        
+        firstWelcomeVC.view.snp.makeConstraints {
+            $0.leading.equalToSuperview()
+            $0.width.equalTo(view)
+            $0.top.bottom.equalToSuperview()
+        }
+        
+        secondWelcomeVC.view.snp.makeConstraints {
+            $0.leading.equalTo(firstWelcomeVC.view.snp.trailing)
+            $0.width.equalTo(view)
+            $0.top.bottom.equalToSuperview()
+        }
+        
+        thirdWelcomeVC.view.snp.makeConstraints {
+            $0.leading.equalTo(secondWelcomeVC.view.snp.trailing)
+            $0.width.equalTo(view)
+            $0.top.bottom.equalToSuperview()
+        }
+        
+        welcomePayVC.view.snp.makeConstraints {
+            $0.leading.equalTo(thirdWelcomeVC.view.snp.trailing)
+            $0.width.equalTo(view)
+            $0.top.bottom.trailing.equalToSuperview()
+        }
+        
     }
     
     override func viewDidLoad() {
-        super.viewDidLoad()
-        dataSource = self
-        let pageControl = UIPageControl.appearance()
-        pageControl.currentPageIndicatorTintColor = .appBlue
-        pageControl.backgroundColor = .clear
-        
-        view.addSubview(skipButton)
-        
-        skipButton.snp.makeConstraints {
-            $0.bottom.equalTo(view.safeAreaLayoutGuide).inset(15)
-            $0.centerX.equalToSuperview()
-        }
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(orientationDidChanged),
+            name: UIDevice.orientationDidChangeNotification,
+            object: nil
+        )
+    }
+    
+    private func addChildViewController(viewController: ViewController) {
+        addChild(viewController)
+        contentView.addSubview(viewController.view)
+        viewController.didMove(toParent: self)
     }
     
     @objc
     private func onSkipButtonTap(sender: UIButton) {
-        welcomeTourDelegate?.welcomeTourViewControllerDidClose(self)
+        delegate?.welcomeTourViewControllerDidClose(self)
+    }
+    
+    @objc
+    private func orientationDidChanged(sender: Notification) {
+
     }
 }
 
-// MARK: - UIPageViewControllerDataSource
+extension WelcomeTourViewController: UIScrollViewDelegate {
+    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+        let x = scrollView.contentOffset.x
+        let w = scrollView.bounds.size.width
+        let currentPage = Int(x/w)
+        if currentPage == 3 {
+            scrollView.isScrollEnabled = false
+        }
+        pageControl.currentPage = currentPage
+    }
+}
 
-extension WelcomeTourViewController: UIPageViewControllerDataSource {
-    func pageViewController(_ pageViewController: UIPageViewController, viewControllerBefore viewController: UIViewController) -> UIViewController? {
-        guard let controller = viewController as? ViewController else {
-            return nil
-        }
-        if let index = controllers.firstIndex(of: controller) {
-            if index > 0 {
-                return controllers[index - 1]
-            }
-        }
-        return nil
-    }
+// MARK: - FirstWelcomeTourPayViewControllerDelegate
+
+extension WelcomeTourViewController: FirstWelcomeTourPayViewControllerDelegate {
+    func firstWelcomeTourPayViewControllerWillAppear(_ viewController: FirstWelcomeTourPayViewController) {
     
-    func pageViewController(_ pageViewController: UIPageViewController, viewControllerAfter viewController: UIViewController) -> UIViewController? {
-        guard let controller = viewController as? ViewController else {
-                  return nil
-              }
-              if let index = controllers.firstIndex(of: controller) {
-                if index < controllers.count - 1 {
-                      return controllers[index + 1]
-                  }
-              }
-              return nil
-    }
-    
-    func presentationCount(for pageViewController: UIPageViewController) -> Int {
-        return controllers.count
-    }
-    
-    func presentationIndex(for pageViewController: UIPageViewController) -> Int {
-        return 0
     }
 }
