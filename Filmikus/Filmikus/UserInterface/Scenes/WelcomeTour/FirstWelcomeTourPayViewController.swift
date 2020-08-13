@@ -16,13 +16,32 @@ class FirstWelcomeTourPayViewController: ViewController {
     
     weak var delegate: FirstWelcomeTourPayViewControllerDelegate?
     
+    private let scrollView = UIScrollView()
+    private let contentView = UIView()
     private lazy var vFirstWelcomeTourPay: FirstWelcomeTourPayView = {
         let view = FirstWelcomeTourPayView()
         return view
     }()
     
     override func loadView() {
-        view = vFirstWelcomeTourPay
+        view = UIView()
+        view.backgroundColor = .appPurple
+        view.addSubview(scrollView)
+        scrollView.addSubview(contentView)
+        contentView.addSubview(vFirstWelcomeTourPay)
+        
+        scrollView.snp.makeConstraints {
+            $0.edges.equalTo(view)
+        }
+        
+        contentView.snp.makeConstraints {
+            $0.edges.equalToSuperview()
+            $0.width.equalToSuperview()
+        }
+        
+        vFirstWelcomeTourPay.snp.makeConstraints {
+            $0.edges.equalToSuperview()
+        }
     }
     
     override func viewDidLoad() {

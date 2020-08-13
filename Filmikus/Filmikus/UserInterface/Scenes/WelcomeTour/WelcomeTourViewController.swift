@@ -44,7 +44,7 @@ class WelcomeTourViewController: ViewController {
     override func loadView() {
         view = UIView()
         view.addSubviews(scrollView, pageControl, skipButton)
-        scrollView.addSubviews(contentView)
+        scrollView.addSubview(contentView)
         let firstWelcomeVC = ReuseWelcomeViewController(imgContentName: "welcomeFirst", contentText: "Более чем 5000 фильмов и сериалов")
         let secondWelcomeVC = ReuseWelcomeViewController(imgContentName: "welcomeSecond", contentText: "Смотри онлайн на любом устройстве")
         let thirdWelcomeVC = ReuseWelcomeViewController(imgContentName: "welcomeThird", contentText: "Море развлекательного контента")
@@ -91,18 +91,9 @@ class WelcomeTourViewController: ViewController {
         welcomePayVC.view.snp.makeConstraints {
             $0.leading.equalTo(thirdWelcomeVC.view.snp.trailing)
             $0.width.equalTo(view)
-            $0.top.bottom.trailing.equalToSuperview()
+            $0.top.trailing.bottom.equalToSuperview()
         }
         
-    }
-    
-    override func viewDidLoad() {
-        NotificationCenter.default.addObserver(
-            self,
-            selector: #selector(orientationDidChanged),
-            name: UIDevice.orientationDidChangeNotification,
-            object: nil
-        )
     }
     
     private func addChildViewController(viewController: ViewController) {
@@ -115,11 +106,6 @@ class WelcomeTourViewController: ViewController {
     private func onSkipButtonTap(sender: UIButton) {
         delegate?.welcomeTourViewControllerDidClose(self)
     }
-    
-    @objc
-    private func orientationDidChanged(sender: Notification) {
-
-    }
 }
 
 extension WelcomeTourViewController: UIScrollViewDelegate {
@@ -129,15 +115,8 @@ extension WelcomeTourViewController: UIScrollViewDelegate {
         let currentPage = Int(x/w)
         if currentPage == 3 {
             scrollView.isScrollEnabled = false
+            pageControl.isHidden = traitCollection.userInterfaceIdiom == .phone ? true : false
         }
         pageControl.currentPage = currentPage
-    }
-}
-
-// MARK: - FirstWelcomeTourPayViewControllerDelegate
-
-extension WelcomeTourViewController: FirstWelcomeTourPayViewControllerDelegate {
-    func firstWelcomeTourPayViewControllerWillAppear(_ viewController: FirstWelcomeTourPayViewController) {
-    
     }
 }

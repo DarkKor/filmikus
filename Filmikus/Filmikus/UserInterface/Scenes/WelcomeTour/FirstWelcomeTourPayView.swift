@@ -196,10 +196,21 @@ class FirstWelcomeTourPayView: UIView {
         action: #selector(onRestorePurchaseButtonTap)
     )
     
+    private lazy var termsLabel: UILabel = {
+        let lbl = UILabel()
+        lbl.textColor = .white
+        lbl.numberOfLines = 0
+        lbl.textAlignment = .justified
+        lbl.font = .systemFont(ofSize: 9, weight: .regular)
+        lbl.text = "Подписка автоматически продлится, если автопродление не будет отключено по крайней мере за 24 часа до окончания текущего периода. Для управления подпиской и отключения автоматического продления вы можете перейти в настройки  iTunes. Деньги будут списаны со счета вашего аккаунта iTunes при подтверждении покупки. Если вы оформите подписку до истечения срока бесплатной пробной версии, оставшаяся часть бесплатного пробного периода будет аннулирована в момент подтверждения покупки"
+        return lbl
+    }()
+    
     init() {
         super.init(frame: .zero)
         
         backgroundColor = .appPurple
+        
         addSubviews(
             logoImageView,
             closeButton,
@@ -207,7 +218,8 @@ class FirstWelcomeTourPayView: UIView {
             mainStackView,
             subscribeButton,
             cancelSubscribeLabel,
-            buttonStackView
+            buttonStackView,
+            termsLabel
         )
         
         logoImageView.snp.makeConstraints {
@@ -220,7 +232,7 @@ class FirstWelcomeTourPayView: UIView {
         }
         
         titleLabel.snp.makeConstraints {
-            $0.top.equalTo(logoImageView.snp.bottom).offset(35)
+            $0.top.equalTo(logoImageView.snp.bottom).offset(58)
             if traitCollection.userInterfaceIdiom == .pad {
                 $0.centerX.equalToSuperview()
                 $0.width.equalTo(thirdScreenWidht)
@@ -230,7 +242,7 @@ class FirstWelcomeTourPayView: UIView {
         }
         
         mainStackView.snp.makeConstraints {
-            $0.top.equalTo(titleLabel.snp.bottom).offset(40)
+            $0.top.equalTo(titleLabel.snp.bottom).offset(61)
             if traitCollection.userInterfaceIdiom == .pad {
                 $0.centerX.equalToSuperview()
                 $0.width.equalTo(halfScreenWidht)
@@ -244,21 +256,20 @@ class FirstWelcomeTourPayView: UIView {
                 $0.centerX.equalToSuperview()
                 $0.width.equalTo(halfScreenWidht)
             } else {
-                $0.height.equalTo(55)
-                $0.bottom.equalTo(cancelSubscribeLabel.snp.top).offset(-10)
+                $0.height.equalTo(50)
                 $0.leading.trailing.equalTo(safeAreaLayoutGuide).inset(14)
-                $0.top.greaterThanOrEqualTo(mainStackView.snp.bottom).offset(20)
+                $0.top.equalTo(mainStackView.snp.bottom).offset(50)
             }
             
             cancelSubscribeLabel.snp.makeConstraints {
-                $0.top.equalTo(buttonStackView.snp.top).offset(-40)
+                $0.top.equalTo(subscribeButton.snp.bottom).offset(15)
                 $0.centerX.equalToSuperview()
             }
             
             signInButton.snp.makeConstraints {
                 $0.height.equalTo(subscribeButton.snp.height)
             }
-            
+
             restorePurchaseButton.snp.makeConstraints {
                 $0.height.equalTo(subscribeButton.snp.height)
             }
@@ -272,9 +283,14 @@ class FirstWelcomeTourPayView: UIView {
                 }
             } else {
                 buttonStackView.snp.makeConstraints {
-                    $0.leading.trailing.equalTo(safeAreaLayoutGuide).inset(14)
-                    $0.bottom.greaterThanOrEqualTo(self).inset(150)
+                    $0.top.equalTo(cancelSubscribeLabel.snp.bottom).offset(15)
+                    $0.leading.trailing.equalToSuperview().inset(14)
                 }
+            }
+            termsLabel.snp.makeConstraints {
+                $0.top.equalTo(buttonStackView.snp.bottom).offset(20)
+                $0.leading.trailing.equalToSuperview().inset(20)
+                $0.bottom.equalToSuperview().inset(20)
             }
         }
         
