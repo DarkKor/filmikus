@@ -67,6 +67,11 @@ class WelcomeTourViewController: ViewController {
             $0.centerX.equalToSuperview()
         }
         
+        skipButton.snp.makeConstraints {
+            $0.bottom.equalToSuperview().inset(30)
+            $0.centerX.equalToSuperview()
+        }
+        
         contentView.snp.makeConstraints {
             $0.edges.equalToSuperview()
             $0.height.equalTo(scrollView.snp.height)
@@ -116,8 +121,11 @@ extension WelcomeTourViewController: UIScrollViewDelegate {
         let w = scrollView.bounds.size.width
         let currentPage = Int(x/w)
         if currentPage == 3 {
-            scrollView.isScrollEnabled = false
-            pageControl.isHidden = traitCollection.userInterfaceIdiom == .phone ? true : false
+            skipButton.isHidden = true
+            if traitCollection.userInterfaceIdiom == .phone {
+                scrollView.isScrollEnabled = false
+                pageControl.isHidden = true
+            }
         }
         pageControl.currentPage = currentPage
     }
