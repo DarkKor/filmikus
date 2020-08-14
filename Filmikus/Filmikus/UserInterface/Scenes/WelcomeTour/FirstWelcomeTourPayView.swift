@@ -39,10 +39,14 @@ class FirstWelcomeTourPayView: UIView {
     
     private lazy var firstStackView: UIStackView = {
         let stv = UIStackView(arrangedSubviews: [
-            filmStripImageView,
-            filmStripLabel
+            filmStripImageViewContainer,
+            filmStripTextView
         ])
-        stv.spacing = 25
+        if traitCollection.userInterfaceIdiom == .pad {
+            stv.spacing = 30
+        } else {
+            stv.spacing = 10
+        }
         stv.alignment = .center
         stv.axis = .horizontal
         return stv
@@ -50,10 +54,14 @@ class FirstWelcomeTourPayView: UIView {
     
     private lazy var secondStackView: UIStackView = {
         let stv = UIStackView(arrangedSubviews: [
-            tiketImageView,
-            tiketLabel
+            tiketImageViewContainer,
+            tiketTextView
         ])
-        stv.spacing = 10
+        if traitCollection.userInterfaceIdiom == .pad {
+            stv.spacing = 30
+        } else {
+            stv.spacing = 10
+        }
         stv.alignment = .center
         stv.axis = .horizontal
         return stv
@@ -61,10 +69,14 @@ class FirstWelcomeTourPayView: UIView {
     
     private lazy var thirdStackView: UIStackView = {
         let stv = UIStackView(arrangedSubviews: [
-            okImageView,
-            okLabel
+            okImageViewContainer,
+            okTextView
         ])
-        stv.spacing = 30
+        if traitCollection.userInterfaceIdiom == .pad {
+            stv.spacing = 30
+        } else {
+            stv.spacing = 10
+        }
         stv.alignment = .center
         stv.axis = .horizontal
         return stv
@@ -97,67 +109,78 @@ class FirstWelcomeTourPayView: UIView {
         return stv
     }()
     
+    private lazy var filmStripImageViewContainer = UIView()
+    private lazy var tiketImageViewContainer = UIView()
+    private lazy var okImageViewContainer = UIView()
+    
     private lazy var filmStripImageView: UIImageView = {
         let imageView = UIImageView()
+        imageView.contentMode = .center
         imageView.image = UIImage(named: "filmStrip")
         imageView.setContentHuggingPriority(.required, for: .horizontal)
+        imageView.setContentHuggingPriority(.required, for: .vertical)
         return imageView
     }()
     
-    private lazy var filmStripLabel: UILabel = {
-        let lbl = UILabel()
-        lbl.textColor = .white
-        lbl.numberOfLines = 2
-        lbl.lineBreakMode = .byWordWrapping
-        lbl.text = "Более 5000 фильмов, сериалов, популярного контента"
+    private lazy var filmStripTextView: UITextView = {
+        let vTxt = UITextView()
+        vTxt.textColor = .white
+        vTxt.backgroundColor = .clear
+        vTxt.isUserInteractionEnabled = false
+        vTxt.isScrollEnabled = false
+        vTxt.text = "Более 5000 фильмов, сериалов, популярного контента"
         if traitCollection.userInterfaceIdiom == .pad {
-            lbl.font = .systemFont(ofSize: 26, weight: .regular)
+            vTxt.font = .systemFont(ofSize: 24, weight: .regular)
         } else {
-            lbl.font = .systemFont(ofSize: 18, weight: .regular)
+            vTxt.font = .systemFont(ofSize: 18, weight: .regular)
         }
-        return lbl
+        return vTxt
     }()
     
     private lazy var tiketImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.image = UIImage(named: "tiket")
         imageView.setContentHuggingPriority(.required, for: .horizontal)
+        imageView.setContentHuggingPriority(.required, for: .vertical)
         return imageView
     }()
     
-    private lazy var tiketLabel: UILabel = {
-        let lbl = UILabel()
-        lbl.textColor = .white
-        lbl.numberOfLines = 2
-        lbl.lineBreakMode = .byWordWrapping
-        lbl.text = "Безлимитный доступ за 349 Р в месяц"
+    private lazy var tiketTextView: UITextView = {
+        let vTxt = UITextView()
+        vTxt.textColor = .white
+        vTxt.backgroundColor = .clear
+        vTxt.isUserInteractionEnabled = false
+        vTxt.isScrollEnabled = false
+        vTxt.text = "Безлимитный доступ за 349 Р в месяц"
         if traitCollection.userInterfaceIdiom == .pad {
-            lbl.font = .systemFont(ofSize: 26, weight: .regular)
+            vTxt.font = .systemFont(ofSize: 24, weight: .regular)
         } else {
-            lbl.font = .systemFont(ofSize: 18, weight: .regular)
+            vTxt.font = .systemFont(ofSize: 18, weight: .regular)
         }
-        return lbl
+        return vTxt
     }()
     
     private lazy var okImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.image = UIImage(named: "ok")
+        imageView.setContentHuggingPriority(.required, for: .vertical)
         imageView.setContentHuggingPriority(.required, for: .horizontal)
         return imageView
     }()
     
-    private lazy var okLabel: UILabel = {
-        let lbl = UILabel()
-        lbl.textColor = .white
-        lbl.numberOfLines = 2
-        lbl.lineBreakMode = .byWordWrapping
-        lbl.text = "Без рекламы"
+    private lazy var okTextView: UITextView = {
+        let vTxt = UITextView()
+        vTxt.textColor = .white
+        vTxt.backgroundColor = .clear
+        vTxt.isUserInteractionEnabled = false
+        vTxt.isScrollEnabled = false
+        vTxt.text = "Без рекламы"
         if traitCollection.userInterfaceIdiom == .pad {
-            lbl.font = .systemFont(ofSize: 26, weight: .regular)
+            vTxt.font = .systemFont(ofSize: 24, weight: .regular)
         } else {
-            lbl.font = .systemFont(ofSize: 18, weight: .regular)
+            vTxt.font = .systemFont(ofSize: 18, weight: .regular)
         }
-        return lbl
+        return vTxt
     }()
     
     private lazy var titleLabel: UILabel = {
@@ -165,6 +188,7 @@ class FirstWelcomeTourPayView: UIView {
         lbl.textColor = .white
         lbl.numberOfLines = 2
         lbl.lineBreakMode = .byWordWrapping
+        lbl.textAlignment = .center
         lbl.text = "Смотри первые 7 дней бесплатно"
         lbl.textAlignment = .center
         if traitCollection.userInterfaceIdiom == .pad {
@@ -236,6 +260,52 @@ class FirstWelcomeTourPayView: UIView {
             termsLabel
         )
         
+        filmStripImageViewContainer.addSubview(filmStripImageView)
+        tiketImageViewContainer.addSubview(tiketImageView)
+        okImageViewContainer.addSubview(okImageView)
+        
+        filmStripImageViewContainer.snp.makeConstraints {
+            if traitCollection.userInterfaceIdiom == .pad {
+                $0.width.equalTo(110)
+                $0.height.equalTo(110)
+            } else {
+                $0.width.equalTo(66)
+                $0.height.equalTo(66)
+            }
+        }
+        
+        filmStripImageView.snp.makeConstraints {
+            $0.center.equalToSuperview()
+        }
+        
+        tiketImageViewContainer.snp.makeConstraints {
+            if traitCollection.userInterfaceIdiom == .pad {
+                $0.width.equalTo(110)
+                $0.height.equalTo(110)
+            } else {
+                $0.width.equalTo(66)
+                $0.height.equalTo(66)
+            }
+        }
+        
+        tiketImageView.snp.makeConstraints {
+            $0.center.equalToSuperview()
+        }
+        
+        okImageViewContainer.snp.makeConstraints {
+            if traitCollection.userInterfaceIdiom == .pad {
+                $0.width.equalTo(110)
+                $0.height.equalTo(110)
+            } else {
+                $0.width.equalTo(66)
+                $0.height.equalTo(66)
+            }
+        }
+        
+        okImageView.snp.makeConstraints {
+            $0.center.equalToSuperview()
+        }
+        
         logoImageView.snp.makeConstraints {
             $0.top.equalTo(safeAreaLayoutGuide).inset(25)
             $0.leading.trailing.equalTo(safeAreaLayoutGuide).inset(20)
@@ -246,20 +316,21 @@ class FirstWelcomeTourPayView: UIView {
         }
         
         titleLabel.snp.makeConstraints {
-            $0.top.equalTo(logoImageView.snp.bottom).offset(58)
             if traitCollection.userInterfaceIdiom == .pad {
+                $0.top.equalTo(logoImageView.snp.bottom).offset(25)
                 $0.centerX.equalToSuperview()
-                $0.width.equalTo(halfScreenWidht)
+                $0.leading.trailing.equalToSuperview().inset(50)
             } else {
+                $0.top.equalTo(logoImageView.snp.bottom).offset(58)
                 $0.leading.trailing.equalTo(safeAreaLayoutGuide).inset(25)
             }
         }
         
         mainStackView.snp.makeConstraints {
             if traitCollection.userInterfaceIdiom == .pad {
-                $0.top.equalTo(titleLabel.snp.bottom).offset(105)
+                $0.top.equalTo(titleLabel.snp.bottom).offset(50)
                 $0.centerX.equalToSuperview()
-                $0.width.equalTo(halfScreenWidht)
+                $0.width.equalToSuperview().dividedBy(1.2)
             } else {
                 $0.top.equalTo(titleLabel.snp.bottom).offset(61)
                 $0.leading.trailing.equalTo(safeAreaLayoutGuide).inset(14)
@@ -271,7 +342,7 @@ class FirstWelcomeTourPayView: UIView {
             if traitCollection.userInterfaceIdiom == .pad {
                 $0.centerX.equalToSuperview()
                 $0.width.equalTo(halfScreenWidht)
-                $0.top.equalTo(mainStackView.snp.bottom).offset(120)
+                $0.top.equalTo(mainStackView.snp.bottom).offset(40)
             } else {
                 $0.leading.trailing.equalTo(safeAreaLayoutGuide).inset(14)
                 $0.top.equalTo(mainStackView.snp.bottom).offset(50)
@@ -297,7 +368,7 @@ class FirstWelcomeTourPayView: UIView {
         
         buttonStackView.snp.makeConstraints {
             if traitCollection.userInterfaceIdiom == .pad {
-                $0.top.equalTo(cancelSubscribeLabel.snp.bottom).offset(115)
+                $0.top.greaterThanOrEqualTo(cancelSubscribeLabel.snp.bottom).offset(50)
                 $0.centerX.equalToSuperview()
                 $0.leading.trailing.equalToSuperview().inset(50)
             } else {
@@ -321,6 +392,28 @@ class FirstWelcomeTourPayView: UIView {
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    func rotate(isLandscape: Bool) {
+        if isLandscape {
+            firstStackView.axis = .vertical
+            secondStackView.axis = .vertical
+            thirdStackView.axis = .vertical
+            mainStackView.axis = .horizontal
+            filmStripTextView.textAlignment = .center
+            tiketTextView.textAlignment = .center
+            okTextView.textAlignment = .center
+            mainStackView.distribution = .fillEqually
+        } else {
+            firstStackView.axis = .horizontal
+            secondStackView.axis = .horizontal
+            thirdStackView.axis = .horizontal
+            mainStackView.axis = .vertical
+            filmStripTextView.textAlignment = .left
+            tiketTextView.textAlignment = .left
+            okTextView.textAlignment = .left
+            mainStackView.distribution = .fill
+        }
     }
     
     

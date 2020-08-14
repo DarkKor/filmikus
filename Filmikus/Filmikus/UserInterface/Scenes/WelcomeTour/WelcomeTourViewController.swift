@@ -100,7 +100,6 @@ class WelcomeTourViewController: ViewController {
             $0.width.equalTo(view)
             $0.top.trailing.bottom.equalToSuperview()
         }
-        
     }
     
     private func addChildViewController(viewController: ViewController) {
@@ -108,6 +107,14 @@ class WelcomeTourViewController: ViewController {
         contentView.addSubview(viewController.view)
         viewController.didMove(toParent: self)
     }
+    
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        coordinator.animate(alongsideTransition: { _ in
+            self.scrollView.contentOffset.x = size.width * CGFloat(self.pageControl.currentPage)
+        })
+        super.viewWillTransition(to: size, with: coordinator)
+    }
+    
     
     @objc
     private func onSkipButtonTap(sender: UIButton) {
@@ -125,6 +132,10 @@ extension WelcomeTourViewController: UIScrollViewDelegate {
             if traitCollection.userInterfaceIdiom == .phone {
                 scrollView.isScrollEnabled = false
                 pageControl.isHidden = true
+            }
+        } else {
+            if traitCollection.userInterfaceIdiom == .pad {
+                skipButton.isHidden = false
             }
         }
         pageControl.currentPage = currentPage

@@ -20,6 +20,9 @@ class ReuseWelcomeViewController: ViewController {
     
     private lazy var contentImageView: UIImageView = {
         let imageView = UIImageView()
+        if traitCollection.userInterfaceIdiom == .pad {
+            imageView.contentMode = .scaleAspectFit
+        }
         return imageView
     }()
     

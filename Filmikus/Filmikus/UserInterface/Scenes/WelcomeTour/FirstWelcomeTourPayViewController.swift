@@ -73,12 +73,28 @@ class FirstWelcomeTourPayViewController: ViewController {
     }
     
     override func viewDidLoad() {
-        super.viewDidLoad()
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(orientationDidChanged),
+            name: UIDevice.orientationDidChangeNotification,
+            object: nil
+        )
     }
+    
+    @objc
+    private func orientationDidChanged(sender: Notification) {
+        ipadOrientationCheck()
+    }
+    
+    private func ipadOrientationCheck() {
+           if traitCollection.userInterfaceIdiom == .pad {
+            vFirstWelcomeTourPay.rotate(isLandscape: UIDevice.current.orientation.isLandscape)
+           }
+       }
     
 }
 
-// MARK: -
+// MARK: - FirstWelcomeTourPayViewDelegate
 
 extension FirstWelcomeTourPayViewController: FirstWelcomeTourPayViewDelegate {
     func firstWelcomeTourPayViewDidClickSignIn(_ view: FirstWelcomeTourPayView) {
