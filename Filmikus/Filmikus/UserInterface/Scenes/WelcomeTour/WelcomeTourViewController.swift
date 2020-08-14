@@ -57,7 +57,7 @@ class WelcomeTourViewController: ViewController {
         pageControl.currentPage = 0
         
         scrollView.snp.makeConstraints {
-            $0.edges.equalTo(view)
+            $0.edges.equalToSuperview()
         }
         
         pageControl.snp.makeConstraints {

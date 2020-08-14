@@ -18,6 +18,13 @@ class FirstWelcomeTourPayViewController: ViewController {
     
     private let scrollView = UIScrollView()
     private let contentView = UIView()
+    
+    private lazy var backgroundImageView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.image = UIImage(named: "sky")
+        return imageView
+    }()
+    
     private lazy var vFirstWelcomeTourPay: FirstWelcomeTourPayView = {
         let view = FirstWelcomeTourPayView()
         return view
@@ -25,13 +32,17 @@ class FirstWelcomeTourPayViewController: ViewController {
     
     override func loadView() {
         view = UIView()
-        view.backgroundColor = .appPurple
-        view.addSubview(scrollView)
+        view.backgroundColor = .appCosmosBlue
+        view.addSubviews(backgroundImageView, scrollView)
         scrollView.addSubview(contentView)
-        contentView.addSubview(vFirstWelcomeTourPay)
+        contentView.addSubviews(vFirstWelcomeTourPay)
+        
+        backgroundImageView.snp.makeConstraints {
+            $0.edges.equalToSuperview()
+        }
         
         scrollView.snp.makeConstraints {
-            $0.edges.equalTo(view)
+            $0.edges.equalToSuperview()
         }
         
         contentView.snp.makeConstraints {

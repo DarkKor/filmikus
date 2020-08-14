@@ -76,4 +76,12 @@ extension UIColor {
     static var appTransparentLightPurple: UIColor {
         UIColor(named: "appTransparentLightPurple")!
     }
+    
+    static var appLightBlueBorder: UIColor {
+        UIColor(named: "appLightBlueBorder")!
+    }
+    
+    static var appCosmosBlue: UIColor {
+        UIColor(named: "appCosmosBlue")!
+    }
 }

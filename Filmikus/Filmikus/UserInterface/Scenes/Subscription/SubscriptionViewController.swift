@@ -98,10 +98,10 @@ class SubscriptionViewController: ViewController {
 
 		closeButton.setContentHuggingPriority(.required, for: .vertical)
 		closeButton.snp.makeConstraints {
-			$0.top.trailing.equalTo(view.safeAreaLayoutGuide).inset(20)
+            $0.top.trailing.equalTo(view.safeAreaLayoutGuide).inset(20)
 		}
 		mainStackView.snp.makeConstraints {
-			$0.top.equalTo(closeButton.snp.bottom)
+            $0.top.equalTo(closeButton.snp.bottom)
 			$0.left.right.bottom.equalTo(view.safeAreaLayoutGuide).inset(20)
 		}
 	}

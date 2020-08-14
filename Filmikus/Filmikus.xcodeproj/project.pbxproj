@@ -154,7 +154,7 @@
 		8A8970C224DC01E9009314B1 /* WelcomeTourViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A8970C124DC01E9009314B1 /* WelcomeTourViewController.swift */; };
 		8AC4365324E53B9D00614966 /* FirstWelcomeTourPayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AC4365224E53B9D00614966 /* FirstWelcomeTourPayViewController.swift */; };
 		8AC4365724E54D3100614966 /* BlueButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AC4365624E54D3100614966 /* BlueButton.swift */; };
-		8AC4365924E54D9300614966 /* TranspatentBorderButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AC4365824E54D9300614966 /* TranspatentBorderButton.swift */; };
+		8AC4365924E54D9300614966 /* ColoredBorderButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AC4365824E54D9300614966 /* ColoredBorderButton.swift */; };
 		8AC4365B24E550A500614966 /* FirstWelcomeTourPayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AC4365A24E550A500614966 /* FirstWelcomeTourPayView.swift */; };
 		8AC4365D24E5520D00614966 /* UIView+Extentions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AC4365C24E5520D00614966 /* UIView+Extentions.swift */; };
 		A72AF6E724E448EE00EBE8DC /* ReuseWelcomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A72AF6E624E448EE00EBE8DC /* ReuseWelcomeViewController.swift */; };
@@ -315,7 +315,7 @@
 		8A8970C124DC01E9009314B1 /* WelcomeTourViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeTourViewController.swift; sourceTree = "<group>"; };
 		8AC4365224E53B9D00614966 /* FirstWelcomeTourPayViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstWelcomeTourPayViewController.swift; sourceTree = "<group>"; };
 		8AC4365624E54D3100614966 /* BlueButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BlueButton.swift; sourceTree = "<group>"; };
-		8AC4365824E54D9300614966 /* TranspatentBorderButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TranspatentBorderButton.swift; sourceTree = "<group>"; };
+		8AC4365824E54D9300614966 /* ColoredBorderButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColoredBorderButton.swift; sourceTree = "<group>"; };
 		8AC4365A24E550A500614966 /* FirstWelcomeTourPayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstWelcomeTourPayView.swift; sourceTree = "<group>"; };
 		8AC4365C24E5520D00614966 /* UIView+Extentions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Extentions.swift"; sourceTree = "<group>"; };
 		97F5ACE358500956AF72C9A2 /* Pods_Filmikus.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Filmikus.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -692,7 +692,7 @@
 			isa = PBXGroup;
 			children = (
 				8AC4365624E54D3100614966 /* BlueButton.swift */,
-				8AC4365824E54D9300614966 /* TranspatentBorderButton.swift */,
+				8AC4365824E54D9300614966 /* ColoredBorderButton.swift */,
 				4937867C24855F2600C8496E /* QualityButton.swift */,
 				49684A61246ACDDA00E9BADC /* BlueBorderButton.swift */,
 				493786922487D55200C8496E /* PriceButton.swift */,
@@ -1050,7 +1050,7 @@
 				49900FCE247FD99500F18B46 /* VideosAPI.swift in Sources */,
 				49ECBF15249A48B000F9A854 /* ProfileView.swift in Sources */,
 				49226843248E7FFE00B05A51 /* DetailMovieSection.swift in Sources */,
-				8AC4365924E54D9300614966 /* TranspatentBorderButton.swift in Sources */,
+				8AC4365924E54D9300614966 /* ColoredBorderButton.swift in Sources */,
 				8A860F8024DD79E20049356D /* ReceiptsModel.swift in Sources */,
 				49684A8F2472ED1400E9BADC /* SelectItemViewController.swift in Sources */,
 				49900FF2248016FD00F18B46 /* DetailEpisodeModel.swift in Sources */,

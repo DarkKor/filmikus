@@ -28,12 +28,18 @@ class FirstWelcomeTourPayView: UIView {
         return imageView
     }()
     
+    private lazy var backgroundImageView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.image = UIImage(named: "sky")
+        return imageView
+    }()
+    
     private lazy var firstStackView: UIStackView = {
         let stv = UIStackView(arrangedSubviews: [
             filmStripImageView,
             filmStripLabel
         ])
-        stv.spacing = 10
+        stv.spacing = 25
         stv.alignment = .center
         stv.axis = .horizontal
         return stv
@@ -55,7 +61,7 @@ class FirstWelcomeTourPayView: UIView {
             okImageView,
             okLabel
         ])
-        stv.spacing = 10
+        stv.spacing = 30
         stv.alignment = .center
         stv.axis = .horizontal
         return stv
@@ -165,8 +171,10 @@ class FirstWelcomeTourPayView: UIView {
         return lbl
     }()
     
-    private lazy var subscribeButton = BlueButton(
+    private lazy var subscribeButton = ColoredBorderButton(
         title: "Смотреть бесплатно",
+        color: .appBlue,
+        borderColor: .appLightBlueBorder,
         target: self,
         action: #selector(onSubscribeButtonTap)
     )
@@ -184,14 +192,18 @@ class FirstWelcomeTourPayView: UIView {
         return lbl
     }()
     
-    private lazy var signInButton = TranspatentBorderButton(
+    private lazy var signInButton = ColoredBorderButton(
         title: "Есть аккаунт? Войти",
+        color: .appTransparentLightPurple,
+        borderColor: .appLightPurple,
         target: self,
         action: #selector(onSignInButtonTap)
     )
     
-    private lazy var restorePurchaseButton = TranspatentBorderButton(
+    private lazy var restorePurchaseButton = ColoredBorderButton(
         title: "Восстановить покупки",
+        color: .appTransparentLightPurple,
+        borderColor: .appLightPurple,
         target: self,
         action: #selector(onRestorePurchaseButtonTap)
     )
@@ -209,9 +221,10 @@ class FirstWelcomeTourPayView: UIView {
     init() {
         super.init(frame: .zero)
         
-        backgroundColor = .appPurple
+//        backgroundColor = .appCosmosBlue
         
         addSubviews(
+//            backgroundImageView,
             logoImageView,
             closeButton,
             titleLabel,
@@ -221,6 +234,10 @@ class FirstWelcomeTourPayView: UIView {
             buttonStackView,
             termsLabel
         )
+        
+//        backgroundImageView.snp.makeConstraints {
+//            $0.edges.equalToSuperview()
+//        }
         
         logoImageView.snp.makeConstraints {
             $0.top.equalTo(safeAreaLayoutGuide).inset(25)
@@ -293,9 +310,6 @@ class FirstWelcomeTourPayView: UIView {
                 $0.bottom.equalToSuperview().inset(20)
             }
         }
-        
-        
-        
     }
     
     required init?(coder: NSCoder) {
