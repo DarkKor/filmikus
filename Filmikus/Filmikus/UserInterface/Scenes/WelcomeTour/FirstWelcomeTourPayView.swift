@@ -8,7 +8,16 @@
 
 import UIKit
 
+protocol FirstWelcomeTourPayViewDelegate: class {
+    func firstWelcomeTourPayViewDidClickSignIn(_ view: FirstWelcomeTourPayView)
+    func firstWelcomeTourPayViewDidClickSubscribe(_ view: FirstWelcomeTourPayView)
+    func firstWelcomeTourPayViewDidClickRestorePurchase(_ view: FirstWelcomeTourPayView)
+    func firstWelcomeTourPayViewDidClickClose(_ view: FirstWelcomeTourPayView)
+}
+
 class FirstWelcomeTourPayView: UIView {
+    
+    weak var delegate: FirstWelcomeTourPayViewDelegate?
     
     private var thirdScreenWidht: CGFloat = UIScreen.main.bounds.width / 3
     private var halfScreenWidht: CGFloat = UIScreen.main.bounds.width / 2
@@ -25,12 +34,6 @@ class FirstWelcomeTourPayView: UIView {
         let imageView = UIImageView()
         imageView.image = UIImage(named: "logo")
         imageView.contentMode = .center
-        return imageView
-    }()
-    
-    private lazy var backgroundImageView: UIImageView = {
-        let imageView = UIImageView()
-        imageView.image = UIImage(named: "sky")
         return imageView
     }()
     
@@ -80,12 +83,13 @@ class FirstWelcomeTourPayView: UIView {
     
     private lazy var buttonStackView: UIStackView = {
         let stv = UIStackView(arrangedSubviews: [
-        signInButton,
-        restorePurchaseButton
+            signInButton,
+            restorePurchaseButton
         ])
         if traitCollection.userInterfaceIdiom == .pad {
             stv.spacing = 25
             stv.axis = .horizontal
+            stv.distribution = .fillEqually
         } else {
             stv.spacing = 6
             stv.axis = .vertical
@@ -164,7 +168,7 @@ class FirstWelcomeTourPayView: UIView {
         lbl.text = "Смотри первые 7 дней бесплатно"
         lbl.textAlignment = .center
         if traitCollection.userInterfaceIdiom == .pad {
-            lbl.font = .systemFont(ofSize: 18, weight: .semibold)
+            lbl.font = .systemFont(ofSize: 36, weight: .semibold)
         } else {
             lbl.font = .systemFont(ofSize: 24, weight: .semibold)
         }
@@ -221,10 +225,7 @@ class FirstWelcomeTourPayView: UIView {
     init() {
         super.init(frame: .zero)
         
-//        backgroundColor = .appCosmosBlue
-        
         addSubviews(
-//            backgroundImageView,
             logoImageView,
             closeButton,
             titleLabel,
@@ -234,10 +235,6 @@ class FirstWelcomeTourPayView: UIView {
             buttonStackView,
             termsLabel
         )
-        
-//        backgroundImageView.snp.makeConstraints {
-//            $0.edges.equalToSuperview()
-//        }
         
         logoImageView.snp.makeConstraints {
             $0.top.equalTo(safeAreaLayoutGuide).inset(25)
@@ -252,89 +249,99 @@ class FirstWelcomeTourPayView: UIView {
             $0.top.equalTo(logoImageView.snp.bottom).offset(58)
             if traitCollection.userInterfaceIdiom == .pad {
                 $0.centerX.equalToSuperview()
-                $0.width.equalTo(thirdScreenWidht)
+                $0.width.equalTo(halfScreenWidht)
             } else {
                 $0.leading.trailing.equalTo(safeAreaLayoutGuide).inset(25)
             }
         }
         
         mainStackView.snp.makeConstraints {
-            $0.top.equalTo(titleLabel.snp.bottom).offset(61)
             if traitCollection.userInterfaceIdiom == .pad {
+                $0.top.equalTo(titleLabel.snp.bottom).offset(105)
                 $0.centerX.equalToSuperview()
                 $0.width.equalTo(halfScreenWidht)
             } else {
+                $0.top.equalTo(titleLabel.snp.bottom).offset(61)
                 $0.leading.trailing.equalTo(safeAreaLayoutGuide).inset(14)
             }
         }
         
         subscribeButton.snp.makeConstraints {
+            $0.height.equalTo(50)
             if traitCollection.userInterfaceIdiom == .pad {
                 $0.centerX.equalToSuperview()
                 $0.width.equalTo(halfScreenWidht)
+                $0.top.equalTo(mainStackView.snp.bottom).offset(120)
             } else {
-                $0.height.equalTo(50)
                 $0.leading.trailing.equalTo(safeAreaLayoutGuide).inset(14)
                 $0.top.equalTo(mainStackView.snp.bottom).offset(50)
             }
-            
-            cancelSubscribeLabel.snp.makeConstraints {
-                $0.top.equalTo(subscribeButton.snp.bottom).offset(15)
-                $0.centerX.equalToSuperview()
-            }
-            
-            signInButton.snp.makeConstraints {
-                $0.height.equalTo(subscribeButton.snp.height)
-            }
-
-            restorePurchaseButton.snp.makeConstraints {
-                $0.height.equalTo(subscribeButton.snp.height)
-            }
-            
+        }
+        
+        cancelSubscribeLabel.snp.makeConstraints {
+            $0.centerX.equalToSuperview()
             if traitCollection.userInterfaceIdiom == .pad {
-                buttonStackView.snp.makeConstraints {
-                    $0.top.equalTo(cancelSubscribeLabel.snp.bottom).offset(115)
-                    $0.centerX.equalToSuperview()
-                    $0.width.equalTo(halfScreenWidht)
-                    $0.bottom.lessThanOrEqualTo(100)
-                }
+                $0.top.equalTo(subscribeButton.snp.bottom).offset(20)
             } else {
-                buttonStackView.snp.makeConstraints {
-                    $0.top.equalTo(cancelSubscribeLabel.snp.bottom).offset(15)
-                    $0.leading.trailing.equalToSuperview().inset(14)
-                }
+                $0.top.equalTo(subscribeButton.snp.bottom).offset(15)
             }
-            termsLabel.snp.makeConstraints {
+        }
+        
+        signInButton.snp.makeConstraints {
+            $0.height.equalTo(subscribeButton.snp.height)
+        }
+        
+        restorePurchaseButton.snp.makeConstraints {
+            $0.height.equalTo(subscribeButton.snp.height)
+        }
+        
+        buttonStackView.snp.makeConstraints {
+            if traitCollection.userInterfaceIdiom == .pad {
+                $0.top.equalTo(cancelSubscribeLabel.snp.bottom).offset(115)
+                $0.centerX.equalToSuperview()
+                $0.leading.trailing.equalToSuperview().inset(50)
+            } else {
+                $0.top.equalTo(cancelSubscribeLabel.snp.bottom).offset(15)
+                $0.leading.trailing.equalToSuperview().inset(14)
+            }
+        }
+        
+        termsLabel.snp.makeConstraints {
+            $0.leading.trailing.equalToSuperview().inset(20)
+            $0.bottom.equalToSuperview().inset(20)
+             if traitCollection.userInterfaceIdiom == .pad {
+             } else {
                 $0.top.equalTo(buttonStackView.snp.bottom).offset(20)
                 $0.leading.trailing.equalToSuperview().inset(20)
                 $0.bottom.equalToSuperview().inset(20)
             }
+            
         }
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-
+    
     
     @objc
-      private func onSubscribeButtonTap(sender: UIButton) {
-          
-      }
-      
-      @objc
-      private func onSignInButtonTap(sender: UIButton) {
-          
-      }
-      
-      @objc
-      private func onRestorePurchaseButtonTap(sender: UIButton) {
-          
-      }
-      
-      @objc
-      private func onCloseButtonTap(sender: UIButton) {
-          
-      }
+    private func onSubscribeButtonTap(sender: UIButton) {
+        delegate?.firstWelcomeTourPayViewDidClickSubscribe(self)
+    }
+    
+    @objc
+    private func onSignInButtonTap(sender: UIButton) {
+        delegate?.firstWelcomeTourPayViewDidClickSignIn(self)
+    }
+    
+    @objc
+    private func onRestorePurchaseButtonTap(sender: UIButton) {
+        delegate?.firstWelcomeTourPayViewDidClickRestorePurchase(self)
+    }
+    
+    @objc
+    private func onCloseButtonTap(sender: UIButton) {
+        delegate?.firstWelcomeTourPayViewDidClickClose(self)
+    }
     
 }

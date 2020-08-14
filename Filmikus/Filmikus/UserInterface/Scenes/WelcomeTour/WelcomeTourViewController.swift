@@ -10,6 +10,7 @@ import UIKit
 
 protocol WelcomeTourViewControllerDelegate: class {
     func welcomeTourViewControllerDidClose(_ viewController: WelcomeTourViewController)
+    func welcomeTourViewControllerWillShowContent(_ viewController: WelcomeTourViewController)
 }
 
 class WelcomeTourViewController: ViewController {
@@ -49,6 +50,7 @@ class WelcomeTourViewController: ViewController {
         let secondWelcomeVC = ReuseWelcomeViewController(imgContentName: "welcomeSecond", contentText: "Смотри онлайн на любом устройстве")
         let thirdWelcomeVC = ReuseWelcomeViewController(imgContentName: "welcomeThird", contentText: "Море развлекательного контента")
         let welcomePayVC = FirstWelcomeTourPayViewController()
+        welcomePayVC.delegate = self
         addChildViewController(viewController: firstWelcomeVC)
         addChildViewController(viewController: secondWelcomeVC)
         addChildViewController(viewController: thirdWelcomeVC)
@@ -118,5 +120,35 @@ extension WelcomeTourViewController: UIScrollViewDelegate {
             pageControl.isHidden = traitCollection.userInterfaceIdiom == .phone ? true : false
         }
         pageControl.currentPage = currentPage
+    }
+}
+
+// MARK: - FirstWelcomeTourPayViewControllerDelegate
+
+extension WelcomeTourViewController: FirstWelcomeTourPayViewControllerDelegate {
+    func firstWelcomeTourPayViewControllerWillShowContent(_ viewController: FirstWelcomeTourPayViewController) {
+        delegate?.welcomeTourViewControllerWillShowContent(self)
+    }
+    
+    func firstWelcomeTourPayViewControllerDidClickSignIn(_ viewController: FirstWelcomeTourPayViewController) {
+        let signInVC = SignInViewController()
+        signInVC.delegate = self
+        present(signInVC, animated: true)
+    }
+    
+    func firstWelcomeTourPayViewControllerDidClose(_ viewController: FirstWelcomeTourPayViewController) {
+        delegate?.welcomeTourViewControllerDidClose(self)
+    }
+}
+
+// MARK: - SignInViewControllerDelegate
+
+extension WelcomeTourViewController: SignInViewControllerDelegate {
+    func signInViewControllerDidSelectClose(_ viewController: SignInViewController) {
+        dismiss(animated: true, completion: nil)
+    }
+    
+    func signInViewController(_ viewController: SignInViewController, didSignInWithPaidStatus isPaid: Bool) {
+        delegate?.welcomeTourViewControllerWillShowContent(self)
     }
 }

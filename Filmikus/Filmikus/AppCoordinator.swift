@@ -70,6 +70,12 @@ extension AppCoordinator: LaunchViewControllerDelegate {
 }
 
 extension AppCoordinator: WelcomeTourViewControllerDelegate {
+    
+    func welcomeTourViewControllerWillShowContent(_ viewController: WelcomeTourViewController) {
+        let tabBarVC = TabBarController()
+        setRoot(viewController: tabBarVC)
+    }
+    
     func welcomeTourViewControllerDidClose(_ viewController: WelcomeTourViewController) {
         let tabBarVC = TabBarController()
         tabBarVC.selectedTab = .profile
