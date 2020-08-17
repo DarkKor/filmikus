@@ -152,6 +152,10 @@
 		8A860F8224DD79F50049356D /* ReceiptModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A860F8124DD79F50049356D /* ReceiptModel.swift */; };
 		8A860F8424DD92F60049356D /* ValidateReceiptAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A860F8324DD92F60049356D /* ValidateReceiptAPI.swift */; };
 		8A8970C224DC01E9009314B1 /* WelcomeTourViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A8970C124DC01E9009314B1 /* WelcomeTourViewController.swift */; };
+		8A8B993924EA6C5A002F339A /* StartSecondTourViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A8B993824EA6C5A002F339A /* StartSecondTourViewController.swift */; };
+		8A8B993B24EA7580002F339A /* SecondTourContainerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A8B993A24EA7580002F339A /* SecondTourContainerViewController.swift */; };
+		8A8B993D24EA8581002F339A /* SelectGenreViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A8B993C24EA8581002F339A /* SelectGenreViewController.swift */; };
+		8A8B994124EA8852002F339A /* SecondTourReuseCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A8B994024EA8852002F339A /* SecondTourReuseCollectionViewCell.swift */; };
 		8AC4365324E53B9D00614966 /* FirstWelcomeTourPayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AC4365224E53B9D00614966 /* FirstWelcomeTourPayViewController.swift */; };
 		8AC4365724E54D3100614966 /* BlueButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AC4365624E54D3100614966 /* BlueButton.swift */; };
 		8AC4365924E54D9300614966 /* ColoredBorderButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AC4365824E54D9300614966 /* ColoredBorderButton.swift */; };
@@ -313,6 +317,10 @@
 		8A860F8124DD79F50049356D /* ReceiptModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReceiptModel.swift; sourceTree = "<group>"; };
 		8A860F8324DD92F60049356D /* ValidateReceiptAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValidateReceiptAPI.swift; sourceTree = "<group>"; };
 		8A8970C124DC01E9009314B1 /* WelcomeTourViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeTourViewController.swift; sourceTree = "<group>"; };
+		8A8B993824EA6C5A002F339A /* StartSecondTourViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartSecondTourViewController.swift; sourceTree = "<group>"; };
+		8A8B993A24EA7580002F339A /* SecondTourContainerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecondTourContainerViewController.swift; sourceTree = "<group>"; };
+		8A8B993C24EA8581002F339A /* SelectGenreViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectGenreViewController.swift; sourceTree = "<group>"; };
+		8A8B994024EA8852002F339A /* SecondTourReuseCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecondTourReuseCollectionViewCell.swift; sourceTree = "<group>"; };
 		8AC4365224E53B9D00614966 /* FirstWelcomeTourPayViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstWelcomeTourPayViewController.swift; sourceTree = "<group>"; };
 		8AC4365624E54D3100614966 /* BlueButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BlueButton.swift; sourceTree = "<group>"; };
 		8AC4365824E54D9300614966 /* ColoredBorderButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColoredBorderButton.swift; sourceTree = "<group>"; };
@@ -826,12 +834,56 @@
 		8A8970C024DC01CB009314B1 /* WelcomeTour */ = {
 			isa = PBXGroup;
 			children = (
+				8A8B993724EA6C25002F339A /* SecondTour */,
+				8A8B993524EA6BE9002F339A /* FirstTour */,
 				8A8970C124DC01E9009314B1 /* WelcomeTourViewController.swift */,
-				A72AF6E624E448EE00EBE8DC /* ReuseWelcomeViewController.swift */,
-				8AC4365224E53B9D00614966 /* FirstWelcomeTourPayViewController.swift */,
-				8AC4365A24E550A500614966 /* FirstWelcomeTourPayView.swift */,
 			);
 			path = WelcomeTour;
+			sourceTree = "<group>";
+		};
+		8A8B993524EA6BE9002F339A /* FirstTour */ = {
+			isa = PBXGroup;
+			children = (
+				8A8B993624EA6C15002F339A /* Views */,
+				A72AF6E624E448EE00EBE8DC /* ReuseWelcomeViewController.swift */,
+				8AC4365224E53B9D00614966 /* FirstWelcomeTourPayViewController.swift */,
+			);
+			path = FirstTour;
+			sourceTree = "<group>";
+		};
+		8A8B993624EA6C15002F339A /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				8AC4365A24E550A500614966 /* FirstWelcomeTourPayView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		8A8B993724EA6C25002F339A /* SecondTour */ = {
+			isa = PBXGroup;
+			children = (
+				8A8B993E24EA87D8002F339A /* Views */,
+				8A8B993824EA6C5A002F339A /* StartSecondTourViewController.swift */,
+				8A8B993A24EA7580002F339A /* SecondTourContainerViewController.swift */,
+				8A8B993C24EA8581002F339A /* SelectGenreViewController.swift */,
+			);
+			path = SecondTour;
+			sourceTree = "<group>";
+		};
+		8A8B993E24EA87D8002F339A /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				8A8B993F24EA87DE002F339A /* Reusable */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		8A8B993F24EA87DE002F339A /* Reusable */ = {
+			isa = PBXGroup;
+			children = (
+				8A8B994024EA8852002F339A /* SecondTourReuseCollectionViewCell.swift */,
+			);
+			path = Reusable;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -1050,15 +1102,19 @@
 				49900FCE247FD99500F18B46 /* VideosAPI.swift in Sources */,
 				49ECBF15249A48B000F9A854 /* ProfileView.swift in Sources */,
 				49226843248E7FFE00B05A51 /* DetailMovieSection.swift in Sources */,
+				8A8B994124EA8852002F339A /* SecondTourReuseCollectionViewCell.swift in Sources */,
 				8AC4365924E54D9300614966 /* ColoredBorderButton.swift in Sources */,
 				8A860F8024DD79E20049356D /* ReceiptsModel.swift in Sources */,
 				49684A8F2472ED1400E9BADC /* SelectItemViewController.swift in Sources */,
+				8A8B993B24EA7580002F339A /* SecondTourContainerViewController.swift in Sources */,
 				49900FF2248016FD00F18B46 /* DetailEpisodeModel.swift in Sources */,
 				491C218A24641393007CDEC2 /* AppDelegate.swift in Sources */,
 				49900FD0247FDA1300F18B46 /* FilterModel.swift in Sources */,
 				49226823248E3D1C00B05A51 /* String+Size.swift in Sources */,
 				49684A7C246D7A9100E9BADC /* SignUpViewController.swift in Sources */,
 				49226852248FD5B100B05A51 /* DetailMovieRelatedCollectionViewCell.swift in Sources */,
+				8A8B993924EA6C5A002F339A /* StartSecondTourViewController.swift in Sources */,
+				8A8B993D24EA8581002F339A /* SelectGenreViewController.swift in Sources */,
 				49684AC82476A5BA00E9BADC /* Video.swift in Sources */,
 				49226849248E80AE00B05A51 /* DetailMovieRelatedSection.swift in Sources */,
 				49CED95924C9BE9600BCCB6C /* DetailMovieVideoState.swift in Sources */,

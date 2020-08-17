@@ -201,7 +201,7 @@ class FirstWelcomeTourPayView: UIView {
     
     private lazy var subscribeButton = ColoredBorderButton(
         title: "Смотреть бесплатно",
-        color: .appBlue,
+        color: UIColor.gradient(from: .appGLightBlue, to: .appBlue, direction: .vertical),
         borderColor: .appLightBlueBorder,
         target: self,
         action: #selector(onSubscribeButtonTap)

@@ -84,4 +84,20 @@ extension UIColor {
     static var appCosmosBlue: UIColor {
         UIColor(named: "appCosmosBlue")!
     }
+    
+    static var appGDarkViolet: UIColor {
+        UIColor(named: "appGDarkViolet")!
+    }
+    
+    static var appGDark: UIColor {
+        UIColor(named: "appGDark")!
+    }
+    
+    static var appGLightBlue: UIColor {
+        UIColor(named: "appGLightBlue")!
+    }
+    
+    static var appCellSelectedPurple: UIColor {
+        UIColor(named: "appCellSelectedPurple")!
+    }
 }

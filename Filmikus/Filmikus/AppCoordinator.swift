@@ -57,15 +57,17 @@ extension AppCoordinator: LaunchViewControllerDelegate {
     
 	
 	func launchViewController(_ viewController: LaunchViewController, didReceiveAccess type: WelcomeTypeModel) {
-        let welcomeTourVC = WelcomeTourViewController()
-        welcomeTourVC.delegate = self
-        setRoot(viewController: welcomeTourVC)
-        NotificationCenter.default.addObserver(
-            self,
-            selector: #selector(handleUserSubscribedNotification),
-            name: .userDidSubscribe,
-            object: nil
-        )
+//        let welcomeTourVC = WelcomeTourViewController()
+//        welcomeTourVC.delegate = self
+//        setRoot(viewController: welcomeTourVC)
+//        NotificationCenter.default.addObserver(
+//            self,
+//            selector: #selector(handleUserSubscribedNotification),
+//            name: .userDidSubscribe,
+//            object: nil
+//        )
+        let secondVC = StartSecondTourViewController()
+        setRoot(viewController: secondVC)
 	}
 }
 

@@ -23,7 +23,7 @@ class ColoredBorderButton: UIButton {
         super.init(frame: .zero)
         addTarget(target, action: action, for: .touchUpInside)
         
-        titleLabel?.font = .boldSystemFont(ofSize: 12)
+        titleLabel?.font = .boldSystemFont(ofSize: 18)
         setTitle(title, for: .normal)
         setTitleColor(.white, for: .selected)
         backgroundColor = color

@@ -9,16 +9,28 @@
 import UIKit
 
 extension UIColor {
-	static func gradient(from startColor: UIColor, to endColor: UIColor) -> UIColor {
-		let gradient = CAGradientLayer()
-		gradient.frame = UIScreen.main.bounds
-		gradient.colors = [startColor.cgColor, endColor.cgColor]
-		gradient.startPoint = CGPoint(x: 0, y: 0)
-		gradient.endPoint = CGPoint(x: 1, y: 0)
-		UIGraphicsBeginImageContext(gradient.frame.size)
-		gradient.render(in: UIGraphicsGetCurrentContext()!)
-		let outputImage = UIGraphicsGetImageFromCurrentImageContext() ?? UIImage()
-		UIGraphicsEndImageContext()
-		return UIColor(patternImage: outputImage)
-	}
+    
+    enum Direction {
+        case horizontal
+        case vertical
+    }
+    
+    static func gradient(from startColor: UIColor, to endColor: UIColor, direction: Direction = .horizontal) -> UIColor {
+        let gradient = CAGradientLayer()
+        gradient.frame = UIScreen.main.bounds
+        gradient.colors = [startColor.cgColor, endColor.cgColor]
+        switch direction {
+        case .horizontal:
+            gradient.startPoint = CGPoint(x: 0, y: 0)
+            gradient.endPoint = CGPoint(x: 1, y: 0)
+        case .vertical:
+            gradient.startPoint = CGPoint(x: 0, y: 0)
+            gradient.endPoint = CGPoint(x: 0, y: 1)
+        }
+        UIGraphicsBeginImageContext(gradient.frame.size)
+        gradient.render(in: UIGraphicsGetCurrentContext()!)
+        let outputImage = UIGraphicsGetImageFromCurrentImageContext() ?? UIImage()
+        UIGraphicsEndImageContext()
+        return UIColor(patternImage: outputImage)
+    }
 }
