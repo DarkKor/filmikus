@@ -1,34 +1,30 @@
 //
-//  SelectGenreViewController.swift
+//  SelectCountryOfOriginViewController.swift
 //  Filmikus
 //
-//  Created by Алесей Гущин on 17.08.2020.
+//  Created by Alexey Guschin on 17.08.2020.
 //  Copyright © 2020 Андрей Козлов. All rights reserved.
 //
 
 import UIKit
 
-protocol SelectGenreViewControllerDelegate: class {
-    func selectGenreViewController(_ viewController: ViewController, selectedRowsCount: Int?)
+protocol SelectCountryOfOriginViewControllerDelegate: class {
+    func selectCountryOfOriginViewController(_ viewController: ViewController, selectedRowsCount: Int?)
 }
 
-class SelectGenreViewController: ViewController {
-
-    weak var delegate: SelectGenreViewControllerDelegate?
+class SelectCountryOfOriginViewController: ViewController {
     
-    private let genres = [
-        "Триллер, детектив, криминал",
-        "Ужасы",
-        "Фантастика, фэнтези",
-        "Экшн, приключения",
-        "Мюзикл",
-        "Комедия, мелодрама",
-        "Драма, мелодрама",
-        "Документальное"
+    weak var delegate: SelectCountryOfOriginViewControllerDelegate?
+    
+    private let countryesOfOrigin = [
+        "Страны СНГ",
+        "Российские, советские",
+        "Европейские",
+        "США"
     ]
     
     private var selectedRowCount: Int? {
-        genreCollectionView.indexPathsForSelectedItems?.count
+        countiesOfOriginCollectionView.indexPathsForSelectedItems?.count
     }
     
     private lazy var titleLabel: UILabel = {
@@ -42,18 +38,17 @@ class SelectGenreViewController: ViewController {
         } else {
             lbl.font = .systemFont(ofSize: 24, weight: .regular)
         }
-        lbl.text = "Выбери любимые жанры"
+        lbl.text = "Какие фильмы и сериалы ты предпочитаешь?"
         return lbl
     }()
     
     private lazy var collectionLayout: UICollectionViewFlowLayout = {
         let layout = UICollectionViewFlowLayout()
         layout.minimumInteritemSpacing = 9
-        layout.minimumLineSpacing = 9
         return layout
     }()
     
-    private lazy var genreCollectionView: UICollectionView = {
+    private lazy var countiesOfOriginCollectionView: UICollectionView = {
         let collection = UICollectionView(frame: .zero, collectionViewLayout: collectionLayout)
         collection.delegate = self
         collection.dataSource = self
@@ -66,7 +61,7 @@ class SelectGenreViewController: ViewController {
     override func loadView() {
         view = UIView()
         view.backgroundColor = .clear
-        view.addSubviews(titleLabel, genreCollectionView)
+        view.addSubviews(titleLabel, countiesOfOriginCollectionView)
         
         titleLabel.snp.makeConstraints {
             $0.top.equalToSuperview()
@@ -74,24 +69,22 @@ class SelectGenreViewController: ViewController {
             $0.width.equalToSuperview().dividedBy(1.2)
         }
         
-        genreCollectionView.snp.makeConstraints {
+        countiesOfOriginCollectionView.snp.makeConstraints {
             if traitCollection.userInterfaceIdiom == .pad {
                 $0.top.equalTo(titleLabel.snp.bottom).offset(60)
             } else {
-               $0.top.equalTo(titleLabel.snp.bottom).offset(30)
+                $0.top.equalTo(titleLabel.snp.bottom).offset(30)
             }
             $0.leading.trailing.equalToSuperview()
             $0.bottom.equalToSuperview()
         }
-        
-        delegate?.selectGenreViewController(self, selectedRowsCount: selectedRowCount)
     }
     
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         super.viewWillTransition(to: size, with: coordinator)
         
         coordinator.animate(
-            alongsideTransition: { _ in self.genreCollectionView.collectionViewLayout.invalidateLayout() },
+            alongsideTransition: { _ in self.countiesOfOriginCollectionView.collectionViewLayout.invalidateLayout() },
             completion: { _ in }
         )
     }
@@ -99,37 +92,37 @@ class SelectGenreViewController: ViewController {
 
 // MARK: - UICollectionViewDataSource
 
-extension SelectGenreViewController: UICollectionViewDataSource {
+extension SelectCountryOfOriginViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return genres.count
+        return countryesOfOrigin.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell: SecondTourReuseCollectionViewCell = collectionView.dequeueCell(for: indexPath)
-        let genre = genres[indexPath.row]
-        cell.text = genre
+        let countryOfOrigin = countryesOfOrigin[indexPath.row]
+        cell.text = countryOfOrigin
         return cell
     }
 }
 
-// MARK: - UICollectionViewDelegate
+// MARK: - UICollectionViewDelegateFlowLayout
 
-extension SelectGenreViewController: UICollectionViewDelegateFlowLayout {
+extension SelectCountryOfOriginViewController: UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         guard let layout = collectionViewLayout as? UICollectionViewFlowLayout else { return CGSize.zero }
         
-        let widthPerItem = collectionView.bounds.width / 2 - layout.minimumInteritemSpacing
-        let heightPerItem = collectionView.bounds.height / CGFloat(genres.count / 2) - layout.minimumLineSpacing
+        let widthPerItem = collectionView.bounds.width
+        let heightPerItem = collectionView.bounds.height / CGFloat(countryesOfOrigin.count) - layout.minimumLineSpacing
         
         return CGSize(width: widthPerItem, height: heightPerItem)
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        delegate?.selectGenreViewController(self, selectedRowsCount: selectedRowCount)
+        delegate?.selectCountryOfOriginViewController(self, selectedRowsCount: selectedRowCount)
     }
     
     func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
-        delegate?.selectGenreViewController(self, selectedRowsCount: selectedRowCount)
+        delegate?.selectCountryOfOriginViewController(self, selectedRowsCount: selectedRowCount)
     }
 }

@@ -10,19 +10,21 @@ import UIKit
 
 class SecondTourReuseCollectionViewCell: ReusableCollectionViewCell {
     
-      private lazy var contentLabel: UILabel = {
-          let lbl = UILabel()
-          lbl.textColor = .white
-          lbl.numberOfLines = 0
-          lbl.lineBreakMode = .byWordWrapping
-          lbl.textAlignment = .center
-          if traitCollection.userInterfaceIdiom == .pad {
-              lbl.font = .systemFont(ofSize: 32, weight: .regular)
-          } else {
-              lbl.font = .systemFont(ofSize: 18, weight: .regular)
-          }
-          return lbl
-      }()
+    private lazy var contentLabel: UILabel = {
+        let lbl = UILabel()
+        lbl.textColor = .white
+        lbl.numberOfLines = 0
+        lbl.textAlignment = .center
+        lbl.lineBreakMode = .byClipping
+        lbl.adjustsFontSizeToFitWidth = true
+        lbl.minimumScaleFactor = 0.5
+        if traitCollection.userInterfaceIdiom == .pad {
+            lbl.font = .systemFont(ofSize: 32, weight: .regular)
+        } else {
+            lbl.font = .systemFont(ofSize: 18, weight: .regular)
+        }
+        return lbl
+    }()
     
     var text: String? = String() {
         didSet {
@@ -50,6 +52,7 @@ class SecondTourReuseCollectionViewCell: ReusableCollectionViewCell {
             $0.centerY.equalToSuperview()
             $0.centerX.equalToSuperview()
             $0.width.equalToSuperview().dividedBy(1.2)
+            $0.height.equalToSuperview().dividedBy(1.2)
         }
     }
     

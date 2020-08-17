@@ -162,6 +162,7 @@
 		8AC4365B24E550A500614966 /* FirstWelcomeTourPayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AC4365A24E550A500614966 /* FirstWelcomeTourPayView.swift */; };
 		8AC4365D24E5520D00614966 /* UIView+Extentions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AC4365C24E5520D00614966 /* UIView+Extentions.swift */; };
 		A72AF6E724E448EE00EBE8DC /* ReuseWelcomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A72AF6E624E448EE00EBE8DC /* ReuseWelcomeViewController.swift */; };
+		A7DB3F4524EAD96600896338 /* SelectCountryOfOriginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7DB3F4424EAD96600896338 /* SelectCountryOfOriginViewController.swift */; };
 		DBB5AD7EDA6B8BBB5543CBB9 /* Pods_Filmikus.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 97F5ACE358500956AF72C9A2 /* Pods_Filmikus.framework */; };
 /* End PBXBuildFile section */
 
@@ -328,6 +329,7 @@
 		8AC4365C24E5520D00614966 /* UIView+Extentions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Extentions.swift"; sourceTree = "<group>"; };
 		97F5ACE358500956AF72C9A2 /* Pods_Filmikus.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Filmikus.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A72AF6E624E448EE00EBE8DC /* ReuseWelcomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReuseWelcomeViewController.swift; sourceTree = "<group>"; };
+		A7DB3F4424EAD96600896338 /* SelectCountryOfOriginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SelectCountryOfOriginViewController.swift; path = Filmikus/UserInterface/Scenes/WelcomeTour/SecondTour/SelectCountryOfOriginViewController.swift; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -862,6 +864,7 @@
 		8A8B993724EA6C25002F339A /* SecondTour */ = {
 			isa = PBXGroup;
 			children = (
+				A7DB3F4424EAD96600896338 /* SelectCountryOfOriginViewController.swift */,
 				8A8B993E24EA87D8002F339A /* Views */,
 				8A8B993824EA6C5A002F339A /* StartSecondTourViewController.swift */,
 				8A8B993A24EA7580002F339A /* SecondTourContainerViewController.swift */,
@@ -1133,6 +1136,7 @@
 				49226854248FD69900B05A51 /* RelatedMovie.swift in Sources */,
 				49900FDE24800E0C00F18B46 /* EpisodesAPI.swift in Sources */,
 				49900FEA2480149B00F18B46 /* ActorModel.swift in Sources */,
+				A7DB3F4524EAD96600896338 /* SelectCountryOfOriginViewController.swift in Sources */,
 				49226831248E43FC00B05A51 /* DetailFunShowVideoSection.swift in Sources */,
 				49ECBF18249B76FF00F9A854 /* UserStorage.swift in Sources */,
 				8AC4365B24E550A500614966 /* FirstWelcomeTourPayView.swift in Sources */,

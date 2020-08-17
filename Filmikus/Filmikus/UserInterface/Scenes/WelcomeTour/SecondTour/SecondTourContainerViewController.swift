@@ -10,6 +10,9 @@ import UIKit
 
 class SecondTourContainerViewController: ViewController {
     
+    private var selectedView = 0
+    private var progress: Float = 0
+    
     private lazy var logoImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.image = UIImage(named: "logo")
@@ -75,14 +78,34 @@ class SecondTourContainerViewController: ViewController {
             skipButton
         )
         
-        let genreVC = SelectGenreViewController()
-        addChildViewController(viewController: genreVC)
+        let selectGenreVC = SelectGenreViewController()
+        selectGenreVC.delegate = self
+        let selectContryOfOriginVC = SelectCountryOfOriginViewController()
+        selectContryOfOriginVC.delegate = self
+        selectContryOfOriginVC.view.alpha = 0
+        addChildViewController(viewController: selectGenreVC)
+        addChildViewController(viewController: selectContryOfOriginVC)
         
-        genreVC.view.snp.makeConstraints {
+        selectGenreVC.view.snp.makeConstraints {
             $0.top.equalTo(logoImageView.snp.bottom).offset(10)
             $0.width.equalToSuperview().dividedBy(1.2)
             $0.centerX.equalToSuperview()
-            $0.bottom.equalTo(nextButton.snp.top).offset(-20)
+            if traitCollection.userInterfaceIdiom == .pad {
+                $0.bottom.equalTo(nextButton.snp.top).offset(-100)
+            } else {
+                $0.bottom.equalTo(nextButton.snp.top).offset(-30)
+            }
+        }
+        
+        selectContryOfOriginVC.view.snp.makeConstraints {
+            $0.top.equalTo(logoImageView.snp.bottom).offset(10)
+            $0.width.equalToSuperview().dividedBy(1.2)
+            $0.centerX.equalToSuperview()
+            if traitCollection.userInterfaceIdiom == .pad {
+                $0.bottom.equalTo(nextButton.snp.top).offset(-100)
+            } else {
+                $0.bottom.equalTo(nextButton.snp.top).offset(-30)
+            }
         }
         
         backButton.snp.makeConstraints {
@@ -100,14 +123,16 @@ class SecondTourContainerViewController: ViewController {
         }
         
         nextButton.snp.makeConstraints {
-            $0.bottom.equalTo(progressView.snp.top).offset(-60)
+            
             $0.centerX.equalToSuperview()
             if traitCollection.userInterfaceIdiom == .pad {
                 $0.height.equalTo(60)
                 $0.width.equalToSuperview().dividedBy(2)
+                $0.bottom.equalTo(progressView.snp.top).offset(-60)
             } else {
                 $0.height.equalTo(50)
                 $0.width.equalToSuperview().dividedBy(1.1)
+                $0.bottom.equalTo(progressView.snp.top).offset(-30)
             }
         }
         
@@ -132,19 +157,67 @@ class SecondTourContainerViewController: ViewController {
         viewController.didMove(toParent: self)
     }
     
+    private func toggleNextButton(with selectedRowsCount: Int?) {
+        guard let selectedRowCount = selectedRowsCount else {
+            nextButton.enable = false
+            return
+        }
+        nextButton.enable = selectedRowCount > 0 ? true : false
+    }
     
     @objc
     private func onBackButtonTap(sender: UIButton) {
-        
+        guard !((selectedView - 1) < 0) else {
+            dismiss(animated: true)
+            return
+        }
+        UIView.animate(withDuration: 0.2, animations: {
+            self.children[self.selectedView].view.alpha = 0
+        }, completion: { _ in
+            UIView.animate(withDuration: 0.2, animations: {
+                self.children[self.selectedView - 1].view.alpha = 1
+                self.progressView.progress -= 0.33
+            }, completion: { _ in
+                self.selectedView -= 1
+            })
+        })
     }
     
     @objc
     private func onNextButtonTap(sender: UIButton) {
-        
+        guard (selectedView + 1) <= children.count - 1 else {
+            return
+        }
+        UIView.animate(withDuration: 0.2, animations: {
+            self.children[self.selectedView].view.alpha = 0
+        }, completion: { _ in
+            UIView.animate(withDuration: 0.2, animations: {
+                self.children[self.selectedView + 1].view.alpha = 1
+                self.progressView.progress += 0.33
+            }, completion: { _ in
+                self.selectedView += 1
+            })
+        })
     }
     
     @objc
     private func onSkipButtonTap(sender: UIButton) {
         
+    }
+}
+
+// MARK: - SelectGenreViewControllerDelegate
+
+extension SecondTourContainerViewController: SelectGenreViewControllerDelegate {
+    func selectGenreViewController(_ viewController: ViewController, selectedRowsCount: Int?) {
+        toggleNextButton(with: selectedRowsCount)
+    }
+}
+
+// MARK: - SelectCountryOfOriginViewControllerDelegate
+
+extension SecondTourContainerViewController: SelectCountryOfOriginViewControllerDelegate {
+    func selectCountryOfOriginViewController(_ viewController: ViewController, selectedRowsCount: Int?) {
+        toggleNextButton(with: selectedRowsCount)
     }
 }

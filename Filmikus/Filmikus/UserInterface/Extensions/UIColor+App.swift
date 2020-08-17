@@ -100,4 +100,12 @@ extension UIColor {
     static var appCellSelectedPurple: UIColor {
         UIColor(named: "appCellSelectedPurple")!
     }
+    
+    static var appGDisableButton: UIColor {
+        UIColor(named: "appGDisableButton")!
+    }
+    
+    static var appButtonGrayBorder: UIColor {
+        UIColor(named: "appButtonGrayBorder")!
+    }
 }

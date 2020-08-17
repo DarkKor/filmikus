@@ -54,7 +54,7 @@ class ReuseWelcomeViewController: ViewController {
     
     override func loadView() {
         view = UIView()
-        view.backgroundColor = .appDarkBlue
+        view.backgroundColor = UIColor.gradient(from: .appGDark, to: .appGDarkViolet, direction: .vertical)
         view.addSubview(contentImageView)
         if traitCollection.userInterfaceIdiom == .pad {
             view.addSubview(logoImageView)
