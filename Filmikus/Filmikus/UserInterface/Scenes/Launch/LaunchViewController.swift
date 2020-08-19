@@ -10,7 +10,7 @@ import UIKit
 import SnapKit
 
 protocol LaunchViewControllerDelegate: class {
-    func launchViewController(_ viewController: LaunchViewController, didReceiveAccess type: WelcomeTypeModel)
+    func launchViewController(_ viewController: LaunchViewController, didReceiveWelcome type: WelcomeTypeModel)
     func launchViewControllerDidShowAllContent(_ viewController: LaunchViewController)
 }
 
@@ -36,13 +36,14 @@ class LaunchViewController: UIViewController {
         super.viewDidLoad()
         
 //        if userFacade.isLaunchedBefore {
-            delegate?.launchViewControllerDidShowAllContent(self)
+//            delegate?.launchViewControllerDidShowAllContent(self)
 //        } else {
-            userFacade.setLaunchBefore()
+//            userFacade.setLaunchBefore()
             userFacade.welcomeType { (result) in
                 switch result {
-                case .success(let accessType):
-                    self.delegate?.launchViewController(self, didReceiveAccess: accessType)
+                case .success(let welcomeType):
+                    self.userFacade.setWelcomeType(type: welcomeType)
+                    self.delegate?.launchViewController(self, didReceiveWelcome: welcomeType)
                 case .failure(let error):
                     print(error)
                 }

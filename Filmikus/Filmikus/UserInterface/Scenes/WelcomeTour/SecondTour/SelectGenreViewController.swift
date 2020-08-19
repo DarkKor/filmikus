@@ -78,7 +78,7 @@ class SelectGenreViewController: ViewController {
             if traitCollection.userInterfaceIdiom == .pad {
                 $0.top.equalTo(titleLabel.snp.bottom).offset(60)
             } else {
-               $0.top.equalTo(titleLabel.snp.bottom).offset(30)
+                $0.top.equalTo(titleLabel.snp.bottom).offset(30)
             }
             $0.leading.trailing.equalToSuperview()
             $0.bottom.equalToSuperview()

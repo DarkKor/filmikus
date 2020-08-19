@@ -1,25 +1,28 @@
 //
-//  FirstWelcomeTourPayViewController.swift
+//  SecondTourPayViewController.swift
 //  Filmikus
 //
-//  Created by Алесей Гущин on 13.08.2020.
+//  Created by Алесей Гущин on 18.08.2020.
 //  Copyright © 2020 Андрей Козлов. All rights reserved.
 //
 
 import UIKit
 
-protocol FirstWelcomeTourPayViewControllerDelegate: class {
-    func firstWelcomeTourPayViewControllerDidClickSignIn(_ viewController: FirstWelcomeTourPayViewController)
-    func firstWelcomeTourPayViewControllerDidClose(_ viewController: FirstWelcomeTourPayViewController)
-    func firstWelcomeTourPayViewControllerWillShowContent(_ viewController: FirstWelcomeTourPayViewController)
+protocol SecondTourPayViewControllerDelegate: class {
+    func secondTourPayViewControllerDidClickSignIn(_ viewController: SecondTourPayViewController)
+    func secondTourPayViewControllerDidClose(_ viewController: SecondTourPayViewController)
+    func secondTourPayViewControllerWillShowContent(_ viewController: SecondTourPayViewController)
 }
 
-class FirstWelcomeTourPayViewController: ViewController {
+class SecondTourPayViewController: ViewController {
     
-    weak var delegate: FirstWelcomeTourPayViewControllerDelegate?
+    weak var delegate: SecondTourPayViewControllerDelegate?
     
+    private let state: PayViewState
+    private let userFacade: UserFacadeType
     private let storeKitService: StoreKitServiceType = StoreKitService.shared
-    private let userFacade: UserFacadeType = UserFacade()
+    
+    var onClose: (() -> Void)?
     
     private let scrollView = UIScrollView()
     private let contentView = UIView()
@@ -30,32 +33,41 @@ class FirstWelcomeTourPayViewController: ViewController {
         return imageView
     }()
     
-    private lazy var vFirstWelcomeTourPay: FirstWelcomeTourPayView = {
-        let view = FirstWelcomeTourPayView()
+    private lazy var vSecondTourPay: SecondTourPayView = {
+        let view = SecondTourPayView(state: state)
         view.delegate = self
         return view
     }()
     
+    init(
+        state: PayViewState,
+        userFasade: UserFacadeType = UserFacade()
+    ) {
+        self.state = state
+        self.userFacade = userFasade
+        super.init(nibName: nil, bundle: nil)
+        modalPresentationStyle = .overFullScreen
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func loadView() {
         view = UIView()
-        view.backgroundColor = .appCosmosBlue
+        view.backgroundColor = UIColor.gradient(from: .appGDark, to: .appGDarkViolet, direction: .vertical)
         if traitCollection.userInterfaceIdiom == .pad {
-            view.addSubviews(backgroundImageView, vFirstWelcomeTourPay)
+            view.addSubviews(backgroundImageView, vSecondTourPay)
             backgroundImageView.snp.makeConstraints {
                 $0.edges.equalToSuperview()
             }
-            vFirstWelcomeTourPay.snp.makeConstraints {
+            vSecondTourPay.snp.makeConstraints {
                 $0.edges.equalToSuperview()
             }
         } else {
-            
-            view.addSubviews(backgroundImageView, scrollView)
+            view.addSubviews(scrollView)
             scrollView.addSubview(contentView)
-            contentView.addSubviews(vFirstWelcomeTourPay)
-            
-            backgroundImageView.snp.makeConstraints {
-                $0.edges.equalToSuperview()
-            }
+            contentView.addSubviews(vSecondTourPay)
             
             scrollView.snp.makeConstraints {
                 $0.edges.equalToSuperview()
@@ -66,7 +78,7 @@ class FirstWelcomeTourPayViewController: ViewController {
                 $0.width.equalToSuperview()
             }
             
-            vFirstWelcomeTourPay.snp.makeConstraints {
+            vSecondTourPay.snp.makeConstraints {
                 $0.edges.equalToSuperview()
             }
         }
@@ -88,21 +100,20 @@ class FirstWelcomeTourPayViewController: ViewController {
     }
     
     private func ipadOrientationCheck() {
-           if traitCollection.userInterfaceIdiom == .pad {
-            vFirstWelcomeTourPay.rotate(isLandscape: UIDevice.current.orientation.isLandscape)
-           }
-       }
-    
+        if traitCollection.userInterfaceIdiom == .pad {
+            vSecondTourPay.checkRotate()
+        }
+    }
 }
 
-// MARK: - FirstWelcomeTourPayViewDelegate
+// MARK: - SecondTourPayViewDelegate
 
-extension FirstWelcomeTourPayViewController: FirstWelcomeTourPayViewDelegate {
-    func firstWelcomeTourPayViewDidClickSignIn(_ view: FirstWelcomeTourPayView) {
-        delegate?.firstWelcomeTourPayViewControllerDidClickSignIn(self)
+extension SecondTourPayViewController: SecondTourPayViewDelegate {
+    func secondTourPayViewDidClickSignIn(_ view: SecondTourPayView) {
+        delegate?.secondTourPayViewControllerDidClickSignIn(self)
     }
     
-    func firstWelcomeTourPayViewDidClickSubscribe(_ view: FirstWelcomeTourPayView) {
+    func secondTourPayViewDidClickSubscribe(_ view: SecondTourPayView) {
         showActivityIndicator()
         storeKitService.loadProducts { (result) in
             guard let products = try? result.get() else { return }
@@ -116,20 +127,32 @@ extension FirstWelcomeTourPayViewController: FirstWelcomeTourPayViewDelegate {
                         guard self.userFacade.isSubscribed else { return }
                         self.showAlert(
                             message: "Вы успешно подписались!",
-                            completion: { self.delegate?.firstWelcomeTourPayViewControllerWillShowContent(self) }
-                        )
+                            completion: {
+                                switch self.state {
+                                case .regular:
+                                    self.dismiss(animated: true)
+                                case .welcome:
+                                    self.delegate?.secondTourPayViewControllerWillShowContent(self)
+                                }
+                        })
                     }
                 case .failure(let error):
                     self.showAlert(
                         message: "Ошибка: \(error.localizedDescription)",
-                        completion: nil
-                    )
+                        completion: {
+                            switch self.state {
+                            case .regular:
+                                self.dismiss(animated: true)
+                            default:
+                                break
+                            }
+                    })
                 }
             }
         }
     }
     
-    func firstWelcomeTourPayViewDidClickRestorePurchase(_ view: FirstWelcomeTourPayView) {
+    func secondTourPayViewDidClickRestorePurchase(_ view: SecondTourPayView) {
         showActivityIndicator()
         storeKitService.restorePurchases { [weak self] (result) in
             guard let self = self else { return }
@@ -140,7 +163,12 @@ extension FirstWelcomeTourPayViewController: FirstWelcomeTourPayViewDelegate {
         }
     }
     
-    func firstWelcomeTourPayViewDidClickClose(_ view: FirstWelcomeTourPayView) {
-        delegate?.firstWelcomeTourPayViewControllerDidClose(self)
+    func secondTourPayViewDidClickClose(_ view: SecondTourPayView) {
+        switch state {
+        case .welcome:
+            delegate?.secondTourPayViewControllerDidClose(self)
+        case .regular:
+            onClose?()
+        }
     }
 }

@@ -170,27 +170,47 @@ extension DetailFilmViewController: DetailMovieCollectionViewControllerDelegate 
 		navigationController?.pushViewController(detailVC, animated: true)
 	}
 	
-	func detailMovieCollectionViewControllerSelectSubscribe(_ viewController: DetailMovieCollectionViewController) {
-        let subscriptionVC = SubscriptionViewController()
-        subscriptionVC.onClose = {
-            self.dismiss(animated: true)
+    func detailMovieCollectionViewControllerSelectSubscribe(_ viewController: DetailMovieCollectionViewController) {
+        guard let payViewType = userFacade.payViewType else { return }
+        switch payViewType {
+        case .firstType:
+            let payVC = FirstTourPayViewController(state: .regular)
+            payVC.onClose = {
+                self.dismiss(animated: true)
+            }
+            present(payVC, animated: true)
+        case .secondype:
+            let payVC = SecondTourPayViewController(state: .regular)
+            payVC.onClose = {
+                self.dismiss(animated: true)
+            }
+            present(payVC, animated: true)
         }
-		present(subscriptionVC, animated: true)
-	}
+    }
 	
-	func detailMovieCollectionViewControllerSelectShowFilm(_ viewController: DetailMovieCollectionViewController) {
-		guard !userFacade.isSignedIn else {
-			if userFacade.isSubscribed {
-				viewController.showMovie()
-			} else {
-				let subscriptionVC = SubscriptionViewController()
-				subscriptionVC.onClose = {
-					self.dismiss(animated: true)
-				}
-				present(subscriptionVC, animated: true)
-			}
-			return
-		}
+    func detailMovieCollectionViewControllerSelectShowFilm(_ viewController: DetailMovieCollectionViewController) {
+        guard !userFacade.isSignedIn else {
+            if userFacade.isSubscribed {
+                viewController.showMovie()
+            } else {
+                guard let payViewType = userFacade.payViewType else { return }
+                switch payViewType {
+                case .firstType:
+                    let payVC = FirstTourPayViewController(state: .regular)
+                    payVC.onClose = {
+                        self.dismiss(animated: true)
+                    }
+                    present(payVC, animated: true)
+                case .secondype:
+                    let payVC = SecondTourPayViewController(state: .regular)
+                    payVC.onClose = {
+                        self.dismiss(animated: true)
+                    }
+                    present(payVC, animated: true)
+                }
+            }
+            return
+        }
 		let signInVC = SignInViewController()
 		signInVC.delegate = self
 		present(signInVC, animated: true)
@@ -200,22 +220,31 @@ extension DetailFilmViewController: DetailMovieCollectionViewControllerDelegate 
 // MARK: - SignInViewControllerDelegate
 
 extension DetailFilmViewController: SignInViewControllerDelegate {
-	
-	func signInViewControllerDidSelectClose(_ viewController: SignInViewController) {
-		navigationController?.dismiss(animated: true)
-	}
-	
-	func signInViewController(_ viewController: SignInViewController, didSignInWithPaidStatus isPaid: Bool) {
-		guard !isPaid else {
+    
+    func signInViewControllerDidSelectClose(_ viewController: SignInViewController) {
+        navigationController?.dismiss(animated: true)
+    }
+    
+    func signInViewController(_ viewController: SignInViewController, didSignInWithPaidStatus isPaid: Bool) {
+        guard !isPaid else {
             dismiss(animated: true)
             return
         }
-		let subscriptionVC = SubscriptionViewController()
-		subscriptionVC.onClose = {
-			viewController.dismiss(animated: true)
-			self.dismiss(animated: true)
-		}
-		viewController.present(subscriptionVC, animated: true)
-	}
+        guard let payViewType = userFacade.payViewType else { return }
+        switch payViewType {
+        case .firstType:
+            let payVC = FirstTourPayViewController(state: .regular)
+            payVC.onClose = {
+                viewController.dismiss(animated: true)
+            }
+            viewController.present(payVC, animated: true)
+        case .secondype:
+            let payVC = SecondTourPayViewController(state: .regular)
+            payVC.onClose = {
+                viewController.dismiss(animated: true)
+            }
+            viewController.present(payVC, animated: true)
+        }
+    }
 }
 

@@ -40,7 +40,12 @@ class ColoredBorderButton: UIButton {
         super.init(frame: .zero)
         addTarget(target, action: action, for: .touchUpInside)
         
-        titleLabel?.font = .boldSystemFont(ofSize: 18)
+        if traitCollection.userInterfaceIdiom == .pad {
+            titleLabel?.font =  .systemFont(ofSize: 24, weight: .medium) 
+        } else {
+            titleLabel?.font = .systemFont(ofSize: 20, weight: .medium)
+        }
+       
         setTitle(title, for: .normal)
         setTitleColor(.white, for: .selected)
         

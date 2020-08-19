@@ -8,26 +8,21 @@
 
 import UIKit
 
+protocol SecondTourContainerViewControllerDelegate: class {
+    func secondTourContainerViewControllerDidOpenPay(_ viewController: SecondTourContainerViewController)
+}
+
 class SecondTourContainerViewController: ViewController {
     
+    weak var delegate: SecondTourContainerViewControllerDelegate?
+    
     private var selectedView = 0
-    private var progress: Float = 0
     
     private lazy var logoImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.image = UIImage(named: "logo")
         imageView.contentMode = .center
         return imageView
-    }()
-    
-    private lazy var backButton: UIButton = {
-        let btn = UIButton()
-        btn.setImage(UIImage(named: "back"), for: .normal)
-        btn.addTarget(self, action: #selector(onBackButtonTap), for: .touchUpInside)
-        if traitCollection.userInterfaceIdiom == .pad {
-            btn.isHidden = true
-        }
-        return btn
     }()
     
     private lazy var nextButton = ColoredBorderButton(
@@ -71,7 +66,6 @@ class SecondTourContainerViewController: ViewController {
         view.backgroundColor = UIColor.gradient(from: .appGDark, to: .appGDarkViolet, direction: .vertical)
     
         view.addSubviews(
-            backButton,
             logoImageView,
             nextButton,
             progressView,
@@ -83,8 +77,12 @@ class SecondTourContainerViewController: ViewController {
         let selectContryOfOriginVC = SelectCountryOfOriginViewController()
         selectContryOfOriginVC.delegate = self
         selectContryOfOriginVC.view.alpha = 0
+        let loadContentsVC = LoadContentsViewController()
+        loadContentsVC.delegate = self
+        loadContentsVC.view.alpha = 0
         addChildViewController(viewController: selectGenreVC)
         addChildViewController(viewController: selectContryOfOriginVC)
+        addChildViewController(viewController: loadContentsVC)
         
         selectGenreVC.view.snp.makeConstraints {
             $0.top.equalTo(logoImageView.snp.bottom).offset(10)
@@ -108,9 +106,15 @@ class SecondTourContainerViewController: ViewController {
             }
         }
         
-        backButton.snp.makeConstraints {
-            $0.leading.equalToSuperview().inset(25)
-            $0.top.equalTo(view.safeAreaLayoutGuide).inset(20)
+        loadContentsVC.view.snp.makeConstraints {
+            $0.top.equalTo(logoImageView.snp.bottom).offset(10)
+            $0.width.equalToSuperview().dividedBy(1.2)
+            $0.centerX.equalToSuperview()
+            if traitCollection.userInterfaceIdiom == .pad {
+                $0.bottom.equalTo(progressView.snp.top).offset(-100)
+            } else {
+                $0.bottom.equalTo(progressView.snp.top).offset(-30)
+            }
         }
         
         logoImageView.snp.makeConstraints {
@@ -123,7 +127,6 @@ class SecondTourContainerViewController: ViewController {
         }
         
         nextButton.snp.makeConstraints {
-            
             $0.centerX.equalToSuperview()
             if traitCollection.userInterfaceIdiom == .pad {
                 $0.height.equalTo(60)
@@ -139,14 +142,14 @@ class SecondTourContainerViewController: ViewController {
         progressView.snp.makeConstraints {
             $0.leading.trailing.equalToSuperview().inset(20)
             if traitCollection.userInterfaceIdiom == .pad {
-                $0.bottom.equalTo(view.safeAreaLayoutGuide).inset(50)
+                $0.bottom.equalTo(view.safeAreaLayoutGuide).inset(40)
             } else {
                 $0.bottom.equalTo(skipButton.snp.top).offset(-30)
             }
         }
         
         skipButton.snp.makeConstraints {
-            $0.bottom.equalTo(view.safeAreaLayoutGuide).inset(40)
+            $0.bottom.equalTo(view.safeAreaLayoutGuide).inset(30)
             $0.centerX.equalToSuperview()
         }
     }
@@ -166,34 +169,25 @@ class SecondTourContainerViewController: ViewController {
     }
     
     @objc
-    private func onBackButtonTap(sender: UIButton) {
-        guard !((selectedView - 1) < 0) else {
-            dismiss(animated: true)
-            return
-        }
-        UIView.animate(withDuration: 0.2, animations: {
-            self.children[self.selectedView].view.alpha = 0
-        }, completion: { _ in
-            UIView.animate(withDuration: 0.2, animations: {
-                self.children[self.selectedView - 1].view.alpha = 1
-                self.progressView.progress -= 0.33
-            }, completion: { _ in
-                self.selectedView -= 1
-            })
-        })
-    }
-    
-    @objc
     private func onNextButtonTap(sender: UIButton) {
         guard (selectedView + 1) <= children.count - 1 else {
             return
         }
+        if let loadContentsVC = self.children[self.selectedView + 1] as? LoadContentsViewController {
+            loadContentsVC.loadFilms()
+            UIView.animate(withDuration: 0.2) {
+                self.nextButton.alpha = 0
+                self.skipButton.alpha = 0
+            }
+        }
+        
         UIView.animate(withDuration: 0.2, animations: {
             self.children[self.selectedView].view.alpha = 0
         }, completion: { _ in
             UIView.animate(withDuration: 0.2, animations: {
                 self.children[self.selectedView + 1].view.alpha = 1
                 self.progressView.progress += 0.33
+                self.nextButton.enable = false
             }, completion: { _ in
                 self.selectedView += 1
             })
@@ -202,7 +196,7 @@ class SecondTourContainerViewController: ViewController {
     
     @objc
     private func onSkipButtonTap(sender: UIButton) {
-        
+      delegate?.secondTourContainerViewControllerDidOpenPay(self)
     }
 }
 
@@ -219,5 +213,17 @@ extension SecondTourContainerViewController: SelectGenreViewControllerDelegate {
 extension SecondTourContainerViewController: SelectCountryOfOriginViewControllerDelegate {
     func selectCountryOfOriginViewController(_ viewController: ViewController, selectedRowsCount: Int?) {
         toggleNextButton(with: selectedRowsCount)
+    }
+}
+
+// MARK: - LoadContentsViewControllerDelegate
+
+extension SecondTourContainerViewController: LoadContentsViewControllerDelegate {
+    func loadContentsViewControllerAnimationDidOpenPay(_ viewController: LoadContentsViewController) {
+        delegate?.secondTourContainerViewControllerDidOpenPay(self)
+    }
+    
+    func loadContentsViewControllerAnimationDidStop(_ viewController: LoadContentsViewController) {
+        progressView.progress = 1
     }
 }

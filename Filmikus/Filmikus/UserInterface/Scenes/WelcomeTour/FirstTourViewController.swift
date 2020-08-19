@@ -8,14 +8,14 @@
 
 import UIKit
 
-protocol WelcomeTourViewControllerDelegate: class {
-    func welcomeTourViewControllerDidClose(_ viewController: WelcomeTourViewController)
-    func welcomeTourViewControllerWillShowContent(_ viewController: WelcomeTourViewController)
+protocol FirstTourViewControllerDelegate: class {
+    func firstTourViewControllerDidClose(_ viewController: FirstTourViewController)
+    func firstTourViewControllerWillShowContent(_ viewController: FirstTourViewController)
 }
 
-class WelcomeTourViewController: ViewController {
+class FirstTourViewController: ViewController {
     
-    weak var delegate: WelcomeTourViewControllerDelegate?
+    weak var delegate: FirstTourViewControllerDelegate?
     
     private lazy var pageControl: UIPageControl = {
         let pageControl = UIPageControl()
@@ -49,7 +49,7 @@ class WelcomeTourViewController: ViewController {
         let firstWelcomeVC = ReuseWelcomeViewController(imgContentName: "welcomeFirst", contentText: "Более чем 5000 фильмов и сериалов")
         let secondWelcomeVC = ReuseWelcomeViewController(imgContentName: "welcomeSecond", contentText: "Смотри онлайн на любом устройстве")
         let thirdWelcomeVC = ReuseWelcomeViewController(imgContentName: "welcomeThird", contentText: "Море развлекательного контента")
-        let welcomePayVC = FirstWelcomeTourPayViewController()
+        let welcomePayVC = FirstTourPayViewController(state: .welcome)
         welcomePayVC.delegate = self
         addChildViewController(viewController: firstWelcomeVC)
         addChildViewController(viewController: secondWelcomeVC)
@@ -115,14 +115,19 @@ class WelcomeTourViewController: ViewController {
         super.viewWillTransition(to: size, with: coordinator)
     }
     
-    
     @objc
     private func onSkipButtonTap(sender: UIButton) {
-        delegate?.welcomeTourViewControllerDidClose(self)
+        scrollView.setContentOffset(CGPoint(x: view.frame.width * CGFloat(self.pageControl.numberOfPages - 1), y: 0), animated: false)
+        pageControl.currentPage = children.count - 1
+        pageControl.isHidden = true
+        skipButton.isHidden = true
+        scrollView.isScrollEnabled = false
     }
 }
 
-extension WelcomeTourViewController: UIScrollViewDelegate {
+// MARK: - UIScrollViewDelegate
+
+extension FirstTourViewController: UIScrollViewDelegate {
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
         let x = scrollView.contentOffset.x
         let w = scrollView.bounds.size.width
@@ -144,30 +149,30 @@ extension WelcomeTourViewController: UIScrollViewDelegate {
 
 // MARK: - FirstWelcomeTourPayViewControllerDelegate
 
-extension WelcomeTourViewController: FirstWelcomeTourPayViewControllerDelegate {
-    func firstWelcomeTourPayViewControllerWillShowContent(_ viewController: FirstWelcomeTourPayViewController) {
-        delegate?.welcomeTourViewControllerWillShowContent(self)
+extension FirstTourViewController: FirstTourPayViewControllerDelegate {
+    func firstTourPayViewControllerWillShowContent(_ viewController: FirstTourPayViewController) {
+        delegate?.firstTourViewControllerWillShowContent(self)
     }
     
-    func firstWelcomeTourPayViewControllerDidClickSignIn(_ viewController: FirstWelcomeTourPayViewController) {
+    func firstTourPayViewControllerDidClickSignIn(_ viewController: FirstTourPayViewController) {
         let signInVC = SignInViewController()
         signInVC.delegate = self
         present(signInVC, animated: true)
     }
     
-    func firstWelcomeTourPayViewControllerDidClose(_ viewController: FirstWelcomeTourPayViewController) {
-        delegate?.welcomeTourViewControllerDidClose(self)
+    func firstTourPayViewControllerDidClose(_ viewController: FirstTourPayViewController) {
+        delegate?.firstTourViewControllerDidClose(self)
     }
 }
 
 // MARK: - SignInViewControllerDelegate
 
-extension WelcomeTourViewController: SignInViewControllerDelegate {
+extension FirstTourViewController: SignInViewControllerDelegate {
     func signInViewControllerDidSelectClose(_ viewController: SignInViewController) {
         dismiss(animated: true, completion: nil)
     }
     
     func signInViewController(_ viewController: SignInViewController, didSignInWithPaidStatus isPaid: Bool) {
-        delegate?.welcomeTourViewControllerWillShowContent(self)
+        delegate?.firstTourViewControllerWillShowContent(self)
     }
 }

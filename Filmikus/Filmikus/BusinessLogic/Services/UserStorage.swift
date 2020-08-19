@@ -11,7 +11,7 @@ import Foundation
 protocol UserStorageType: class {
 	var user: UserModel? { get set }
 	var expirationDate: Date? { get set }
-	var accessType: WelcomeTypeModel? { get set }
+	var welcomeType: WelcomeTypeModel? { get set }
     var isLaunchedBefore: Bool { get set }
 }
 
@@ -20,7 +20,7 @@ class UserStorage: UserStorageType {
 	enum Keys {
 		static let user = "com.userStorage.user"
 		static let expirationDate = "com.userStorage.expirationDate"
-		static let accessType = "com.userStorage.accessType"
+		static let welcomeType = "com.userStorage.welcomeType"
         static let isLaunchedBefore = "com.userStorage.isLaunchedBefore"
 	}
 	
@@ -46,13 +46,14 @@ class UserStorage: UserStorageType {
 		}
 	}
 	
-	var accessType: WelcomeTypeModel? {
+	var welcomeType: WelcomeTypeModel? {
 		get {
-			let accessType = storage.integer(forKey: Keys.accessType)
-			return WelcomeTypeModel(rawValue: accessType)
+			let welcomeType = storage.object(forKey: Keys.welcomeType) as? Int
+            guard let welcomeTypeValue = welcomeType else { return nil }
+			return WelcomeTypeModel(rawValue: welcomeTypeValue)
 		}
 		set {
-			storage.set(newValue?.rawValue, forKey: Keys.accessType)
+			storage.set(newValue?.rawValue, forKey: Keys.welcomeType)
 			storage.synchronize()
 		}
 	}

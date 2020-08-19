@@ -19,8 +19,7 @@ class FirstWelcomeTourPayView: UIView {
     
     weak var delegate: FirstWelcomeTourPayViewDelegate?
     
-    private var thirdScreenWidht: CGFloat = UIScreen.main.bounds.width / 3
-    private var halfScreenWidht: CGFloat = UIScreen.main.bounds.width / 2
+    private var state: PayViewState
     
     private lazy var closeButton: UIButton = {
         let button = UIButton()
@@ -94,10 +93,13 @@ class FirstWelcomeTourPayView: UIView {
     }()
     
     private lazy var buttonStackView: UIStackView = {
-        let stv = UIStackView(arrangedSubviews: [
-            signInButton,
-            restorePurchaseButton
-        ])
+        var arrangedSubviews = [UIView]()
+        if state == .welcome {
+            arrangedSubviews = [signInButton, restorePurchaseButton]
+        } else {
+            arrangedSubviews = [restorePurchaseButton]
+        }
+        let stv = UIStackView(arrangedSubviews: arrangedSubviews)
         if traitCollection.userInterfaceIdiom == .pad {
             stv.spacing = 25
             stv.axis = .horizontal
@@ -246,7 +248,8 @@ class FirstWelcomeTourPayView: UIView {
         return lbl
     }()
     
-    init() {
+    init(state: PayViewState) {
+        self.state = state
         super.init(frame: .zero)
         
         addSubviews(
@@ -266,11 +269,11 @@ class FirstWelcomeTourPayView: UIView {
         
         filmStripImageViewContainer.snp.makeConstraints {
             if traitCollection.userInterfaceIdiom == .pad {
-                $0.width.equalTo(110)
-                $0.height.equalTo(110)
+                $0.width.equalTo(106)
+                $0.height.equalTo(77)
             } else {
                 $0.width.equalTo(66)
-                $0.height.equalTo(66)
+                $0.height.equalTo(48)
             }
         }
         
@@ -280,11 +283,11 @@ class FirstWelcomeTourPayView: UIView {
         
         tiketImageViewContainer.snp.makeConstraints {
             if traitCollection.userInterfaceIdiom == .pad {
-                $0.width.equalTo(110)
-                $0.height.equalTo(110)
+                $0.width.equalTo(106)
+                $0.height.equalTo(77)
             } else {
                 $0.width.equalTo(66)
-                $0.height.equalTo(66)
+                $0.height.equalTo(48)
             }
         }
         
@@ -294,11 +297,11 @@ class FirstWelcomeTourPayView: UIView {
         
         okImageViewContainer.snp.makeConstraints {
             if traitCollection.userInterfaceIdiom == .pad {
-                $0.width.equalTo(110)
-                $0.height.equalTo(110)
+                $0.width.equalTo(106)
+                $0.height.equalTo(77)
             } else {
                 $0.width.equalTo(66)
-                $0.height.equalTo(66)
+                $0.height.equalTo(48)
             }
         }
         
@@ -338,10 +341,10 @@ class FirstWelcomeTourPayView: UIView {
         }
         
         subscribeButton.snp.makeConstraints {
-            $0.height.equalTo(50)
+            $0.height.equalTo(60)
             if traitCollection.userInterfaceIdiom == .pad {
                 $0.centerX.equalToSuperview()
-                $0.width.equalTo(halfScreenWidht)
+                $0.width.equalToSuperview().dividedBy(2)
                 $0.top.equalTo(mainStackView.snp.bottom).offset(40)
             } else {
                 $0.leading.trailing.equalTo(safeAreaLayoutGuide).inset(14)
@@ -358,8 +361,10 @@ class FirstWelcomeTourPayView: UIView {
             }
         }
         
-        signInButton.snp.makeConstraints {
-            $0.height.equalTo(subscribeButton.snp.height)
+        if state == .welcome {
+            signInButton.snp.makeConstraints {
+                $0.height.equalTo(subscribeButton.snp.height)
+            }
         }
         
         restorePurchaseButton.snp.makeConstraints {
@@ -370,7 +375,11 @@ class FirstWelcomeTourPayView: UIView {
             if traitCollection.userInterfaceIdiom == .pad {
                 $0.top.greaterThanOrEqualTo(cancelSubscribeLabel.snp.bottom).offset(50)
                 $0.centerX.equalToSuperview()
-                $0.leading.trailing.equalToSuperview().inset(50)
+                if state == .welcome {
+                    $0.leading.trailing.equalToSuperview().inset(50)
+                } else {
+                    $0.width.equalToSuperview().dividedBy(2)
+                }
             } else {
                 $0.top.equalTo(cancelSubscribeLabel.snp.bottom).offset(15)
                 $0.leading.trailing.equalToSuperview().inset(14)

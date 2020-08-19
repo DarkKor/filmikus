@@ -8,8 +8,15 @@
 
 import UIKit
 
-class StartSecondTourViewController: UIViewController {
+protocol SecondTourViewControllerDelegate: class {
+    func secondTourViewControllerDidClose(_ viewController: SecondTourViewController)
+    func secondTourViewControllerWillShowContent(_ viewController: SecondTourViewController)
+}
 
+class SecondTourViewController: UIViewController {
+
+    weak var delegate: SecondTourViewControllerDelegate?
+    
     private lazy var logoImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.image = UIImage(named: "logo")
@@ -84,6 +91,47 @@ class StartSecondTourViewController: UIViewController {
     @objc
     private func onNextButtonTap(sender: UIButton) {
         let containerVC = SecondTourContainerViewController()
-        present(containerVC, animated: true)
+        containerVC.delegate = self
+        navigationController?.pushViewController(containerVC, animated: true)
+    }
+}
+
+// MARK: - SecondTourContainerViewControllerDelegate
+
+extension SecondTourViewController: SecondTourContainerViewControllerDelegate {
+    func secondTourContainerViewControllerDidOpenPay(_ viewController: SecondTourContainerViewController) {
+        let secondPayVC = SecondTourPayViewController(state: .welcome)
+        secondPayVC.delegate = self
+        navigationController?.pushViewController(secondPayVC, animated: true)
+    }
+}
+
+// MARK: - SecondTourPayViewControllerDelegate
+
+extension SecondTourViewController: SecondTourPayViewControllerDelegate {
+    func secondTourPayViewControllerDidClickSignIn(_ viewController: SecondTourPayViewController) {
+        let signInVC = SignInViewController()
+        signInVC.delegate = self
+        present(signInVC, animated: true)
+    }
+    
+    func secondTourPayViewControllerDidClose(_ viewController: SecondTourPayViewController) {
+        delegate?.secondTourViewControllerDidClose(self)
+    }
+    
+    func secondTourPayViewControllerWillShowContent(_ viewController: SecondTourPayViewController) {
+        delegate?.secondTourViewControllerWillShowContent(self)
+    }
+}
+
+// MARK: - SignInViewControllerDelegate
+
+extension SecondTourViewController: SignInViewControllerDelegate {
+    func signInViewControllerDidSelectClose(_ viewController: SignInViewController) {
+        dismiss(animated: true)
+    }
+    
+    func signInViewController(_ viewController: SignInViewController, didSignInWithPaidStatus isPaid: Bool) {
+        delegate?.secondTourViewControllerWillShowContent(self)
     }
 }

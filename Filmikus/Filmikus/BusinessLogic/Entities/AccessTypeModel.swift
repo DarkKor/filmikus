@@ -1,5 +1,5 @@
 //
-//  AccessTypeModel.swift
+//  WelcomeTypeModel.swift
 //  Filmikus
 //
 //  Created by Андрей Козлов on 27.07.2020.
@@ -10,23 +10,23 @@ import Foundation
 
 enum WelcomeTypeModel: Int, Codable {
     // В зависимости от значения показываем разные Welcome Tour
-	case firstWelcomeType = 0
-	case secondWelcomeType = 1
+	case firstType = 0
+	case secondype = 1
 	
 	// Access_type=2 и более – пока не задействованы, но будут.
 	
 	enum CodingKeys: String, CodingKey {
-		case welcomeType = "welcome_type"
+		case welcomeType = "access_type"
 	}
 		
 	init(from decoder: Decoder) throws {
 		let container = try decoder.container(keyedBy: CodingKeys.self)
-		let accessType = try container.decode(Int.self, forKey: .welcomeType)
-		switch accessType {
+		let welcomeType = try container.decode(Int.self, forKey: .welcomeType)
+		switch welcomeType {
 		case 0:
-			self = .firstWelcomeType
+			self = .firstType
 		case 1:
-			self = .secondWelcomeType
+			self = .secondype
 		default:
 			throw NSError()
 		}

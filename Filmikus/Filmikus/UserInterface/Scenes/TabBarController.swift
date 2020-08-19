@@ -132,13 +132,29 @@ extension TabBarController: MainViewControllerDelegate {
 
 extension TabBarController: ProfileViewControllerDelegate {
     func profileViewControllerDidSelectSignUp(_ viewController: ProfileViewController) {
+        
         if !userFacade.isSubscribed  {
-            let subscriptionVC = SubscriptionViewController()
-            subscriptionVC.onClose = {
-                self.dismiss(animated: true)
-                NotificationCenter.default.removeObserver(self, name: .userDidSubscribe, object: nil)
+            
+            guard let payViewType = userFacade.payViewType else { return }
+            
+            switch payViewType {
+                
+            case .firstType:
+                let payVC = FirstTourPayViewController(state: .regular)
+                payVC.onClose = {
+                    self.dismiss(animated: true)
+                    NotificationCenter.default.removeObserver(self, name: .userDidSubscribe, object: nil)
+                }
+                present(payVC, animated: true)
+                
+            case .secondype:
+                let payVC = SecondTourPayViewController(state: .regular)
+                payVC.onClose = {
+                    self.dismiss(animated: true)
+                    NotificationCenter.default.removeObserver(self, name: .userDidSubscribe, object: nil)
+                }
+                present(payVC, animated: true)
             }
-            present(subscriptionVC, animated: true)
             
             NotificationCenter.default.addObserver(
                 self,
@@ -146,26 +162,37 @@ extension TabBarController: ProfileViewControllerDelegate {
                 name: .userDidSubscribe,
                 object: nil
             )
+            
         } else {
             let signUpVC = SignUpViewController()
             signUpVC.delegate = self
             present(signUpVC, animated: true)
         }
-	}
+    }
 	
 	func profileViewControllerDidSelectSignIn(_ viewController: ProfileViewController) {
 		let signInVC = SignInViewController()
 		signInVC.delegate = self
 		present(signInVC, animated: true)
 	}
-	
-	func profileViewControllerDidSelectSubscribe(_ viewController: ProfileViewController) {
-		let subscriptionVC = SubscriptionViewController()
-		subscriptionVC.onClose = {
-			viewController.dismiss(animated: true)
-		}
-		present(subscriptionVC, animated: true)
-	}
+    
+    func profileViewControllerDidSelectSubscribe(_ viewController: ProfileViewController) {
+        guard let payViewType = userFacade.payViewType else { return }
+        switch payViewType {
+        case .firstType:
+            let payVC = FirstTourPayViewController(state: .regular)
+            payVC.onClose = {
+                viewController.dismiss(animated: true)
+            }
+            present(payVC, animated: true)
+        case .secondype:
+            let payVC = SecondTourPayViewController(state: .regular)
+            payVC.onClose = {
+                viewController.dismiss(animated: true)
+            }
+            present(payVC, animated: true)
+        }
+    }
 }
 
 // MARK: - SignUpViewControllerDelegate
@@ -177,12 +204,23 @@ extension TabBarController: SignUpViewControllerDelegate {
 	}
 	
     func signUpViewControllerDidSignUp(_ viewController: SignUpViewController) {
-        let subscriptionVC = SubscriptionViewController()
-        subscriptionVC.onClose = {
-            viewController.dismiss(animated: true)
-            viewController.showAlert(message: "Чтобы пользоваться приложением необходимо купить подписку")
+        guard let payViewType = userFacade.payViewType else { return }
+        switch payViewType {
+        case .firstType:
+            let payVC = FirstTourPayViewController(state: .regular)
+            payVC.onClose = {
+                viewController.dismiss(animated: true)
+                viewController.showAlert(message: "Чтобы пользоваться приложением необходимо купить подписку")
+            }
+            viewController.present(payVC, animated: true)
+        case .secondype:
+            let payVC = SecondTourPayViewController(state: .regular)
+            payVC.onClose = {
+                viewController.dismiss(animated: true)
+                viewController.showAlert(message: "Чтобы пользоваться приложением необходимо купить подписку")
+            }
+            viewController.present(payVC, animated: true)
         }
-        viewController.present(subscriptionVC, animated: true)
     }
 }
 
@@ -194,16 +232,27 @@ extension TabBarController: SignInViewControllerDelegate {
 		dismiss(animated: true)
 	}
 	
-	func signInViewController(_ viewController: SignInViewController, didSignInWithPaidStatus isPaid: Bool) {
-		guard !isPaid else {
+    func signInViewController(_ viewController: SignInViewController, didSignInWithPaidStatus isPaid: Bool) {
+        guard !isPaid else {
             dismiss(animated: true)
             return
         }
-		let subscriptionVC = SubscriptionViewController()
-		subscriptionVC.onClose = {
-			viewController.dismiss(animated: true)
-			self.dismiss(animated: true)
-		}
-		viewController.present(subscriptionVC, animated: true)
-	}
+        guard let payViewType = userFacade.payViewType else { return }
+        switch payViewType {
+        case .firstType:
+            let payVC = FirstTourPayViewController(state: .regular)
+            payVC.onClose = {
+                viewController.dismiss(animated: true)
+                self.dismiss(animated: true)
+            }
+            viewController.present(payVC, animated: true)
+        case .secondype:
+            let payVC = SecondTourPayViewController(state: .regular)
+            payVC.onClose = {
+                viewController.dismiss(animated: true)
+                self.dismiss(animated: true)
+            }
+            viewController.present(payVC, animated: true)
+        }
+    }
 }
