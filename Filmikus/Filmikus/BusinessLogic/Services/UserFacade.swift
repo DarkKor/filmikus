@@ -24,6 +24,7 @@ protocol UserFacadeType {
 	func signIn(email: String, password: String, completion: @escaping (SignInStatusModel) -> Void)
 	func signOut()
 	func signUp(email: String, completion: @escaping (SignUpStatusModel) -> Void)
+    func restorePassword(email: String, password: String, completion: @escaping (RestorePasswordStatusModel) -> Void)
 	func updateReceipt(completion: @escaping (ReceiptStatusModel) -> Void)
 	func welcomeType(completion: @escaping (Result<WelcomeTypeModel, Error>) -> Void)
     func setLaunchBefore()
@@ -31,7 +32,7 @@ protocol UserFacadeType {
 }
 
 class UserFacade: UserFacadeType {
-    
+   
 	var user: UserModel? {
 		storage.user
 	}
@@ -99,6 +100,21 @@ class UserFacade: UserFacadeType {
 			completion(status)
 		}
 	}
+    
+    func restorePassword(email: String, password: String, completion: @escaping (RestorePasswordStatusModel) -> Void) {
+        service.restorePassword(email: email, password: password) { [weak self] (result) in
+            guard let self = self else { return }
+            guard let userStatus = try? result.get() else { return }
+            switch userStatus {
+            case let .success(model):
+                self.storage.user = UserModel(id: model.userId, username: email, password: password)
+                NotificationCenter.default.post(name: .userDidLogin, object: nil)
+            case .failure(_):
+                break
+            }
+            completion(userStatus)
+        }
+    }
 	
     func updateReceipt(completion: @escaping (ReceiptStatusModel) -> Void) {
         storeKit.loadReceipt { (result) in

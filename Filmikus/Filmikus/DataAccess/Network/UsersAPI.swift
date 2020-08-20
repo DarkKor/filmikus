@@ -14,6 +14,7 @@ enum UsersAPI {
 	case login(email: String, password: String)
 	case appstoreReceipt(userId: Int, receipt: String)
 	case welcomeType
+    case restorePassword(email: String, password: String)
 }
 
 extension UsersAPI: TargetType {
@@ -36,7 +37,9 @@ extension UsersAPI: TargetType {
 			return "/appstore-receipt"
 		case .welcomeType:
 			return "/access-type"
-		}
+        case .restorePassword:
+            return "/restore-access"
+        }
 	}
 	
 	var method: Method {
@@ -60,7 +63,10 @@ extension UsersAPI: TargetType {
 			json["appstorereceipt"] = receipt
 		case .welcomeType:
 			return .requestPlain
-		}
+        case .restorePassword(let email, let password):
+            json["email"] = email
+            json["new_password"] = password
+        }
 		let encryptedJson = try? encrypt(json: json)
 		return .requestParameters(
 			parameters: [

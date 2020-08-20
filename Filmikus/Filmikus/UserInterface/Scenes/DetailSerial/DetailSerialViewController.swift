@@ -277,12 +277,14 @@ extension DetailSerialViewController: SignInViewControllerDelegate {
         case .firstType:
             let payVC = FirstTourPayViewController(state: .regular)
             payVC.onClose = {
+                self.dismiss(animated: true)
                 viewController.dismiss(animated: true)
             }
             viewController.present(payVC, animated: true)
         case .secondype:
             let payVC = SecondTourPayViewController(state: .regular)
             payVC.onClose = {
+                self.dismiss(animated: true)
                 viewController.dismiss(animated: true)
             }
             viewController.present(payVC, animated: true)

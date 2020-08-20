@@ -12,6 +12,7 @@ protocol UsersServiceType {
 	func register(email: String, completion: @escaping (Result<SignUpStatusModel, Error>) -> Void)
 	func login(email: String, password: String, completion: @escaping (Result<SignInStatusModel, Error>) -> Void)
 	func updateReceipt(userId: Int, receipt: String, completion: @escaping (Result<ReceiptStatusModel, Error>) -> Void)
+    func restorePassword(email: String, password: String, completion: @escaping (Result<RestorePasswordStatusModel, Error>) -> Void)
 	func welcomeType(completion: @escaping (Result<WelcomeTypeModel, Error>) -> Void)
 }
 
@@ -54,7 +55,17 @@ class UsersService: UsersServiceType {
 			)
 		}
 	}
-	
+    
+    func restorePassword(email: String, password: String, completion: @escaping (Result<RestorePasswordStatusModel, Error>) -> Void) {
+        provider.request(.restorePassword(email: email, password: password)) { (result) in
+            completion(
+                result.mapError { $0 }.flatMap { response in
+                    Result { try response.map(RestorePasswordStatusModel.self) }
+                }
+            )
+        }
+    }
+   
 	func welcomeType(completion: @escaping (Result<WelcomeTypeModel, Error>) -> Void) {
 		provider.request(.welcomeType) { (result) in
 			completion(

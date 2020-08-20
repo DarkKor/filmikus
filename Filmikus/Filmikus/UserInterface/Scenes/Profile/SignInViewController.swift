@@ -58,6 +58,14 @@ class SignInViewController: ViewController {
 		return textField
 	}()
 	
+    private lazy var restorePasswordButton: UIButton = {
+        let button = UIButton()
+        button.titleLabel?.font = .systemFont(ofSize: 14, weight: .regular)
+        button.setTitle("Забыли пароль?", for: .normal)
+        button.setTitleColor(.appBlue, for: .normal)
+        button.addTarget(self, action: #selector(onRestorePasswordButtonTap), for: .touchUpInside)
+        return button
+    }()
 	private lazy var signInButton = BlueBorderButton(title: "ВОЙТИ", target: self, action: #selector(onSignInButtonTap))
 	
 	override func loadView() {
@@ -72,6 +80,7 @@ class SignInViewController: ViewController {
 		containerView.addSubview(loginTextField)
 		containerView.addSubview(passwordTextField)
 		containerView.addSubview(phoneTextField)
+        containerView.addSubview(restorePasswordButton)
 		containerView.addSubview(signInButton)
 		
 		scrollView.translatesAutoresizingMaskIntoConstraints = false
@@ -92,7 +101,7 @@ class SignInViewController: ViewController {
 		
 		segmentControl.snp.makeConstraints {
 			$0.top.equalTo(closeButton.snp.bottom).offset(10)
-			$0.left.right.equalToSuperview().inset(0)
+			$0.leading.trailing.equalToSuperview().inset(0)
 		}
 		
 		loginTextField.snp.makeConstraints {
@@ -107,8 +116,12 @@ class SignInViewController: ViewController {
 			$0.top.equalTo(segmentControl.snp.bottom).offset(40)
 			$0.leading.trailing.equalToSuperview().inset(20)
 		}
+        restorePasswordButton.snp.makeConstraints {
+            $0.top.equalTo(passwordTextField.snp.bottom).offset(5)
+            $0.leading.equalToSuperview().inset(20)
+        }
 		signInButton.snp.makeConstraints {
-			$0.top.equalTo(passwordTextField.snp.bottom).offset(20)
+			$0.top.equalTo(restorePasswordButton.snp.bottom).offset(15)
 			$0.centerX.bottom.equalToSuperview()
 			$0.height.equalTo(44)
 			if traitCollection.userInterfaceIdiom == .pad {
@@ -192,6 +205,13 @@ class SignInViewController: ViewController {
 			}
 		}
 	}
+    
+    @objc
+    private func onRestorePasswordButtonTap(sender: UIButton) {
+        let restorePasswordVC = RestorePasswordViewController()
+        restorePasswordVC.delegate = self
+        present(restorePasswordVC, animated: true)
+    }
 }
 
 // MARK: - UITextFieldDelegate
@@ -202,4 +222,17 @@ extension SignInViewController: UITextFieldDelegate {
 		textField.resignFirstResponder()
 		return true
 	}
+}
+
+// MARK: - RestorePasswordViewControllerDelegate
+
+extension SignInViewController: RestorePasswordViewControllerDelegate {
+    func restorePasswordViewControllerDidSelectClose(_ viewController: RestorePasswordViewController) {
+        viewController.dismiss(animated: true)
+    }
+    
+    func restorePasswordViewController(_ viewController: RestorePasswordViewController, didRestorePasswordWithPaidStatus isPaid: Bool) {
+        viewController.dismiss(animated: true)
+        delegate?.signInViewController(self, didSignInWithPaidStatus: isPaid)
+    }
 }
