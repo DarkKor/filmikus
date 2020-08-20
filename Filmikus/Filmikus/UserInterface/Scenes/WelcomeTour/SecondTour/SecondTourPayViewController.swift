@@ -117,7 +117,7 @@ extension SecondTourPayViewController: SecondTourPayViewDelegate {
         showActivityIndicator()
         storeKitService.loadProducts { (result) in
             guard let products = try? result.get() else { return }
-            guard let selectedProduct = products.first(where: {$0.subscriptionPeriod?.numberOfUnits == 1 && $0.subscriptionPeriod?.unit == .month }) else { return }
+            guard let selectedProduct = products.first else { return }
             self.storeKitService.purchase(product: selectedProduct) { [weak self] result in
                 guard let self = self else { return }
                 self.hideActivityIndicator()
