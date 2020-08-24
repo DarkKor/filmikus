@@ -12,7 +12,6 @@ protocol UserStorageType: class {
 	var user: UserModel? { get set }
 	var expirationDate: Date? { get set }
 	var welcomeType: WelcomeTypeModel? { get set }
-    var isLaunchedBefore: Bool { get set }
 }
 
 class UserStorage: UserStorageType {
@@ -57,17 +56,6 @@ class UserStorage: UserStorageType {
 			storage.synchronize()
 		}
 	}
-    
-    var isLaunchedBefore: Bool {
-        get {
-            return storage.bool(forKey: Keys.isLaunchedBefore)
-        }
-        set {
-            storage.set(newValue, forKey: Keys.isLaunchedBefore)
-            storage.synchronize()
-        }
-    }
-    
 	
 	private let storage: UserDefaults
 	private let encoder: JSONEncoder = JSONEncoder()

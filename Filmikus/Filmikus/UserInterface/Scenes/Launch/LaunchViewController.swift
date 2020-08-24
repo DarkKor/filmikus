@@ -35,10 +35,9 @@ class LaunchViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-//        if userFacade.isLaunchedBefore {
-//            delegate?.launchViewControllerDidShowAllContent(self)
-//        } else {
-//            userFacade.setLaunchBefore()
+        if userFacade.isSubscribed {
+            delegate?.launchViewControllerDidShowAllContent(self)
+        } else {
             userFacade.welcomeType { (result) in
                 switch result {
                 case .success(let welcomeType):
@@ -47,7 +46,7 @@ class LaunchViewController: UIViewController {
                 case .failure(let error):
                     print(error)
                 }
-//            }
+            }
         }
     }
 }

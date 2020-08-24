@@ -19,7 +19,6 @@ protocol UserFacadeType {
 	var expirationDate: Date? { get }
 	var isSubscribed: Bool { get }
 	var isSignedIn: Bool { get }
-    var isLaunchedBefore: Bool { get }
     var payViewType: WelcomeTypeModel? { get }
 	func signIn(email: String, password: String, completion: @escaping (SignInStatusModel) -> Void)
 	func signOut()
@@ -27,7 +26,6 @@ protocol UserFacadeType {
     func restorePassword(email: String, password: String, completion: @escaping (RestorePasswordStatusModel) -> Void)
 	func updateReceipt(completion: @escaping (ReceiptStatusModel) -> Void)
 	func welcomeType(completion: @escaping (Result<WelcomeTypeModel, Error>) -> Void)
-    func setLaunchBefore()
     func setWelcomeType(type: WelcomeTypeModel)
 }
 
@@ -48,10 +46,6 @@ class UserFacade: UserFacadeType {
 	var isSignedIn: Bool {
 		storage.user != nil
 	}
-    
-    var isLaunchedBefore: Bool {
-        storage.isLaunchedBefore
-    }
     
     var payViewType: WelcomeTypeModel? {
         storage.welcomeType
@@ -151,21 +145,12 @@ class UserFacade: UserFacadeType {
     }
 	
 	func welcomeType(completion: @escaping (Result<WelcomeTypeModel, Error>) -> Void) {
-		guard let welcomeType = storage.welcomeType else {
 			service.welcomeType { (result) in
 				completion(result)
-                
 			}
-			return
-		}
-		completion(.success(welcomeType))
 	}
     
     func setWelcomeType(type: WelcomeTypeModel) {
         storage.welcomeType = type
-    }
-    
-    func setLaunchBefore() {
-        storage.isLaunchedBefore = true
     }
 }
