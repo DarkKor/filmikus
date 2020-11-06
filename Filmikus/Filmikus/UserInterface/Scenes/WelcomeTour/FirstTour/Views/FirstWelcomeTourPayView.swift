@@ -153,7 +153,6 @@ class FirstWelcomeTourPayView: UIView {
         vTxt.backgroundColor = .clear
         vTxt.isUserInteractionEnabled = false
         vTxt.isScrollEnabled = false
-        vTxt.text = "Безлимитный доступ за 349 Р в месяц"
         if traitCollection.userInterfaceIdiom == .pad {
             vTxt.font = .systemFont(ofSize: 24, weight: .regular)
         } else {
@@ -194,9 +193,9 @@ class FirstWelcomeTourPayView: UIView {
         lbl.text = "Смотри первые 7 дней бесплатно"
         lbl.textAlignment = .center
         if traitCollection.userInterfaceIdiom == .pad {
-            lbl.font = .systemFont(ofSize: 36, weight: .semibold)
-        } else {
             lbl.font = .systemFont(ofSize: 24, weight: .semibold)
+        } else {
+            lbl.font = .systemFont(ofSize: 18, weight: .semibold)
         }
         return lbl
     }()
@@ -322,10 +321,10 @@ class FirstWelcomeTourPayView: UIView {
             if traitCollection.userInterfaceIdiom == .pad {
                 $0.top.equalTo(logoImageView.snp.bottom).offset(25)
                 $0.centerX.equalToSuperview()
-                $0.leading.trailing.equalToSuperview().inset(50)
+                $0.leading.trailing.equalToSuperview().inset(10)
             } else {
                 $0.top.equalTo(logoImageView.snp.bottom).offset(58)
-                $0.leading.trailing.equalTo(safeAreaLayoutGuide).inset(25)
+                $0.leading.trailing.equalTo(safeAreaLayoutGuide).inset(10)
             }
         }
         
@@ -423,6 +422,10 @@ class FirstWelcomeTourPayView: UIView {
             okTextView.textAlignment = .left
             mainStackView.distribution = .fill
         }
+    }
+    
+    func setPriceText(price: NSDecimalNumber) {
+        tiketTextView.text = "Безлимитный доступ за \(price) ₽ в месяц"
     }
     
     

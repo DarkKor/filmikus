@@ -171,7 +171,6 @@ class SecondTourPayView: UIView {
         let lbl = UILabel()
         lbl.textColor = .white
         lbl.backgroundColor = .clear
-        lbl.text = "Безлимитный доступ за 349 Р в месяц"
         if traitCollection.userInterfaceIdiom == .pad {
             lbl.numberOfLines = 2
             lbl.lineBreakMode = .byWordWrapping
@@ -328,7 +327,7 @@ class SecondTourPayView: UIView {
                 titleLableTop = $0.top.equalTo(logoImageView.snp.bottom).offset(25).constraint
                 titleLableTopLandscape = $0.top.equalTo(popCornImageView.snp.bottom).offset(25).constraint
                 $0.centerX.equalToSuperview()
-                $0.leading.trailing.equalToSuperview().inset(50)
+                $0.leading.trailing.equalToSuperview().inset(10)
             }
             
             popCornImageView.snp.makeConstraints {
@@ -487,6 +486,10 @@ class SecondTourPayView: UIView {
             mainStackViewTopLandscape?.deactivate()
             mainStackViewTop?.activate()
         }
+    }
+    
+    func setPriceText(price: NSDecimalNumber) {
+        tiketLabel.text = "Безлимитный доступ за \(price) ₽ в месяц"
     }
     
     @objc

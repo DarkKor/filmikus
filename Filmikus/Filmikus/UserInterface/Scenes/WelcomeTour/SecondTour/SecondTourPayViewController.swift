@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import StoreKit
 
 protocol SecondTourPayViewControllerDelegate: class {
     func secondTourPayViewControllerDidClickSignIn(_ viewController: SecondTourPayViewController)
@@ -21,6 +22,8 @@ class SecondTourPayViewController: ViewController {
     private let state: PayViewState
     private let userFacade: UserFacadeType
     private let storeKitService: StoreKitServiceType = StoreKitService.shared
+    
+    private var product: SKProduct?
     
     var onClose: (() -> Void)?
     
@@ -86,6 +89,16 @@ class SecondTourPayViewController: ViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        showActivityIndicator()
+        storeKitService.loadProducts{ [weak self] (result) in
+            self?.hideActivityIndicator()
+            guard let products = try? result.get() else { return }
+            guard let selectedProduct = products.first else { return }
+            self?.product = selectedProduct
+            self?.vSecondTourPay.setPriceText(price: selectedProduct.price)
+        }
+        
         NotificationCenter.default.addObserver(
             self,
             selector: #selector(orientationDidChanged),
@@ -114,40 +127,37 @@ extension SecondTourPayViewController: SecondTourPayViewDelegate {
     }
     
     func secondTourPayViewDidClickSubscribe(_ view: SecondTourPayView) {
+        guard let selectedProduct = product else { return }
         showActivityIndicator()
-        storeKitService.loadProducts { (result) in
-            guard let products = try? result.get() else { return }
-            guard let selectedProduct = products.first else { return }
-            self.storeKitService.purchase(product: selectedProduct) { [weak self] result in
-                guard let self = self else { return }
-                self.hideActivityIndicator()
-                switch result {
-                case .success:
-                    self.userFacade.updateReceipt { (status) in
-                        guard self.userFacade.isSubscribed else { return }
-                        self.showAlert(
-                            message: "Вы успешно подписались!",
-                            completion: {
-                                switch self.state {
-                                case .regular:
-                                    self.dismiss(animated: true)
-                                case .welcome:
-                                    self.delegate?.secondTourPayViewControllerWillShowContent(self)
-                                }
-                        })
-                    }
-                case .failure(let error):
+        self.storeKitService.purchase(product: selectedProduct) { [weak self] result in
+            guard let self = self else { return }
+            self.hideActivityIndicator()
+            switch result {
+            case .success:
+                self.userFacade.updateReceipt { (status) in
+                    guard self.userFacade.isSubscribed else { return }
                     self.showAlert(
-                        message: "Ошибка: \(error.localizedDescription)",
+                        message: "Вы успешно подписались!",
                         completion: {
                             switch self.state {
                             case .regular:
                                 self.dismiss(animated: true)
-                            default:
-                                break
+                            case .welcome:
+                                self.delegate?.secondTourPayViewControllerWillShowContent(self)
                             }
-                    })
+                        })
                 }
+            case .failure(let error):
+                self.showAlert(
+                    message: "Ошибка: \(error.localizedDescription)",
+                    completion: {
+                        switch self.state {
+                        case .regular:
+                            self.dismiss(animated: true)
+                        default:
+                            break
+                        }
+                    })
             }
         }
     }

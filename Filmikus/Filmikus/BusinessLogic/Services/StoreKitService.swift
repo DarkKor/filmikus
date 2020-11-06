@@ -72,8 +72,7 @@ class StoreKitService: NSObject, StoreKitServiceType {
 			return
 		}
 		let productIds: Set<String> = [
-			"com.filmikustestsubscription.testapp",
-			"com.filmikustestsubscription.year.testapp"
+            "com.inspiritum.filmikus.1month7daysfree"
 		]
 		let request = SKProductsRequest(productIdentifiers: productIds)
 		productsBlock = completion
