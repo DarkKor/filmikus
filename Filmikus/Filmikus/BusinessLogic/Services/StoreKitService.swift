@@ -129,9 +129,10 @@ extension StoreKitService: SKPaymentTransactionObserver {
 				}
 			case .failed:
 				SKPaymentQueue.default().finishTransaction(transaction)
+                
 				DispatchQueue.main.async {
-					self.subscriptionBlock?(.failure(transaction.error ?? NSError()))
-					self.subscriptionBlock = nil
+                        self.subscriptionBlock?(.failure(transaction.error ?? NSError()))
+                        self.subscriptionBlock = nil
 				}
 			case .deferred, .purchasing:
 				break

@@ -148,16 +148,18 @@ extension SecondTourPayViewController: SecondTourPayViewDelegate {
                         })
                 }
             case .failure(let error):
-                self.showAlert(
-                    message: "Ошибка: \(error.localizedDescription)",
-                    completion: {
-                        switch self.state {
-                        case .regular:
-                            self.dismiss(animated: true)
-                        default:
-                            break
-                        }
-                    })
+                if (error as? SKError)?.code != SKError.Code.paymentCancelled {
+                    self.showAlert(
+                        message: "Ошибка: \(error.localizedDescription)",
+                        completion: {
+                            switch self.state {
+                            case .regular:
+                                self.dismiss(animated: true)
+                            default:
+                                break
+                            }
+                        })
+                }
             }
         }
     }

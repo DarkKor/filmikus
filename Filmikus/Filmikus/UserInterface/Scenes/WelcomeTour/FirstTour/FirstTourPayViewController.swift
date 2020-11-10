@@ -150,6 +150,7 @@ extension FirstTourPayViewController: FirstWelcomeTourPayViewDelegate {
                         })
                 }
             case .failure(let error):
+                if (error as? SKError)?.code != SKError.Code.paymentCancelled {
                 self.showAlert(
                     message: "Ошибка: \(error.localizedDescription)",
                     completion: {
@@ -161,6 +162,7 @@ extension FirstTourPayViewController: FirstWelcomeTourPayViewDelegate {
                         }
                     }
                 )
+            }
             }
         }
     }

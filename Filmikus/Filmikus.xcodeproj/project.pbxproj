@@ -172,6 +172,7 @@
 		8AC4365B24E550A500614966 /* FirstWelcomeTourPayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AC4365A24E550A500614966 /* FirstWelcomeTourPayView.swift */; };
 		8AC4365D24E5520D00614966 /* UIView+Extentions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AC4365C24E5520D00614966 /* UIView+Extentions.swift */; };
 		A72AF6E724E448EE00EBE8DC /* ReuseWelcomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A72AF6E624E448EE00EBE8DC /* ReuseWelcomeViewController.swift */; };
+		A7C14D71255A92AD007F4296 /* Screen.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7C14D70255A92AD007F4296 /* Screen.swift */; };
 		A7DB3F4524EAD96600896338 /* SelectCountryOfOriginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7DB3F4424EAD96600896338 /* SelectCountryOfOriginViewController.swift */; };
 		DBB5AD7EDA6B8BBB5543CBB9 /* Pods_Filmikus.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 97F5ACE358500956AF72C9A2 /* Pods_Filmikus.framework */; };
 /* End PBXBuildFile section */
@@ -349,6 +350,7 @@
 		8AC4365C24E5520D00614966 /* UIView+Extentions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Extentions.swift"; sourceTree = "<group>"; };
 		97F5ACE358500956AF72C9A2 /* Pods_Filmikus.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Filmikus.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A72AF6E624E448EE00EBE8DC /* ReuseWelcomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReuseWelcomeViewController.swift; sourceTree = "<group>"; };
+		A7C14D70255A92AD007F4296 /* Screen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Screen.swift; sourceTree = "<group>"; };
 		A7DB3F4424EAD96600896338 /* SelectCountryOfOriginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SelectCountryOfOriginViewController.swift; path = Filmikus/UserInterface/Scenes/WelcomeTour/SecondTour/SelectCountryOfOriginViewController.swift; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
@@ -579,6 +581,7 @@
 			children = (
 				491D03872492411C00093293 /* ActivityIndicatorPresenter.swift */,
 				491D0389249243B900093293 /* AlertPresenter.swift */,
+				A7C14D70255A92AD007F4296 /* Screen.swift */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -1162,6 +1165,7 @@
 				49CED95924C9BE9600BCCB6C /* DetailMovieVideoState.swift in Sources */,
 				49900FEC2480153100F18B46 /* MovieItem.swift in Sources */,
 				4922682F248E43C600B05A51 /* DetailFunShowMoreSection.swift in Sources */,
+				A7C14D71255A92AD007F4296 /* Screen.swift in Sources */,
 				491C21B024641E94007CDEC2 /* CategoriesViewController.swift in Sources */,
 				4922684F248E85DB00B05A51 /* DetailMovieInfoCollectionViewCell.swift in Sources */,
 				491D037F2492343700093293 /* UsersAPI.swift in Sources */,
@@ -1338,7 +1342,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 10;
+				CURRENT_PROJECT_VERSION = 11;
 				DEVELOPMENT_TEAM = 8G9BA2KRAU;
 				INFOPLIST_FILE = Filmikus/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -1365,7 +1369,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 10;
+				CURRENT_PROJECT_VERSION = 11;
 				DEVELOPMENT_TEAM = 8G9BA2KRAU;
 				INFOPLIST_FILE = Filmikus/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (

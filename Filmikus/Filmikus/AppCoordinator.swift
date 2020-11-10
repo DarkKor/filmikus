@@ -70,7 +70,7 @@ extension AppCoordinator: LaunchViewControllerDelegate {
             navVC.setNavigationBarHidden(true, animated: false)
             setRoot(viewController: navVC)
         }
-        
+
         NotificationCenter.default.addObserver(
             self,
             selector: #selector(handleUserSubscribedNotification),
