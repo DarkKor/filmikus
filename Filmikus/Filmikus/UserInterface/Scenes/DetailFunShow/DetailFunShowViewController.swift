@@ -185,6 +185,28 @@ extension DetailFunShowViewController: DetailFunShowCollectionViewControllerDele
     }
 	
 	func detailFunShowCollectionViewControllerSelectShowFilm(_ viewController: DetailFunShowCollectionViewController) {
+		guard !userFacade.isSignedIn else {
+			if userFacade.isSubscribed {
+				viewController.showMovie()
+			} else {
+				let payViewType: WelcomeTypeModel = userFacade.payViewType ?? .firstType
+				switch payViewType {
+				case .firstType:
+					let payVC = FirstTourPayViewController(state: .regular)
+					payVC.onClose = {
+						self.dismiss(animated: true)
+					}
+					present(payVC, animated: true)
+				case .secondype:
+					let payVC = SecondTourPayViewController(state: .regular)
+					payVC.onClose = {
+						self.dismiss(animated: true)
+					}
+					present(payVC, animated: true)
+				}
+			}
+			return
+		}
 		let signInVC = SignInViewController()
 		signInVC.delegate = self
 		present(signInVC, animated: true)
