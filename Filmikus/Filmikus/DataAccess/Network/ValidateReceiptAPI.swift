@@ -19,8 +19,8 @@ extension ValidateReceiptAPI: TargetType {
     }
     
     var baseURL: URL {
-        return URL(string: "https://sandbox.itunes.apple.com")!
-//        return URL(string: "https://buy.itunes.apple.com/verifyReceipt")!
+        URL(string: "https://sandbox.itunes.apple.com")!
+//        URL(string: "https://buy.itunes.apple.com")!
     }
     
     var path: String {
