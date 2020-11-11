@@ -123,28 +123,17 @@ extension ProfileViewController: LoginViewDelegate {
             guard let self = self else { return }
             switch result {
             case .success(_):
-				self.userFacade.updateReceipt { (status) in
-					switch status {
-					case .success:
-						guard self.userFacade.isSubscribed else {
-							self.showAlert(
-								message: "Ошибка",
-								completion: { self.dismiss(animated: true) }
-							)
-							return
-						}
-						self.showAlert(
-							message: "Вы успешно подписались!",
-							completion: { self.dismiss(animated: true) }
-						)
-					case .failure(let error):
-						self.showAlert(
-							message: "Ошибка: \(error.localizedDescription)",
-							completion: { self.dismiss(animated: true) }
-						)
-					}
-					
-				}
+                self.userFacade.updateReceipt { [weak self] (result) in
+                    guard let self = self else { return }
+                    switch result {
+                    case .success:
+                        self.hideActivityIndicator()
+                    case .failure(let error):
+                        self.showAlert(message: "Возникла ошибка: \(error.localizedDescription)", completion: {
+                            self.hideActivityIndicator()
+                        })
+                    }
+                }
             case .failure(let error):
                 self.showAlert(message: "Возникла ошибка: \(error.localizedDescription)", completion: {
                     self.hideActivityIndicator()
