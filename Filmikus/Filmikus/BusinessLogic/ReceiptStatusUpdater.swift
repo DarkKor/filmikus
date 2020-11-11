@@ -27,9 +27,14 @@ class ReceiptStatusUpdater {
 				return
 			}
 		}
-		userFacade.updateReceipt { [weak self] (model) in
+		userFacade.updateReceipt { [weak self] (result) in
 			guard let self = self else { return }
-			self.storage.set(today, forKey: Keys.lastReceiptUpdate)
+			switch result {
+			case .success:
+				self.storage.set(today, forKey: Keys.lastReceiptUpdate)
+			case .failure:
+				break
+			}
 		}
 	}
 }

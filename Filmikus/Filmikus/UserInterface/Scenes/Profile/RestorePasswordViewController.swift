@@ -149,13 +149,18 @@ class RestorePasswordViewController: ViewController {
                 self.userFacade.updateReceipt { [weak self] (subcriptionStatus) in
                     guard let self = self else { return }
                     self.hideActivityIndicator()
-                    var isPaid = false
-                    guard let expirationDate = subcriptionStatus.expirationDate else {
-                        self.delegate?.restorePasswordViewController(self, didRestorePasswordWithPaidStatus: isPaid)
-                        return
-                    }
-                    isPaid = expirationDate > Date()
-                    self.delegate?.restorePasswordViewController(self, didRestorePasswordWithPaidStatus: isPaid)
+					switch subcriptionStatus {
+					case .success(let status):
+						var isPaid = false
+						guard let expirationDate = status.expirationDate else {
+							self.delegate?.restorePasswordViewController(self, didRestorePasswordWithPaidStatus: isPaid)
+							return
+						}
+						isPaid = expirationDate > Date()
+						self.delegate?.restorePasswordViewController(self, didRestorePasswordWithPaidStatus: isPaid)
+					case .failure(let error):
+						self.showAlert(message: error.localizedDescription)
+					}
                 }
             case let .failure(model):
                 self.showAlert(message: model.message)

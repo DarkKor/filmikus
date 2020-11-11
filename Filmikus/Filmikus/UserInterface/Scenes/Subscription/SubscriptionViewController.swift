@@ -160,11 +160,26 @@ class SubscriptionViewController: ViewController {
 				switch result {
 				case .success:
 					self.userFacade.updateReceipt { (status) in
-						guard self.userFacade.isSubscribed else { return }
-						self.showAlert(
-							message: "Вы успешно подписались!",
-							completion: { self.dismiss(animated: true) }
-						)
+						switch status {
+						case .success:
+							guard self.userFacade.isSubscribed else {
+								self.showAlert(
+									message: "Ошибка",
+									completion: { self.dismiss(animated: true) }
+								)
+								return
+							}
+							self.showAlert(
+								message: "Вы успешно подписались!",
+								completion: { self.dismiss(animated: true) }
+							)
+						case .failure(let error):
+							self.showAlert(
+								message: "Ошибка: \(error.localizedDescription)",
+								completion: { self.dismiss(animated: true) }
+							)
+						}
+						
 					}
 				case .failure(let error):
 					self.showAlert(

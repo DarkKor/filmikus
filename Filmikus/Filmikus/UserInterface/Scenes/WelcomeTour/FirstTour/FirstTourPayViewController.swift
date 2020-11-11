@@ -136,18 +136,46 @@ extension FirstTourPayViewController: FirstWelcomeTourPayViewDelegate {
             self.hideActivityIndicator()
             switch result {
             case .success:
-                self.userFacade.updateReceipt { (status) in
-                    guard self.userFacade.isSubscribed else { return }
-                    self.showAlert(
-                        message: "Вы успешно подписались!",
-                        completion: {
-                            switch self.state {
-                            case .regular:
-                                self.dismiss(animated: true)
-                            case .welcome:
-                                self.delegate?.firstTourPayViewControllerWillShowContent(self)
-                            }
-                        })
+                self.userFacade.updateReceipt { (result) in
+					switch result {
+					case .success:
+						guard self.userFacade.isSubscribed else {
+							self.showAlert(
+								message: "Ошибка",
+								completion: {
+									switch self.state {
+									case .regular:
+										self.dismiss(animated: true)
+									default:
+										break
+									}
+								}
+							)
+							return
+						}
+						self.showAlert(
+							message: "Вы успешно подписались!",
+							completion: {
+								switch self.state {
+								case .regular:
+									self.dismiss(animated: true)
+								case .welcome:
+									self.delegate?.firstTourPayViewControllerWillShowContent(self)
+								}
+							})
+					case .failure(let error):
+						self.showAlert(
+							message: "Ошибка: \(error.localizedDescription)",
+							completion: {
+								switch self.state {
+								case .regular:
+									self.dismiss(animated: true)
+								default:
+									break
+								}
+							}
+						)
+					}
                 }
             case .failure(let error):
                 if (error as? SKError)?.code != SKError.Code.paymentCancelled {
@@ -175,7 +203,14 @@ extension FirstTourPayViewController: FirstWelcomeTourPayViewDelegate {
             case .success(_):
                 self.userFacade.updateReceipt { [weak self] (model) in
                     guard let self = self else { return }
-                    self.hideActivityIndicator()
+					switch model {
+					case .success:
+						self.hideActivityIndicator()
+					case .failure(let error):
+						self.showAlert(message: "Возникла ошибка: \(error.localizedDescription)", completion: {
+							self.hideActivityIndicator()
+						})
+					}
                 }
             case .failure(let error):
                 self.showAlert(message: "Возникла ошибка: \(error.localizedDescription)", completion: {

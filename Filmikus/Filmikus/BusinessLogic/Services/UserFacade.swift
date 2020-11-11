@@ -24,7 +24,7 @@ protocol UserFacadeType {
 	func signOut()
 	func signUp(email: String, completion: @escaping (SignUpStatusModel) -> Void)
     func restorePassword(email: String, password: String, completion: @escaping (RestorePasswordStatusModel) -> Void)
-	func updateReceipt(completion: @escaping (ReceiptStatusModel) -> Void)
+	func updateReceipt(completion: @escaping (Result<ReceiptStatusModel, Error>) -> Void)
 	func welcomeType(completion: @escaping (Result<WelcomeTypeModel, Error>) -> Void)
     func setWelcomeType(type: WelcomeTypeModel)
 }
@@ -110,44 +110,59 @@ class UserFacade: UserFacadeType {
         }
     }
 	
-    func updateReceipt(completion: @escaping (ReceiptStatusModel) -> Void) {
+	func updateReceipt(completion: @escaping (Result<ReceiptStatusModel, Error>) -> Void) {
         storeKit.loadReceipt { (result) in
-            guard let receipt = try? result.get() else { return}
-            if let userId = self.user?.id {
-                self.service.updateReceipt(userId: userId, receipt: receipt) { [weak self] result in
-                    guard let self = self else { return }
-                    guard let status = try? result.get() else { return }
-                    self.storage.expirationDate = status.expirationDate
-                    completion(status)
-                    guard self.isSubscribed else { return }
-                    NotificationCenter.default.post(name: .userDidSubscribe, object: nil)
-                }
-            } else {
-                self.provider.request(.validate(receipt: receipt)) { result in
-                    switch result {
-                    case let .success(response):
-                        guard let receipts = try? JSONDecoder().decode(ReceiptsModel.self, from: response.data).receipts else { return }
-                        let expirationDates = receipts.compactMap{ $0.expirationDate }
-                        guard let latestExpirationDate = expirationDates.sorted().last else {
-                            self.storage.expirationDate = nil
-                            return
-                        }
-                        self.storage.expirationDate = latestExpirationDate
-                        completion(ReceiptStatusModel(userId: nil, expirationDate: latestExpirationDate))
-                        guard self.isSubscribed else { return }
-                        NotificationCenter.default.post(name: .userDidSubscribe, object: nil)
-                    default:
-                        break
-                    }
-                }
-            }
+			switch result {
+			case .success(let receipt):
+				if let userId = self.user?.id {
+					self.service.updateReceipt(userId: userId, receipt: receipt) { [weak self] result in
+						guard let self = self else { return }
+						switch result {
+						case .success(let status):
+							self.storage.expirationDate = status.expirationDate
+							completion(.success(status))
+							guard self.isSubscribed else { return }
+							NotificationCenter.default.post(name: .userDidSubscribe, object: nil)
+						case .failure(let error):
+							completion(.failure(error))
+						}
+					}
+				} else {
+					self.provider.request(.validate(receipt: receipt)) { result in
+						switch result {
+						case let .success(response):
+							do {
+								let receipts = try response.map(ReceiptsModel.self).receipts ?? []
+								let expirationDates = receipts.compactMap { $0.expirationDate }
+								guard let latestExpirationDate = expirationDates.sorted().last else {
+									self.storage.expirationDate = nil
+									completion(.failure(NSError.error(with: "Ошибка при валидации чека")))
+									return
+								}
+								self.storage.expirationDate = latestExpirationDate
+								let status = ReceiptStatusModel(userId: nil, expirationDate: latestExpirationDate)
+								completion(.success(status))
+								guard self.isSubscribed else { return }
+								NotificationCenter.default.post(name: .userDidSubscribe, object: nil)
+							} catch {
+								completion(.failure(error))
+							}
+						case .failure(let error):
+							completion(.failure(error))
+						}
+					}
+				}
+			case .failure(let error):
+				completion(.failure(error))
+			}
+
         }
     }
 	
 	func welcomeType(completion: @escaping (Result<WelcomeTypeModel, Error>) -> Void) {
-			service.welcomeType { (result) in
-				completion(result)
-			}
+		service.welcomeType { (result) in
+			completion(result)
+		}
 	}
     
     func setWelcomeType(type: WelcomeTypeModel) {

@@ -123,10 +123,28 @@ extension ProfileViewController: LoginViewDelegate {
             guard let self = self else { return }
             switch result {
             case .success(_):
-                self.userFacade.updateReceipt { [weak self] (model) in
-                    guard let self = self else { return }
-                    self.hideActivityIndicator()
-                }
+				self.userFacade.updateReceipt { (status) in
+					switch status {
+					case .success:
+						guard self.userFacade.isSubscribed else {
+							self.showAlert(
+								message: "Ошибка",
+								completion: { self.dismiss(animated: true) }
+							)
+							return
+						}
+						self.showAlert(
+							message: "Вы успешно подписались!",
+							completion: { self.dismiss(animated: true) }
+						)
+					case .failure(let error):
+						self.showAlert(
+							message: "Ошибка: \(error.localizedDescription)",
+							completion: { self.dismiss(animated: true) }
+						)
+					}
+					
+				}
             case .failure(let error):
                 self.showAlert(message: "Возникла ошибка: \(error.localizedDescription)", completion: {
                     self.hideActivityIndicator()
@@ -158,10 +176,28 @@ extension ProfileViewController: ProfileViewDelegate {
 			guard let self = self else { return }
             switch result {
             case .success(_):
-                self.userFacade.updateReceipt { [weak self] (model) in
-                    guard let self = self else { return }
-                    self.hideActivityIndicator()
-                }
+				self.userFacade.updateReceipt { (status) in
+					switch status {
+					case .success:
+						guard self.userFacade.isSubscribed else {
+							self.showAlert(
+								message: "Ошибка",
+								completion: { self.dismiss(animated: true) }
+							)
+							return
+						}
+						self.showAlert(
+							message: "Вы успешно подписались!",
+							completion: { self.dismiss(animated: true) }
+						)
+					case .failure(let error):
+						self.showAlert(
+							message: "Ошибка: \(error.localizedDescription)",
+							completion: { self.dismiss(animated: true) }
+						)
+					}
+					
+				}
             case .failure(let error):
                 self.showAlert(message: "Возникла ошибка: \(error.localizedDescription)", completion: {
                     self.hideActivityIndicator()
