@@ -34,19 +34,21 @@ class LaunchViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        if userFacade.isSubscribed {
-            delegate?.launchViewControllerDidShowAllContent(self)
-        } else {
-            userFacade.welcomeType { (result) in
-                switch result {
-                case .success(let welcomeType):
-                    self.userFacade.setWelcomeType(type: welcomeType)
-                    self.delegate?.launchViewController(self, didReceiveWelcome: welcomeType)
-                case .failure(let error):
-                    print(error)
-                }
-            }
-        }
+		
+		userFacade.updateUserInfo {
+			if self.userFacade.isSubscribed {
+				self.delegate?.launchViewControllerDidShowAllContent(self)
+			} else {
+				self.userFacade.welcomeType { (result) in
+					switch result {
+					case .success(let welcomeType):
+						self.userFacade.setWelcomeType(type: welcomeType)
+						self.delegate?.launchViewController(self, didReceiveWelcome: welcomeType)
+					case .failure(let error):
+						print(error)
+					}
+				}
+			}
+		}
     }
 }

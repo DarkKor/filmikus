@@ -20,7 +20,7 @@ protocol UserFacadeType {
 	var isSubscribed: Bool { get }
 	var isSignedIn: Bool { get }
     var payViewType: WelcomeTypeModel? { get }
-	func updateUserInfo()
+	func updateUserInfo(completion: @escaping () -> Void)
 	func signIn(email: String, password: String, completion: @escaping (SignInStatusModel) -> Void)
 	func signOut()
 	func signUp(email: String, completion: @escaping (SignUpStatusModel) -> Void)
@@ -42,11 +42,8 @@ class UserFacade: UserFacadeType {
 	
 	var isSubscribed: Bool {
 		let isPaid = user?.isPaid ?? false
-		if isPaid {
-			return true
-		} else {
-			return storage.expirationDate.map { $0 > Date() } ?? false
-		}
+		let isSubscribed = storage.expirationDate.map { $0 > Date() } ?? false
+		return isPaid || isSubscribed
 	}
 	
 	var isSignedIn: Bool {
@@ -74,9 +71,12 @@ class UserFacade: UserFacadeType {
         self.provider = provider
 	}
 	
-	func updateUserInfo() {
-		guard let user = self.user else { return }
-		signIn(email: user.username, password: user.password, completion: { _ in })
+	func updateUserInfo(completion: @escaping () -> Void) {
+		guard let user = self.user else {
+			completion()
+			return
+		}
+		signIn(email: user.username, password: user.password, completion: { _ in completion() })
 	}
 	
 	func signIn(email: String, password: String, completion: @escaping (SignInStatusModel) -> Void) {
@@ -85,7 +85,7 @@ class UserFacade: UserFacadeType {
 			guard let userStatus = try? result.get() else { return }
 			switch userStatus {
 			case let .success(model):
-				self.storage.user = UserModel(id: model.userId, username: email, password: password, isPaid: model.isPaid)
+				self.storage.user = UserModel(id: model.userId, username: email, password: password, isPaid: true)
 				NotificationCenter.default.post(name: .userDidLogin, object: nil)
 			case .failure(_):
 				break
