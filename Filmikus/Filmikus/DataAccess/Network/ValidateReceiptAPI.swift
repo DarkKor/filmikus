@@ -15,7 +15,7 @@ enum ValidateReceiptAPI {
 extension ValidateReceiptAPI: TargetType {
     
     var sharedSecretKey: String {
-        "325bac5a10fd4dcd9274233dcf980c17"
+        "226c5369f1904a3d95dc47003b7875d9"
     }
     
     var baseURL: URL {
