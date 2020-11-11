@@ -33,6 +33,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 	
 	func applicationDidBecomeActive(_ application: UIApplication) {
 		receiptStatusUpdater.updateReceipt()
+		userFacade.updateUserInfo()
 	}
 }
 

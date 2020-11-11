@@ -17,7 +17,7 @@ class DetailFilmViewController: UIViewController {
 	private let userFacade: UserFacadeType
 	
 	var videoState: DetailMovieVideoState {
-		 if !self.userFacade.isSubscribed {
+		if !self.userFacade.isSubscribed {
 			return .needSubscription
 		} else {
 			return .watchMovie

@@ -20,6 +20,7 @@ protocol UserFacadeType {
 	var isSubscribed: Bool { get }
 	var isSignedIn: Bool { get }
     var payViewType: WelcomeTypeModel? { get }
+	func updateUserInfo()
 	func signIn(email: String, password: String, completion: @escaping (SignInStatusModel) -> Void)
 	func signOut()
 	func signUp(email: String, completion: @escaping (SignUpStatusModel) -> Void)
@@ -40,7 +41,12 @@ class UserFacade: UserFacadeType {
 	}
 	
 	var isSubscribed: Bool {
-		storage.expirationDate.map { $0 > Date() } ?? false
+		let isPaid = user?.isPaid ?? false
+		if isPaid {
+			return true
+		} else {
+			return storage.expirationDate.map { $0 > Date() } ?? false
+		}
 	}
 	
 	var isSignedIn: Bool {
@@ -68,13 +74,18 @@ class UserFacade: UserFacadeType {
         self.provider = provider
 	}
 	
+	func updateUserInfo() {
+		guard let user = self.user else { return }
+		signIn(email: user.username, password: user.password, completion: { _ in })
+	}
+	
 	func signIn(email: String, password: String, completion: @escaping (SignInStatusModel) -> Void) {
 		service.login(email: email, password: password) { [weak self] (result) in
 			guard let self = self else { return }
 			guard let userStatus = try? result.get() else { return }
 			switch userStatus {
 			case let .success(model):
-				self.storage.user = UserModel(id: model.userId, username: email, password: password)
+				self.storage.user = UserModel(id: model.userId, username: email, password: password, isPaid: model.isPaid)
 				NotificationCenter.default.post(name: .userDidLogin, object: nil)
 			case .failure(_):
 				break
@@ -100,9 +111,8 @@ class UserFacade: UserFacadeType {
             guard let self = self else { return }
             guard let userStatus = try? result.get() else { return }
             switch userStatus {
-            case let .success(model):
-                self.storage.user = UserModel(id: model.userId, username: email, password: password)
-                NotificationCenter.default.post(name: .userDidLogin, object: nil)
+            case .success(_):
+				self.signIn(email: email, password: password) { (_) in }
             case .failure(_):
                 break
             }
