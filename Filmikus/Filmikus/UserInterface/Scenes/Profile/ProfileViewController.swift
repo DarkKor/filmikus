@@ -127,6 +127,13 @@ extension ProfileViewController: LoginViewDelegate {
                     guard let self = self else { return }
                     switch result {
                     case .success:
+                        guard self.userFacade.isSubscribed else {
+                            self.showAlert(
+                                message: "Ошибка")
+                            self.hideActivityIndicator()
+                            return
+                        }
+                        self.showAlert(message: "Вы успешно подписались!")
                         self.hideActivityIndicator()
                     case .failure(let error):
                         self.showAlert(message: "Возникла ошибка: \(error.localizedDescription)", completion: {

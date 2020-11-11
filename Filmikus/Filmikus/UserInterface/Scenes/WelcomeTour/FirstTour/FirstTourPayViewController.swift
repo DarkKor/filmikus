@@ -203,14 +203,30 @@ extension FirstTourPayViewController: FirstWelcomeTourPayViewDelegate {
             case .success(_):
                 self.userFacade.updateReceipt { [weak self] (model) in
                     guard let self = self else { return }
-					switch model {
-					case .success:
-						self.hideActivityIndicator()
-					case .failure(let error):
-						self.showAlert(message: "Возникла ошибка: \(error.localizedDescription)", completion: {
-							self.hideActivityIndicator()
-						})
-					}
+                    switch model {
+                    case .success:
+                        guard self.userFacade.isSubscribed else {
+                            self.showAlert(
+                                message: "Ошибка")
+                            self.hideActivityIndicator()
+                            return
+                        }
+                        self.showAlert(
+                            message: "Вы успешно подписались!",
+                            completion: {
+                                self.hideActivityIndicator()
+                                switch self.state {
+                                case .regular:
+                                    self.dismiss(animated: true)
+                                case .welcome:
+                                    self.delegate?.firstTourPayViewControllerWillShowContent(self)
+                                }
+                            })
+                    case .failure(let error):
+                        self.showAlert(message: "Возникла ошибка: \(error.localizedDescription)", completion: {
+                            self.hideActivityIndicator()
+                        })
+                    }
                 }
             case .failure(let error):
                 self.showAlert(message: "Возникла ошибка: \(error.localizedDescription)", completion: {
