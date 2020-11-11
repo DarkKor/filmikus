@@ -213,7 +213,7 @@ extension DetailSerialViewController: DetailMovieCollectionViewControllerDelegat
 	}
 	
     func detailMovieCollectionViewControllerSelectSubscribe(_ viewController: DetailMovieCollectionViewController) {
-        guard let payViewType = userFacade.payViewType else { return }
+        let payViewType: WelcomeTypeModel = userFacade.payViewType ?? .firstType
         switch payViewType {
         case .firstType:
             let payVC = FirstTourPayViewController(state: .regular)
@@ -235,7 +235,7 @@ extension DetailSerialViewController: DetailMovieCollectionViewControllerDelegat
             if userFacade.isSubscribed {
                 viewController.showMovie()
             } else {
-                guard let payViewType = userFacade.payViewType else { return }
+                let payViewType: WelcomeTypeModel = userFacade.payViewType ?? .firstType
                 switch payViewType {
                 case .firstType:
                     let payVC = FirstTourPayViewController(state: .regular)
@@ -272,7 +272,7 @@ extension DetailSerialViewController: SignInViewControllerDelegate {
             dismiss(animated: true)
             return
         }
-        guard let payViewType = userFacade.payViewType else { return }
+        let payViewType: WelcomeTypeModel = userFacade.payViewType ?? .firstType
         switch payViewType {
         case .firstType:
             let payVC = FirstTourPayViewController(state: .regular)

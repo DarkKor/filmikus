@@ -171,9 +171,16 @@ extension FirstTourPayViewController: FirstWelcomeTourPayViewDelegate {
         showActivityIndicator()
         storeKitService.restorePurchases { [weak self] (result) in
             guard let self = self else { return }
-            self.userFacade.updateReceipt { [weak self] (model) in
-                guard let self = self else { return }
-                self.hideActivityIndicator()
+            switch result {
+            case .success(_):
+                self.userFacade.updateReceipt { [weak self] (model) in
+                    guard let self = self else { return }
+                    self.hideActivityIndicator()
+                }
+            case .failure(let error):
+                self.showAlert(message: "Возникла ошибка: \(error.localizedDescription)", completion: {
+                    self.hideActivityIndicator()
+                })
             }
         }
     }

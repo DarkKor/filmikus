@@ -135,7 +135,7 @@ extension TabBarController: ProfileViewControllerDelegate {
         
         if !userFacade.isSubscribed  {
             
-            guard let payViewType = userFacade.payViewType else { return }
+            let payViewType: WelcomeTypeModel = userFacade.payViewType ?? .firstType
             
             switch payViewType {
                 
@@ -177,7 +177,7 @@ extension TabBarController: ProfileViewControllerDelegate {
 	}
     
     func profileViewControllerDidSelectSubscribe(_ viewController: ProfileViewController) {
-        guard let payViewType = userFacade.payViewType else { return }
+        let payViewType: WelcomeTypeModel = userFacade.payViewType ?? .firstType
         switch payViewType {
         case .firstType:
             let payVC = FirstTourPayViewController(state: .regular)
@@ -204,7 +204,7 @@ extension TabBarController: SignUpViewControllerDelegate {
 	}
 	
     func signUpViewControllerDidSignUp(_ viewController: SignUpViewController) {
-        guard let payViewType = userFacade.payViewType else { return }
+        let payViewType: WelcomeTypeModel = userFacade.payViewType ?? .firstType
         switch payViewType {
         case .firstType:
             let payVC = FirstTourPayViewController(state: .regular)
@@ -237,7 +237,7 @@ extension TabBarController: SignInViewControllerDelegate {
             dismiss(animated: true)
             return
         }
-        guard let payViewType = userFacade.payViewType else { return }
+        let payViewType: WelcomeTypeModel = userFacade.payViewType ?? .firstType
         switch payViewType {
         case .firstType:
             let payVC = FirstTourPayViewController(state: .regular)

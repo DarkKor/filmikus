@@ -112,7 +112,7 @@ class UserFacade: UserFacadeType {
 	
     func updateReceipt(completion: @escaping (ReceiptStatusModel) -> Void) {
         storeKit.loadReceipt { (result) in
-            guard let receipt = try? result.get() else { return }
+            guard let receipt = try? result.get() else { return}
             if let userId = self.user?.id {
                 self.service.updateReceipt(userId: userId, receipt: receipt) { [weak self] result in
                     guard let self = self else { return }

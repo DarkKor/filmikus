@@ -56,10 +56,13 @@ class StoreKitService: NSObject, StoreKitServiceType {
 			refreshReceipt()
 			return
 		}
-		guard let receiptData = try? Data(contentsOf: receiptUrl).base64EncodedString() else { return }
+		guard let receiptData = try? Data(contentsOf: receiptUrl).base64EncodedString() else {
+            completion?(.failure(NSError.error(with: "Что-то пошло не так")))
+            return
+        }
 		completion?(.success(receiptData))
 	}
-
+    
 	private func refreshReceipt() {
 		let request = SKReceiptRefreshRequest(receiptProperties: nil)
 		request.delegate = self
@@ -114,19 +117,43 @@ extension StoreKitService: SKProductsRequestDelegate {
 // MARK: - SKPaymentTransactionObserver
 
 extension StoreKitService: SKPaymentTransactionObserver {
-	
+    
+    public func paymentQueueRestoreCompletedTransactionsFinished(_ queue: SKPaymentQueue) {
+        print("restored transactions, loading receipt...")
+        loadReceipt() { result in
+            print("receipt loaded")
+            DispatchQueue.main.async {
+                let subscriptionResult = result.map { _ in Void() }
+                self.subscriptionBlock?(subscriptionResult)
+                self.subscriptionBlock = nil
+            }
+        }
+    }
+    
+    public func paymentQueue(_ queue: SKPaymentQueue, restoreCompletedTransactionsFailedWithError error: Error) {
+        print("failed to restore transactions")
+        DispatchQueue.main.async {
+            self.subscriptionBlock?(.failure(NSError.error(with: error.localizedDescription)))
+            self.subscriptionBlock = nil
+        }
+    }
+    
 	public func paymentQueue(_ queue: SKPaymentQueue, updatedTransactions transactions: [SKPaymentTransaction]) {
 		for transaction in transactions {
 			switch (transaction.transactionState) {
-			case .purchased, .restored:
+			case .purchased:
 				SKPaymentQueue.default().finishTransaction(transaction)
-				loadReceipt() { result in
-					DispatchQueue.main.async {
-						let subscriptionResult = result.map { _ in Void() }
-						self.subscriptionBlock?(subscriptionResult)
-						self.subscriptionBlock = nil
-					}
-				}
+                
+                loadReceipt() { result in
+                    print("receipt loaded")
+                    DispatchQueue.main.async {
+                        let subscriptionResult = result.map { _ in Void() }
+                        self.subscriptionBlock?(subscriptionResult)
+                        self.subscriptionBlock = nil
+                    }
+                }
+            case .restored:
+                SKPaymentQueue.default().finishTransaction(transaction)
 			case .failed:
 				SKPaymentQueue.default().finishTransaction(transaction)
                 
@@ -141,4 +168,11 @@ extension StoreKitService: SKPaymentTransactionObserver {
 			}
 		}
 	}
+}
+
+extension NSError {
+    static func error(with title: String) -> NSError {
+        let bundle = Bundle.main.bundleIdentifier ?? "com.filmikus.app"
+        return NSError(domain: bundle, code: 0, userInfo: [NSLocalizedDescriptionKey : title])
+    }
 }

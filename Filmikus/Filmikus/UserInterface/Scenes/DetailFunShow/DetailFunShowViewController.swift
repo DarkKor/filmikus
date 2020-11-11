@@ -167,9 +167,7 @@ extension DetailFunShowViewController: DetailFunShowCollectionViewControllerDele
 	}
 	
     func detailFunShowCollectionViewControllerSelectSubscribe(_ viewController: DetailFunShowCollectionViewController) {
-        guard let payViewType = userFacade.payViewType else {
-            return
-        }
+        let payViewType: WelcomeTypeModel = userFacade.payViewType ?? .firstType
         switch payViewType {
         case .firstType:
             let payVC = FirstTourPayViewController(state: .regular)
@@ -206,9 +204,7 @@ extension DetailFunShowViewController: SignInViewControllerDelegate {
             dismiss(animated: true)
             return
         }
-        guard let payViewType = userFacade.payViewType else {
-            return
-        }
+        let payViewType: WelcomeTypeModel = userFacade.payViewType ?? .firstType
         switch payViewType {
         case .firstType:
             let payVC = FirstTourPayViewController(state: .regular)
