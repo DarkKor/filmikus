@@ -132,11 +132,11 @@ class UserFacade: UserFacadeType {
 						switch result {
 						case let .success(response):
 							do {
-								let receipts = try response.map(ReceiptsModel.self).receipts ?? []
-								let expirationDates = receipts.compactMap { $0.expirationDate }
-								guard let latestExpirationDate = expirationDates.sorted().last else {
+								let receipts = try response.map(ReceiptsModel.self).receipts
+								let expirationDates = receipts?.compactMap { $0.expirationDate }
+								guard let latestExpirationDate = expirationDates?.sorted().last else {
 									self.storage.expirationDate = nil
-									completion(.failure(NSError.error(with: "Ошибка при валидации чека")))
+									completion(.failure(NSError.error(with: "Не найдено ни одной покупки")))
 									return
 								}
 								self.storage.expirationDate = latestExpirationDate
