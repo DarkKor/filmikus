@@ -60,6 +60,10 @@ class DetailFunShowCollectionViewController: UIViewController {
 		collectionView.reloadData()
 		collectionView.scrollToItem(at: IndexPath(item: 0, section: 0), at: .top, animated: true)
 	}
+	
+	func showMovie() {
+		collectionView.scrollToItem(at: IndexPath(item: 0, section: 0), at: .top, animated: true)
+	}
 }
 
 // MARK: - UICollectionViewDataSource
