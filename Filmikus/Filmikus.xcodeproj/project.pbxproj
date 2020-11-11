@@ -62,7 +62,6 @@
 		4937869E248A42F400C8496E /* DetailSerialViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4937869D248A42F400C8496E /* DetailSerialViewController.swift */; };
 		493786A0248A8BC000C8496E /* CategoryType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4937869F248A8BC000C8496E /* CategoryType.swift */; };
 		493786A3248A93C800C8496E /* DetailFunShowViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 493786A2248A93C800C8496E /* DetailFunShowViewController.swift */; };
-		495D769124D022950026B7A2 /* AuthenticationCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 495D769024D022950026B7A2 /* AuthenticationCoordinator.swift */; };
 		49684A5E246AC51600E9BADC /* CategoryHeaderSectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49684A5D246AC51600E9BADC /* CategoryHeaderSectionView.swift */; };
 		49684A60246ACD9B00E9BADC /* UIView+Style.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49684A5F246ACD9B00E9BADC /* UIView+Style.swift */; };
 		49684A62246ACDDA00E9BADC /* BlueBorderButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49684A61246ACDDA00E9BADC /* BlueBorderButton.swift */; };
@@ -172,9 +171,9 @@
 		8AC4365B24E550A500614966 /* FirstWelcomeTourPayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AC4365A24E550A500614966 /* FirstWelcomeTourPayView.swift */; };
 		8AC4365D24E5520D00614966 /* UIView+Extentions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AC4365C24E5520D00614966 /* UIView+Extentions.swift */; };
 		A72AF6E724E448EE00EBE8DC /* ReuseWelcomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A72AF6E624E448EE00EBE8DC /* ReuseWelcomeViewController.swift */; };
-		A7C14D71255A92AD007F4296 /* Screen.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7C14D70255A92AD007F4296 /* Screen.swift */; };
 		A7DB3F4524EAD96600896338 /* SelectCountryOfOriginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7DB3F4424EAD96600896338 /* SelectCountryOfOriginViewController.swift */; };
 		DBB5AD7EDA6B8BBB5543CBB9 /* Pods_Filmikus.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 97F5ACE358500956AF72C9A2 /* Pods_Filmikus.framework */; };
+		DF5FB36E255C03FC00DB1AFB /* UIScreen+Extentions.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF5FB36D255C03FC00DB1AFB /* UIScreen+Extentions.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -238,7 +237,6 @@
 		4937869D248A42F400C8496E /* DetailSerialViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailSerialViewController.swift; sourceTree = "<group>"; };
 		4937869F248A8BC000C8496E /* CategoryType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryType.swift; sourceTree = "<group>"; };
 		493786A2248A93C800C8496E /* DetailFunShowViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailFunShowViewController.swift; sourceTree = "<group>"; };
-		495D769024D022950026B7A2 /* AuthenticationCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationCoordinator.swift; sourceTree = "<group>"; };
 		49684A5D246AC51600E9BADC /* CategoryHeaderSectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryHeaderSectionView.swift; sourceTree = "<group>"; };
 		49684A5F246ACD9B00E9BADC /* UIView+Style.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Style.swift"; sourceTree = "<group>"; };
 		49684A61246ACDDA00E9BADC /* BlueBorderButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlueBorderButton.swift; sourceTree = "<group>"; };
@@ -350,8 +348,8 @@
 		8AC4365C24E5520D00614966 /* UIView+Extentions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Extentions.swift"; sourceTree = "<group>"; };
 		97F5ACE358500956AF72C9A2 /* Pods_Filmikus.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Filmikus.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A72AF6E624E448EE00EBE8DC /* ReuseWelcomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReuseWelcomeViewController.swift; sourceTree = "<group>"; };
-		A7C14D70255A92AD007F4296 /* Screen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Screen.swift; sourceTree = "<group>"; };
 		A7DB3F4424EAD96600896338 /* SelectCountryOfOriginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SelectCountryOfOriginViewController.swift; path = Filmikus/UserInterface/Scenes/WelcomeTour/SecondTour/SelectCountryOfOriginViewController.swift; sourceTree = SOURCE_ROOT; };
+		DF5FB36D255C03FC00DB1AFB /* UIScreen+Extentions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIScreen+Extentions.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -411,7 +409,6 @@
 				491C21A2246416B9007CDEC2 /* UserInterface */,
 				491C218924641393007CDEC2 /* AppDelegate.swift */,
 				49D34C1D24CF134F00DD39C9 /* AppCoordinator.swift */,
-				495D769024D022950026B7A2 /* AuthenticationCoordinator.swift */,
 				8A7C32DC24EBCBAF00C7155D /* BlueCat.gif */,
 				491C219224641395007CDEC2 /* Assets.xcassets */,
 				491C219424641395007CDEC2 /* LaunchScreen.storyboard */,
@@ -509,6 +506,7 @@
 				49684A902472F2D000E9BADC /* String+SelectableItem.swift */,
 				49226822248E3D1C00B05A51 /* String+Size.swift */,
 				8A7C32DE24EBCE2500C7155D /* UIImageView+Gif.swift */,
+				DF5FB36D255C03FC00DB1AFB /* UIScreen+Extentions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -581,7 +579,6 @@
 			children = (
 				491D03872492411C00093293 /* ActivityIndicatorPresenter.swift */,
 				491D0389249243B900093293 /* AlertPresenter.swift */,
-				A7C14D70255A92AD007F4296 /* Screen.swift */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -1070,6 +1067,7 @@
 				4937867924853A3400C8496E /* SelectItemPickerViewController.swift in Sources */,
 				49684A74246BE71200E9BADC /* ProfileViewController.swift in Sources */,
 				49684A66246ADA9900E9BADC /* UIColor+App.swift in Sources */,
+				DF5FB36E255C03FC00DB1AFB /* UIScreen+Extentions.swift in Sources */,
 				4922683D248E7E4500B05A51 /* DetailMovieRelatedHeaderSectionView.swift in Sources */,
 				8A7C32E224EBD7F000C7155D /* SecondTourPayViewController.swift in Sources */,
 				499010012481455800F18B46 /* RoundedBorderLabel.swift in Sources */,
@@ -1123,7 +1121,6 @@
 				8A71236A24ED713A006DBB45 /* RestorePasswordFailureModel.swift in Sources */,
 				49900FEE2480165600F18B46 /* DetailFunShowModel.swift in Sources */,
 				49684A76246BED4000E9BADC /* UnderlinedTextField.swift in Sources */,
-				495D769124D022950026B7A2 /* AuthenticationCoordinator.swift in Sources */,
 				8A7C32E424EBF67000C7155D /* SecondTourPayView.swift in Sources */,
 				49684AC0247676DE00E9BADC /* VideoCategory.swift in Sources */,
 				49CED94424C50A2800BCCB6C /* Data+HMAC.swift in Sources */,
@@ -1165,7 +1162,6 @@
 				49CED95924C9BE9600BCCB6C /* DetailMovieVideoState.swift in Sources */,
 				49900FEC2480153100F18B46 /* MovieItem.swift in Sources */,
 				4922682F248E43C600B05A51 /* DetailFunShowMoreSection.swift in Sources */,
-				A7C14D71255A92AD007F4296 /* Screen.swift in Sources */,
 				491C21B024641E94007CDEC2 /* CategoriesViewController.swift in Sources */,
 				4922684F248E85DB00B05A51 /* DetailMovieInfoCollectionViewCell.swift in Sources */,
 				491D037F2492343700093293 /* UsersAPI.swift in Sources */,

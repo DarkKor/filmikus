@@ -12,13 +12,6 @@ class AppCoordinator {
     
     private let window: UIWindow
     
-    //	private lazy var authenticationCoordinator: AuthenticationCoordinator = {
-    //		let controller = NavigationController()
-    //		controller.apply(gradientStyle: .bluePurple)
-    //		let coordinator = AuthenticationCoordinator(navigationController: controller)
-    //		return coordinator
-    //	}()
-    
     init(window: UIWindow) {
         self.window = window
     }

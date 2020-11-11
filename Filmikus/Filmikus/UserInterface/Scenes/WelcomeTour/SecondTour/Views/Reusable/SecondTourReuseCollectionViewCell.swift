@@ -21,7 +21,7 @@ class SecondTourReuseCollectionViewCell: ReusableCollectionViewCell {
         if traitCollection.userInterfaceIdiom == .pad {
             lbl.font = .systemFont(ofSize: 32, weight: .regular)
         } else {
-            lbl.font = .systemFont(ofSize: Screen.isSmallScreen() ? 12 : 15, weight: .regular)
+            lbl.font = .systemFont(ofSize: UIScreen.isSmallScreen ? 12 : 15, weight: .regular)
         }
         return lbl
     }()
