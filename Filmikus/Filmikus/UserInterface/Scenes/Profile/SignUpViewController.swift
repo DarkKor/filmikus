@@ -28,7 +28,7 @@ class SignUpViewController: ViewController {
 	
 	private lazy var descriptionLabel: UILabel = {
 		let label = UILabel()
-		label.text = "Для того, чтобы получить доступ к нашему сайту, пожалуйста зарегистрируйтесь.\nНа указанный email придет информация о доступе к сайту, и чеки о покупках, если вы будете их совершать."
+		label.text = "Для того, чтобы получить доступ к сервису, пожалуйста зарегистрируйтесь.\nНа указанный email придет информация о доступе к сайту, и чеки о покупках, если вы будете их совершать."
 		label.numberOfLines = 0
 		return label
 	}()
