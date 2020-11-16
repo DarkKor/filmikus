@@ -26,4 +26,7 @@ extension AlertPresenter where Self: UIViewController {
 		}
 	}
 
+	func showNetworkErrorAlert(completion: (() -> Void)? = nil) {
+		showAlert(message: "Произошла ошибка во время загрузки контента", completion: completion)
+	}
 }

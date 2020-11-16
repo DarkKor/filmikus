@@ -9,7 +9,7 @@
 import UIKit
 import WebKit
 
-class DetailFunShowViewController: UIViewController {
+class DetailFunShowViewController: ViewController {
 	
 	private let id: Int
 	private let subcategoryId: Int
@@ -95,36 +95,48 @@ class DetailFunShowViewController: UIViewController {
 	}
 	
 	private func loadData(with id: Int) {
+		self.showActivityIndicator()
 		videoService.detailEpisode(id: id) { [weak self] (result) in
 			guard let self = self else { return }
-			guard let detailModel = try? result.get() else { return }
-			self.title = detailModel.title
-			self.episodesService.getFunShowEpisodes(funShowId: self.subcategoryId) { [weak self] (result) in
-				guard let self = self else { return }
-				guard let episodesModel = try? result.get() else { return }
-				var videoUrl = ""
-				if let tvigleId = detailModel.tvigleId {
-					videoUrl = "http://cloud.tvigle.ru/video/\(tvigleId)/"
-				}
-				let detailFunShowVideo = DetailFunShowVideoSection(
-					videoUrl: videoUrl,
-					state: self.videoState
-				)
-				let detailFunShowInfo = DetailFunShowInfoSection(
-					title: detailModel.title,
-					descr: detailModel.descr
-				)
-				let detailFunShowMore = DetailFunShowMoreSection(
-					title: "Другие сериии из этого цикла",
-					videos: episodesModel.items.map {
-						Video(id: $0.id, title: $0.title, imageUrl: $0.imageUrl.high)
+			self.hideActivityIndicator()
+			switch result {
+			case .failure:
+				self.showNetworkErrorAlert()
+			case .success(let detailModel):
+				self.title = detailModel.title
+				self.showActivityIndicator()
+				self.episodesService.getFunShowEpisodes(funShowId: self.subcategoryId) { [weak self] (result) in
+					guard let self = self else { return }
+					self.hideActivityIndicator()
+					switch result {
+					case .failure:
+						self.showNetworkErrorAlert()
+					case .success(let episodesModel):
+						var videoUrl = ""
+						if let tvigleId = detailModel.tvigleId {
+							videoUrl = "http://cloud.tvigle.ru/video/\(tvigleId)/"
+						}
+						let detailFunShowVideo = DetailFunShowVideoSection(
+							videoUrl: videoUrl,
+							state: self.videoState
+						)
+						let detailFunShowInfo = DetailFunShowInfoSection(
+							title: detailModel.title,
+							descr: detailModel.descr
+						)
+						let detailFunShowMore = DetailFunShowMoreSection(
+							title: "Другие сериии из этого цикла",
+							videos: episodesModel.items.map {
+								Video(id: $0.id, title: $0.title, imageUrl: $0.imageUrl.high)
+							}
+						)
+						self.collectionViewController.update(sections: [
+							.video(detailFunShowVideo),
+							.info(detailFunShowInfo),
+							.more(detailFunShowMore)
+						])
 					}
-				)
-				self.collectionViewController.update(sections: [
-					.video(detailFunShowVideo),
-					.info(detailFunShowInfo),
-					.more(detailFunShowMore)
-				])
+				}
 			}
 		}
 	}
@@ -185,10 +197,10 @@ extension DetailFunShowViewController: DetailFunShowCollectionViewControllerDele
     }
 	
 	func detailFunShowCollectionViewControllerSelectShowFilm(_ viewController: DetailFunShowCollectionViewController) {
-		guard !userFacade.isSignedIn else {
-			if userFacade.isSubscribed {
-				viewController.showMovie()
-			} else {
+		if userFacade.isSubscribed {
+			viewController.showMovie()
+		} else {
+			if userFacade.isSignedIn {
 				let payViewType: WelcomeTypeModel = userFacade.payViewType ?? .firstType
 				switch payViewType {
 				case .firstType:
@@ -204,12 +216,12 @@ extension DetailFunShowViewController: DetailFunShowCollectionViewControllerDele
 					}
 					present(payVC, animated: true)
 				}
+			} else {
+				let signInVC = SignInViewController()
+				signInVC.delegate = self
+				present(signInVC, animated: true)
 			}
-			return
 		}
-		let signInVC = SignInViewController()
-		signInVC.delegate = self
-		present(signInVC, animated: true)
 	}
 }
 

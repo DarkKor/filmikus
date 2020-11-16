@@ -9,7 +9,7 @@
 import UIKit
 import WebKit
 
-class DetailFilmViewController: UIViewController {
+class DetailFilmViewController: ViewController {
 	
 	private let id: Int
 	
@@ -89,47 +89,53 @@ class DetailFilmViewController: UIViewController {
     }
 	
 	private func loadData(with id: Int) {
+		self.showActivityIndicator()
 		videoService.detailMovie(id: id) { [weak self] (result) in
 			guard let self = self else { return }
-			guard let detailModel = try? result.get() else { return }
-			self.title = detailModel.title
-			
-			var videoUrl = ""
-			if let tvigleId = detailModel.tvigleId {
-				videoUrl = "http://cloud.tvigle.ru/video/\(tvigleId)/"
+			self.hideActivityIndicator()
+			switch result {
+			case .failure:
+				self.showNetworkErrorAlert()
+			case .success(let detailModel):
+				self.title = detailModel.title
+				
+				var videoUrl = ""
+				if let tvigleId = detailModel.tvigleId {
+					videoUrl = "http://cloud.tvigle.ru/video/\(tvigleId)/"
+				}
+				let videoSection = DetailMovieVideoSection(url: videoUrl, state: self.videoState)
+				let infoSection = DetailMovieInfoSection(
+					title: detailModel.title,
+					descr: detailModel.descr,
+					rating: detailModel.rating,
+					imageUrl: detailModel.imageUrl.high,
+					categories: detailModel.categories,
+					year: detailModel.year,
+					duration: detailModel.duration,
+					ageRating: detailModel.ageRating,
+					countries: detailModel.countries,
+					quality: detailModel.quality,
+					directors: detailModel.directors,
+					actors: detailModel.actors,
+					showButtonText: "СМОТРЕТЬ ФИЛЬМ"
+				)
+				let relatedSection = DetailMovieRelatedSection(
+					title: "Похожие видео",
+					relatedMovies: detailModel.similar.map {
+						RelatedMovie(
+							id: $0.id,
+							title: $0.title,
+							imageUrl: $0.imageUrl.high,
+							type: .film,
+							isSelected: false
+						)
+					})
+				self.collectionViewController.update(sections: [
+					.video(videoSection),
+					.info(infoSection),
+					.related(relatedSection)
+				])
 			}
-			let videoSection = DetailMovieVideoSection(url: videoUrl, state: self.videoState)
-			let infoSection = DetailMovieInfoSection(
-				title: detailModel.title,
-				descr: detailModel.descr,
-				rating: detailModel.rating,
-				imageUrl: detailModel.imageUrl.high,
-				categories: detailModel.categories,
-				year: detailModel.year,
-				duration: detailModel.duration,
-				ageRating: detailModel.ageRating,
-				countries: detailModel.countries,
-				quality: detailModel.quality,
-				directors: detailModel.directors,
-				actors: detailModel.actors,
-				showButtonText: "СМОТРЕТЬ ФИЛЬМ"
-			)
-			let relatedSection = DetailMovieRelatedSection(
-				title: "Похожие видео",
-				relatedMovies: detailModel.similar.map {
-					RelatedMovie(
-						id: $0.id,
-						title: $0.title,
-						imageUrl: $0.imageUrl.high,
-						type: .film,
-						isSelected: false
-					)
-			})
-			self.collectionViewController.update(sections: [
-				.video(videoSection),
-				.info(infoSection),
-				.related(relatedSection)
-			])
 		}
 	}
 	
@@ -189,31 +195,31 @@ extension DetailFilmViewController: DetailMovieCollectionViewControllerDelegate 
     }
 	
     func detailMovieCollectionViewControllerSelectShowFilm(_ viewController: DetailMovieCollectionViewController) {
-        guard !userFacade.isSignedIn else {
-            if userFacade.isSubscribed {
-                viewController.showMovie()
-            } else {
-                let payViewType: WelcomeTypeModel = userFacade.payViewType ?? .firstType
-                switch payViewType {
-                case .firstType:
-                    let payVC = FirstTourPayViewController(state: .regular)
-                    payVC.onClose = {
-                        self.dismiss(animated: true)
-                    }
-                    present(payVC, animated: true)
-                case .secondype:
-                    let payVC = SecondTourPayViewController(state: .regular)
-                    payVC.onClose = {
-                        self.dismiss(animated: true)
-                    }
-                    present(payVC, animated: true)
-                }
-            }
-            return
-        }
-		let signInVC = SignInViewController()
-		signInVC.delegate = self
-		present(signInVC, animated: true)
+		if userFacade.isSubscribed {
+			viewController.showMovie()
+		} else {
+			if userFacade.isSignedIn {
+				let payViewType: WelcomeTypeModel = userFacade.payViewType ?? .firstType
+				switch payViewType {
+				case .firstType:
+					let payVC = FirstTourPayViewController(state: .regular)
+					payVC.onClose = {
+						self.dismiss(animated: true)
+					}
+					present(payVC, animated: true)
+				case .secondype:
+					let payVC = SecondTourPayViewController(state: .regular)
+					payVC.onClose = {
+						self.dismiss(animated: true)
+					}
+					present(payVC, animated: true)
+				}
+			} else {
+				let signInVC = SignInViewController()
+				signInVC.delegate = self
+				present(signInVC, animated: true)
+			}
+		}
 	}
 }
 
