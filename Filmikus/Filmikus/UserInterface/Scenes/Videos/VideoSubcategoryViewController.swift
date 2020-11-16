@@ -8,7 +8,7 @@
 
 import UIKit
 
-class VideoSubcategoryViewController: UIViewController {
+class VideoSubcategoryViewController: ViewController {
 	
 	private let subcategory: VideoSubcategory
 	
@@ -48,12 +48,17 @@ class VideoSubcategoryViewController: UIViewController {
 
 		title = subcategory.title
 		navigationItem.largeTitleDisplayMode = .never
-
+		self.showActivityIndicator()
 		episodesServise.getFunShowEpisodes(funShowId: subcategory.id) { [weak self] (result) in
 			guard let self = self else { return }
-			guard let episodes = try? result.get() else { return }
-			let videos = episodes.items.map { Video(id: $0.id, title: $0.title, imageUrl: $0.imageUrl.high) }
-			self.videosCollectionViewController.update(videos: videos)
+			self.hideActivityIndicator()
+			switch result {
+			case .failure:
+				self.showNetworkErrorAlert()
+			case .success(let episodes):
+				let videos = episodes.items.map { Video(id: $0.id, title: $0.title, imageUrl: $0.imageUrl.high) }
+				self.videosCollectionViewController.update(videos: videos)
+			}
 		}
     }
 

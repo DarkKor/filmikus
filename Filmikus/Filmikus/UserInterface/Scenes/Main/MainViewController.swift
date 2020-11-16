@@ -13,7 +13,7 @@ protocol MainViewControllerDelegate: class {
 	func mainViewController(_ viewController: MainViewController, didSelectCategoryType type: CategoryType)
 }
 
-class MainViewController: UIViewController {
+class MainViewController: ViewController {
 	
 	weak var delegate: MainViewControllerDelegate?
 	
@@ -113,9 +113,10 @@ class MainViewController: UIViewController {
 			guard let movies = try? result.get() else { return }
 			categories[2].movies = movies
 		}
-		
+		self.showActivityIndicator()
 		dispatchGroup.notify(queue: .main) { [weak self] in
 			guard let self = self else { return }
+			self.hideActivityIndicator()
 			self.categoriesViewController.update(categories: categories)
 		}
 	}

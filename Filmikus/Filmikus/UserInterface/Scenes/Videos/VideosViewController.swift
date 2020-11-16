@@ -8,7 +8,7 @@
 
 import UIKit
 
-class VideosViewController: UIViewController {
+class VideosViewController: ViewController {
 	
 	private let facade = VideosFacade()
 
@@ -35,26 +35,36 @@ class VideosViewController: UIViewController {
         super.viewDidLoad()
 
         title = "Видео"
-		
+		self.showActivityIndicator()
 		facade.getFunCategories { [weak self] (result) in
 			guard let self = self else { return }
-			guard let categories = try? result.get() else { return }
-			print(categories)
-			let videoCategories = categories.map { VideoCategory(id: $0.id, title: $0.title, subcategories: []) }
-			self.videoCategoriesViewController.update(categories: videoCategories)
-			guard let videoCategory = videoCategories.first else { return }
-			self.loadSubcategories(with: videoCategory.id)
+			self.hideActivityIndicator()
+			switch result {
+			case .failure:
+				self.showNetworkErrorAlert()
+			case .success(let categories):
+				let videoCategories = categories.map { VideoCategory(id: $0.id, title: $0.title, subcategories: []) }
+				self.videoCategoriesViewController.update(categories: videoCategories)
+				guard let videoCategory = videoCategories.first else { return }
+				self.loadSubcategories(with: videoCategory.id)
+			}
 		}
-    }
+	}
 	
 	private func loadSubcategories(with categoryId: Int) {
+		self.showActivityIndicator()
 		facade.getFunShows(with: categoryId) { [weak self] (result) in
 			guard let self = self else { return }
-			guard let moviesModel = try? result.get() else { return }
-			let subcategories = moviesModel.items.map {
-				VideoSubcategory(id: $0.id, title: $0.title, imageUrl: $0.imageUrl.high)
+			self.hideActivityIndicator()
+			switch result {
+			case .failure:
+				self.showNetworkErrorAlert()
+			case .success(let moviesModel):
+				let subcategories = moviesModel.items.map {
+					VideoSubcategory(id: $0.id, title: $0.title, imageUrl: $0.imageUrl.high)
+				}
+				self.videoCategoriesViewController.update(subcategories: subcategories, by: categoryId)
 			}
-			self.videoCategoriesViewController.update(subcategories: subcategories, by: categoryId)
 		}
 	}
 }
