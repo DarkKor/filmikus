@@ -10,6 +10,7 @@ import Foundation
 import Moya
 
 extension Notification.Name {
+	static let userDidSubscribe = Notification.Name(rawValue: "userSubscribed")
 	static let userDidLogin = Notification.Name(rawValue: "userDidLogin")
 	static let userDidLogout = Notification.Name(rawValue: "userDidLogout")
 }

@@ -19,11 +19,7 @@ class DetailFunShowViewController: ViewController {
 	private let userFacade: UserFacadeType
 	
     var videoState: DetailMovieVideoState {
-        if !self.userFacade.isSubscribed {
-            return .needSubscription
-        } else {
-            return .watchMovie
-        }
+		userFacade.isSubscribed ? .watchMovie : .needSubscription
     }
 	
 	private lazy var collectionViewController: DetailFunShowCollectionViewController = {

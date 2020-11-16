@@ -9,10 +9,6 @@
 import UIKit
 import SnapKit
 
-extension Notification.Name {
-	static let userDidSubscribe = Notification.Name("userSubscribed")
-}
-
 class SubscriptionViewController: ViewController {
 	
 	private let storeKitService: StoreKitServiceType = StoreKitService.shared
