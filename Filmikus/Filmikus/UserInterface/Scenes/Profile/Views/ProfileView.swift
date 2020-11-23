@@ -11,7 +11,8 @@ import UIKit
 protocol ProfileViewDelegate: class {
 	func profileViewDidSelectSubscribe(_ view: ProfileView)
 	func profileViewDidSelectRestorePurchases(_ view: ProfileView)
-	func profileViewDidSelectLogout(_ view: ProfileView)
+	func profileViewDidSelectChangePasssword(_ view: ProfileView)
+    func profileViewDidSelectLogout(_ view: ProfileView)
 }
 
 class ProfileView: UIView {
@@ -20,7 +21,7 @@ class ProfileView: UIView {
 	
 	private lazy var stackView: UIStackView = {
 		let stack = UIStackView(arrangedSubviews: [
-			usernameLabel, userStatusLabel, subscribeButton, restorePurchasesButton, logoutButton
+			usernameLabel, userStatusLabel, subscribeButton, restorePurchasesButton, changePasswordButton, logoutButton
 		])
 		stack.axis = .vertical
 		stack.spacing = 20
@@ -42,6 +43,7 @@ class ProfileView: UIView {
 	
 	private lazy var subscribeButton = BlueButton(title: "ПОДПИСАТЬСЯ", target: self, action: #selector(onSubscribeButtonTap))
 	private lazy var restorePurchasesButton = BlueButton(title: "ВОССТАНОВИТЬ ПОКУПКИ", target: self, action: #selector(onRestorePurchasesButtonTap))
+    private lazy var changePasswordButton = BlueButton(title: "СМЕНИТЬ ПАРОЛЬ", target: self, action: #selector(onChangePasswordButtonTap))
 	private lazy var logoutButton = BlueBorderButton(title: "ВЫЙТИ", target: self, action: #selector(onLogoutButtonTap))
 
 	init() {
@@ -86,6 +88,11 @@ class ProfileView: UIView {
 	private func onRestorePurchasesButtonTap(sender: UIButton) {
 		delegate?.profileViewDidSelectRestorePurchases(self)
 	}
+    
+    @objc
+    private func onChangePasswordButtonTap(sender: UIButton) {
+        delegate?.profileViewDidSelectChangePasssword(self)
+    }
 	
 	@objc
 	private func onLogoutButtonTap(sender: UIButton) {

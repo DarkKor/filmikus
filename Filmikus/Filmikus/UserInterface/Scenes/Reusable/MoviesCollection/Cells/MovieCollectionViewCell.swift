@@ -23,6 +23,8 @@ class MovieCollectionViewCell: ReusableCollectionViewCell {
 		layer.shadowRadius = 5
 		labelTitle.font = .boldSystemFont(ofSize: 14)
 		imageView.backgroundColor = .appLightGray
+        imageView.contentMode = .scaleAspectFill
+        imageView.clipsToBounds = true
 		contentView.addSubview(imageView)
 		contentView.addSubview(labelTitle)
 

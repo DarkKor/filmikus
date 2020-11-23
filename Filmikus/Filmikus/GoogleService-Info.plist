@@ -3,21 +3,21 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>1072441829555-n3jd46bljco371edsi4s34bg6uignkjt.apps.googleusercontent.com</string>
+	<string>852099222440-jb4d2othl6jqheplravcig6ckrl5v22k.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.1072441829555-n3jd46bljco371edsi4s34bg6uignkjt</string>
+	<string>com.googleusercontent.apps.852099222440-jb4d2othl6jqheplravcig6ckrl5v22k</string>
 	<key>API_KEY</key>
-	<string>AIzaSyDKvZBnv4LGOVGJWpus5TRXVETnTckvtjE</string>
+	<string>AIzaSyDD9WfGklFd5ZDDTLndOJ44n7XS7kg_25M</string>
 	<key>GCM_SENDER_ID</key>
-	<string>1072441829555</string>
+	<string>852099222440</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.filmikustest.testapp</string>
+	<string>com.inspiritum.filmikus</string>
 	<key>PROJECT_ID</key>
-	<string>filmikus-test</string>
+	<string>filmikus</string>
 	<key>STORAGE_BUCKET</key>
-	<string>filmikus-test.appspot.com</string>
+	<string>filmikus.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
 	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -29,8 +29,8 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:1072441829555:ios:8ebb738166afb33b66e8c6</string>
+	<string>1:852099222440:ios:7af79adf72b0d5c84beb9d</string>
 	<key>DATABASE_URL</key>
-	<string>https://filmikus-test.firebaseio.com</string>
+	<string>https://filmikus.firebaseio.com</string>
 </dict>
 </plist>

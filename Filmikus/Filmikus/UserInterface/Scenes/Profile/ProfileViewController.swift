@@ -13,6 +13,7 @@ protocol ProfileViewControllerDelegate: class {
 	func profileViewControllerDidSelectSignUp(_ viewController: ProfileViewController)
 	func profileViewControllerDidSelectSignIn(_ viewController: ProfileViewController)
 	func profileViewControllerDidSelectSubscribe(_ viewController: ProfileViewController)
+    func profileViewControllerDidSelectChangePassword(_ viewController: ProfileViewController)
 }
 
 class ProfileViewController: ViewController {
@@ -205,4 +206,8 @@ extension ProfileViewController: ProfileViewDelegate {
 	func profileViewDidSelectLogout(_ view: ProfileView) {
 		userFacade.signOut()
 	}
+    
+    func profileViewDidSelectChangePasssword(_ view: ProfileView) {
+        delegate?.profileViewControllerDidSelectChangePassword(self)
+    }
 }

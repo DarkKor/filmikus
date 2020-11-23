@@ -25,7 +25,9 @@ extension ActivityIndicatorPresenter where Self: UIViewController {
 			self.activityIndicator.frame = CGRect(origin: .zero, size: self.view.bounds.size)
 			self.activityIndicator.autoresizingMask = UIView.AutoresizingMask().union(.flexibleWidth).union(.flexibleHeight)
 
-            self.view.addSubview(self.activityIndicator)
+            if self.activityIndicator.superview == nil || self.activityIndicator.superview != self.view {
+                self.view.addSubview(self.activityIndicator)
+            }
             self.activityIndicator.startAnimating()
         }
     }

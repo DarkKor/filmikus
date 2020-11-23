@@ -40,12 +40,17 @@ class SignInViewController: ViewController {
 	
 	private lazy var loginTextField: UnderlinedTextField = {
 		let textField = UnderlinedTextField(placeholder: "Введите логин")
-		textField.textContentType = .nickname
+		textField.textContentType = .emailAddress
+        textField.autocorrectionType = .no
+        textField.autocapitalizationType = .none
 		textField.delegate = self
 		return textField
 	}()
 	private lazy var passwordTextField: PasswordUnderlinedTextField = {
 		let textField = PasswordUnderlinedTextField(placeholder: "Введите пароль")
+        textField.isSecureTextEntry = true
+        textField.autocorrectionType = .no
+        textField.autocapitalizationType = .none
 		textField.delegate = self
 		return textField
 	}()

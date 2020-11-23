@@ -28,7 +28,7 @@ class SignUpViewController: ViewController {
 	
 	private lazy var descriptionLabel: UILabel = {
 		let label = UILabel()
-		label.text = "Для того, чтобы получить доступ к сервису, пожалуйста зарегистрируйтесь.\nНа указанный email придет информация о доступе к сайту, и чеки о покупках, если вы будете их совершать."
+		label.text = "Зарегистрируйтесь, чтобы получить доступ к сервису.\nНа указанный email придет информация о доступе к сервису и чеки о покупках, если вы будете их совершать."
 		label.numberOfLines = 0
 		return label
 	}()
@@ -37,6 +37,8 @@ class SignUpViewController: ViewController {
 		let textField = UnderlinedTextField(placeholder: "Введите корректный e-mail")
 		textField.keyboardType = .emailAddress
 		textField.textContentType = .emailAddress
+        textField.autocapitalizationType = .none
+        textField.autocorrectionType = .no
 		return textField
 	}()
 	
@@ -111,6 +113,7 @@ class SignUpViewController: ViewController {
 						self.hideActivityIndicator()
 						switch loginStatus {
 						case .success(_):
+                            self.descriptionLabel.text = "Аккаунт успешно создан!"
 							self.userTextView.text = "Ваш логин: \(model.username)\nВаш пароль: \(model.password)"
                             guard self.userFacade.isSubscribed else { return }
                             self.userFacade.updateReceipt { _ in }

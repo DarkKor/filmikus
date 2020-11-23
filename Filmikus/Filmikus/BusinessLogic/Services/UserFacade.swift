@@ -42,7 +42,7 @@ class UserFacade: UserFacadeType {
 	}
 	
 	var isSubscribed: Bool {
-		let isPaid = user?.isPaid ?? false
+        let isPaid = user?.isPaid ?? false
 		let isSubscribed = storage.expirationDate.map { $0 > Date() } ?? false
 		return isPaid || isSubscribed
 	}

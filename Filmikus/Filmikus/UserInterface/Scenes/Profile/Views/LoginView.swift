@@ -29,7 +29,7 @@ class LoginView: UIView {
 	}()
 	private lazy var signUpButton = BlueBorderButton(title: "РЕГИСТРАЦИЯ", target: self, action: #selector(onSignUpButtonTap))
 	private lazy var signInButton = BlueButton(title: "ВОЙТИ", target: self, action: #selector(onSignInButtonTap))
-    private lazy var restorePurchaseButton = BlueButton(title: "Восстановить покупки", target: self, action: #selector(onRestorePurchaseButtonTap))
+    private lazy var restorePurchaseButton = BlueButton(title: "ВОССТАНОВИТЬ ПОКУПКИ", target: self, action: #selector(onRestorePurchaseButtonTap))
 	
 	init() {
 		super.init(frame: .zero)

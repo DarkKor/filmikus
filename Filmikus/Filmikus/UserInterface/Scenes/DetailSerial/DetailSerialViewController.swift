@@ -100,9 +100,10 @@ class DetailSerialViewController: ViewController {
 				self.showActivityIndicator()
 				self.episodesService.getSerialEpisodes(serialId: self.id) { [weak self] (result) in
 					guard let self = self else { return }
-					self.hideActivityIndicator()
+					
 					switch result {
 					case .failure:
+                        self.hideActivityIndicator()
 						self.showNetworkErrorAlert()
 					case .success(let episodesModel):
 						var videoUrl = ""
@@ -144,6 +145,8 @@ class DetailSerialViewController: ViewController {
 							.info(infoSection),
 							.related(relatedSection)
 						])
+                        
+                        self.updateEpisode(episodeId: selectedId)
 					}
 				}
 			}

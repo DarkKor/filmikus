@@ -131,6 +131,13 @@ extension TabBarController: MainViewControllerDelegate {
 // MARK: - ProfileViewControllerDelegate
 
 extension TabBarController: ProfileViewControllerDelegate {
+    func profileViewControllerDidSelectChangePassword(_ viewController: ProfileViewController) {
+        let restorePasswordVC = RestorePasswordViewController()
+        restorePasswordVC.delegate = self
+        restorePasswordVC.email = userFacade.user?.username
+        present(restorePasswordVC, animated: true)
+    }
+    
     func profileViewControllerDidSelectSignUp(_ viewController: ProfileViewController) {
         
         if !userFacade.isSubscribed  {
@@ -254,5 +261,17 @@ extension TabBarController: SignInViewControllerDelegate {
             }
              viewController.present(payVC, animated: true)
         }
+    }
+}
+
+// MARK: - RestorePasswordViewControllerDelegate
+
+extension TabBarController: RestorePasswordViewControllerDelegate {
+    func restorePasswordViewControllerDidSelectClose(_ viewController: RestorePasswordViewController) {
+        viewController.dismiss(animated: true)
+    }
+    
+    func restorePasswordViewController(_ viewController: RestorePasswordViewController, didRestorePasswordWithPaidStatus isPaid: Bool) {
+        viewController.dismiss(animated: true)
     }
 }

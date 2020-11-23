@@ -17,6 +17,8 @@ class RestorePasswordViewController: ViewController {
     
     weak var delegate: RestorePasswordViewControllerDelegate?
     
+    var email: String? = nil
+    
     private let userFacade: UserFacadeType = UserFacade()
     
     private lazy var scrollView = UIScrollView()
@@ -32,12 +34,17 @@ class RestorePasswordViewController: ViewController {
     
     private lazy var loginTextField: UnderlinedTextField = {
         let textField = UnderlinedTextField(placeholder: "Введите email")
-        textField.textContentType = .nickname
+        textField.textContentType = .emailAddress
+        textField.autocapitalizationType = .none
+        textField.autocorrectionType = .no
         textField.delegate = self
+        textField.text = email
         return textField
     }()
     private lazy var passwordTextField: PasswordUnderlinedTextField = {
         let textField = PasswordUnderlinedTextField(placeholder: "Введите новый пароль")
+        textField.autocapitalizationType = .none
+        textField.autocorrectionType = .no
         textField.delegate = self
         return textField
     }()
@@ -163,6 +170,7 @@ class RestorePasswordViewController: ViewController {
 					}
                 }
             case let .failure(model):
+                self.hideActivityIndicator()
                 self.showAlert(message: model.message)
             }
         }

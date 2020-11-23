@@ -9,4 +9,5 @@ target 'Filmikus' do
   pod 'Kingfisher'
   pod 'Moya'
   pod 'Firebase/Analytics'
+  pod 'Firebase/Crashlytics'
 end

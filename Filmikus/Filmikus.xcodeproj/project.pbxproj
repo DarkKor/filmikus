@@ -176,6 +176,20 @@
 		DF5FB36E255C03FC00DB1AFB /* UIScreen+Extentions.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF5FB36D255C03FC00DB1AFB /* UIScreen+Extentions.swift */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXBuildRule section */
+		CAF270EB256BFBAA0062E1BD /* PBXBuildRule */ = {
+			isa = PBXBuildRule;
+			compilerSpec = com.apple.compilers.proxy.script;
+			fileType = pattern.proxy;
+			inputFiles = (
+			);
+			isEditable = 1;
+			outputFiles = (
+			);
+			script = "# Type a script or drag a script file from your workspace to insert its path.\n\"${PODS_ROOT}/FirebaseCrashlytics/run\"\n";
+		};
+/* End PBXBuildRule section */
+
 /* Begin PBXFileReference section */
 		12B0868BA10E758462FB2DA8 /* Pods-Filmikus.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Filmikus.release.xcconfig"; path = "Target Support Files/Pods-Filmikus/Pods-Filmikus.release.xcconfig"; sourceTree = "<group>"; };
 		491C218624641393007CDEC2 /* Фильмикус.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Фильмикус.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -931,8 +945,10 @@
 				491C218324641393007CDEC2 /* Frameworks */,
 				491C218424641393007CDEC2 /* Resources */,
 				05D22C96A5666C6845C48FD5 /* [CP] Embed Pods Frameworks */,
+				CAF270EC256BFC340062E1BD /* ShellScript */,
 			);
 			buildRules = (
+				CAF270EB256BFBAA0062E1BD /* PBXBuildRule */,
 			);
 			dependencies = (
 			);
@@ -1029,6 +1045,23 @@
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
+		};
+		CAF270EC256BFC340062E1BD /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n\"${PODS_ROOT}/FirebaseCrashlytics/run\"\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -1338,7 +1371,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 20;
+				CURRENT_PROJECT_VERSION = 21;
 				DEVELOPMENT_TEAM = 8G9BA2KRAU;
 				INFOPLIST_FILE = Filmikus/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -1365,7 +1398,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 20;
+				CURRENT_PROJECT_VERSION = 21;
 				DEVELOPMENT_TEAM = 8G9BA2KRAU;
 				INFOPLIST_FILE = Filmikus/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
