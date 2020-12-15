@@ -145,7 +145,6 @@ extension StoreKitService: SKPaymentTransactionObserver {
 				SKPaymentQueue.default().finishTransaction(transaction)
                 
                 loadReceipt() { result in
-                    print("receipt loaded")
                     DispatchQueue.main.async {
                         let subscriptionResult = result.map { _ in Void() }
                         self.subscriptionBlock?(subscriptionResult)
@@ -158,8 +157,8 @@ extension StoreKitService: SKPaymentTransactionObserver {
 				SKPaymentQueue.default().finishTransaction(transaction)
                 
 				DispatchQueue.main.async {
-                        self.subscriptionBlock?(.failure(transaction.error ?? NSError()))
-                        self.subscriptionBlock = nil
+                    self.subscriptionBlock?(.failure(transaction.error ?? NSError()))
+                    self.subscriptionBlock = nil
 				}
 			case .deferred, .purchasing:
 				break

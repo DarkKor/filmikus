@@ -48,7 +48,7 @@ class FirstTourPayViewController: ViewController {
         self.state = state
         self.userFacade = userFacade
         super.init(nibName: nil, bundle: nil)
-        modalPresentationStyle = .overFullScreen
+        //modalPresentationStyle = .overFullScreen
     }
     
     required init?(coder: NSCoder) {
@@ -141,7 +141,7 @@ extension FirstTourPayViewController: FirstWelcomeTourPayViewDelegate {
 					case .success:
 						guard self.userFacade.isSubscribed else {
 							self.showAlert(
-								message: "Ошибка",
+								message: "Ошибка: не удалось приобрести подписку",
 								completion: {
 									switch self.state {
 									case .regular:
@@ -154,7 +154,7 @@ extension FirstTourPayViewController: FirstWelcomeTourPayViewDelegate {
 							return
 						}
 						self.showAlert(
-							message: "Вы успешно подписались!",
+							message: "Покупки успешно восстановлены!",
 							completion: {
 								switch self.state {
 								case .regular:
@@ -207,12 +207,12 @@ extension FirstTourPayViewController: FirstWelcomeTourPayViewDelegate {
                     case .success:
                         guard self.userFacade.isSubscribed else {
                             self.showAlert(
-                                message: "Ошибка")
+                                message: "Ошибка: не удалось восстановить покупки")
                             self.hideActivityIndicator()
                             return
                         }
                         self.showAlert(
-                            message: "Вы успешно подписались!",
+                            message: "Покупки успешно восстановлены!",
                             completion: {
                                 self.hideActivityIndicator()
                                 switch self.state {
@@ -223,13 +223,13 @@ extension FirstTourPayViewController: FirstWelcomeTourPayViewDelegate {
                                 }
                             })
                     case .failure(let error):
-                        self.showAlert(message: "Возникла ошибка: \(error.localizedDescription)", completion: {
+                        self.showAlert(message: "Ошибка: \(error.localizedDescription)", completion: {
                             self.hideActivityIndicator()
                         })
                     }
                 }
             case .failure(let error):
-                self.showAlert(message: "Возникла ошибка: \(error.localizedDescription)", completion: {
+                self.showAlert(message: "Ошибка: \(error.localizedDescription)", completion: {
                     self.hideActivityIndicator()
                 })
             }

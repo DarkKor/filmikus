@@ -169,11 +169,11 @@ extension MainViewController: UISearchResultsUpdating {
 	
 	func updateSearchResults(for searchController: UISearchController) {
 		guard let text = searchController.searchBar.text, !text.isEmpty else { return }
-		print(text)
-		guard text.count > 3 else {
-			self.searchController.warningText = "Введите в поле поиска не менее 4-х символов"
-			return
-		}
+//		print(text)
+//		guard text.count > 3 else {
+//			self.searchController.warningText = "Введите в поле поиска не менее 4-х символов"
+//			return
+//		}
 		self.searchController.showActivityIndicator()
 		videoService.searchMovies(query: text) { [weak self] (result) in
 			guard let self = self else { return }

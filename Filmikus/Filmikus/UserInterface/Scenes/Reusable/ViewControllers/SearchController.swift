@@ -30,7 +30,7 @@ class SearchController: UISearchController {
 	}()
 	
 	private lazy var activityIndicatorView: UIActivityIndicatorView = {
-		let activity = UIActivityIndicatorView(style: .large)
+		let activity = UIActivityIndicatorView(style: .whiteLarge)
 		activity.color = .white
 		return activity
 	}()
@@ -63,10 +63,14 @@ class SearchController: UISearchController {
 		searchBar.barTintColor = .appDarkBlue
 		searchBar.tintColor = .white
 		//searchBar.searchTextField.backgroundColor = UIColor.appDarkBlue.withAlphaComponent(0.3)
-		searchBar.searchTextField.attributedPlaceholder = NSAttributedString(
-			string: "Поиск",
-			attributes: [.foregroundColor : UIColor.white]
-		)
+        if #available(iOS 13.0, *) {
+            searchBar.searchTextField.attributedPlaceholder = NSAttributedString(
+                string: "Поиск (не менее 4 символов)",
+                attributes: [.foregroundColor : UIColor.white]
+            )
+        } else {
+            // Fallback on earlier versions
+        }
 		searchBar.searchTextField.textColor = .white
 		
 		if let leftView = searchBar.searchTextField.leftView as? UIImageView {

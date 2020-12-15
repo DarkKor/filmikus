@@ -19,7 +19,7 @@ class SubscriptionViewController: ViewController {
 	
 	private lazy var closeButton: UIButton = {
 		let button = UIButton()
-		button.setImage(UIImage(systemName: "xmark"), for: .normal)
+		button.setImage(UIImage(named: "xmark"), for: .normal)
 		button.tintColor = .white
 		button.addTarget(self, action: #selector(onCloseButtonTap), for: .touchUpInside)
 		return button
@@ -160,13 +160,13 @@ class SubscriptionViewController: ViewController {
 						case .success:
 							guard self.userFacade.isSubscribed else {
 								self.showAlert(
-									message: "Ошибка",
+									message: "Ошибка: не удалось приобрести подписку",
 									completion: { self.dismiss(animated: true) }
 								)
 								return
 							}
 							self.showAlert(
-								message: "Вы успешно подписались!",
+								message: "Покупки успешно восстановлены!",
 								completion: { self.dismiss(animated: true) }
 							)
 						case .failure(let error):

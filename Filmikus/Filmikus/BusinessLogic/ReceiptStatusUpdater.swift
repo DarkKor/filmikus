@@ -26,6 +26,10 @@ class ReceiptStatusUpdater {
 			if let diffHours = dateComponents.hour, diffHours < 24 {
 				return
 			}
+//            let dateComponents = Calendar.current.dateComponents([.minute], from: lastReceiptUpdate, to: today)
+//            if let diffMinutes = dateComponents.minute, diffMinutes < 3 {
+//                return
+//            }
 		}
 		userFacade.updateReceipt { [weak self] (result) in
 			guard let self = self else { return }

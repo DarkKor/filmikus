@@ -115,6 +115,8 @@ class SignUpViewController: ViewController {
 						case .success(_):
                             self.descriptionLabel.text = "Аккаунт успешно создан!"
 							self.userTextView.text = "Ваш логин: \(model.username)\nВаш пароль: \(model.password)"
+                            self.nextButton.removeTarget(self, action: #selector(self.onNextButtonTap(sender:)), for: .touchUpInside)
+                            self.nextButton.addTarget(self, action: #selector(self.onCloseButtonTap(sender:)), for: .touchUpInside)
                             guard self.userFacade.isSubscribed else { return }
                             self.userFacade.updateReceipt { _ in }
 						case let .failure(loginModel):

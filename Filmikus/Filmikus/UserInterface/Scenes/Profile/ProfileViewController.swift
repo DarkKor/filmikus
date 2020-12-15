@@ -62,8 +62,6 @@ class ProfileViewController: ViewController {
 
 		title = "Профиль"
 		
-		updateUI()
-		
 		NotificationCenter.default.addObserver(
 			self,
 			selector: #selector(handleUserSubscribedNotification),
@@ -83,6 +81,12 @@ class ProfileViewController: ViewController {
 			object: nil
 		)
 	}
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        updateUI()
+    }
 	
 	func signOut() {
 		userFacade.signOut()
@@ -130,20 +134,20 @@ extension ProfileViewController: LoginViewDelegate {
                     case .success:
                         guard self.userFacade.isSubscribed else {
                             self.showAlert(
-                                message: "Ошибка")
+                                message: "Ошибка: не удалось восстановить покупки")
                             self.hideActivityIndicator()
                             return
                         }
-                        self.showAlert(message: "Вы успешно подписались!")
+                        self.showAlert(message: "Покупки успешно восстановлены")
                         self.hideActivityIndicator()
                     case .failure(let error):
-                        self.showAlert(message: "Возникла ошибка: \(error.localizedDescription)", completion: {
+                        self.showAlert(message: "Ошибка: \(error.localizedDescription)", completion: {
                             self.hideActivityIndicator()
                         })
                     }
                 }
             case .failure(let error):
-                self.showAlert(message: "Возникла ошибка: \(error.localizedDescription)", completion: {
+                self.showAlert(message: "Ошибка: \(error.localizedDescription)", completion: {
                     self.hideActivityIndicator()
                 })
             }
@@ -178,13 +182,13 @@ extension ProfileViewController: ProfileViewDelegate {
 					case .success:
 						guard self.userFacade.isSubscribed else {
 							self.showAlert(
-								message: "Ошибка",
+								message: "Ошибка: не удалось восстановить покупки",
 								completion: { self.dismiss(animated: true) }
 							)
 							return
 						}
 						self.showAlert(
-							message: "Вы успешно подписались!",
+							message: "Покупки успешно восстановлены",
 							completion: { self.dismiss(animated: true) }
 						)
 					case .failure(let error):
@@ -196,7 +200,7 @@ extension ProfileViewController: ProfileViewDelegate {
 					
 				}
             case .failure(let error):
-                self.showAlert(message: "Возникла ошибка: \(error.localizedDescription)", completion: {
+                self.showAlert(message: "Ошибка: \(error.localizedDescription)", completion: {
                     self.hideActivityIndicator()
                 })
             }

@@ -137,7 +137,7 @@ extension SecondTourPayViewController: SecondTourPayViewDelegate {
                 self.userFacade.updateReceipt { (status) in
                     guard self.userFacade.isSubscribed else { return }
                     self.showAlert(
-                        message: "Вы успешно подписались!",
+                        message: "Покупки успешно восстановлены!",
                         completion: {
                             switch self.state {
                             case .regular:
@@ -176,12 +176,12 @@ extension SecondTourPayViewController: SecondTourPayViewDelegate {
                     case .success:
                         guard self.userFacade.isSubscribed else {
                             self.showAlert(
-                                message: "Ошибка")
+                                message: "Ошибка: не удалось восстановить покупки")
                             self.hideActivityIndicator()
                             return
                         }
                         self.showAlert(
-                            message: "Вы успешно подписались!",
+                            message: "Покупки успешно восстановлены!",
                             completion: {
                                 self.hideActivityIndicator()
                                 switch self.state {
@@ -192,13 +192,13 @@ extension SecondTourPayViewController: SecondTourPayViewDelegate {
                                 }
                             })
                     case .failure(let error):
-                        self.showAlert(message: "Возникла ошибка: \(error.localizedDescription)", completion: {
+                        self.showAlert(message: "Ошибка: \(error.localizedDescription)", completion: {
                             self.hideActivityIndicator()
                         })
                     }
                 }
             case .failure(let error):
-                self.showAlert(message: "Возникла ошибка: \(error.localizedDescription)", completion: {
+                self.showAlert(message: "Ошибка: \(error.localizedDescription)", completion: {
                     self.hideActivityIndicator()
                 })
             }

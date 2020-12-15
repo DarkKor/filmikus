@@ -53,6 +53,7 @@ class MoviesCollectionViewController: UIViewController {
 			forSupplementaryViewOfKind: UICollectionView.elementKindSectionFooter,
 			withReuseIdentifier: LoadingCollectionFooterView.reuseID
 		)
+        collection.keyboardDismissMode = .interactive
 		return collection
 	}()
 	

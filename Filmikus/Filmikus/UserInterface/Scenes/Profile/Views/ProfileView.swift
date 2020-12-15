@@ -71,10 +71,12 @@ class ProfileView: UIView {
 		subscribeButton.isHidden = isSubscribed
 		restorePurchasesButton.isHidden = isSubscribed
 		var userStatusText = isSubscribed ? "Подписка активна" : "Нет доступа к контенту. Для получения доступа - нажмите кнопку 'Подписаться'"
-		if isSubscribed, let expirationDate = expirationDate {
-			let formatter = DateFormatter()
-			formatter.dateFormat = "dd.MM.yyyy"
-			userStatusText += " до \(formatter.string(from: expirationDate))"
+        if isSubscribed, let expirationDate = expirationDate {
+            if expirationDate.compare(Date()) == .orderedDescending {
+                let formatter = DateFormatter()
+                formatter.dateFormat = "dd.MM.yyyy"
+                userStatusText += " до \(formatter.string(from: expirationDate))"
+            }
 		}
 		userStatusLabel.text = userStatusText
 	}
