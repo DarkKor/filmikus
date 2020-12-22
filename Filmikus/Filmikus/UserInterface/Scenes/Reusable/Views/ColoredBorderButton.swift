@@ -54,6 +54,27 @@ class ColoredBorderButton: UIButton {
         layer.borderWidth = 1.0
     }
     
+    init(title: NSAttributedString, color: UIColor, borderColor: UIColor, target: Any?, action: Selector) {
+        self.background = color
+        self.borderColor = borderColor
+        super.init(frame: .zero)
+        addTarget(target, action: action, for: .touchUpInside)
+        
+        if traitCollection.userInterfaceIdiom == .pad {
+            titleLabel?.font =  .systemFont(ofSize: 24, weight: .medium)
+        } else {
+            titleLabel?.font = .systemFont(ofSize: 20, weight: .medium)
+        }
+       
+        setAttributedTitle(title, for: .normal)
+        titleLabel?.lineBreakMode = .byWordWrapping
+        titleLabel?.numberOfLines = 0
+        
+        backgroundColor = color
+        layer.borderColor = borderColor.cgColor
+        layer.borderWidth = 1.0
+    }
+    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }

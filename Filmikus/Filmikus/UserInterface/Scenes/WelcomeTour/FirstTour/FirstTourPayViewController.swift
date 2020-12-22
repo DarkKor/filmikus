@@ -98,7 +98,9 @@ class FirstTourPayViewController: ViewController {
             guard let products = try? result.get() else { return }
             guard let selectedProduct = products.first else { return }
             self?.product = selectedProduct
-            self?.vFirstWelcomeTourPay.setPriceText(price: selectedProduct.price)
+            
+            let priceFormatted = "\(selectedProduct.localizedPrice)"
+            self?.vFirstWelcomeTourPay.setPriceText(price: priceFormatted)
         }
         
         NotificationCenter.default.addObserver(

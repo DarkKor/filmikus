@@ -96,7 +96,7 @@ class SecondTourPayViewController: ViewController {
             guard let products = try? result.get() else { return }
             guard let selectedProduct = products.first else { return }
             self?.product = selectedProduct
-            self?.vSecondTourPay.setPriceText(price: selectedProduct.price)
+            self?.vSecondTourPay.setPriceText(price: selectedProduct.localizedPrice)
         }
         
         NotificationCenter.default.addObserver(

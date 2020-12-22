@@ -171,6 +171,8 @@ class SecondTourPayView: UIView {
         let lbl = UILabel()
         lbl.textColor = .white
         lbl.backgroundColor = .clear
+        lbl.numberOfLines = 0
+        lbl.lineBreakMode = .byWordWrapping
         if traitCollection.userInterfaceIdiom == .pad {
             lbl.numberOfLines = 2
             lbl.lineBreakMode = .byWordWrapping
@@ -211,7 +213,7 @@ class SecondTourPayView: UIView {
     }()
     
     private lazy var subscribeButton = ColoredBorderButton(
-        title: "Смотреть бесплатно",
+        title: StoreKitService.shared.callToAction,
         color: UIColor.gradient(from: .appGLightBlue, to: .appBlue, direction: .vertical),
         borderColor: .appLightBlueBorder,
         target: self,
@@ -228,7 +230,7 @@ class SecondTourPayView: UIView {
         } else {
             lbl.font = .systemFont(ofSize: 14, weight: .regular)
         }
-        lbl.text = "Отменить подписку можно в любой момент"
+        lbl.text = StoreKitService.shared.subtitle
         return lbl
     }()
     
@@ -255,7 +257,7 @@ class SecondTourPayView: UIView {
         lbl.textAlignment = .justified
         lbl.setContentCompressionResistancePriority(.required, for: .vertical)
         lbl.font = .systemFont(ofSize: 9, weight: .regular)
-        lbl.text = "Подписка автоматически продлится, если автопродление не будет отключено по крайней мере за 24 часа до окончания текущего периода. Для управления подпиской и отключения автоматического продления вы можете перейти в настройки  iTunes. Деньги будут списаны со счета вашего аккаунта iTunes при подтверждении покупки. Если вы оформите подписку до истечения срока бесплатной пробной версии, оставшаяся часть бесплатного пробного периода будет аннулирована в момент подтверждения покупки"
+        lbl.text = StoreKitService.shared.terms(price: "299 ₽")
         return lbl
     }()
     
@@ -488,8 +490,9 @@ class SecondTourPayView: UIView {
         }
     }
     
-    func setPriceText(price: NSDecimalNumber) {
-        tiketLabel.text = "Безлимитный доступ за \(price) ₽ в месяц"
+    func setPriceText(price: String) {
+        tiketLabel.text = "Безлимитный доступ 7 дней бесплатно,\nдалее \(price) в месяц"
+        termsLabel.text = StoreKitService.shared.terms(price: price)
     }
     
     @objc
