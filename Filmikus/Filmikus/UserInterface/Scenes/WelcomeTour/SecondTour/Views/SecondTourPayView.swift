@@ -14,6 +14,7 @@ protocol SecondTourPayViewDelegate: class {
     func secondTourPayViewDidClickSubscribe(_ view: SecondTourPayView)
     func secondTourPayViewDidClickRestorePurchase(_ view: SecondTourPayView)
     func secondTourPayViewDidClickClose(_ view: SecondTourPayView)
+    func secondTourPayViewDidClickTerms(_ view: SecondTourPayView)
 }
 
 class SecondTourPayView: UIView {
@@ -254,10 +255,12 @@ class SecondTourPayView: UIView {
         let lbl = UILabel()
         lbl.textColor = .white
         lbl.numberOfLines = 0
-        lbl.textAlignment = .justified
+        lbl.textAlignment = .left
         lbl.setContentCompressionResistancePriority(.required, for: .vertical)
         lbl.font = .systemFont(ofSize: 9, weight: .regular)
-        lbl.text = StoreKitService.shared.terms(price: "299 ₽")
+        lbl.attributedText = StoreKitService.shared.attributedTerms(price: "299 ₽")
+        lbl.isUserInteractionEnabled = true
+        lbl.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(onTermsLinkTap(sender:))))
         return lbl
     }()
     
@@ -492,7 +495,12 @@ class SecondTourPayView: UIView {
     
     func setPriceText(price: String) {
         tiketLabel.text = "Безлимитный доступ 7 дней бесплатно,\nдалее \(price) в месяц"
-        termsLabel.text = StoreKitService.shared.terms(price: price)
+        termsLabel.attributedText = StoreKitService.shared.attributedTerms(price: price)
+    }
+    
+    @objc
+    private func onTermsLinkTap(sender: UIButton) {
+        delegate?.secondTourPayViewDidClickTerms(self)
     }
     
     @objc

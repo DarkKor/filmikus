@@ -13,6 +13,7 @@ protocol FirstWelcomeTourPayViewDelegate: class {
     func firstWelcomeTourPayViewDidClickSubscribe(_ view: FirstWelcomeTourPayView)
     func firstWelcomeTourPayViewDidClickRestorePurchase(_ view: FirstWelcomeTourPayView)
     func firstWelcomeTourPayViewDidClickClose(_ view: FirstWelcomeTourPayView)
+    func firstWelcomeTourPayViewDidClickTerms(_ view: FirstWelcomeTourPayView)
 }
 
 class FirstWelcomeTourPayView: UIView {
@@ -241,9 +242,11 @@ class FirstWelcomeTourPayView: UIView {
         let lbl = UILabel()
         lbl.textColor = .white
         lbl.numberOfLines = 0
-        lbl.textAlignment = .justified
+        lbl.textAlignment = .center
         lbl.font = .systemFont(ofSize: 9, weight: .regular)
-        lbl.text = StoreKitService.shared.terms(price: "299 ₽")
+        lbl.attributedText = StoreKitService.shared.attributedTerms(price: "299 ₽")
+        lbl.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(onTermsLinkTap(sender:))))
+        lbl.isUserInteractionEnabled = true
         return lbl
     }()
     
@@ -425,7 +428,12 @@ class FirstWelcomeTourPayView: UIView {
     
     func setPriceText(price: String) {
         tiketTextView.text = "Безлимитный доступ 7 дней бесплатно, далее \(price) в месяц"
-        termsLabel.text = StoreKitService.shared.terms(price: price)
+        termsLabel.attributedText = StoreKitService.shared.attributedTerms(price: price)
+    }
+    
+    @objc
+    private func onTermsLinkTap(sender: UIButton) {
+        delegate?.firstWelcomeTourPayViewDidClickTerms(self)
     }
     
     @objc

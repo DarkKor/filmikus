@@ -33,34 +33,20 @@ class StoreKitService: NSObject, StoreKitServiceType {
     
     let callToAction = "Смотреть бесплатно"
     let subtitle = "Отменить подписку можно в любой момент"
+    var termsOfUse = "https://filmikus.com/agreement"
     func terms(price: String) -> String {
-        return "Первые 7 дней бесплатно, далее \(price) в месяц, c автоматическим продлением каждые 30 дней. Подписка автоматически продлится, если автопродление не будет отключено по крайней мере за 24 часа до окончания текущего периода. Для управления подпиской и отключения автоматического продления вы можете перейти в настройки  iTunes. Деньги будут списаны со счета вашего аккаунта iTunes при подтверждении покупки. Если вы оформите подписку до истечения срока бесплатной пробной версии, оставшаяся часть бесплатного пробного периода будет аннулирована в момент подтверждения покупки"
+        return "Первые 7 дней бесплатно, далее \(price) в месяц, c автоматическим продлением каждые 30 дней. Подписка автоматически продлится, если автопродление не будет отключено по крайней мере за 24 часа до окончания текущего периода. Для управления подпиской и отключения автоматического продления вы можете перейти в настройки  iTunes. Деньги будут списаны со счета вашего аккаунта iTunes при подтверждении покупки. Если вы оформите подписку до истечения срока бесплатной пробной версии, оставшаяся часть бесплатного пробного периода будет аннулирована в момент подтверждения покупки. Пользовательское соглашение - \(termsOfUse)"
     }
-    
-    var callToActionAttributed: NSAttributedString {
-        var mainFont: UIFont!
-        var smallFont: UIFont!
-        if UIDevice.current.userInterfaceIdiom == .pad {
-            mainFont = .systemFont(ofSize: 24, weight: .medium)
-            smallFont = .systemFont(ofSize: 20, weight: .medium)
-        } else {
-            mainFont = .systemFont(ofSize: 20, weight: .medium)
-            smallFont = .systemFont(ofSize: 16, weight: .medium)
+    func attributedTerms(price: String) -> NSAttributedString {
+        let text = terms(price: price)
+        let attributedTitle = NSMutableAttributedString(string: text,
+                                                        attributes: [.font : UIFont.systemFont(ofSize: 9),
+                                                                     .foregroundColor : UIColor.white])
+        if let range = text.nsRange(of: termsOfUse) {
+            attributedTitle.addAttributes([.underlineStyle : NSUnderlineStyle.single.rawValue], range: range)
         }
         
-        let paragraph = NSMutableParagraphStyle()
-        paragraph.alignment = .center
-        
-        let string = NSMutableAttributedString(string: callToAction + "\nпервые 7 дней",
-                                               attributes: [
-                                                NSAttributedString.Key.foregroundColor : UIColor.white,
-                                                NSAttributedString.Key.font : mainFont!,
-                                                NSAttributedString.Key.paragraphStyle : paragraph
-        ])
-        
-        string.addAttributes([NSAttributedString.Key.font : smallFont!],
-                             range: (string.string as NSString).range(of: "первые 7 дней"))
-        return string
+        return attributedTitle
     }
 	
 	private override init() {

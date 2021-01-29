@@ -8,6 +8,7 @@
 
 import UIKit
 import StoreKit
+import SafariServices
 
 protocol FirstTourPayViewControllerDelegate: class {
     func firstTourPayViewControllerDidClickSignIn(_ viewController: FirstTourPayViewController)
@@ -245,5 +246,10 @@ extension FirstTourPayViewController: FirstWelcomeTourPayViewDelegate {
         case .regular:
             onClose?()
         }
+    }
+    
+    func firstWelcomeTourPayViewDidClickTerms(_ view: FirstWelcomeTourPayView) {
+        let controller = SFSafariViewController(url: URL(string: StoreKitService.shared.termsOfUse)!)
+        self.present(controller, animated: true, completion: nil)
     }
 }
