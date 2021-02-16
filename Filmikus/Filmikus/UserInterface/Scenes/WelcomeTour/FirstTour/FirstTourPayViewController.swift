@@ -249,7 +249,18 @@ extension FirstTourPayViewController: FirstWelcomeTourPayViewDelegate {
     }
     
     func firstWelcomeTourPayViewDidClickTerms(_ view: FirstWelcomeTourPayView) {
-        let controller = SFSafariViewController(url: URL(string: StoreKitService.shared.termsOfUse)!)
-        self.present(controller, animated: true, completion: nil)
+        let alert = UIAlertController(title: "",
+                                      message: "Ознакомьтесь с документами",
+                                      preferredStyle: UIDevice.current.userInterfaceIdiom == .pad ? .alert : .actionSheet)
+        alert.addAction(UIAlertAction(title: "Политика конфиденциальности", style: .default, handler: { _ in
+            let controller = SFSafariViewController(url: URL(string: StoreKitService.shared.privacyPolicy)!)
+            self.present(controller, animated: true, completion: nil)
+        }))
+        alert.addAction(UIAlertAction(title: "Пользовательское соглашение", style: .default, handler: { _ in
+            let controller = SFSafariViewController(url: URL(string: StoreKitService.shared.termsOfUse)!)
+            self.present(controller, animated: true, completion: nil)
+        }))
+        alert.addAction(UIAlertAction(title: "Отмена", style: .cancel, handler: nil))
+        self.present(alert, animated: true, completion: nil)
     }
 }

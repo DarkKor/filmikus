@@ -84,6 +84,22 @@ class ColoredBorderButton: UIButton {
         
         rounded(radius: bounds.height / 2)
     }
-    
 
+    var attributedButtonTitle: NSAttributedString! {
+        get {
+            return attributedTitle(for: .normal)
+        }
+        set {
+            setAttributedTitle(newValue, for: .normal)
+        }
+    }
+    
+    var buttonTitle: String! {
+        get {
+            return title(for: .normal)
+        }
+        set {
+            setTitle(newValue, for: .normal)
+        }
+    }
 }

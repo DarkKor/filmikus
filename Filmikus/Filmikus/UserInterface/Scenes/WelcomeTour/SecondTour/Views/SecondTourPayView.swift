@@ -23,6 +23,8 @@ class SecondTourPayView: UIView {
     
     private let state: PayViewState
     
+    private var price: String = "299 ₽"
+    
     private var titleLableTopLandscape: Constraint?
     private var titleLableTop: Constraint?
     private var popCornImageViewTopLandscape: Constraint?
@@ -47,7 +49,7 @@ class SecondTourPayView: UIView {
     private lazy var titleLabel: UILabel = {
         let lbl = UILabel()
         lbl.textColor = .white
-        lbl.numberOfLines = 2
+        lbl.numberOfLines = 0
         lbl.lineBreakMode = .byWordWrapping
         lbl.textAlignment = .center
         lbl.setContentCompressionResistancePriority(.required, for: .vertical)
@@ -214,7 +216,7 @@ class SecondTourPayView: UIView {
     }()
     
     private lazy var subscribeButton = ColoredBorderButton(
-        title: StoreKitService.shared.callToAction,
+        title: StoreKitService.shared.callToAction(price: price),
         color: UIColor.gradient(from: .appGLightBlue, to: .appBlue, direction: .vertical),
         borderColor: .appLightBlueBorder,
         target: self,
@@ -229,7 +231,7 @@ class SecondTourPayView: UIView {
         if traitCollection.userInterfaceIdiom == .pad {
             lbl.font = .systemFont(ofSize: 18, weight: .regular)
         } else {
-            lbl.font = .systemFont(ofSize: 14, weight: .regular)
+            lbl.font = .systemFont(ofSize: 14, weight: .bold)
         }
         lbl.text = StoreKitService.shared.subtitle
         return lbl
@@ -345,13 +347,13 @@ class SecondTourPayView: UIView {
                 mainStackViewTop = $0.top.equalTo(popCornImageView.snp.bottom).offset(50).constraint
                 mainStackViewTopLandscape = $0.top.equalTo(titleLabel.snp.bottom).offset(50).constraint
                 $0.centerX.equalToSuperview()
-                $0.width.equalToSuperview().dividedBy(2)
+                $0.width.equalToSuperview().dividedBy(1.7)
             }
             
             subscribeButton.snp.makeConstraints {
                 $0.height.equalTo(60)
                 $0.centerX.equalToSuperview()
-                $0.width.equalToSuperview().dividedBy(2)
+                $0.width.equalToSuperview().dividedBy(1.8)
                 $0.top.equalTo(mainStackView.snp.bottom).offset(40)
             }
             
@@ -491,11 +493,17 @@ class SecondTourPayView: UIView {
             mainStackViewTopLandscape?.deactivate()
             mainStackViewTop?.activate()
         }
+        
+        termsLabel.attributedText = StoreKitService.shared.attributedTerms(price: price)
     }
     
     func setPriceText(price: String) {
-        tiketLabel.text = "Безлимитный доступ 7 дней бесплатно,\nдалее \(price) в месяц"
+        subscribeButton.buttonTitle = StoreKitService.shared.callToAction(price: price)
+        tiketLabel.text = UIDevice.current.userInterfaceIdiom == .pad ? "Безлимитный доступ" : "Безлимитный доступ 7 дней бесплатно,\nдалее \(price) в месяц"
         termsLabel.attributedText = StoreKitService.shared.attributedTerms(price: price)
+        self.layoutIfNeeded()
+        
+        self.price = price
     }
     
     @objc

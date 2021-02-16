@@ -31,18 +31,25 @@ class StoreKitService: NSObject, StoreKitServiceType {
 
 	static let shared = StoreKitService()
     
-    let callToAction = "Смотреть бесплатно"
-    let subtitle = "Отменить подписку можно в любой момент"
+    func callToAction(price: String) -> String { return "Попробовать за \(price) / месяц" }
+    let subtitle = "Первые 7 дней бесплатно"
     var termsOfUse = "https://filmikus.com/agreement"
+    var privacyPolicy = "https://filmikus.com/privacy"
     func terms(price: String) -> String {
-        return "Первые 7 дней бесплатно, далее \(price) в месяц, c автоматическим продлением каждые 30 дней. Подписка автоматически продлится, если автопродление не будет отключено по крайней мере за 24 часа до окончания текущего периода. Для управления подпиской и отключения автоматического продления вы можете перейти в настройки  iTunes. Деньги будут списаны со счета вашего аккаунта iTunes при подтверждении покупки. Если вы оформите подписку до истечения срока бесплатной пробной версии, оставшаяся часть бесплатного пробного периода будет аннулирована в момент подтверждения покупки. Пользовательское соглашение - \(termsOfUse)"
+        return "Первые 7 дней бесплатно, далее \(price) в месяц, c автоматическим продлением каждые 30 дней. Подписка автоматически продлится, если автопродление не будет отключено по крайней мере за 24 часа до окончания текущего периода. Для управления подпиской и отключения автоматического продления вы можете перейти в настройки  iTunes. Деньги будут списаны со счета вашего аккаунта iTunes при подтверждении покупки. Если вы оформите подписку до истечения срока бесплатной пробной версии, оставшаяся часть бесплатного пробного периода будет аннулирована в момент подтверждения покупки.\nПолитика конфиденциальности: \(privacyPolicy)\nПользовательское соглашение: \(termsOfUse)"
     }
     func attributedTerms(price: String) -> NSAttributedString {
+        let isIpad = UIDevice.current.userInterfaceIdiom == .pad
+        let fontSize: CGFloat = isIpad ? (UIDevice.current.orientation.isLandscape ? 12 : 18) : 12
+        
         let text = terms(price: price)
         let attributedTitle = NSMutableAttributedString(string: text,
-                                                        attributes: [.font : UIFont.systemFont(ofSize: 9),
+                                                        attributes: [.font : UIFont.systemFont(ofSize: fontSize),
                                                                      .foregroundColor : UIColor.white])
         if let range = text.nsRange(of: termsOfUse) {
+            attributedTitle.addAttributes([.underlineStyle : NSUnderlineStyle.single.rawValue], range: range)
+        }
+        if let range = text.nsRange(of: privacyPolicy) {
             attributedTitle.addAttributes([.underlineStyle : NSUnderlineStyle.single.rawValue], range: range)
         }
         

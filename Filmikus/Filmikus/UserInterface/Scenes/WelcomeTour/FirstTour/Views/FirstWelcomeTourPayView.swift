@@ -22,6 +22,8 @@ class FirstWelcomeTourPayView: UIView {
     
     private var state: PayViewState
     
+    private var price: String = "299 ₽"
+    
     private lazy var closeButton: UIButton = {
         let button = UIButton()
         button.setImage(UIImage(systemName: "xmark"), for: .normal)
@@ -202,7 +204,7 @@ class FirstWelcomeTourPayView: UIView {
     }()
     
     private lazy var subscribeButton = ColoredBorderButton(
-        title: StoreKitService.shared.callToAction,
+        title: StoreKitService.shared.callToAction(price: price),
         color: UIColor.gradient(from: .appGLightBlue, to: .appBlue, direction: .vertical),
         borderColor: .appLightBlueBorder,
         target: self,
@@ -346,7 +348,7 @@ class FirstWelcomeTourPayView: UIView {
             $0.height.equalTo(60)
             if traitCollection.userInterfaceIdiom == .pad {
                 $0.centerX.equalToSuperview()
-                $0.width.equalToSuperview().dividedBy(2)
+                $0.width.equalToSuperview().dividedBy(1.8)
                 $0.top.equalTo(mainStackView.snp.bottom).offset(40)
             } else {
                 $0.leading.trailing.equalTo(safeAreaLayoutGuide).inset(14)
@@ -380,7 +382,7 @@ class FirstWelcomeTourPayView: UIView {
                 if state == .welcome {
                     $0.leading.trailing.equalToSuperview().inset(50)
                 } else {
-                    $0.width.equalToSuperview().dividedBy(2)
+                    $0.width.equalToSuperview().dividedBy(1.8)
                 }
             } else {
                 $0.top.equalTo(cancelSubscribeLabel.snp.bottom).offset(15)
@@ -424,11 +426,17 @@ class FirstWelcomeTourPayView: UIView {
             okTextView.textAlignment = .left
             mainStackView.distribution = .fill
         }
+        
+        termsLabel.attributedText = StoreKitService.shared.attributedTerms(price: price)
     }
     
     func setPriceText(price: String) {
+        subscribeButton.buttonTitle = StoreKitService.shared.callToAction(price: price)
         tiketTextView.text = "Безлимитный доступ 7 дней бесплатно, далее \(price) в месяц"
         termsLabel.attributedText = StoreKitService.shared.attributedTerms(price: price)
+        self.layoutIfNeeded()
+        
+        self.price = price
     }
     
     @objc
