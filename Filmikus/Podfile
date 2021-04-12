@@ -10,4 +10,7 @@ target 'Filmikus' do
   pod 'Moya'
   pod 'Firebase/Analytics'
   pod 'Firebase/Crashlytics'
+  pod 'FBSDKCoreKit'
+  pod 'FBSDKLoginKit'
+  pod 'FBSDKShareKit'
 end

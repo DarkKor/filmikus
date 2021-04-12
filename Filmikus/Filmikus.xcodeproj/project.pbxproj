@@ -173,6 +173,7 @@
 		A72AF6E724E448EE00EBE8DC /* ReuseWelcomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A72AF6E624E448EE00EBE8DC /* ReuseWelcomeViewController.swift */; };
 		A7DB3F4524EAD96600896338 /* SelectCountryOfOriginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7DB3F4424EAD96600896338 /* SelectCountryOfOriginViewController.swift */; };
 		CA54F8CA25922C5F00D12B4D /* SKProduct+LocalizedPrice.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA54F8C925922C5F00D12B4D /* SKProduct+LocalizedPrice.swift */; };
+		CAB59A512624B0AE004BF6E5 /* AnalyticsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAB59A502624B0AE004BF6E5 /* AnalyticsService.swift */; };
 		CADF32102594E5B600218723 /* String+NSRange.swift in Sources */ = {isa = PBXBuildFile; fileRef = CADF320F2594E5B600218723 /* String+NSRange.swift */; };
 		DBB5AD7EDA6B8BBB5543CBB9 /* Pods_Filmikus.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 97F5ACE358500956AF72C9A2 /* Pods_Filmikus.framework */; };
 		DF5FB36E255C03FC00DB1AFB /* UIScreen+Extentions.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF5FB36D255C03FC00DB1AFB /* UIScreen+Extentions.swift */; };
@@ -366,6 +367,7 @@
 		A72AF6E624E448EE00EBE8DC /* ReuseWelcomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReuseWelcomeViewController.swift; sourceTree = "<group>"; };
 		A7DB3F4424EAD96600896338 /* SelectCountryOfOriginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SelectCountryOfOriginViewController.swift; path = Filmikus/UserInterface/Scenes/WelcomeTour/SecondTour/SelectCountryOfOriginViewController.swift; sourceTree = SOURCE_ROOT; };
 		CA54F8C925922C5F00D12B4D /* SKProduct+LocalizedPrice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SKProduct+LocalizedPrice.swift"; sourceTree = "<group>"; };
+		CAB59A502624B0AE004BF6E5 /* AnalyticsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalyticsService.swift; sourceTree = "<group>"; };
 		CADF320F2594E5B600218723 /* String+NSRange.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+NSRange.swift"; sourceTree = "<group>"; };
 		DF5FB36D255C03FC00DB1AFB /* UIScreen+Extentions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIScreen+Extentions.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -508,6 +510,7 @@
 				491D0380249236F900093293 /* UsersService.swift */,
 				49ECBF17249B76FF00F9A854 /* UserStorage.swift */,
 				49ECBF19249B981500F9A854 /* UserFacade.swift */,
+				CAB59A502624B0AE004BF6E5 /* AnalyticsService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -1239,6 +1242,7 @@
 				4922682D248E435700B05A51 /* DetailFunShowInfoSection.swift in Sources */,
 				49684A62246ACDDA00E9BADC /* BlueBorderButton.swift in Sources */,
 				49684A8D2472E7ED00E9BADC /* FilterContentItem.swift in Sources */,
+				CAB59A512624B0AE004BF6E5 /* AnalyticsService.swift in Sources */,
 				49684A8B2472E7D600E9BADC /* FilterItem.swift in Sources */,
 				49CED95624C984F500BCCB6C /* SignUpFailureModel.swift in Sources */,
 				493786872486D45100C8496E /* VideosFacade.swift in Sources */,
@@ -1381,7 +1385,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 34;
+				CURRENT_PROJECT_VERSION = 35;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = 8G9BA2KRAU;
 				INFOPLIST_FILE = Filmikus/Info.plist;
@@ -1391,7 +1395,7 @@
 					"@executable_path/Frameworks",
 				);
 				LIBRARY_SEARCH_PATHS = "";
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.inspiritum.filmikus;
 				PRODUCT_NAME = "Фильмикус";
 				PROVISIONING_PROFILE_SPECIFIER = Filmikus_dev;
@@ -1410,7 +1414,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 34;
+				CURRENT_PROJECT_VERSION = 35;
 				DEVELOPMENT_TEAM = 8G9BA2KRAU;
 				INFOPLIST_FILE = Filmikus/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
@@ -1419,7 +1423,7 @@
 					"@executable_path/Frameworks",
 				);
 				LIBRARY_SEARCH_PATHS = "";
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.inspiritum.filmikus;
 				PRODUCT_NAME = "Фильмикус";
 				PROVISIONING_PROFILE_SPECIFIER = Filmikus_dev;

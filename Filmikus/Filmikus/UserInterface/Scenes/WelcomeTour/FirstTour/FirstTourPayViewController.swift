@@ -134,6 +134,9 @@ extension FirstTourPayViewController: FirstWelcomeTourPayViewDelegate {
     func firstWelcomeTourPayViewDidClickSubscribe(_ view: FirstWelcomeTourPayView) {
         guard let selectedProduct = product else { return }
         showActivityIndicator()
+        
+        AnalyticsService.shared.track(event: "Purchase", properties: ["screen" : "firstTour"])
+        
         self.storeKitService.purchase(product: selectedProduct) { [weak self] result in
             guard let self = self else { return }
             self.hideActivityIndicator()
@@ -157,7 +160,7 @@ extension FirstTourPayViewController: FirstWelcomeTourPayViewDelegate {
 							return
 						}
 						self.showAlert(
-							message: "Покупки успешно восстановлены!",
+							message: "Подписка успешно оформлена!",
 							completion: {
 								switch self.state {
 								case .regular:
@@ -166,6 +169,11 @@ extension FirstTourPayViewController: FirstWelcomeTourPayViewDelegate {
 									self.delegate?.firstTourPayViewControllerWillShowContent(self)
 								}
 							})
+                        AnalyticsService.shared.track(event: "PurchaseSuccess",
+                                                      properties: ["screen" : "firstTour",
+                                                                   "value" : selectedProduct.price,
+                                                                   "currency" : selectedProduct.priceLocale.currencyCode ?? "RUB"])
+                        AnalyticsService.shared.trackPurchase(selectedProduct)
 					case .failure(let error):
 						self.showAlert(
 							message: "Ошибка: \(error.localizedDescription)",
@@ -200,6 +208,9 @@ extension FirstTourPayViewController: FirstWelcomeTourPayViewDelegate {
     
     func firstWelcomeTourPayViewDidClickRestorePurchase(_ view: FirstWelcomeTourPayView) {
         showActivityIndicator()
+        
+        AnalyticsService.shared.track(event: "Restore", properties: ["screen" : "firstTour"])
+        
         storeKitService.restorePurchases { [weak self] (result) in
             guard let self = self else { return }
             switch result {
@@ -225,6 +236,7 @@ extension FirstTourPayViewController: FirstWelcomeTourPayViewDelegate {
                                     self.delegate?.firstTourPayViewControllerWillShowContent(self)
                                 }
                             })
+                        AnalyticsService.shared.track(event: "RestoreSuccess", properties: ["screen" : "firstTour"])
                     case .failure(let error):
                         self.showAlert(message: "Ошибка: \(error.localizedDescription)", completion: {
                             self.hideActivityIndicator()

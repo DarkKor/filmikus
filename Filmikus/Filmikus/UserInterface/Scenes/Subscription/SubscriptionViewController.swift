@@ -149,6 +149,8 @@ class SubscriptionViewController: ViewController {
 		storeKitService.loadProducts { (result) in
 			guard let products = try? result.get() else { return }
 			let selectedProduct = products[self.segmentControl.selectedIndex]
+            
+            AnalyticsService.shared.track(event: "Purchase", properties: ["screen" : "subscription"])
 
 			self.storeKitService.purchase(product: selectedProduct) { [weak self] result in
 				guard let self = self else { return }
@@ -166,9 +168,14 @@ class SubscriptionViewController: ViewController {
 								return
 							}
 							self.showAlert(
-								message: "Покупки успешно восстановлены!",
+								message: "Подписка успешно оформлена!",
 								completion: { self.dismiss(animated: true) }
 							)
+                            AnalyticsService.shared.track(event: "PurchaseSuccess",
+                                                          properties: ["screen" : "subscription",
+                                                                       "value" : selectedProduct.price,
+                                                                       "currency" : selectedProduct.priceLocale.currencyCode ?? "RUB"])
+                            AnalyticsService.shared.trackPurchase(selectedProduct)
 						case .failure(let error):
 							self.showAlert(
 								message: "Ошибка: \(error.localizedDescription)",

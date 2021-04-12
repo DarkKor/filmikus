@@ -46,5 +46,22 @@
 	</array>
 	<key>UIUserInterfaceStyle</key>
 	<string>Light</string>
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>fb479022870198904</string>
+			</array>
+		</dict>
+	</array>
+	<key>FacebookAppID</key>
+	<string>479022870198904</string>
+	<key>FacebookAutoLogAppEventsEnabled</key>
+	<true/>
+	<key>FacebookAdvertiserIDCollectionEnabled</key>
+	<true/>
+	<key>FacebookDisplayName</key>
+	<string>Фильмикус</string>
 </dict>
 </plist>

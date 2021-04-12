@@ -124,6 +124,9 @@ class ProfileViewController: ViewController {
 extension ProfileViewController: LoginViewDelegate {
     func loginViewDidSelectRestorePurchase(_ view: LoginView) {
         showActivityIndicator()
+        
+        AnalyticsService.shared.track(event: "Restore", properties: ["screen" : "login"])
+        
         storeKitService.restorePurchases { [weak self] (result) in
             guard let self = self else { return }
             switch result {
@@ -139,6 +142,9 @@ extension ProfileViewController: LoginViewDelegate {
                             return
                         }
                         self.showAlert(message: "Покупки успешно восстановлены")
+                        
+                        AnalyticsService.shared.track(event: "RestoreSuccess", properties: ["screen" : "login"])
+                        
                         self.hideActivityIndicator()
                     case .failure(let error):
                         self.showAlert(message: "Ошибка: \(error.localizedDescription)", completion: {
@@ -173,6 +179,9 @@ extension ProfileViewController: ProfileViewDelegate {
 	
 	func profileViewDidSelectRestorePurchases(_ view: ProfileView) {
 		showActivityIndicator()
+        
+        AnalyticsService.shared.track(event: "Restore", properties: ["screen" : "profile"])
+        
 		storeKitService.restorePurchases { [weak self] (result) in
 			guard let self = self else { return }
             switch result {
@@ -191,6 +200,7 @@ extension ProfileViewController: ProfileViewDelegate {
 							message: "Покупки успешно восстановлены",
 							completion: { self.dismiss(animated: true) }
 						)
+                        AnalyticsService.shared.track(event: "RestoreSuccess", properties: ["screen" : "profile"])
 					case .failure(let error):
 						self.showAlert(
 							message: "Ошибка: \(error.localizedDescription)",

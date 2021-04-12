@@ -86,6 +86,8 @@ class UserFacade: UserFacadeType {
 			guard let userStatus = try? result.get() else { return }
 			switch userStatus {
 			case let .success(model):
+                AnalyticsService.shared.setUserId("\(model.userId)")
+                
 				self.storage.user = UserModel(id: model.userId, username: email, password: password, isPaid: true)
 				NotificationCenter.default.post(name: .userDidLogin, object: nil)
 			case .failure(_):
@@ -96,6 +98,8 @@ class UserFacade: UserFacadeType {
 	}
 	
 	func signOut() {
+        AnalyticsService.shared.setUserId(nil)
+        
 		storage.user = nil
 		NotificationCenter.default.post(name: .userDidLogout, object: nil)
 	}

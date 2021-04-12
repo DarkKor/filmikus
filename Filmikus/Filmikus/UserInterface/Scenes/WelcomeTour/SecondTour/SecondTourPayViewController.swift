@@ -130,6 +130,9 @@ extension SecondTourPayViewController: SecondTourPayViewDelegate {
     func secondTourPayViewDidClickSubscribe(_ view: SecondTourPayView) {
         guard let selectedProduct = product else { return }
         showActivityIndicator()
+        
+        AnalyticsService.shared.track(event: "Purchase", properties: ["screen" : "secondTour"])
+        
         self.storeKitService.purchase(product: selectedProduct) { [weak self] result in
             guard let self = self else { return }
             self.hideActivityIndicator()
@@ -138,7 +141,7 @@ extension SecondTourPayViewController: SecondTourPayViewDelegate {
                 self.userFacade.updateReceipt { (status) in
                     guard self.userFacade.isSubscribed else { return }
                     self.showAlert(
-                        message: "Покупки успешно восстановлены!",
+                        message: "Подписка успешно оформлена!",
                         completion: {
                             switch self.state {
                             case .regular:
@@ -147,6 +150,11 @@ extension SecondTourPayViewController: SecondTourPayViewDelegate {
                                 self.delegate?.secondTourPayViewControllerWillShowContent(self)
                             }
                         })
+                    AnalyticsService.shared.track(event: "PurchaseSuccess",
+                                                  properties: ["screen" : "secondTour",
+                                                               "value" : selectedProduct.price,
+                                                               "currency" : selectedProduct.priceLocale.currencyCode ?? "RUB"])
+                    AnalyticsService.shared.trackPurchase(selectedProduct)
                 }
             case .failure(let error):
                 if (error as? SKError)?.code != SKError.Code.paymentCancelled {
@@ -167,6 +175,9 @@ extension SecondTourPayViewController: SecondTourPayViewDelegate {
     
     func secondTourPayViewDidClickRestorePurchase(_ view: SecondTourPayView) {
         showActivityIndicator()
+        
+        AnalyticsService.shared.track(event: "Restore", properties: ["screen" : "secondTour"])
+        
         storeKitService.restorePurchases { [weak self] (result) in
             guard let self = self else { return }
             switch result {
@@ -192,6 +203,7 @@ extension SecondTourPayViewController: SecondTourPayViewDelegate {
                                     self.delegate?.secondTourPayViewControllerWillShowContent(self)
                                 }
                             })
+                        AnalyticsService.shared.track(event: "RestoreSuccess", properties: ["screen" : "secondTour"])
                     case .failure(let error):
                         self.showAlert(message: "Ошибка: \(error.localizedDescription)", completion: {
                             self.hideActivityIndicator()
