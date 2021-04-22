@@ -97,7 +97,7 @@ class DetailFilmViewController: ViewController {
 				
 				var videoUrl = ""
 				if let tvigleId = detailModel.tvigleId {
-					videoUrl = "http://cloud.tvigle.ru/video/\(tvigleId)/"
+					videoUrl = "http://cloud.tvigle.ru/video/\(tvigleId)/?partnerId=10458"
 				}
 				let videoSection = DetailMovieVideoSection(url: videoUrl, state: self.videoState)
 				let infoSection = DetailMovieInfoSection(
