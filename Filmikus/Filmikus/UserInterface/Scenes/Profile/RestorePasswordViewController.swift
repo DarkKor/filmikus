@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import WebKit
 
 protocol RestorePasswordViewControllerDelegate: class {
     func restorePasswordViewControllerDidSelectClose(_ viewController: RestorePasswordViewController)
@@ -48,77 +49,97 @@ class RestorePasswordViewController: ViewController {
         textField.delegate = self
         return textField
     }()
+    private lazy var webView: WKWebView = {
+        let webView = WKWebView()
+        webView.translatesAutoresizingMaskIntoConstraints = false
+        return webView
+    }()
     
     private lazy var signInButton = BlueBorderButton(title: "Восстановить пароль", target: self, action: #selector(onRestorePasswordButtonTap))
     
     override func loadView() {
         view = UIView()
         view.backgroundColor = .white
-        scrollView.keyboardDismissMode = .interactive
-        view.addSubview(scrollView)
-        scrollView.addSubview(containerView)
         
-        containerView.addSubview(closeButton)
-        containerView.addSubview(loginTextField)
-        containerView.addSubview(passwordTextField)
-        containerView.addSubview(signInButton)
-        
-        scrollView.translatesAutoresizingMaskIntoConstraints = false
-        let frameGuide = scrollView.frameLayoutGuide
-        let contentGuide = scrollView.contentLayoutGuide
-        
-        frameGuide.snp.makeConstraints {
-            $0.edges.equalTo(view)
-            $0.width.equalTo(contentGuide)
-        }
-        containerView.snp.makeConstraints {
-            $0.edges.equalTo(contentGuide)
+        view.addSubview(webView)
+        webView.snp.makeConstraints {
+            $0.top.equalTo(view).inset(50)
+            $0.left.equalTo(view)
+            $0.right.equalTo(view)
+            $0.bottom.equalTo(view)
         }
         
+//        scrollView.keyboardDismissMode = .interactive
+//        view.addSubview(scrollView)
+//        scrollView.addSubview(containerView)
+//
+        view.addSubview(closeButton)
+//        containerView.addSubview(loginTextField)
+//        containerView.addSubview(passwordTextField)
+//        containerView.addSubview(signInButton)
+//
+//        scrollView.translatesAutoresizingMaskIntoConstraints = false
+//        let frameGuide = scrollView.frameLayoutGuide
+//        let contentGuide = scrollView.contentLayoutGuide
+//
+//        frameGuide.snp.makeConstraints {
+//            $0.edges.equalTo(view)
+//            $0.width.equalTo(contentGuide)
+//        }
+//        containerView.snp.makeConstraints {
+//            $0.edges.equalTo(contentGuide)
+//        }
+//
         closeButton.snp.makeConstraints {
-            $0.top.right.equalTo(containerView.safeAreaLayoutGuide).inset(20)
+            $0.top.right.equalTo(view.safeAreaLayoutGuide).inset(20)
         }
+//
+//        loginTextField.snp.makeConstraints {
+//            $0.top.equalTo(closeButton.snp.bottom).offset(40)
+//            $0.leading.trailing.equalToSuperview().inset(20)
+//        }
+//        passwordTextField.snp.makeConstraints {
+//            $0.top.equalTo(loginTextField.snp.bottom).offset(20)
+//            $0.leading.trailing.equalToSuperview().inset(20)
+//        }
+//
+//        signInButton.snp.makeConstraints {
+//            $0.top.equalTo(passwordTextField.snp.bottom).offset(20)
+//            $0.centerX.bottom.equalToSuperview()
+//            $0.height.equalTo(44)
+//            if traitCollection.userInterfaceIdiom == .pad {
+//                $0.width.equalToSuperview().dividedBy(2)
+//            } else {
+//                $0.width.equalToSuperview().inset(20)
+//            }
+//        }
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
         
-        loginTextField.snp.makeConstraints {
-            $0.top.equalTo(closeButton.snp.bottom).offset(40)
-            $0.leading.trailing.equalToSuperview().inset(20)
-        }
-        passwordTextField.snp.makeConstraints {
-            $0.top.equalTo(loginTextField.snp.bottom).offset(20)
-            $0.leading.trailing.equalToSuperview().inset(20)
-        }
-        
-        signInButton.snp.makeConstraints {
-            $0.top.equalTo(passwordTextField.snp.bottom).offset(20)
-            $0.centerX.bottom.equalToSuperview()
-            $0.height.equalTo(44)
-            if traitCollection.userInterfaceIdiom == .pad {
-                $0.width.equalToSuperview().dividedBy(2)
-            } else {
-                $0.width.equalToSuperview().inset(20)
-            }
-        }
+        webView.load(URLRequest(url: URL(string: "https://filmikus.com/restore-access")!))
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        NotificationCenter.default.addObserver(
-            self,
-            selector: #selector(keyboardWillShow),
-            name: UIResponder.keyboardWillShowNotification,
-            object: nil
-        )
-        NotificationCenter.default.addObserver(
-            self,
-            selector: #selector(keyboardWillHide),
-            name: UIResponder.keyboardWillHideNotification,
-            object: nil
-        )
+//        NotificationCenter.default.addObserver(
+//            self,
+//            selector: #selector(keyboardWillShow),
+//            name: UIResponder.keyboardWillShowNotification,
+//            object: nil
+//        )
+//        NotificationCenter.default.addObserver(
+//            self,
+//            selector: #selector(keyboardWillHide),
+//            name: UIResponder.keyboardWillHideNotification,
+//            object: nil
+//        )
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        NotificationCenter.default.removeObserver(self)
+//        NotificationCenter.default.removeObserver(self)
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {

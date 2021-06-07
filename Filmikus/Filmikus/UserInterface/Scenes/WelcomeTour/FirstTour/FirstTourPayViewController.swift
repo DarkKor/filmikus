@@ -93,6 +93,7 @@ class FirstTourPayViewController: ViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         showActivityIndicator()
         storeKitService.loadProducts{ [weak self] (result) in
             self?.hideActivityIndicator()

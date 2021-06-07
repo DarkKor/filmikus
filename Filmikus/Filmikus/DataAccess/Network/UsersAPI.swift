@@ -11,7 +11,8 @@ import CommonCrypto
 
 enum UsersAPI {
 	case register(email: String)
-	case login(email: String, password: String)
+	case loginEmail(email: String, password: String)
+    case loginPhone(phone: String)
 	case appstoreReceipt(userId: Int, receipt: String)
 	case welcomeType
     case restorePassword(email: String, password: String)
@@ -31,8 +32,10 @@ extension UsersAPI: TargetType {
 		switch self {
 		case .register:
 			return ""
-		case .login:
+		case .loginEmail(_, _):
 			return "/login"
+        case .loginPhone(_):
+            return "/login"
 		case .appstoreReceipt:
 			return "/appstore-receipt"
 		case .welcomeType:
@@ -55,9 +58,11 @@ extension UsersAPI: TargetType {
 		switch self {
 		case let .register(email):
 			json["email"] = email
-		case let .login(email, password):
+		case let .loginEmail(email, password):
 			json["email"] = email
 			json["pass"] = password
+        case let .loginPhone(phone):
+            json["phone"] = phone
 		case let .appstoreReceipt(userId, receipt):
 			json["user_id"] = userId
 			json["appstorereceipt"] = receipt

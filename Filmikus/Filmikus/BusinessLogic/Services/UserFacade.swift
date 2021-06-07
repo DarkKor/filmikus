@@ -23,6 +23,7 @@ protocol UserFacadeType {
     var payViewType: WelcomeTypeModel? { get }
 	func updateUserInfo(completion: @escaping () -> Void)
 	func signIn(email: String, password: String, completion: @escaping (SignInStatusModel) -> Void)
+    func signIn(phone: String, completion: @escaping (SignInStatusModel) -> Void)
 	func signOut()
 	func signUp(email: String, completion: @escaping (SignUpStatusModel) -> Void)
     func restorePassword(email: String, password: String, completion: @escaping (RestorePasswordStatusModel) -> Void)
@@ -96,6 +97,23 @@ class UserFacade: UserFacadeType {
 			completion(userStatus)
 		}
 	}
+    
+    func signIn(phone: String, completion: @escaping (SignInStatusModel) -> Void) {
+        service.login(phone: phone) { [weak self] (result) in
+            guard let self = self else { return }
+            guard let userStatus = try? result.get() else { return }
+            switch userStatus {
+            case let .success(model):
+                AnalyticsService.shared.setUserId("\(model.userId)")
+                
+                self.storage.user = UserModel(id: model.userId, username: phone, password: "", isPaid: true)
+                NotificationCenter.default.post(name: .userDidLogin, object: nil)
+            case .failure(_):
+                break
+            }
+            completion(userStatus)
+        }
+    }
 	
 	func signOut() {
         AnalyticsService.shared.setUserId(nil)
@@ -151,7 +169,7 @@ class UserFacade: UserFacadeType {
 								let expirationDates = receipts?.compactMap { $0.expirationDate }
 								guard let latestExpirationDate = expirationDates?.sorted().last else {
 									self.storage.expirationDate = nil
-									completion(.failure(NSError.error(with: "Не найдено ни одной покупки")))
+									completion(.failure(NSError.error(with: "Вы еще не активировали подписку в приложении Фильмикус")))
 									return
 								}
 								self.storage.expirationDate = latestExpirationDate

@@ -110,7 +110,7 @@ class DetailFunShowViewController: ViewController {
 					case .success(let episodesModel):
 						var videoUrl = ""
 						if let tvigleId = detailModel.tvigleId {
-							videoUrl = "http://cloud.tvigle.ru/video/\(tvigleId)/"
+							videoUrl = "http://cloud.tvigle.ru/video/\(tvigleId)/?partnerId=10458"
 						}
 						let detailFunShowVideo = DetailFunShowVideoSection(
 							videoUrl: videoUrl,

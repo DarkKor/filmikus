@@ -108,7 +108,7 @@ class DetailSerialViewController: ViewController {
 					case .success(let episodesModel):
 						var videoUrl = ""
 						if let tvigleId = detailModel.tvigleId {
-							videoUrl = "http://cloud.tvigle.ru/video/\(tvigleId)/"
+							videoUrl = "http://cloud.tvigle.ru/video/\(tvigleId)/?partnerId=10458"
 						}
 						let videoSection = DetailMovieVideoSection(url: videoUrl, state: self.videoState)
 						let infoSection = DetailMovieInfoSection(
@@ -164,7 +164,7 @@ class DetailSerialViewController: ViewController {
 			case .success(let detailModel):
 				var videoUrl = ""
 				if let tvigleId = detailModel.tvigleId {
-					videoUrl = "http://cloud.tvigle.ru/video/\(tvigleId)/"
+					videoUrl = "http://cloud.tvigle.ru/video/\(tvigleId)/?partnerId=10458"
 				}
 				let sections = self.collectionViewController.sections
 				self.collectionViewController.update(sections: sections.map {

@@ -192,24 +192,69 @@ class SignInViewController: ViewController {
 	@objc
 	private func onSignInButtonTap(sender: UIButton) {
 		view.endEditing(true)
-		guard let username = self.loginTextField.text, !username.isEmpty else { return }
-		guard let password = self.passwordTextField.text, !password.isEmpty else { return }
-
-		showActivityIndicator()
-		self.userFacade.signIn(email: username, password: password) { [weak self] (loginStatus) in
-			guard let self = self else { return }
-			self.hideActivityIndicator()
-			switch loginStatus {
-			case .success(_):
-                let isPaid = self.userFacade.isSubscribed
-				self.delegate?.signInViewController(self, didSignInWithPaidStatus: isPaid)
-				guard isPaid else { return }
-				self.userFacade.updateReceipt(completion: { _ in })
-			case let .failure(model):
-				self.showAlert(message: model.errorDescription)
-			}
-		}
+        
+        if !self.loginTextField.isHidden {
+            loginViaEmail()
+        } else {
+            loginViaPhone()
+        }
 	}
+    
+    private func loginViaEmail() {
+        var validated = true
+        if self.loginTextField.text == nil || self.loginTextField.text!.isEmpty {
+            self.loginTextField.shake()
+            validated = false
+        }
+        if self.passwordTextField.text == nil || self.passwordTextField.text!.isEmpty {
+            self.passwordTextField.shake()
+            validated = false
+        }
+        
+        if !validated {
+            return
+        }
+        
+        let username = self.loginTextField.text!
+        let password = self.passwordTextField.text!
+
+        showActivityIndicator()
+        self.userFacade.signIn(email: username, password: password) { [weak self] (loginStatus) in
+            guard let self = self else { return }
+            self.hideActivityIndicator()
+            switch loginStatus {
+            case .success(_):
+                let isPaid = self.userFacade.isSubscribed
+                self.delegate?.signInViewController(self, didSignInWithPaidStatus: isPaid)
+                guard isPaid else { return }
+                self.userFacade.updateReceipt(completion: { _ in })
+            case let .failure(model):
+                self.showAlert(message: model.errorDescription)
+            }
+        }
+    }
+    
+    private func loginViaPhone() {
+        guard let phone = self.phoneTextField.text, !phone.isEmpty else {
+            self.phoneTextField.shake()
+            return
+        }
+
+        showActivityIndicator()
+        self.userFacade.signIn(phone: phone) { [weak self] (loginStatus) in
+            guard let self = self else { return }
+            self.hideActivityIndicator()
+            switch loginStatus {
+            case .success(_):
+                let isPaid = self.userFacade.isSubscribed
+                self.delegate?.signInViewController(self, didSignInWithPaidStatus: isPaid)
+                guard isPaid else { return }
+                self.userFacade.updateReceipt(completion: { _ in })
+            case let .failure(model):
+                self.showAlert(message: model.errorDescription)
+            }
+        }
+    }
     
     @objc
     private func onRestorePasswordButtonTap(sender: UIButton) {
